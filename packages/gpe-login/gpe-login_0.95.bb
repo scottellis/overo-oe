@@ -21,6 +21,7 @@ SRC_URI += " file://c-locale.patch;patch=1 "
 SRC_URI_append_spitz = "file://brightness-adjust-keyluanchrc.patch;patch=1"
 SRC_URI_append_akita = "file://brightness-adjust-keyluanchrc.patch;patch=1"
 SRC_URI_append_c7x0 = "file://brightness-adjust-keyluanchrc.patch;patch=1"
+SRC_URI_append_overo = "file://autologin.patch;patch=1"
 
 
 CONFFILES_${PN} += " \

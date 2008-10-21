@@ -1,0 +1,10 @@
+--- gpe-login-0.95/gpe-login.sysconfig-orig	2008-08-06 14:23:40.000000000 -0700
++++ gpe-login-0.95/gpe-login.sysconfig	2008-09-09 21:17:20.000000000 -0700
+@@ -1,6 +1,6 @@
+ # GPE Login Config
+ 
+-AUTOLOGIN="false"
++AUTOLOGIN="true"
+ 
+ if [ "$AUTOLOGIN" = "true" ]; then
+   USER="root"

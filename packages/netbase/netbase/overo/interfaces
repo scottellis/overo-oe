@@ -1,0 +1,61 @@
+# /etc/network/interfaces -- configuration file for ifup(8), ifdown(8)
+ 
+# The loopback interface
+#
+auto lo
+iface lo inet loopback
+
+#
+# Wired interfaces
+#
+
+auto eth0
+iface eth0 inet dhcp
+
+#
+# Wireless interfaces
+#
+
+# Example of an unencrypted (no WEP or WPA) wireless connection
+# that connects to any available access point:
+#
+auto wlan0
+iface wlan0 inet dhcp
+	wireless_mode managed
+	wireless_essid any
+
+# Example of an unencrypted (no WEP or WPA) wireless connection
+# that is locked to a specific access point:
+#
+#iface wlan0 inet dhcp  
+#	wireless_mode managed
+#	wireless-essid some-essid
+
+# Example of a WEP encrypted connection locked to a specific access point:
+#
+#iface wlan0 inet dhcp  
+#  pre-up /sbin/iwconfig $IFACE key 03AB30A4EF8A71A4781DA1CB84 key open essid gumstixnet txpower 100mW
+
+# Example of a WPA1 or WPA2 encrypted connection locked to a specific access point.
+#
+# You will also need to create a /etc/wpa_supplicant.conf file:
+#  Copy / paste the results of this command into that file :
+#     wpa_passphrase myssid mypasswordhere
+#
+#iface wlan0 inet dhcp
+#      pre-up wpa_supplicant -Dmarvell -iwlan0 -c/etc/wpa_supplicant.conf -Bw
+#      down killall wpa_supplicant          
+
+# Ethernet/RNDIS gadget (g_ether)
+# ... or on host side, usbnet and random hwaddr
+iface usb0 inet static
+	address 192.168.0.202
+	netmask 255.255.255.0
+	network 192.168.0.0
+	gateway 192.168.0.200
+
+# Bluetooth networking
+iface bnep0 inet dhcp
+
+
+

@@ -15,7 +15,6 @@ SRC_URI = "http://bluez.sourceforge.net/download/bluez-utils-${PV}.tar.gz \
            file://hcid.conf \
            file://hciattach-ti-bts.patch;patch=1"
 
-
 S = "${WORKDIR}/bluez-utils-${PV}"
 
 inherit autotools update-rc.d
@@ -89,6 +88,10 @@ do_install_append() {
         install -m 0644 ${S}/rfcomm/rfcomm.conf ${D}${sysconfdir}/bluetooth/
         install -m 0755 ${S}/daemon/.libs/passkey-agent ${D}${base_bindir}/ ||true 
 		install -m 0755 ${S}/test/.libs/passkey-agent ${D}${base_bindir}/ ||true
+
+	install -m 0644 ${WORKDIR}/bluetooth.default ${D}${sysconfdir}/default/bluetooth
+	install -m 0755 ${WORKDIR}/bluetooth.init    ${D}${sysconfdir}/init.d/bluetooth
+
 }
 
 

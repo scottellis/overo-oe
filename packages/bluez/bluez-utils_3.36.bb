@@ -4,6 +4,8 @@ FILE_PR = "r1"
 
 SRC_URI = "http://bluez.sourceforge.net/download/bluez-utils-${PV}.tar.gz \
            file://hcid.conf \
+           file://bluetooth.default \
+           file://bluetooth.init \
           "
 
 # see bluez-utils3.inc for the explanation of these option

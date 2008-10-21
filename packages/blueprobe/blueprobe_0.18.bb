@@ -1,7 +1,9 @@
 require blueprobe.inc
 
-FILE_PR = "r4"
+PR = "r5"
 
 SRC_URI += "file://h4000.patch;patch=1 \
             file://uclibc-fix.patch;patch=1 \
-	    file://rx3000.patch;patch=1"
+	    file://rx3000.patch;patch=1 \
+	    file://overo.patch;patch=1 \
+           "

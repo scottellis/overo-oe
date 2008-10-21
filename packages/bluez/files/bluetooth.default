@@ -1,5 +1,8 @@
 # Bluetooth configuraton file
 
+# Attach to the onboard bluetooth adapter  (allowed values are "true" and "false")
+HCIATTACH_ENABLE=true
+
 # Start of hcid (allowed values are "true" and "false")
 HCID_ENABLE=true
 
@@ -10,10 +13,10 @@ HCID_CONFIG="/etc/bluetooth/hcid.conf"
 SDPD_ENABLE=true
 
 # Start hidd (allowed values are "true" and "false")
-HIDD_ENABLE=true
+HIDD_ENABLE=false
 
 # Arguments to hidd
-HIDD_OPTIONS=""
+#HIDD_OPTIONS=""
 
 # Run hid2hci (allowed values are "true" and "false")
 HID2HCI_ENABLE=true
@@ -34,4 +37,8 @@ DUND_OPTIONS="--listen --persist"
 PAND_ENABLE=false
 
 # Arguments to pand
-PAND_OPTIONS="--listen --role NAP"
+# Uncomment the line below to set up your gumstix as a bluetooth network access point
+#PAND_OPTIONS="--listen --role NAP"
+# Uncomment the line below to connect to any available bluetooth network access point
+#PAND_OPTIONS="--role PANU --search --service NAP -sdp --persist"
+
