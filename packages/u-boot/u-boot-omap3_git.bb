@@ -2,12 +2,12 @@ require u-boot.inc
 
 FILESDIR = "${@os.path.dirname(bb.data.getVar('FILE',d,1))}/u-boot-omap3-git/${MACHINE}"
 
-SRCREV = "160b30a7f315ea2c7d76dd19250d723eedb283ee"
+SRCREV = "486ad6069e804bcc98004f197f01b7ef267dc408"
 
-PV = "2008.10-rc3+${PR}+git${SRCREV}"
+PV = "2008.10+${PR}+git${SRCREV}"
 PR="r0"
 
-SRC_URI = "git://www.sakoman.net/git/u-boot-omap3.git;branch=overo;protocol=git \
+SRC_URI = "git://www.sakoman.net/git/u-boot-omap3.git;branch=evmmux;protocol=git \
           "
 
 UBOOT_MACHINE_beagleboard = "omap3_beagle_config"
