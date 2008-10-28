@@ -1,26 +1,3 @@
-diff --git a/arch/arm/mach-omap2/clock34xx.c b/arch/arm/mach-omap2/clock34xx.c
-index cc43f4f..5fe7adc 100644
---- a/arch/arm/mach-omap2/clock34xx.c
-+++ b/arch/arm/mach-omap2/clock34xx.c
-@@ -271,6 +271,7 @@ static int _omap3_noncore_dpll_stop(struct clk *clk)
- static int omap3_noncore_dpll_enable(struct clk *clk)
- {
- 	int r;
-+	long rate;
- 	struct dpll_data *dd;
- 
- 	if (clk == &dpll3_ck)
-@@ -280,7 +281,9 @@ static int omap3_noncore_dpll_enable(struct clk *clk)
- 	if (!dd)
- 		return -EINVAL;
- 
--	if (clk->rate == dd->bypass_clk->rate)
-+	rate = omap2_get_dpll_rate(clk);
-+
-+	if (dd->bypass_clk->rate == rate)
- 		r = _omap3_noncore_dpll_bypass(clk);
- 	else
- 		r = _omap3_noncore_dpll_lock(clk);
 diff --git a/drivers/usb/musb/Kconfig b/drivers/usb/musb/Kconfig
 index 58b2b8f..4b9542b 100644
 --- a/drivers/usb/musb/Kconfig
