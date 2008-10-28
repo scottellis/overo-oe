@@ -1,6 +1,6 @@
-# X11 demo image for Overo
+# X11 demo image for omap3
 
-PR = "r6"
+PR = "r0"
 
 inherit image
 

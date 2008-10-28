@@ -1,6 +1,6 @@
-# console image for Overo
+# console image for omap3
 
-PR = "r2"
+PR = "r0"
 
 inherit image
 
