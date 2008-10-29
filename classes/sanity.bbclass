@@ -131,6 +131,8 @@ def check_sanity(e):
 		if (f.read().strip() != tmpdir):
 			messages = messages + "Error, TMPDIR has changed location. You need to either move it back to %s or rebuild\n" % tmpdir
 	else:
+		import bb
+		bb.mkdirhier(tmpdir)
 		f = file(checkfile, "w")
 		f.write(tmpdir)
 	f.close()
@@ -138,7 +140,7 @@ def check_sanity(e):
 	#
 	# Check the 'ABI' of TMPDIR
 	#
-	current_abi = data.getVar('SANITY_ABI', e.data, True)
+	current_abi = data.getVar('OELAYOUT_ABI', e.data, True)
 	abifile = data.getVar('SANITY_ABIFILE', e.data, True)
 	if os.path.exists(abifile):
 		f = file(abifile, "r")
@@ -153,6 +155,32 @@ def check_sanity(e):
 		f = file(abifile, "w")
 		f.write(current_abi)
 	f.close()
+
+	#
+	# Check the Distro PR value didn't change
+	#
+	distro_pr = data.getVar('DISTRO_PR', e.data, True)
+	prfile = data.getVar('SANITY_PRFILE', e.data, True)
+	if os.path.exists(prfile):
+		f = file(prfile, "r")
+		pr = f.read().strip()
+		if (pr != distro_pr):
+			# Code to convert from one ABI to another could go here if possible.
+			messages = messages + "Error, DISTRO_PR has changed (%s to %s) which means all packages need to rebuild. Please remove your TMPDIR so this can happen. For autobuilder setups you can avoid this by using a TMPDIR that include DISTRO_PR in the path.\n" % (pr, distro_pr)
+	else:
+		f = file(prfile, "w")
+		f.write(distro_pr)
+	f.close()
+
+
+	#
+	# Check there aren't duplicates in PACKAGE_ARCHS
+	#
+	archs = data.getVar('PACKAGE_ARCHS', e.data, True).split()
+	for arch in archs:
+		if archs.count(arch) != 1:
+			messages = messages + "Error, Your PACKAGE_ARCHS field contains duplicates. Perhaps you set EXTRA_PACKAGE_ARCHS twice accidently through some tune file?\n"
+			break
 
 	if messages != "":
 		raise_sanity_error(messages)

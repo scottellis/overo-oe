@@ -1,6 +1,6 @@
 require dpkg.inc
-FILE_PR = "r0"
-DEPENDS += "ncurses zlib bzip2"
+PR = "r1"
+DEPENDS += "zlib bzip2"
 SRC_URI += "file://noman.patch;patch=1"
 
 EXTRA_OECONF = "--without-static-progs \

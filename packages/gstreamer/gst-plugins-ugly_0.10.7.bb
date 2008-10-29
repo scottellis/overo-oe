@@ -1,5 +1,7 @@
 require gst-plugins.inc
-FILE_PR = "r0"
+PR = "r0"
+
+EXTRA_OECONF_append_openmoko = "--disable-mad"
 
 DEPENDS += "gst-plugins-base mpeg2dec libsidplay"
 
