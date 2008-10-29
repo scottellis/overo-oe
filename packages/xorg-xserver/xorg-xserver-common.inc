@@ -11,7 +11,7 @@ scrnsaverproto bigreqsproto resourceproto fontsproto inputproto \
 xf86dgaproto videoproto compositeproto trapproto recordproto dmxproto \
 resourceproto xineramaproto xtrans evieext libxkbfile libxfont libxau \
 libfontenc libxdmcp libxxf86vm libxaw libxmu libxt libxpm libxext libx11 \
-libxkbui libxxf86misc libxi libdmx libxtst libxres mesa"
+libxkbui libxxf86misc libxi libdmx libxtst libxres mesa libxcalibrate"
 
 RECOMMENDS_${PN} = "hal"
 
@@ -22,6 +22,9 @@ SRC_URI = "${XORG_MIRROR}/individual/xserver/${XORG_PN}-${PV}.tar.bz2 \
 S = "${WORKDIR}/${XORG_PN}-${PV}"
 
 inherit autotools pkgconfig
+
+EXTRA_OECONF += " --enable-xcalibrate \
+                  ac_cv_file__usr_share_sgml_X11_defs_ent=no"
 
 PACKAGES =+ "xserver-security-policy"
 FILES_xserver-security-policy += "${libdir}/xserver/SecurityPolicy"
@@ -50,4 +53,5 @@ do_install_append () {
 	install -d ${D}/${sysconfdir}/X11
 	install -m 0644 ${WORKDIR}/xorg.conf ${D}/${sysconfdir}/X11/
 	ln -sf ${datadir}/fonts/X11 ${D}/${libdir}/X11/fonts
+	chmod u+s ${D}/usr/bin/Xorg
 }

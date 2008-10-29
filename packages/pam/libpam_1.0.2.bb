@@ -12,7 +12,7 @@ LICENSE = "GPLv2"
 
 DEPENDS = "flex flex-native"
 
-FILE_PR = "r1"
+PR = "r2"
 
 # The project is actually called Linux-PAM but that gives
 # a bad OE package name because of the upper case characters
@@ -27,6 +27,10 @@ inherit autotools
 
 LEAD_SONAME = "libpam.so.*"
 
+# maintain the pam default layout
+EXTRA_OECONF += " --includedir=${includedir}/security"
+
+PACKAGES_DYNAMIC += " pam-plugin-*"
 python populate_packages_prepend () {
 	import os.path
 
@@ -44,4 +48,3 @@ python populate_packages_prepend () {
 do_stage() {
 	autotools_stage_all
 }
-
