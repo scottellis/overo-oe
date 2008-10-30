@@ -13,11 +13,13 @@ SRC_URI = "git://source.mvista.com/git/linux-omap-2.6.git;branch=master;protocol
 SRC_URI_append_beagleboard = " \
            file://logo_linux_clut224.ppm \
            file://no-empty-flash-warnings.patch;patch=1 \
+           file://beagleboard.patch;patch=1 \
           "
 
 SRC_URI_append_omap3evm = " \
            file://logo_linux_clut224.ppm \
            file://no-empty-flash-warnings.patch;patch=1 \
+           file://omap3evm.patch;patch=1 \
           "
 
 SRC_URI_append_overo = " \
