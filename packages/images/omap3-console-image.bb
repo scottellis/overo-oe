@@ -1,7 +1,5 @@
 # console image for omap3
 
-PR = "r0"
-
 inherit image
 
 DEPENDS = "task-base"
@@ -10,7 +8,6 @@ IMAGE_INSTALL += " \
   task-base-extended \
   task-proper-tools \
   psplash \
-  coreutils \
   mtd-utils \
   fbgrab \
   fbset \
@@ -18,11 +15,13 @@ IMAGE_INSTALL += " \
   socat \
   strace \
   ksymoops \
-  iptables \
   alsa-utils \
   alsa-utils-alsactl \
   alsa-utils-alsamixer \
   alsa-utils-aplay \
+  libertas_firmware \
+  rt73-firmware \
+  zd1211-firmware \
  "
 
 IMAGE_PREPROCESS_COMMAND = "create_etc_timestamp"
