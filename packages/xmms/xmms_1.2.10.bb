@@ -38,6 +38,7 @@ do_install_append() {
 	install -d ${D}${datadir}/applications
 	install xmms/xmms.desktop ${D}${datadir}/applications
 	sed -i "s/Exec=xmms/Exec=xmms.sh/" ${D}${datadir}/applications/xmms.desktop
+	sed -i "s/Type=Application/Type=Application\nCategories=AudioVideo;/" ${D}${datadir}/applications/xmms.desktop
 	install -d ${D}${datadir}/pixmaps
 	install xmms/xmms_mini.xpm ${D}${datadir}/pixmaps
 }
