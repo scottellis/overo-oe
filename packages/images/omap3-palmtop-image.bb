@@ -1,16 +1,8 @@
 # gpe image for omap3 machines with lcd/touchscreen + midori
 
-inherit image
-PR = "r3"
+require omap3-console-image.bb
 
 IMAGE_INSTALL += " \
-  task-base-extended \
-  mtd-utils \
-  fbgrab \
-  fbset \
-  fbset-modes \
-  tar \
-  mplayer \
   angstrom-gpe-task-apps \
   angstrom-gpe-task-base \
   angstrom-gpe-task-game \
@@ -24,6 +16,4 @@ IMAGE_INSTALL += " \
   alsa-utils-aplay \
   xmms \
  "
-
-#ROOTFS_POSTPROCESS_COMMAND += '${@base_conditional("DISTRO_TYPE", "release", "zap_root_password; ", "",d)}'
 

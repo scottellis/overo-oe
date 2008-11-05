@@ -1,28 +1,16 @@
 # X11 demo image for omap3
 
-PR = "r0"
+require omap3-console-image.bb
 
-inherit image
-
-DEPENDS = "task-base"
+XSERVER ?= "xserver-xorg \
+           xf86-input-evdev \
+           xf86-input-mouse \
+           xf86-video-fbdev \
+           xf86-input-keyboard \
+"
 
 IMAGE_INSTALL += " \
   ${XSERVER} \
-  task-base-extended \
-  task-proper-tools \
-  psplash \
-  mtd-utils \
-  fbgrab \
-  fbset \
-  fbset-modes \
-  socat \
-  strace \
-  ksymoops \
-  iptables \
-  alsa-utils \
-  alsa-utils-alsactl \
-  alsa-utils-alsamixer \
-  alsa-utils-aplay \
   angstrom-x11-base-depends \
   angstrom-gpe-task-apps \
   angstrom-gpe-task-base \
@@ -41,22 +29,8 @@ IMAGE_INSTALL += " \
   epiphany \
   midori \
   swfdec-mozilla \
-  mplayer \
+  gnome-mplayer \
   xmms \
   claws-mail \
-  rt73-firmware zd1211-firmware \
   stalonetray \
  "
-
-IMAGE_PREPROCESS_COMMAND = "create_etc_timestamp"
-
-#ROOTFS_POSTPROCESS_COMMAND += '${@base_conditional("DISTRO_TYPE", "release", "zap_root_password; ", "",d)}'
-
-XSERVER ?= "xserver-xorg \
-           xf86-input-evdev \
-           xf86-input-mouse \
-           xf86-video-fbdev \
-           xf86-input-keyboard \
-"
-
-
