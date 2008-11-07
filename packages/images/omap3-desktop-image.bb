@@ -26,7 +26,6 @@ IMAGE_INSTALL += " \
   e-wm exhibit \
   hicolor-icon-theme gnome-icon-theme \
   firefox \
-  epiphany \
   midori \
   swfdec-mozilla \
   gnome-mplayer \

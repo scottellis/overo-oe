@@ -7,8 +7,10 @@ DEPENDS = "task-base"
 IMAGE_INSTALL += " \
   task-base-extended \
   task-proper-tools \
+  bash \
   psplash \
   mtd-utils \
+  mkfs-jffs2 \
   fbgrab \
   fbset \
   fbset-modes \
@@ -19,7 +21,7 @@ IMAGE_INSTALL += " \
   alsa-utils-alsactl \
   alsa-utils-alsamixer \
   alsa-utils-aplay \
-  libertas_firmware \
+#  libertas-sd-firmware \
   rt73-firmware \
   zd1211-firmware \
  "
