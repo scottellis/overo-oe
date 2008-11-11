@@ -21,7 +21,7 @@ IMAGE_INSTALL += " \
   alsa-utils-alsactl \
   alsa-utils-alsamixer \
   alsa-utils-aplay \
-#  libertas-sd-firmware \
+  libertas-sd-firmware \
   rt73-firmware \
   zd1211-firmware \
  "
