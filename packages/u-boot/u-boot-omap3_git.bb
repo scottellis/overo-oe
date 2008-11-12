@@ -2,10 +2,10 @@ require u-boot.inc
 
 FILESDIR = "${@os.path.dirname(bb.data.getVar('FILE',d,1))}/u-boot-omap3-git/${MACHINE}"
 
-SRCREV = "4d3a46ab299ce031e9850ff006d34bc27e9cd085"
+SRCREV = "d0d5a7de9813b662415fd599b55b0ff4f0400a54"
 
 PV = "2008.10+${PR}+git${SRCREV}"
-PR="r3"
+PR="r4"
 
 SRC_URI = "git://www.sakoman.net/git/u-boot-omap3.git;branch=omap3;protocol=git \
           "
