@@ -2,9 +2,9 @@ require linux-omap.inc
 
 FILESDIR = "${@os.path.dirname(bb.data.getVar('FILE',d,1))}/linux-omap3-git/${MACHINE}"
 
-SRCREV = "444fcab6e8f8bad4ffc50feb91516c246d91e901"
+SRCREV = "d33dcd3247f9700d7634ac44485a656b002c770b"
 
-PV = "2.6.28-rc3+${PR}+git${SRCREV}"
+PV = "2.6.28-rc4+${PR}+git${SRCREV}"
 PR = "r1"
 
 SRC_URI = "git://source.mvista.com/git/linux-omap-2.6.git;branch=master;protocol=git \
