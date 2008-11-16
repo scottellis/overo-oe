@@ -6,31 +6,20 @@
 # UCLIBC_BASE can be set in a distro file, but whether this works depends
 # on whether the base patches apply to the selected (SRCDATE) svn release.
 #
-UCLIBC_BASE ?= "0.9.29"
-PR = "r29"
+UCLIBC_BASE ?= "0.9.30"
+PR = "r0"
+DEFAULT_PREFERENCE = "1"
 
 require uclibc.inc
 
 PROVIDES += "virtual/${TARGET_PREFIX}libc-for-gcc"
 
 SRC_URI += "file://uClibc.machine file://uClibc.distro \
-		file://errno_values.h.patch;patch=1 \
-		file://termios.h.patch;patch=1 \
-		file://unistd_arm.patch;patch=1 \
-		file://build_wcs_upper_buffer.patch;patch=1 \
-		file://uClibc-0.9.29-001-fix-mmap.patch;patch=1 \
-		file://uClibc-0.9.29-002-atmel.1.patch;patch=1 \
-		file://uClibc-0.9.29-avr32-fix-sa_onstack.patch;patch=1 \
-		file://uClibc-0.9.29-conditional-sched_affinity.patch;patch=1 \
-		file://uClibc-0.9.29-fix-gethostent_r-failure-retval.patch;patch=1 \
-		file://uClibc-0.9.29-fix-internal_function-definition.patch;patch=1 \
-		file://uClibc-0.9.29-rm-whitespace.patch;patch=1 \
-		file://uClibc-0.9.29-avr32-bzero.patch;patch=1 \
-		file://uClibc-0.9.29-nonposix_bashisms.patch;patch=1 \
-		file://arm_fix_alignment.patch;patch=1 \
-		file://uclibc-arm-ftruncate64.patch;patch=1 \
-		file://uclibc-use-fgnu89-inline.patch;patch=1 \
-		"
+            file://arm-linuxthreads.patch;patch=1 \
+            file://linuxthreads-changes.patch;patch=1 \
+	   "
+SRC_URI_append_arm = " file://ldso_hash_arm.patch;patch=1 "
+SRC_URI_append_armeb = " file://ldso_hash_arm.patch;patch=1 "
 
 #recent versions uclibc require real kernel headers
 PACKAGE_ARCH = "${MACHINE_ARCH}"
