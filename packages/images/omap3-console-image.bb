@@ -8,6 +8,7 @@ IMAGE_INSTALL += " \
   task-base-extended \
   task-proper-tools \
   bash \
+  bzip2 \
   psplash \
   mtd-utils \
   mkfs-jffs2 \
