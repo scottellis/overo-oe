@@ -10,7 +10,7 @@ SRCREV = "5ecf98b76fa95078277c9037bb01640fd3de5e2c"
 
 PV = "2.6.27+2.6.28-rc4+${PR}+gitr${SRCREV}"
 #PV = "2.6.27+${PR}+gitr${SRCREV}"
-PR = "r0"
+PR = "r1"
 
 SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/tmlind/linux-omap-2.6.git;protocol=git \
 	   file://defconfig"
@@ -45,7 +45,7 @@ SRC_URI_append = " \
            file://0011-DSS-Support-for-OMAP3-EVM-board.patch;patch=1 \
 #           file://fix-asoc.diff;patch=1 \
            file://fix-mmc.diff;patch=1 \
-		http://www.bat.org/~tomba/git/0001-debug-prints.patch;patch=1 \
+		   http://www.bat.org/~tomba/git/0001-DSS-OMAPFB-Check-that-var-pixclock-is-not-zero.patch;patch=1 \
 "
 
 

@@ -1,19 +1,21 @@
 require scummvm.inc
 
+CCACHE = ""
+
 DEPENDS = "virtual/libsdl libvorbis libogg zlib \
            ${@base_conditional('ENTERPRISE_DISTRO', '1', '', 'libmad mpeg2dec', d)}"
 
-SRC_URI += "file://makefile-nostrip.patch;patch=1 \
-            file://scummvm-targetcheck.patch;patch=1"
-SRC_URI_append_openmoko = " file://openmoko-scummvm \
-                           file://scummvm.desktop"
+SRC_URI += " file://scummvm.desktop "
+
+SRC_URI_append_openmoko = " file://openmoko-scummvm "
+
 
 SRC_URI_OVERRIDES_PACKAGE_ARCH = "1"
 
-EXTRA_OECONF += "--enable-lure \
-		 --enable-agi \
-		 --enable-cine \
-		 "
+EXTRA_OECONF += " \
+		--disable-scumm-7-8 \
+		--disable-he \
+		"
 
 do_compile() {
 	oe_runmake CC="${CC}" CXX="${CXX}" CFLAGS="${CFLAGS}" \
