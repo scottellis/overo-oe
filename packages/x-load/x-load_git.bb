@@ -6,6 +6,7 @@ SRCREV = "65ed00323f3807197a83abc75d62ed2a8d3f60de"
 
 PV = "1.42+${PR}+git${SRCREV}"
 PR="r12"
+PE = "1"
 
 SRC_URI = "git://www.sakoman.net/git/x-load-omap3.git;branch=master;protocol=git"
 

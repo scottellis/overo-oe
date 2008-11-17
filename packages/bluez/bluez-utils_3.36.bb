@@ -2,10 +2,12 @@ require bluez-utils3.inc
 
 PR = "r1"
 
+# removed hciattach-ti-bts.patch (landed upstream)
 SRC_URI = "http://bluez.sourceforge.net/download/bluez-utils-${PV}.tar.gz \
            file://hcid.conf \
            file://bluetooth.default \
            file://bluetooth.init \
+           file://sbc-thumb.patch;patch=1 \
           "
 
 # see bluez-utils3.inc for the explanation of these option

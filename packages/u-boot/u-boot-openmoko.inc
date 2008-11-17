@@ -1,16 +1,13 @@
 DESCRIPTION = "U-boot bootloader w/ Neo1973 (GTA01) and Neo FreeRunner (GTA02) support"
-AUTHOR = "Harald Welte <laforge@openmoko.org> et. al."
 LICENSE = "GPL"
 SECTION = "bootloader"
 PRIORITY = "optional"
 PROVIDES = "virtual/bootloader"
 LOCALVERSION = "+gitr${SRCREV}"
 PV = "1.3.1${LOCALVERSION}"
-PR = "r0"
+PR = "r1"
 
 UBOOT_MACHINES = "gta01bv2 gta01bv3 gta01bv4 gta02v2 gta02v4 gta02v5"
-
-DEFAULT_PREFERENCE = "-1"
 
 EXTRA_OEMAKE = "CROSS_COMPILE=${TARGET_PREFIX}"
 TARGET_LDFLAGS = ""
