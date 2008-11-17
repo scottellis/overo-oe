@@ -7,16 +7,20 @@ LICENSE = "GPL"
 DEPENDS = "sip-native python-sip"
 RDEPENDS = "python-core"
 SRCNAME = "pyqt"
-PR = "ml1"
+PR = "ml3"
+
+PYQT_OE_VERSION = "Qt_4_4_1"
 
 SRC_URI = "\
-  http://www.riverbankcomputing.com/Downloads/PyQt4/GPL/PyQt-x11-gpl-${PV}.tar.gz \
+  http://cvs.fedora.redhat.com/repo/pkgs/PyQt4/PyQt-x11-gpl-4.4.3.tar.gz/89e84c36a8520bf8b3a8a2b20e765154/PyQt-x11-gpl-4.4.3.tar.gz \
   file://cross-compile.patch;patch=1 \
   file://01_configure.dpatch;patch=1 \
   file://02_htmllinks.dpatch;patch=1 \
   file://03_qreal.dpatch;patch=1 \
-  file://04_qreal_api_fixes.dpatch;patch=1 \
-  file://assistantclient-fix.patch;patch=1"
+  file://04_qreal_api_fixes-for-4.4.3.dpatch;patch=1 \
+  \
+  file://assistantclient-fix.patch;patch=1 \
+"
 S = "${WORKDIR}/PyQt-x11-gpl-${PV}"
 
 inherit qt4x11 sip distutils-base
@@ -25,18 +29,14 @@ PARALLEL_MAKE = ""
 
 QMAKE_PROFILES = "pyqt.pro"
 # NOTE: match with qt version we have in OE
-EXTRA_SIPTAGS = "-tWS_X11 -tQt_4_3_3 -xVendorID -xPyQt_SessionManager -xPyQt_Accessibility"
+EXTRA_SIPTAGS = "-tWS_X11 -t${PYQT_OE_VERSION} -xVendorID -xPyQt_SessionManager -xPyQt_Accessibility"
 EXTRA_OEMAKE = " MAKEFLAGS= "
 
-SIP_MODULES = "QtCore QtGui QtNetwork QtSql QtSvg QtXml QtAssistant"
+SIP_MODULES = "QtCore QtGui QtNetwork QtSql QtSvg QtXml QtAssistant QtWebKit"
 EXTRA_QMAKEVARS_POST += "INCLUDEPATH+=${OE_QMAKE_INCDIR_QT}/Qt \
-                         INCLUDEPATH+=${STAGING_INCDIR}/${PYTHON_DIR} \
-                         DEFINES+=QT_NO_FPU"
+                         INCLUDEPATH+=${STAGING_INCDIR}/${PYTHON_DIR}"
 
 FIX_QREAL = "\
-  QtCore/qtimeline.sip \
-  QtCore/qrect.sip \
-  QtGui/qtransform.sip \
 "
 
 do_generate_prepend() {
