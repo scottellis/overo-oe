@@ -14,6 +14,9 @@ SRC_URI = "\
   file://allow-nopw.patch \
   file://init \
 "
+SRC_URI_append_openmoko = "\
+  file://default \
+"
 
 inherit autotools update-rc.d
 
@@ -48,7 +51,7 @@ do_install() {
 	
 	for i in ${SBINCOMMANDS}
 	do
-		ln -s ./dropbearmulti ${D}${sbindir}/$i
+		ln -sf ./dropbearmulti ${D}${sbindir}/$i
 	done
 	cat ${WORKDIR}/init | sed -e 's,/etc,${sysconfdir},g' \
 				  -e 's,/usr/sbin,${sbindir},g' \
@@ -56,6 +59,9 @@ do_install() {
 				  -e 's,/usr/bin,${bindir},g' \
 				  -e 's,/usr,${prefix},g' > ${D}${sysconfdir}/init.d/dropbear
 	chmod 755 ${D}${sysconfdir}/init.d/dropbear
+	if test -e ${WORKDIR}/default ; then
+		install -m 0644 ${WORKDIR}/default ${D}${sysconfdir}/default/dropbear
+	fi
 }
 
 pkg_postinst () {
@@ -73,3 +79,5 @@ pkg_postrm_append () {
 	update-alternatives --remove ssh ${bindir}/dropbearmulti
 	update-alternatives --remove scp ${bindir}/dropbearmulti
 }
+
+CONFFILES_${PN}_openmoko += "${sysconfdir}/default/dropbear"
