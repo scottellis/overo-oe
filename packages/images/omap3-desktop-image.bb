@@ -11,6 +11,7 @@ XSERVER ?= "xserver-xorg \
 
 IMAGE_INSTALL += " \
   ${XSERVER} \
+  glibc-binary-localedata-en-us \
   angstrom-x11-base-depends \
   angstrom-gpe-task-apps \
   angstrom-gpe-task-base \
@@ -27,8 +28,14 @@ IMAGE_INSTALL += " \
   pidgin \
   abiword \
   gnumeric \
+  exhibit \
   gimp \
-  e-wm exhibit \
+  e-wm \
+  e-wm-config-illume \
+  e-wm-config-standard \
+  e-wm-config-netbook \
+  e-wm-config-minimalist \
+  e-wm-config-scaleable \
   firefox \
   midori \
   swfdec-mozilla \
