@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DO_UCLIBC=1
+DO_UCLIBC=0
 
 do_build() {
         if [ $DO_UCLIBC = 1 ]
@@ -72,7 +72,25 @@ do
 	BUILD_MACHINE=$machine
 	BUILD_TARGETS="altboot-console-image"
 	do_build
-done  
+done 
+
+# build kexecboot kernels for supported machines
+for machine in poodle collie
+do
+	BUILD_MACHINE=$machine
+	BUILD_TARGETS="linux-kexecboot"
+	do_build
+done 
+
+
+# Make uclibc initramfs-bootmenu-image for ipaqs, this should move to more generic klibc stuff, but till then:
+DO_UCLIBC=1
+for machine in h2200 h3900 h4000 h5000 hx4700
+do
+	BUILD_MACHINE=$machine
+	BUILD_TARGETS="initramfs-bootmenu-image"
+done
+DO_UCLIBC=0
 
 # graphics, flash storage
 for machine in beagleboard omap3evm om-gta01 om-gta02 a780 at91sam9263ek qemuarm qemux86 h2200 h3900 h4000 h5000 poodle tosa hx4700 c7x0 spitz akita collie simpad 
