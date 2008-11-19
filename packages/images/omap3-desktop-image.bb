@@ -18,18 +18,23 @@ IMAGE_INSTALL += " \
   angstrom-gpe-task-pim \
   angstrom-gpe-task-settings \
   angstrom-zeroconf-audio \
+  angstrom-gnome-icon-theme-enable \
+  hicolor-icon-theme \
+  gnome-icon-theme \
+  gnome-mplayer \
   gnome-games \
+  gpe-scap \
   pidgin \
   abiword \
   gnumeric \
   gimp \
   e-wm exhibit \
-  hicolor-icon-theme gnome-icon-theme \
   firefox \
   midori \
   swfdec-mozilla \
-  gnome-mplayer \
   xmms \
   claws-mail \
   stalonetray \
+  synergy \
+  x11vnc \
  "
