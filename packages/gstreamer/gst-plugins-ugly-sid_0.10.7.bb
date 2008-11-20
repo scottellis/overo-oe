@@ -1,7 +1,7 @@
 require gst-plugins.inc
 DEPENDS += "gst-plugins-base libsidplay"
 PROVIDES += "gst-plugin-sid"
-PR = "r2"
+PR = "r4"
 
 SRC_URI = "\
   http://gstreamer.freedesktop.org/src/gst-plugins-ugly/gst-plugins-ugly-${PV}.tar.bz2 \

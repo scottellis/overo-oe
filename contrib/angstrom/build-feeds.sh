@@ -109,7 +109,8 @@ do
 		      gdal \
 		      gdb \
 		      gdbserver \
-		      gimp \
+		      gdm \
+              gimp \
 		      glider \
 		      gmp \
 		      gnome-games \
@@ -132,10 +133,12 @@ do
 		      gpsdrive \
 		      gqview \
 		      gsm0710muxd \
-		      gtk+ \
+		      gspcav1 \
+              gtk+ \
 		      gzip \
 		      hal \
 		      hexatrolic \
+		      i2c-tools \
 		      iaimaster \
 		      icebloxx \
 		      imagemagick \
@@ -160,6 +163,7 @@ do
 		      mc \
 		      meta-nas-server \
 		      meta-toolchain \
+              metacity \
               midori \
 		      mileage \
 		      mono \
@@ -208,6 +212,7 @@ do
 		      quasar \
 		      quetoo \
 		      rdesktop \
+		      read-edid \
 		      resistorui \
 		      roadmap-gtk2 \
 		      rtorrent \
