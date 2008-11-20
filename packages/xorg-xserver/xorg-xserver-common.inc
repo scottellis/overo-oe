@@ -11,7 +11,8 @@ scrnsaverproto bigreqsproto resourceproto fontsproto inputproto \
 xf86dgaproto videoproto compositeproto trapproto recordproto dmxproto \
 resourceproto xineramaproto xtrans evieext libxkbfile libxfont libxau \
 libfontenc libxdmcp libxxf86vm libxaw libxmu libxt libxpm libxext libx11 \
-libxkbui libxxf86misc libxi libdmx libxtst libxres mesa libxcalibrate"
+libxkbui libxxf86misc libxi libdmx libxtst libxres mesa libxcalibrate \
+libxv"
 
 RECOMMENDS_${PN} = "hal libpciaccess"
 
@@ -25,6 +26,9 @@ inherit autotools pkgconfig
 EXTRA_OECONF += " --enable-xcalibrate \
                   --enable-kdrive \
                   --enable-xephyr \
+                  --disable-xfbdev \
+                  --disable-xnest \
+                  --disable-kdrive-vesa \
                   --with-default-font-path="/usr/share/fonts/X11/misc" \
                   ac_cv_file__usr_share_sgml_X11_defs_ent=no"
 
