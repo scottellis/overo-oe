@@ -12,7 +12,7 @@ BASE_INSTALL = "\
   sysfsutils \
   modutils-initscripts \
   module-init-tools-depmod \
-  prelink \
+#  prelink \
   exquisite \
   exquisite-themes \
   exquisite-theme-illume \
@@ -150,7 +150,11 @@ APPS_INSTALL = "\
 #  gpe-filemanager \
 #  vagalume \
 #  starling \
+   rxvt-unicode \
+   gpe-terminal \
    elementary-alarm \
+   gpe-scap \
+   openmoko-calculator2 \
 "
 
 IMAGE_INSTALL = "\
