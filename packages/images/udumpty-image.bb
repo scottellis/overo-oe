@@ -1,4 +1,4 @@
-# Demo image for beagleboard
+# Image that mimics the default desktop of a certain distro
 
 XSERVER ?= "xserver-xorg \
            xf86-input-evdev \
@@ -7,11 +7,10 @@ XSERVER ?= "xserver-xorg \
            xf86-input-keyboard \
 "
 
-E_CONFIG ?= "e-wm-config-standard e-wm-config-default"
 
 ANGSTROM_EXTRA_INSTALL ?= ""
 
-export IMAGE_BASENAME = "Beagleboard-demo-image"
+export IMAGE_BASENAME = "Udumpty-image"
 
 DEPENDS = "task-base"
 IMAGE_INSTALL = "\
@@ -19,31 +18,31 @@ IMAGE_INSTALL = "\
     task-base-extended \
     angstrom-x11-base-depends \
     angstrom-gpe-task-base \
-    angstrom-gpe-task-settings \
     ${ANGSTROM_EXTRA_INSTALL} \
     angstrom-zeroconf-audio \
     angstrom-led-config \ 
     gpe-scap \
     psplash \
-    e-wm ${E_CONFIG} exhibit \
-    xterm xmms \
-    epiphany firefox midori \
+    metacity \
+    xterm 
+    epiphany \
     swfdec-mozilla \
     hicolor-icon-theme gnome-icon-theme \
-    jaaa nmap iperf gnuplot \
     abiword \
     gnumeric \
     gimp \
     powertop oprofile \
     pidgin \
-#    irssi \
-    mplayer omapfbplay \
+    totem mplayer omapfbplay \
     gnome-games \
     rt73-firmware zd1211-firmware \
-    stalonetray \
 	synergy \
 	x11vnc \
 	angstrom-gnome-icon-theme-enable \
+	gnome-panel \
+	gnome-control-center \
+	gnome-settings-daemon \
+	gnome-session \
 "
 
 IMAGE_PREPROCESS_COMMAND = "create_etc_timestamp"
