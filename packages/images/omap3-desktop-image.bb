@@ -9,19 +9,36 @@ XSERVER ?= "xserver-xorg \
            xf86-input-keyboard \
 "
 
+IMAGE_LINGUAS = ""
+
 IMAGE_INSTALL += " \
   ${XSERVER} \
+  xserver-nodm-init \
+  xauth \
+  xhost \
+  xset \
+  xrandr \
+  fontconfig-utils \
+  ttf-dejavu-common \
+  ttf-dejavu-sans \
+  ttf-dejavu-sans-mono \
+  ttf-arphic-uming \
+  glibc-utils \
+  glibc-charmap-utf-8 \
   glibc-binary-localedata-en-us \
-  angstrom-x11-base-depends \
-  angstrom-gpe-task-apps \
-  angstrom-gpe-task-base \
-  angstrom-gpe-task-game \
-  angstrom-gpe-task-pim \
-  angstrom-gpe-task-settings \
-  angstrom-zeroconf-audio \
-  angstrom-gnome-icon-theme-enable \
-  hicolor-icon-theme \
-  gnome-icon-theme \
+  e-wm \
+  e-wm-config-standard \
+  e-wm-config-default \
+#  angstrom-x11-base-depends \
+#  angstrom-gpe-task-apps \
+#  angstrom-gpe-task-base \
+#  angstrom-gpe-task-game \
+#  angstrom-gpe-task-pim \
+#  angstrom-gpe-task-settings \
+#  angstrom-zeroconf-audio \
+#  angstrom-gnome-icon-theme-enable \
+#  hicolor-icon-theme \
+#  gnome-icon-theme \
   gnome-mplayer \
   gnome-games \
   gpe-scap \
@@ -30,18 +47,11 @@ IMAGE_INSTALL += " \
   gnumeric \
   exhibit \
   gimp \
-  e-wm \
-  e-wm-config-illume \
-  e-wm-config-standard \
-  e-wm-config-netbook \
-  e-wm-config-minimalist \
-  e-wm-config-scaleable \
   firefox \
   midori \
   swfdec-mozilla \
   xmms \
   claws-mail \
-  stalonetray \
   synergy \
   x11vnc \
  "
