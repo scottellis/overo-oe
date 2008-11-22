@@ -9,39 +9,25 @@ XSERVER ?= "xserver-xorg \
            xf86-input-keyboard \
 "
 
-IMAGE_LINGUAS = ""
-
 IMAGE_INSTALL += " \
-  ${XSERVER} \
-  xserver-nodm-init \
-  xauth \
-  xhost \
-  xset \
-  xrandr \
-  fontconfig-utils \
-  ttf-dejavu-common \
-  ttf-dejavu-sans \
-  ttf-dejavu-sans-mono \
-  ttf-arphic-uming \
-  glibc-utils \
-  glibc-charmap-utf-8 \
+  angstrom-x11-base-depends \
   glibc-binary-localedata-en-us \
+  glibc-binary-localedata-de-de \
+  glibc-binary-localedata-fr-fr \
+  angstrom-gpe-task-base \
+  angstrom-gpe-task-settings \
+  angstrom-zeroconf-audio \
+  angstrom-gnome-icon-theme-enable \
   e-wm \
+  e-wm-config-illume \
   e-wm-config-standard \
-  e-wm-config-default \
-#  angstrom-x11-base-depends \
-#  angstrom-gpe-task-apps \
-#  angstrom-gpe-task-base \
-#  angstrom-gpe-task-game \
-#  angstrom-gpe-task-pim \
-#  angstrom-gpe-task-settings \
-#  angstrom-zeroconf-audio \
-#  angstrom-gnome-icon-theme-enable \
-#  hicolor-icon-theme \
-#  gnome-icon-theme \
+  e-wm-config-netbook \
+  e-wm-config-minimalist \
+  e-wm-config-scaleable \
+  hicolor-icon-theme \
+  gnome-icon-theme \
   gnome-mplayer \
   gnome-games \
-  gpe-scap \
   pidgin \
   abiword \
   gnumeric \
@@ -53,5 +39,6 @@ IMAGE_INSTALL += " \
   xmms \
   claws-mail \
   synergy \
+  vnc \
   x11vnc \
  "
