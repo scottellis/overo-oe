@@ -2,11 +2,18 @@ DESCRIPTION = "The Enlightenment Window Manager Version 17"
 DEPENDS = "eet evas ecore edje efreet edbus"
 LICENSE = "MIT BSD"
 PV = "0.16.999.043+svnr${SRCREV}"
-PR = "r19"
+PR = "r22"
 
 inherit e update-alternatives
 
-RDEPENDS += "shared-mime-info mime-support edje-utils glibc-utils"
+E_RDEPENDS = "shared-mime-info mime-support edje-utils"
+
+# Uclibc build don't have 'glibc-utils'
+# I suspect the workaround below breaks eglibc, though. Koen - 20081125
+RDEPENDS_${PN}_append_linux = " ${E_RDEPENDS} glibc-utils "
+RDEPENDS_${PN}_append_linux-gnueabi = " ${E_RDEPENDS} glibc-utils "
+RDEPENDS_${PN}_append_linux-uclibc = " ${E_RDEPENDS} uclibc-utils "
+RDEPENDS_${PN}_append_linux-uclibcgnueabi = " ${E_RDEPENDS} uclibc-utils "
 
 PACKAGES =+ "\
   ${PN}-config-default \
@@ -23,6 +30,7 @@ PACKAGES =+ "\
   ${PN}-icons \
   ${PN}-other \
   ${PN}-input-methods \
+  ${PN}-sysactions \
 "
 
 RRECOMMENDS_${PN} = "\
@@ -47,6 +55,7 @@ PACKAGE_ARCH_${PN}-images = "all"
 PACKAGE_ARCH_${PN}-icons = "all"
 PACKAGE_ARCH_${PN}-other = "all"
 PACKAGE_ARCH_${PN}-input-methods = "all"
+PACKAGE_ARCH_${PN}-sysactions = "${MACHINE_ARCH}" # sysactions are supposed to be arch dependent
 
 SRC_URI = "\
   svn://svn.enlightenment.org/svn/e/trunk;module=e;proto=http \
@@ -95,7 +104,7 @@ FILES_${PN} = "\
   ${datadir}/enlightenment/data/config/profile.cfg \
   ${datadir}/enlightenment/AUTHORS \
   ${datadir}/enlightenment/COPYING \
-  ${sysconfdir} \
+  ${sysconfdir}/xdg \
 "
 FILES_${PN}-config-default = "${datadir}/enlightenment/data/config/default"
 FILES_${PN}-config-illume = "${datadir}/enlightenment/data/config/illume"
@@ -112,6 +121,7 @@ FILES_${PN}-images = "${datadir}/enlightenment/data/images"
 FILES_${PN}-icons = "${datadir}/enlightenment/data/icons"
 FILES_${PN}-other = "${datadir}/enlightenment/data/other"
 FILES_${PN}-input-methods = "${datadir}/enlightenment/data/input_methods"
+FILES_${PN}-sysactions = "${sysconfdir}/enlightenment/sysactions.conf"
 
 RRECOMMENDS_${PN}-config-default = "${PN}-theme-default"
 RRECOMMENDS_${PN}-config-illume = "${PN}-theme-illume"
