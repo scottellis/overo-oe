@@ -2,43 +2,46 @@
 
 require omap3-console-image.bb
 
-XSERVER ?= "xserver-xorg \
-           xf86-input-evdev \
-           xf86-input-mouse \
-           xf86-video-fbdev \
-           xf86-input-keyboard \
+IMAGE_LINGUAS = "de-de fr-fr en-gb en-us pt-br es-es"
+
+E_CONFIG = " \
+  e-wm-config-illume \
+  e-wm-config-standard \
+  e-wm-config-netbook \
+  e-wm-config-default \
+  e-wm-config-minimalist \
+  e-wm-config-scaleable \
+"
+
+APPS = " \
+  abiword \
+  claws-mail \
+  exhibit \
+  firefox \
+  gimp \
+  gnome-games \
+  gnome-mplayer \
+  gnumeric \
+  midori \
+  omapfbplay \
+  pidgin \
+  swfdec-mozilla \
+  synergy \
+  vnc \
+  x11vnc \
+  xmms \
 "
 
 IMAGE_INSTALL += " \
+  ${XSERVER} \
   angstrom-x11-base-depends \
-  glibc-binary-localedata-en-us \
-  glibc-binary-localedata-de-de \
-  glibc-binary-localedata-fr-fr \
   angstrom-gpe-task-base \
   angstrom-gpe-task-settings \
   angstrom-zeroconf-audio \
   angstrom-gnome-icon-theme-enable \
   e-wm \
-  e-wm-config-illume \
-  e-wm-config-standard \
-  e-wm-config-netbook \
-  e-wm-config-minimalist \
-  e-wm-config-scaleable \
+  ${E_CONFIG} \
   hicolor-icon-theme \
   gnome-icon-theme \
-  gnome-mplayer \
-  gnome-games \
-  pidgin \
-  abiword \
-  gnumeric \
-  exhibit \
-  gimp \
-  firefox \
-  midori \
-  swfdec-mozilla \
-  xmms \
-  claws-mail \
-  synergy \
-  vnc \
-  x11vnc \
+  ${APPS} \
  "
