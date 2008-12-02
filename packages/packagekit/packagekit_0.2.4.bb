@@ -4,21 +4,18 @@ PRIORITY = "optional"
 LICENSE = "GPL"
 DEPENDS = "dbus (>= 1.1.1) dbus-glib glib-2.0 sqlite3 opkg intltool intltool-native (>= 0.37.1)"
 RDEPENDS_${PN} = "opkg"
-PV = "0.2.3+gitr${SRCREV}"
-PR = "r18"
+
 PE = "1"
 
-SRC_URI = "git://anongit.freedesktop.org/git/packagekit;protocol=git \
+SRC_URI = "http://www.packagekit.org/releases/PackageKit-${PV}.tar.gz \
            file://disable-docbook2man.patch;patch=1 \
            file://repository-ping.patch;patch=1 \
            file://force_depends.patch;patch=1 \
-           file://remove_search_memory_leak.patch;patch=1 \
            file://racing_condition.patch;patch=1 \
-           file://modify_summary_and_adding_reposi_info.patch;patch=1 \
            "
 
 
-S = "${WORKDIR}/git"
+S = "${WORKDIR}/PackageKit-${PV}"
 
 inherit autotools pkgconfig
 
