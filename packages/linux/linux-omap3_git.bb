@@ -8,7 +8,7 @@ COMPATIBLE_MACHINE = "beagleboard|omap3evm|overo"
 SRCREV = "75b7ae0e97f0862a13df9a6ac036ad0865b6703d"
 
 PV = "2.6.28-rc6+${PR}+git${SRCREV}"
-PR = "r3"
+PR = "r4"
 
 SRC_URI = "git://source.mvista.com/git/linux-omap-2.6.git;branch=master;protocol=git \
 	   file://defconfig \
