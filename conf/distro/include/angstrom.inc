@@ -99,6 +99,7 @@ LOCALE_UTF8_ONLY = "1"
 
 #qemu doesn't like armv6/eabi/vfp
 ENABLE_BINARY_LOCALE_GENERATION_armv6 = "0"
+ENABLE_BINARY_LOCALE_GENERATION_armv6-novfp = "0"
 ENABLE_BINARY_LOCALE_GENERATION_armv7a = "0"
 
 #qemu has taken a dislike to armeb as well
@@ -112,6 +113,7 @@ TARGET_FPU_ixp4xx ?= "soft"
 TARGET_FPU_ppc405 ?= "soft"
 
 TARGET_FPU_armv6 ?= "hard"
+TARGET_FPU_armv6-novfp ?= "soft"
 TARGET_FPU_armv7a ?= "hard"
 TARGET_FPU_ppc603e ?= "hard"
 
