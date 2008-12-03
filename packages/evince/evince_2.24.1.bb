@@ -15,4 +15,10 @@ EXTRA_OECONF = " --without-libgnome \
 		 --disable-scrollkeeper \
 		 --enable-djvu \
 		 "
+
+do_install_append() {
+	sed -i "s/NoDisplay=true//" ${D}${datadir}/applications/evince.desktop
+	sed -i "s/;Viewer;/;Viewer;Office;/" ${D}${datadir}/applications/evince.desktop
+}
+
 FILES_${PN}-dbg = "${libdir}/evince/backends/.debug"
