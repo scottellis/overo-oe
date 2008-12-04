@@ -16,6 +16,8 @@ E_CONFIG = " \
 APPS = " \
   abiword \
   claws-mail \
+  epdfview \
+  evince \
   exhibit \
   firefox \
   gimp \
