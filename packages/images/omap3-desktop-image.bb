@@ -44,4 +44,5 @@ IMAGE_INSTALL += " \
   hicolor-icon-theme \
   gnome-icon-theme \
   ${APPS} \
+  cups \
  "
