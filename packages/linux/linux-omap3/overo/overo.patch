@@ -1,16 +1,3 @@
-diff --git a/scripts/Makefile.fwinst b/scripts/Makefile.fwinst
-index 6bf8e87..fb20532 100644
---- a/scripts/Makefile.fwinst
-+++ b/scripts/Makefile.fwinst
-@@ -37,7 +37,7 @@ install-all-dirs: $(installed-fw-dirs)
- 	@true
- 
- quiet_cmd_install = INSTALL $(subst $(srctree)/,,$@)
--      cmd_install = $(INSTALL) -m0644 $< $@
-+      cmd_install = $(INSTALL) -m 0644 $< $@
- 
- $(installed-fw-dirs):
- 	$(call cmd,mkdir)
 diff --git a/drivers/usb/host/ehci-omap.c b/drivers/usb/host/ehci-omap.c
 index 419e70a..96b9df5 100644
 --- a/drivers/usb/host/ehci-omap.c
@@ -29,4 +16,18 @@ index 419e70a..96b9df5 100644
 
  	ehci_clocks->usbtll_ick_clk = clk_get(&dev->dev, USBHOST_TLL_ICKL);
  	if (IS_ERR(ehci_clocks->usbtll_ick_clk))
-
+diff --git a/sound/soc/codecs/twl4030.c b/sound/soc/codecs/twl4030.c
+index ee2f0d3..8b4aafb 100644
+--- a/sound/soc/codecs/twl4030.c
++++ b/sound/soc/codecs/twl4030.c
+@@ -45,8 +45,8 @@ static const u8 twl4030_reg[TWL4030_CACHEREGNUM] = {
+ 	0xc3, /* REG_OPTION		(0x2)	*/
+ 	0x00, /* REG_UNKNOWN		(0x3)	*/
+ 	0x00, /* REG_MICBIAS_CTL	(0x4)	*/
+-	0x24, /* REG_ANAMICL		(0x5)	*/
+-	0x04, /* REG_ANAMICR		(0x6)	*/
++	0x34, /* REG_ANAMICL		(0x5)	*/
++	0x14, /* REG_ANAMICR		(0x6)	*/
+ 	0x0a, /* REG_AVADC_CTL		(0x7)	*/
+ 	0x00, /* REG_ADCMICSEL		(0x8)	*/
+ 	0x00, /* REG_DIGMIXING		(0x9)	*/
