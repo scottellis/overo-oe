@@ -35,17 +35,18 @@ APPS = " \
 "
 
 IMAGE_INSTALL += " \
-  ${XSERVER} \
+  ${APPS} \
   angstrom-x11-base-depends \
   angstrom-gpe-task-base \
   angstrom-gpe-task-settings \
   angstrom-zeroconf-audio \
   angstrom-gnome-icon-theme-enable \
+  cups \
   e-wm \
   ${E_CONFIG} \
   hicolor-icon-theme \
   gnome-cups-manager \
   gnome-icon-theme \
-  ${APPS} \
-  cups \
+  mime-support \
+  ${XSERVER} \
  "
