@@ -16,7 +16,6 @@ E_CONFIG = " \
 APPS = " \
   abiword \
   claws-mail \
-  epdfview \
   evince \
   exhibit \
   firefox \
@@ -24,6 +23,7 @@ APPS = " \
   gnome-games \
   gnome-mplayer \
   gnumeric \
+  gpe-soundbite \
   midori \
   omapfbplay \
   pidgin \
@@ -44,6 +44,7 @@ IMAGE_INSTALL += " \
   e-wm \
   ${E_CONFIG} \
   hicolor-icon-theme \
+  gnome-cups-manager \
   gnome-icon-theme \
   ${APPS} \
   cups \
