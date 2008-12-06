@@ -25,6 +25,8 @@ IMAGE_INSTALL += " \
   libertas-sd-firmware \
   rt73-firmware \
   zd1211-firmware \
+  openssh-scp \
+  openssh-ssh \
  "
 
 IMAGE_PREPROCESS_COMMAND = "create_etc_timestamp"
