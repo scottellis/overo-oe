@@ -5,10 +5,10 @@ KERNEL_IMAGETYPE = "uImage"
 
 COMPATIBLE_MACHINE = "beagleboard|omap3evm|overo"
 
-SRCREV = "75b7ae0e97f0862a13df9a6ac036ad0865b6703d"
+SRCREV = "014ba70469e889ebb74516052c43fd06a419b17b"
 
-PV = "2.6.28-rc6+${PR}+git${SRCREV}"
-PR = "r5"
+PV = "2.6.28-rc7+${PR}+git${SRCREV}"
+PR = "r1"
 
 SRC_URI = "git://source.mvista.com/git/linux-omap-2.6.git;branch=master;protocol=git \
 	   file://defconfig \
@@ -20,8 +20,6 @@ SRC_URI_append = " \
            file://fix-install.patch;patch=1 \
            file://mru-fix-timings.diff;patch=1 \
            file://mru-fix-display-panning.diff;patch=1 \
-           file://mru-make-dpll4-m4-ck-programmable.diff;patch=1 \
-           file://mru-add-clk-get-parent.diff;patch=1 \
            file://mru-improve-pixclock-config.diff;patch=1 \
            file://mru-make-video-timings-selectable.diff;patch=1 \
            file://mru-enable-overlay-optimalization.diff;patch=1 \
