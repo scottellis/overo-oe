@@ -48,5 +48,6 @@ IMAGE_INSTALL += " \
   gnome-cups-manager \
   gnome-icon-theme \
   mime-support \
+  nautilus \
   ${XSERVER} \
  "
