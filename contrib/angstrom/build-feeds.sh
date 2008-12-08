@@ -180,6 +180,8 @@ do
                       mileage \
                       mono \
                       mousepad \
+                      mpc \
+                      mpd \
                       mpfr \
                       mpg123 \
                       mplayer \
@@ -212,6 +214,7 @@ do
                       pocketcellar \
                       povray \
                       prboom \
+                      prelink \
                       pushover \
                       python \
                       python-pybluez \
