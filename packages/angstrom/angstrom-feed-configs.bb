@@ -41,7 +41,8 @@ FILES_${PN} = "${sysconfdir}/opkg/base-feed.conf \
                     ${sysconfdir}/opkg/gstreamer-feed.conf \
                     ${sysconfdir}/opkg/${MACHINE_ARCH}-feed.conf \
                     ${sysconfdir}/opkg/noarch-feed.conf \
-                   "
+                    ${sysconfdir}/opkg/iwmmxt-feed.conf \
+                "
 
 CONFFILES_${PN} += "${sysconfdir}/opkg/base-feed.conf \
                     ${sysconfdir}/opkg/debug-feed.conf \
