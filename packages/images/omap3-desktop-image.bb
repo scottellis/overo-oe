@@ -32,6 +32,7 @@ APPS = " \
   vnc \
   x11vnc \
   xmms \
+  xterm \
 "
 
 IMAGE_INSTALL += " \
