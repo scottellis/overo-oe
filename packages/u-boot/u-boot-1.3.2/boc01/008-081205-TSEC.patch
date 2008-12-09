@@ -1,7 +1,7 @@
 Index: u-boot-1.3.2/drivers/net/tsec.c
 ===================================================================
---- u-boot-1.3.2.orig/drivers/net/tsec.c	2008-03-09 16:20:02.000000000 +0100
-+++ u-boot-1.3.2/drivers/net/tsec.c	2008-11-21 16:06:21.000000000 +0100
+--- u-boot-1.3.2.orig/drivers/net/tsec.c	2008-12-09 16:29:43.000000000 +0100
++++ u-boot-1.3.2/drivers/net/tsec.c	2008-12-09 16:30:18.000000000 +0100
 @@ -179,6 +179,12 @@
  	priv->regs->maccfg1 |= MACCFG1_SOFT_RESET;
  	priv->regs->maccfg1 &= ~(MACCFG1_SOFT_RESET);
@@ -95,8 +95,8 @@ Index: u-boot-1.3.2/drivers/net/tsec.c
  /* Relocate the function pointers in the phy cmd lists */
 Index: u-boot-1.3.2/drivers/net/tsec.h
 ===================================================================
---- u-boot-1.3.2.orig/drivers/net/tsec.h	2008-03-09 16:20:02.000000000 +0100
-+++ u-boot-1.3.2/drivers/net/tsec.h	2008-11-21 16:06:21.000000000 +0100
+--- u-boot-1.3.2.orig/drivers/net/tsec.h	2008-12-09 16:29:43.000000000 +0100
++++ u-boot-1.3.2/drivers/net/tsec.h	2008-12-09 16:30:18.000000000 +0100
 @@ -56,11 +56,11 @@
  #define MACCFG1_SYNCD_TX_EN	0x00000002
  #define MACCFG1_TX_EN		0x00000001
@@ -106,15 +106,15 @@ Index: u-boot-1.3.2/drivers/net/tsec.h
  #define MACCFG2_IF              0x00000300
  #define MACCFG2_GMII		0x00000200
  #define MACCFG2_MII             0x00000100
-+#define MACCFG2_INIT_SETTINGS	(0x00007005 | MACCFG2_MII) 
++#define MACCFG2_INIT_SETTINGS	(0x00007005 | MACCFG2_MII)
  
  #define ECNTRL_INIT_SETTINGS	0x00001000
  #define ECNTRL_TBI_MODE         0x00000020
 Index: u-boot-1.3.2/include/configs/MPC8313ERDB.h
 ===================================================================
---- u-boot-1.3.2.orig/include/configs/MPC8313ERDB.h	2008-11-21 16:06:16.000000000 +0100
-+++ u-boot-1.3.2/include/configs/MPC8313ERDB.h	2008-11-21 16:06:21.000000000 +0100
-@@ -245,8 +245,8 @@
+--- u-boot-1.3.2.orig/include/configs/MPC8313ERDB.h	2008-12-09 16:30:12.000000000 +0100
++++ u-boot-1.3.2/include/configs/MPC8313ERDB.h	2008-12-09 16:30:18.000000000 +0100
+@@ -246,8 +246,8 @@
  #define CFG_BAUDRATE_TABLE	\
  	{300, 600, 1200, 2400, 4800, 9600, 19200, 38400, 115200}
  
@@ -125,7 +125,7 @@ Index: u-boot-1.3.2/include/configs/MPC8313ERDB.h
  
  /* Use the HUSH parser */
  #define CFG_HUSH_PARSER
-@@ -301,23 +301,24 @@
+@@ -302,23 +302,24 @@
   * TSEC configuration
   */
  #define CONFIG_TSEC_ENET		/* TSEC ethernet support */
@@ -156,7 +156,7 @@ Index: u-boot-1.3.2/include/configs/MPC8313ERDB.h
  
  /* Options are: TSEC[0-1] */
  #define CONFIG_ETHPRIME			"TSEC1"
-@@ -455,17 +456,17 @@
+@@ -472,17 +473,17 @@
  	HRCWH_SW_WATCHDOG_DISABLE |\
  	HRCWH_ROM_LOC_LOCAL_16BIT |\
  	HRCWH_RL_EXT_LEGACY |\
