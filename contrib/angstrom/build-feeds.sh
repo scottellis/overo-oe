@@ -25,12 +25,12 @@ do_build() {
                 
                 if [ "$BUILD_CLEAN" != "" ]
                 then
-                        ANGSTROM_MODE=uclibc MACHINE=$BUILD_MACHINE bitbake -c clean $BUILD_CLEAN
+                        ANGSTROMLIBC=uclibc MACHINE=$BUILD_MACHINE bitbake -c clean $BUILD_CLEAN
                 fi
                 
                 for target in $BUILD_TARGETS
                 do
-                        ANGSTROM_MODE=uclibc MACHINE=$BUILD_MACHINE bitbake $target && do_report_success
+                        ANGSTROMLIBC=uclibc MACHINE=$BUILD_MACHINE bitbake $target && do_report_success
                 done
         fi
 }
@@ -180,6 +180,8 @@ do
                       mileage \
                       mono \
                       mousepad \
+                      mpc \
+                      mpd \
                       mpfr \
                       mpg123 \
                       mplayer \
@@ -212,6 +214,7 @@ do
                       pocketcellar \
                       povray \
                       prboom \
+                      prelink \
                       pushover \
                       python \
                       python-pybluez \
@@ -253,6 +256,7 @@ do
                       thunar \
                       tightvnc \
                       timesleuth \
+                      tofrodos \
                       totem \
                       tron \
                       tzdata \

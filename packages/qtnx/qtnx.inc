@@ -2,11 +2,12 @@ DESCRIPTION = "This a the freesource nx client, build with qt"
 HOMEPAGE = "http://freenx.berlios.de/"
 SECTION = "libs"
 LICENSE = "GPL"
-PR = "r2"
+PR = "r4"
 
 DEPENDS = "libnxcl"
 
 SRC_URI = "http://download.berlios.de/freenx/freenx-client-${PV}.tar.bz2 \
+	   file://qtnx.desktop \
 	   file://pro.patch;patch=1 \
 	   file://id-path.patch;patch=1 \
 	   file://scroll.patch;patch=1 \
@@ -30,7 +31,9 @@ do_configure_prepend () {
 do_install () {
        install -d ${D}${bindir}/
        install -s -m 0755 qtnx ${D}${bindir}/
-       install -d ${D}${datadir}/
-       install -m 0644 id.key ${D}${datadir}/ 
+       install -d ${D}${datadir}/qtnx
+       install -m 0644 id.key ${D}${datadir}/qtnx
+       install -d ${D}${datadir}/applications
+       install -m 0644 qtnx.desktop ${D}${datadir}/applications
 }
 

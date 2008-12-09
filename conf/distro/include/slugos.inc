@@ -5,6 +5,26 @@
 # WARNING: this file should not be used directly, use one of
 # the supported slugos-derived distributions instead.
 
+#===============================================================================#
+#===============================================================================#
+#===============================================================================#
+#                              NOTE NOTE NOTE
+#
+# This *forces* the preferred kernel version; making it unable to be overridden
+# in the local.conf file.  This is a Very Bad Thing.  This is temporary, and
+# is intended to facilitate some SlugOS-specific testing without disturbing
+# other distros that use the ixp4xx machine type (which is currently where the
+# preferred kernel version is set).
+#
+# This *must* be removed after initial testing is completed.  MJW 08-Dec-2008
+#
+PREFERRED_VERSION_linux-ixp4xx = "2.6.27.8+svnr${SRCREV}"
+#
+#===============================================================================#
+#===============================================================================#
+#===============================================================================#
+
+
 #----------------------------------------------------------------------------------
 # STANDARD SLUGOS DEFINITIONS
 #----------------------------------------------------------------------------------
@@ -16,7 +36,7 @@
 #TARGET_OS "linux" or "linux-uclibc"
 
 # The following may be overridden to make sub-versions
-SLUGOS_VERSION = "5.0"
+SLUGOS_VERSION = "5.1"
 DISTRO_REVISION ?= ""
 DISTRO_VERSION ?= "${SLUGOS_VERSION}${DISTRO_REVISION}-${DISTRO_TYPE}"
 # For release (only):

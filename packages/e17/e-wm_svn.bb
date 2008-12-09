@@ -1,19 +1,23 @@
 DESCRIPTION = "The Enlightenment Window Manager Version 17"
 DEPENDS = "eet evas ecore edje efreet edbus"
 LICENSE = "MIT BSD"
-PV = "0.16.999.043+svnr${SRCREV}"
-PR = "r22"
+PV = "0.16.999.050+svnr${SRCREV}"
+PR = "r0"
 
 inherit e update-alternatives
 
-E_RDEPENDS = "shared-mime-info mime-support edje-utils"
+RDEPENDS_${PN} += "\
+  shared-mime-info \
+  mime-support \
+  edje-utils \
+"
 
 # Uclibc build don't have 'glibc-utils'
 # I suspect the workaround below breaks eglibc, though. Koen - 20081125
-RDEPENDS_${PN}_append_linux = " ${E_RDEPENDS} glibc-utils "
-RDEPENDS_${PN}_append_linux-gnueabi = " ${E_RDEPENDS} glibc-utils "
-RDEPENDS_${PN}_append_linux-uclibc = " ${E_RDEPENDS} uclibc-utils "
-RDEPENDS_${PN}_append_linux-uclibcgnueabi = " ${E_RDEPENDS} uclibc-utils "
+RDEPENDS_${PN}_append_linux = " glibc-utils "
+RDEPENDS_${PN}_append_linux-gnueabi = " glibc-utils "
+RDEPENDS_${PN}_append_linux-uclibc = " uclibc-utils "
+RDEPENDS_${PN}_append_linux-uclibcgnueabi = " uclibc-utils "
 
 PACKAGES =+ "\
   ${PN}-config-default \
@@ -39,6 +43,7 @@ RRECOMMENDS_${PN} = "\
   ${PN}-icons \
   ${PN}-other \
   ${PN}-input-methods \
+  ${PN}-sysactions \
 "
 
 PACKAGE_ARCH_${PN}-config-default = "all"
@@ -55,7 +60,7 @@ PACKAGE_ARCH_${PN}-images = "all"
 PACKAGE_ARCH_${PN}-icons = "all"
 PACKAGE_ARCH_${PN}-other = "all"
 PACKAGE_ARCH_${PN}-input-methods = "all"
-PACKAGE_ARCH_${PN}-sysactions = "${MACHINE_ARCH}"
+PACKAGE_ARCH_${PN}-sysactions = "all"
 
 SRC_URI = "\
   svn://svn.enlightenment.org/svn/e/trunk;module=e;proto=http \
@@ -136,8 +141,6 @@ FILES_${PN}-dbg += "\
   ${libdir}/enlightenment/modules/*/*/.debug/ \
   ${libdir}/enlightenment/preload/.debug/ \
 "
-FILES_${PN}-dev += "${libdir}/enlightenment/preload/*.?a"
-
 CONFFILES_${PN} = "/etc/xdg/menus/applications.menu"
 
 ALTERNATIVE_PATH = "${bindir}/enlightenment_start.oe"
