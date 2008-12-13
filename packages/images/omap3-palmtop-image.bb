@@ -3,6 +3,10 @@
 require omap3-console-image.bb
 
 IMAGE_INSTALL += " \
+  alsa-utils \
+  alsa-utils-alsactl \
+  alsa-utils-alsamixer \
+  alsa-utils-aplay \
   angstrom-gpe-task-apps \
   angstrom-gpe-task-base \
   angstrom-gpe-task-game \
@@ -10,10 +14,7 @@ IMAGE_INSTALL += " \
   angstrom-gpe-task-settings \
   angstrom-x11-base-depends \
   midori \
-  alsa-utils \
-  alsa-utils-alsactl \
-  alsa-utils-alsamixer \
-  alsa-utils-aplay \
+  psplash \
   xmms \
  "
 

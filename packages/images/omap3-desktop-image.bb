@@ -50,5 +50,6 @@ IMAGE_INSTALL += " \
   gnome-icon-theme \
   mime-support \
   nautilus \
+  psplash \
   ${XSERVER} \
  "

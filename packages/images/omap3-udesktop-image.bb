@@ -44,5 +44,6 @@ IMAGE_INSTALL += " \
   gnome-settings-daemon \
   mime-support \
   nautilus \
+  psplash \
   ${XSERVER} \
  "

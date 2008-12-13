@@ -23,7 +23,6 @@ IMAGE_INSTALL += " \
   mtd-utils \
   openssh-scp \
   openssh-ssh \
-  psplash \
   socat \
   strace \
   ${IMAGE_EXTRA_INSTALL} \
