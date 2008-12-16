@@ -19,6 +19,11 @@ do_configure () {
 	cd ${DSPLINK}
 	perl config/bin/dsplinkcfg.pl --platform=${DSPLINKPLATFORM} --nodsp=1 --dspcfg_0=${DSPCFG} --dspos_0=DSPBIOS5XX  --gppos=${GPPOS} --comps=ponslrm
 	)
+
+	if [ $(echo ${KERNEL_VERSION} | cut -c5,6) -gt 26 ] ; then
+		sed -i -e s:asm/semaphore:linux/semaphore: ${S}/gpp/src/osal/Linux/user.c
+		sed -i -e s:asm/semaphore:linux/semaphore: ${S}/gpp/src/osal/Linux/2.6.18/sync.c
+	fi
 }
 
 PARALLEL_MAKE = ""
@@ -47,33 +52,38 @@ do_compile () {
 	export ARCHIVER_AR=${TARGET_PREFIX}ar
 	export BASE_SABIOS=${DSP_BASE_BIOS}
 	
-	make -e -f ${WORKDIR}/Makefile.dsplink
-}
+	if [ ! -d ${S}/gpp/BUILD/EXPORT/RELEASE ] ; then 
+		install -d ${S}/gpp/BUILD/EXPORT/RELEASE
+	fi
 
-dsplink-kbuild-compile() {	
-	mkdir -p ${S}/dsplink-kbuild-test	
-	cp ${WORKDIR}/Makefile-dsplink-kbuild  ${S}/dsplink-kbuild-test/Makefile
-    cd ${S}/dsplink-kbuild-test/
+	cp ${WORKDIR}/Makefile-dsplink-gpp ${S}/gpp/BUILD/EXPORT/RELEASE/Makefile
+	cd ${S}/gpp/BUILD/EXPORT/RELEASE/
+
 	unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
-    oe_runmake KERNEL_PATH=${STAGING_KERNEL_DIR}   \
-           KERNEL_SRC=${STAGING_KERNEL_DIR}    \
-           KDIR=${STAGING_KERNEL_DIR}	\
-           KERNEL_VERSION=${KERNEL_VERSION}    \
-           CC="${KERNEL_CC}" LD="${KERNEL_LD}" \
-           AR="${KERNEL_AR}" \
-           V=1        ${MAKE_TARGETS}
 
+#    oe_runmake KERNEL_PATH=${STAGING_KERNEL_DIR}   \
+#           KERNEL_SRC=${STAGING_KERNEL_DIR}    \
+#           KDIR=${STAGING_KERNEL_DIR}	\
+#           KERNEL_VERSION=${KERNEL_VERSION}    \
+#           CC="${KERNEL_CC}" LD="${KERNEL_LD}" \
+#           AR="${KERNEL_AR}" \
+#           V=1        ${MAKE_TARGETS}
+
+	export KDIR=${STAGING_KERNEL_DIR}
+	make -e all
+
+	make -e -f ${WORKDIR}/Makefile-dsplink-dsp
 }
 
 do_install () {
 	install -d ${D}/${bindir}
 #	install ${S}/gpp/BUILD/EXPORT/RELEASE/loopgpp           ${D}/${bindir}
 	install ${S}/gpp/BUILD/EXPORT/RELEASE/messagegpp        ${D}/${bindir}
-	install ${S}/gpp/BUILD/EXPORT/RELEASE/messagemultigpp   ${D}/${bindir}
+#	install ${S}/gpp/BUILD/EXPORT/RELEASE/messagemultigpp   ${D}/${bindir}
 	install ${S}/gpp/BUILD/EXPORT/RELEASE/mpcsxfergpp       ${D}/${bindir}
-	install ${S}/gpp/BUILD/EXPORT/RELEASE/mplistgpp         ${D}/${bindir}
+#	install ${S}/gpp/BUILD/EXPORT/RELEASE/mplistgpp         ${D}/${bindir}
 	install ${S}/gpp/BUILD/EXPORT/RELEASE/readwritegpp      ${D}/${bindir}
-	install ${S}/gpp/BUILD/EXPORT/RELEASE/ringiogpp         ${D}/${bindir}
+#	install ${S}/gpp/BUILD/EXPORT/RELEASE/ringiogpp         ${D}/${bindir}
 	install ${S}/gpp/BUILD/EXPORT/RELEASE/scalegpp          ${D}/${bindir} || true
 
 	install -d ${D}/${datadir}/dsplink
@@ -86,7 +96,7 @@ do_install () {
 }
 
 
-# Coded Engine and friends need a complete tree, so stage it all
+# Codec Engine and friends need a complete tree, so stage it all
 do_stage() {
 	install -d ${STAGING_DIR}/${MULTIMACH_TARGET_SYS}/dsplink
 	cp -pPr ${S}/* ${STAGING_DIR}/${MULTIMACH_TARGET_SYS}/dsplink/ 
