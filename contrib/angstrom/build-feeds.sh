@@ -77,6 +77,7 @@ do
                       binutils \
                       bison \
                       bluez-gnome \
+                      bluez-hcidump \
                       boa \
                       camera-assistant \
                       checkers \
@@ -241,6 +242,7 @@ do
                       slcalc \
                       sliderulez \
                       sokoban \
+                      squeakvm \
                       strace \
                       subversion \
                       sugar \
