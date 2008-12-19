@@ -44,6 +44,7 @@ IMAGE_INSTALL += " \
   angstrom-gnome-icon-theme-enable \
   cups \
   e-wm \
+  e-wm-sysactions \
   ${E_CONFIG} \
   hicolor-icon-theme \
   gnome-cups-manager \
