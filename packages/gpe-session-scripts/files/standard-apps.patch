@@ -1,0 +1,14 @@
+--- gpe-session-scripts-0.68/X11/Xsession.d/98standard-apps-orig
++++ gpe-session-scripts-0.68/X11/Xsession.d/98standard-apps
+@@ -16,11 +16,5 @@ if [ ! -f $HOME/.matchbox/mbdock.session
+   if [ "$time_set_already" = "no" ]; then
+     gpe-conf time user_only &
+   fi
+-
+-  gpe-question --icon !gtk-dialog-info --question "<b>Welcome to GPE!</b>
+-
+-I have added some standard programs to the panel at the bottom of the screen.
+-
+-To remove these, or add more,  tap and hold on an empty area of the panel." --buttons !gtk-ok &
+ fi
+ 

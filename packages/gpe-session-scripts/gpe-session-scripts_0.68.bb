@@ -20,6 +20,10 @@ SRC_URI_append_akita = " file://highdpifontfix.patch;patch=1"
 SRC_URI_append_c7x0 = " file://highdpifontfix.patch;patch=1"
 SRC_URI_append_nokia770 = " file://highdpifontfix.patch;patch=1"
 
+#get rid of GPE Welcome dialog
+SRC_URI_append_overo = " file://standard-apps.patch;patch=1"
+SRC_URI_append_beagleboard = " file://standard-apps.patch;patch=1"
+SRC_URI_append_omap3evm = " file://standard-apps.patch;patch=1"
 
 do_configure_append_angstrom() {
 	sed -i s:Default:Clearlooks:g X11/xsettings.default
