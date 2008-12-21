@@ -5,10 +5,10 @@ KERNEL_IMAGETYPE = "uImage"
 
 COMPATIBLE_MACHINE = "beagleboard|omap3evm|overo"
 
-SRCREV = "9d211b761b3cdf7736602ecf7e68f8a298c13278"
+SRCREV = "52a8b74cc5548c38e9d1328d75dbc5fc671dd261"
 
-PV = "2.6.28-rc8+${PR}+git${SRCREV}"
-PR = "r2"
+PV = "2.6.28-rc9+${PR}+git${SRCREV}"
+PR = "r1"
 
 SRC_URI = "git://source.mvista.com/git/linux-omap-2.6.git;branch=master;protocol=git \
 	   file://defconfig \
