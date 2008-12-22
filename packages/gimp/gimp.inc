@@ -26,6 +26,10 @@ do_configure_append() {
         find ${S} -name Makefile | xargs sed -i s:'file-wmf$(EXEEXT)':'':g
 }
 
+do_install_append() {
+	install -d install -d ${D}${datadir}/pixmaps
+	install -m 0755 ${S}/desktop/48x48/gimp.png ${D}${datadir}/pixmaps/
+}
 
 do_stage() {
         autotools_stage_all
@@ -39,6 +43,7 @@ python populate_packages_prepend () {
 FILES_${PN} =  "${bindir} ${sysconfdir} ${datadir}/gimp* ${libdir}/gimp* \
                 ${datadir}/applications \
                 ${datadir}/icons \
+                ${datadir}/pixmaps \
                 ${datadir}/mime-info \
 		${datadir}/application-registry "
 
