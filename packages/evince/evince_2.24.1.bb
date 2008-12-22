@@ -20,6 +20,8 @@ EXTRA_OECONF = "  \
 do_install_append() {
 	sed -i "s/NoDisplay=true//" ${D}${datadir}/applications/evince.desktop
 	sed -i "s/;Viewer;/;Viewer;Office;/" ${D}${datadir}/applications/evince.desktop
+	install -d install -d ${D}${datadir}/pixmaps
+	install -m 0755 ${S}/data/icons/48x48/apps/evince.png ${D}${datadir}/pixmaps/
 }
 
 FILES_${PN}-dbg += "${libdir}/evince/backends/.debug"
