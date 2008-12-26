@@ -1,9 +1,9 @@
 DESCRIPTION = "Helper lib for keyboard management"
 LICENSE = "LGPL"
 
-PR = "r1"
+PR = "r2"
 
-DEPENDS = "xkbcomp gtk+"
+DEPENDS = "xkbcomp gtk+ iso-codes "
 
 inherit gnome
 
