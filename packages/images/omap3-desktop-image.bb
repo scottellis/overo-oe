@@ -25,6 +25,7 @@ APPS = " \
   gnumeric \
   gpe-soundbite \
   midori \
+  numptyphysics \
   omapfbplay \
   pidgin \
   swfdec-mozilla \
