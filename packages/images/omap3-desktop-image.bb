@@ -28,6 +28,7 @@ APPS = " \
   numptyphysics \
   omapfbplay \
   pidgin \
+  swfdec \
   swfdec-mozilla \
   synergy \
   vnc \
