@@ -91,7 +91,7 @@ SRCREV_pn-linux-bfin ?= "3758"
 SRCREV_pn-linux-hackndev-2.6 ?= "1308"
 SRCREV_pn-linux-ixp4xx ?= "1085"
 SRCREV_pn-linux-openmoko ?= "fb42ce6724576fc173faf8abfb04aa2c36d213b7"
-SRCREV_pn-linux-openmoko-devel ?= "75e0b08ee55b32b996d491809ce60b63287dadf5"
+SRCREV_pn-linux-openmoko-devel ?= "60f90ae24d36d4ef1facebcf0b62b91f7f93c911"
 SRCREV_pn-linux-eten ?= "ab2d414f4f13816af0ec0401b608133ca946624a"
 SRCREV_pn-llvm-gcc4 ?= "374"
 SRCREV_pn-llvm-gcc4-cross ?= "374"
@@ -231,7 +231,7 @@ SRCREV_pn-zhone ?= "605686fc96d15cf3b8d5d3aa75a712d0c2589e59"
 # Enlightenment Foundation Libraries
 # Caution: This is not alphabetically, but (roughly) dependency-sorted.
 # Please leave it like that.
-EFL_SRCREV ?= "37988"
+EFL_SRCREV ?= "38352"
 SRCREV_pn-edb-native ?= "${EFL_SRCREV}"
 SRCREV_pn-edb ?= "${EFL_SRCREV}"
 SRCREV_pn-eina-native ?= "${EFL_SRCREV}"
