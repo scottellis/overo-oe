@@ -1,6 +1,6 @@
 DESCRIPTION = "DSP Link for TI ARM/DSP processors"
 
-DEPENDS = "virtual/kernel dsplink-module perl-native"
+DEPENDS = "virtual/kernel perl-native"
 
 inherit module
 
@@ -13,8 +13,8 @@ require ti-paths.inc
 
 do_configure () {
 	# Clean up stale binaries
-	find ${S} -name "*.ko" -delete
-	find ${S} -name "*.o" -delete
+	find ${S} -name "*.ko" -exec rm {} \; || true
+	find ${S} -name "*.o" -exec rm {} \; || true
 
 	# Run perl script to create appropriate makefiles (v1.60 and up)
 	(
