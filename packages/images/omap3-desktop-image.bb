@@ -13,6 +13,13 @@ E_CONFIG = " \
   e-wm-config-scaleable \
 "
 
+E_MODULES = " \
+  flame \
+  news \
+  places \
+  rain \
+"
+
 APPS = " \
   abiword \
   claws-mail \
@@ -48,6 +55,7 @@ IMAGE_INSTALL += " \
   e-wm \
   e-wm-sysactions \
   ${E_CONFIG} \
+  ${E_MODULES} \
   hicolor-icon-theme \
   gnome-cups-manager \
   gnome-icon-theme \
