@@ -1,8 +1,12 @@
 require wxwidgets.inc
 
-PR = "r0"
+PR = "r1"
 
 LEAD_SONAME = "libwx_gtk2_core-2.8.so"
+
+do_configure_append() {
+        find ${S} -name Makefile | xargs sed -i s:'-fvisibility-inlines-hidden':'':g
+}
 
 do_stage() {
        install -d ${STAGING_INCDIR}/wx-2.8/wx
