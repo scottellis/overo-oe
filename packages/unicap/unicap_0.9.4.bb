@@ -2,9 +2,9 @@ DESCRIPTION = "A uniform interface to video capture devices."
 SECTION = "graphics"
 LICENSE = "GPL"
 DEPENDS = "intltool-native gtk+ libpng libxv"
-PR = "r2"
+PR = "r0"
 
-SRC_URI = "http://www.unicap-imaging.org/downloads/unicap-${PV}.tar.gz \
+SRC_URI = "http://www.unicap-imaging.org/downloads/tisCMOS/unicap-${PV}.tar.gz \
            file://pkgconfig.patch;patch=1"
 
 inherit autotools pkgconfig
