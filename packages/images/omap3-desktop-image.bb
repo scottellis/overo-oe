@@ -42,7 +42,7 @@ APPS = " \
   synergy \
   vnc \
   x11vnc \
-  x11vnc-init \
+  angstrom-x11vnc-xinit \
   xmms \
   xterm \
 "
