@@ -5,6 +5,7 @@ require omap3-console-image.bb
 IMAGE_LINGUAS = "de-de fr-fr en-gb en-us pt-br es-es"
 
 E_CONFIG = " \
+  e-wm-config-angstrom \
   e-wm-config-illume \
   e-wm-config-standard \
   e-wm-config-netbook \
@@ -31,6 +32,7 @@ APPS = " \
   gnome-mplayer \
   gnumeric \
   gpe-soundbite \
+  jaaa \
   midori \
   numptyphysics \
   omapfbplay \
@@ -40,6 +42,7 @@ APPS = " \
   synergy \
   vnc \
   x11vnc \
+  x11vnc-init \
   xmms \
   xterm \
 "
