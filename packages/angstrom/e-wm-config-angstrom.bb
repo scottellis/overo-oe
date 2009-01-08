@@ -1,8 +1,9 @@
 DESCRIPTION = "Enlightenment DR17 theme for Angstrom"
 LICENSE = "MIT/BSD"
 DEPENDS = "edje-native eet-native"
+RRECOMMENDS_${PN} = "places"
 
-PR = "r1"
+PR = "r3"
 
 SRC_URI = " \
           file://e.src \
