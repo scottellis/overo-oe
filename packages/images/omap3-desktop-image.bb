@@ -66,4 +66,5 @@ IMAGE_INSTALL += " \
   nautilus \
   psplash \
   ${XSERVER} \
+  xdg-utils \
  "
