@@ -1,7 +1,7 @@
 DESCRIPTION = "Icecast streaming media server"
 LICENSE = "GPLv2"
 
-DEPENDS = "libvorbis libogg libxslt"
+DEPENDS = "libvorbis libogg libxslt libxslt-native"
 
 PR = "r1"
 
