@@ -10,11 +10,11 @@ DEFAULT_PREFERENCE_omap3evm = "1"
 DEFAULT_PREFERENCE_omap3-pandora = "1"
 
 
-SRCREV = "e8b22165f8af8cf9827d6c3e1279c17a457efb08"
+SRCREV = "818862e11bad091dc635baedace58265a126b5c8"
 
 #PV = "2.6.27+2.6.28-rc8+${PR}+gitr${SRCREV}"
-PV = "2.6.28+gitr${SRCREV}"
-PR = "r3"
+PV = "2.6.28+${PR}+gitr${SRCREV}"
+PR = "r7"
 
 SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/tmlind/linux-omap-2.6.git;protocol=git \
 	   file://defconfig"
@@ -49,6 +49,7 @@ SRC_URI_append = " \
            file://0012-DSS-Add-comments-to-FAKE_VSYNC-to-make-things-more.patch;patch=1 \
            file://0013-DSS-OMAPFB-remove-extra-spaces.patch;patch=1 \
            file://0014-DSS-fix-clk_get_usecount.patch;patch=1 \
+           file://0001-ASoC-Add-support-for-OMAP3-EVM.patch;patch=1 \
 "
 
 
