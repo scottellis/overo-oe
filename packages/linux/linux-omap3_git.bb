@@ -5,10 +5,10 @@ KERNEL_IMAGETYPE = "uImage"
 
 COMPATIBLE_MACHINE = "beagleboard|omap3evm|overo"
 
-SRCREV = "818862e11bad091dc635baedace58265a126b5c8"
+SRCREV = "0ec95b96fd77036a13398c66901e11cd301190d0"
 
 PV = "2.6.28-rcfinal+${PR}+git${SRCREV}"
-PR = "r3"
+PR = "r4"
 
 SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/tmlind/linux-omap-2.6.git;branch=master;protocol=git \
 	   file://defconfig \
