@@ -22,6 +22,22 @@ python populate_packages_prepend () {
 
 	do_split_packages(d, gst_libdir, '^libgst(.*)\.so$', 'gst-plugin-%s', 'GStreamer plugin for %s', postinst=postinst, extra_depends='')
 	do_split_packages(d, gst_libdir, '^libgst(.*)\.l?a$', 'gst-plugin-%s-dev', 'GStreamer plugin for %s (development files)', extra_depends='')
+	
+	pn = bb.data.getVar('PN', d, 1)
+	metapkg =  pn + '-meta'
+	bb.data.setVar('ALLOW_EMPTY_' + metapkg, "1", d)
+	bb.data.setVar('FILES_' + metapkg, "", d)
+	blacklist = [ pn + '-locale', pn + '-dev', pn + '-dbg', pn + '-doc' ]
+	metapkg_rdepends = []
+	packages = bb.data.getVar('PACKAGES', d, 1).split()
+	for pkg in packages[1:]:
+		if not pkg in blacklist and not pkg in metapkg_rdepends and not pkg.count('dev') and not pkg.count( 'locale' ):
+			metapkg_rdepends.append(pkg)
+	bb.data.setVar('RDEPENDS_' + metapkg, ' '.join(metapkg_rdepends), d)
+	bb.data.setVar('DESCRIPTION_' + metapkg, pn + ' meta package', d)
+	packages.append(metapkg)
+	bb.data.setVar('PACKAGES', ' '.join(packages), d)
+
 }
 
 ALLOW_EMPTY = "1"

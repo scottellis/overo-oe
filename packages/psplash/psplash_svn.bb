@@ -1,16 +1,9 @@
-DESCRIPTION = "Userspace framebuffer boot logo based on usplash."
-HOMEPAGE = "http://projects.o-hand.com/psplash"
-SECTION = "base"
-LICENSE = "GPL"
-PV = "0.0+svnr${SRCREV}"
-PR = "r14"
-RDEPENDS = "initscripts"
+require psplash.inc
+require psplash-ua.inc
 
-# You can create your own pslash-hand-img.h by doing
-# ./make-image-header.sh <file>.png HAND
-# and rename the resulting .h to pslash-hand-img.h (for the logo)
-# respectively psplash-bar-img.h (BAR) for the bar.
-# You might also want to patch the colors (see patch)
+ALTERNATIVE_PRIORITY = "10"
+
+PR = "r16"
 
 SRC_URI = "svn://svn.o-hand.com/repos/misc/trunk;module=psplash;proto=http \
           file://psplash-hand-img.h \
@@ -22,28 +15,5 @@ S = "${WORKDIR}/psplash"
 # This really should be default, but due yo openmoko hack below, can't be easily
 SRC_URI_append_angstrom = " file://logo-math.patch;patch=1 "
 SRC_URI_append_openmoko = " file://configurability.patch;patch=1 "
-SRC_URI_append_boc01 = " file://psplash_1bpp.patch;patch=1 "
+SRC_URI_append_boc01 = " file://psplash_grayscale.patch;patch=1 "
 
-inherit autotools pkgconfig update-rc.d
-
-do_configure_append() {
-	install -m 0644 ${WORKDIR}/psplash-hand-img.h ${S}/
-	install -m 0644 ${WORKDIR}/psplash-bar-img.h ${S}/
-
-	if [ -e "${WORKDIR}/psplash.h" ]; then
-		install -m 0644 ${WORKDIR}/psplash.h ${S}/
-	fi
-}
-
-do_install_prepend() {
-	install -d ${D}/mnt/.psplash/
-	install -d ${D}${sysconfdir}/default/
-	install -m 0644 ${WORKDIR}/psplash-default ${D}${sysconfdir}/default/psplash
-	install -d ${D}${sysconfdir}/init.d/
-	install -m 0755 ${WORKDIR}/psplash-init ${D}${sysconfdir}/init.d/psplash
-}
-
-INITSCRIPT_NAME = "psplash"
-INITSCRIPT_PARAMS = "start 01 S . stop 20 0 1 6 ."
-
-FILES_${PN} += "/mnt/.psplash"

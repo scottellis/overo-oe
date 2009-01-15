@@ -2,7 +2,7 @@ DESCRIPTION = "Aufs is a stackable unification filesystem such as Unionfs, which
 HOMEPAGE = "http://aufs.sourceforge.net/"
 LICENSE = "GPL"
 PV = "cvs${SRCDATE}"
-PR = "r1"
+PR = "r2"
 
 RSUGGESTS_${PN} = "${PN}-tools"
 
@@ -16,8 +16,7 @@ S = "${WORKDIR}/aufs"
 # See http://svn.exactcode.de/t2/trunk/package/filesystem/aufs/compile.patch.cross
 # as an example how this could be done.
 
-SRC_URI = "cvs://anonymous@aufs.cvs.sourceforge.net/cvsroot/aufs;module=aufs;date=${SRCDATE} \
-	file://aufs_create_no_manpage.patch;patch=1 "
+SRC_URI = "cvs://anonymous@aufs.cvs.sourceforge.net/cvsroot/aufs;module=aufs;date=${SRCDATE}"
 
 EXTRA_OEMAKE = "KDIR=${STAGING_KERNEL_DIR} -f local.mk"
 
@@ -52,4 +51,5 @@ do_install() {
 
 FILES_${PN} = "/lib/modules"
 PACKAGES += "${PN}-tools"
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 FILES_${PN}-tools = "${sbindir} /etc/default/auplink"
