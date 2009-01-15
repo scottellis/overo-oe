@@ -5,12 +5,12 @@ KERNEL_IMAGETYPE = "uImage"
 
 COMPATIBLE_MACHINE = "beagleboard|omap3evm|overo"
 
-SRCREV = "0ec95b96fd77036a13398c66901e11cd301190d0"
+SRCREV = "596a3cf9b9fb60e5cc5d948bc88c6bf757d68b26"
 
 PV = "2.6.28-rcfinal+${PR}+git${SRCREV}"
-PR = "r4"
+PR = "r7"
 
-SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/tmlind/linux-omap-2.6.git;branch=master;protocol=git \
+SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/tmlind/linux-omap-2.6.git;branch=omap-2.6.28;protocol=git \
 	   file://defconfig \
           "
 
@@ -18,6 +18,7 @@ SRC_URI_append = " \
            file://logo_linux_clut224.ppm \
            file://no-empty-flash-warnings.patch;patch=1 \
            file://fix-install.patch;patch=1 \
+           file://fix-audio-capture.patch;patch=1 \
            file://mru-fix-timings.diff;patch=1 \
            file://mru-fix-display-panning.diff;patch=1 \
            file://mru-improve-pixclock-config.diff;patch=1 \
@@ -26,15 +27,14 @@ SRC_URI_append = " \
           "
 
 SRC_URI_append_beagleboard = " \
-           file://beagleboard.patch;patch=1 \
+           file://beagleboard-ehci.patch;patch=1 \
           "
 
 SRC_URI_append_omap3evm = " \
-           file://omap3evm.patch;patch=1 \
           "
 
 SRC_URI_append_overo = " \
-           file://overo.patch;patch=1 \
+           file://overo-ehci.patch;patch=1 \
           "
 
 
