@@ -3,9 +3,11 @@ LICENSE = "LGPL"
 DESCRIPTION = "WvStreams is a network programming library in C++"
 DEPENDS = "zlib openssl (>= 0.9.8)"
 
-PR = "r2"
+PR = "r1"
 
-SRC_URI = "http://wvstreams.googlecode.com/files/${PN}-${PV}.tar.gz \
+SRC_URI = "http://ftp.de.debian.org/debian/pool/main/w/wvstreams/${PN}_${PV}.orig.tar.gz \
+           http://ftp.de.debian.org/debian/pool/main/w/wvstreams/wvstreams_4.2.2-2.2.diff.gz;patch=1 \
+           file://wvstreams-debian.patch;patch=1 \
            file://build-fixes-and-sanity.patch;patch=1 "
 
 inherit autotools pkgconfig
