@@ -1,7 +1,7 @@
 Index: u-boot-1.3.2/drivers/net/tsec.c
 ===================================================================
---- u-boot-1.3.2.orig/drivers/net/tsec.c	2008-12-09 16:29:43.000000000 +0100
-+++ u-boot-1.3.2/drivers/net/tsec.c	2008-12-09 16:30:18.000000000 +0100
+--- u-boot-1.3.2.orig/drivers/net/tsec.c	2008-03-09 16:20:02.000000000 +0100
++++ u-boot-1.3.2/drivers/net/tsec.c	2009-01-07 15:09:40.000000000 +0100
 @@ -179,6 +179,12 @@
  	priv->regs->maccfg1 |= MACCFG1_SOFT_RESET;
  	priv->regs->maccfg1 &= ~(MACCFG1_SOFT_RESET);
@@ -77,26 +77,10 @@ Index: u-boot-1.3.2/drivers/net/tsec.c
  }
  
  /* Execute the given series of commands on the given device's
-@@ -1520,6 +1550,7 @@
- 
- 	while (phyregs->miimind & MIIMIND_BUSY) ;
- 
-+#if 0
- 	for (i = 0; cmd->mii_reg != miim_end; i++) {
- 		if (cmd->mii_data == miim_read) {
- 			result = read_phy_reg(priv, cmd->mii_reg);
-@@ -1538,6 +1569,7 @@
- 		}
- 		cmd++;
- 	}
-+#endif
- }
- 
- /* Relocate the function pointers in the phy cmd lists */
 Index: u-boot-1.3.2/drivers/net/tsec.h
 ===================================================================
---- u-boot-1.3.2.orig/drivers/net/tsec.h	2008-12-09 16:29:43.000000000 +0100
-+++ u-boot-1.3.2/drivers/net/tsec.h	2008-12-09 16:30:18.000000000 +0100
+--- u-boot-1.3.2.orig/drivers/net/tsec.h	2008-03-09 16:20:02.000000000 +0100
++++ u-boot-1.3.2/drivers/net/tsec.h	2009-01-07 15:09:40.000000000 +0100
 @@ -56,11 +56,11 @@
  #define MACCFG1_SYNCD_TX_EN	0x00000002
  #define MACCFG1_TX_EN		0x00000001
@@ -112,8 +96,8 @@ Index: u-boot-1.3.2/drivers/net/tsec.h
  #define ECNTRL_TBI_MODE         0x00000020
 Index: u-boot-1.3.2/include/configs/MPC8313ERDB.h
 ===================================================================
---- u-boot-1.3.2.orig/include/configs/MPC8313ERDB.h	2008-12-09 16:30:12.000000000 +0100
-+++ u-boot-1.3.2/include/configs/MPC8313ERDB.h	2008-12-09 16:30:18.000000000 +0100
+--- u-boot-1.3.2.orig/include/configs/MPC8313ERDB.h	2009-01-07 15:09:39.000000000 +0100
++++ u-boot-1.3.2/include/configs/MPC8313ERDB.h	2009-01-07 15:11:17.000000000 +0100
 @@ -246,8 +246,8 @@
  #define CFG_BAUDRATE_TABLE	\
  	{300, 600, 1200, 2400, 4800, 9600, 19200, 38400, 115200}
@@ -125,7 +109,7 @@ Index: u-boot-1.3.2/include/configs/MPC8313ERDB.h
  
  /* Use the HUSH parser */
  #define CFG_HUSH_PARSER
-@@ -302,23 +302,24 @@
+@@ -302,6 +302,7 @@
   * TSEC configuration
   */
  #define CONFIG_TSEC_ENET		/* TSEC ethernet support */
@@ -133,12 +117,7 @@ Index: u-boot-1.3.2/include/configs/MPC8313ERDB.h
  
  #ifndef CONFIG_NET_MULTI
  #define CONFIG_NET_MULTI		1
- #endif
- 
- #define CONFIG_GMII			1	/* MII PHY management */
--#define CONFIG_TSEC1		1
-+//#define CONFIG_TSEC1		1
- 
+@@ -313,12 +314,12 @@
  #define CONFIG_TSEC1_NAME	"TSEC0"
  #define CONFIG_TSEC2		1
  #define CONFIG_TSEC2_NAME	"TSEC1"
@@ -156,7 +135,7 @@ Index: u-boot-1.3.2/include/configs/MPC8313ERDB.h
  
  /* Options are: TSEC[0-1] */
  #define CONFIG_ETHPRIME			"TSEC1"
-@@ -472,17 +473,17 @@
+@@ -472,8 +473,8 @@
  	HRCWH_SW_WATCHDOG_DISABLE |\
  	HRCWH_ROM_LOC_LOCAL_16BIT |\
  	HRCWH_RL_EXT_LEGACY |\
@@ -167,9 +146,7 @@ Index: u-boot-1.3.2/include/configs/MPC8313ERDB.h
  	HRCWH_BIG_ENDIAN |\
  	HRCWH_LALE_NORMAL)
  
- 
--#define CONFIG_WATCHDOG
-+//#define CONFIG_WATCHDOG
+@@ -482,7 +483,7 @@
  #define CFG_WATCHDOG_VALUE 0xFFFF
  
  /* System IO Config */
