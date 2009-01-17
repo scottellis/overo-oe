@@ -14,6 +14,10 @@ GPE_TARBALL_SUFFIX = "bz2"
 
 inherit gpe autotools pkgconfig
 
+SRC_URI += " \
+            file://timezone.patch;patch=1 \
+           "
+
 PACKAGES += "gpe-conf-panel"
 
 FILES_${PN} = "${sysconfdir} ${bindir} ${datadir}/pixmaps \
