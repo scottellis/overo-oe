@@ -1,0 +1,20 @@
+--- gpe-conf/modules/timeanddate.c-orig	2007-06-11 01:34:14.000000000 -0700
++++ gpe-conf/modules/timeanddate.c	2008-12-19 21:23:05.000000000 -0800
+@@ -188,6 +188,7 @@ void
+ set_timezone (gchar *zone)
+ {
+ 	FILE *ftimezone;
++	gchar *command = NULL;
+ 	
+ 	ftimezone = fopen ("/etc/timezone", "w");
+ 	if (ftimezone)
+@@ -195,6 +196,9 @@ set_timezone (gchar *zone)
+ 		fprintf (ftimezone, "%s\n", zone);
+ 		fchmod(fileno(ftimezone), S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+ 		fclose (ftimezone);
++		command = g_strdup_printf("%s %s%s %s","cp -df","/usr/share/zoneinfo/", zone,"/etc/localtime");
++		system(command);
++		g_free(command);
+ 	}
+ 	else
+ 		g_printerr("Error: Could not write to /etc/timezone\n");
