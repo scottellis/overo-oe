@@ -3,6 +3,8 @@ SECTION = "gpe"
 PRIORITY = "optional"
 LICENSE = "GPL"
 
+PR = "r1"
+
 DEPENDS = "gtk+ esound audiofile libgpewidget libxsettings libxsettings-client libxrandr"
 RDEPENDS_${PN} = "xst gpe-confd xset ntpdate gpe-icons tzdata xrandr"
 RDEPENDS_gpe-conf-panel = "gpe-conf"
