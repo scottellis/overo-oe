@@ -51,13 +51,20 @@ distutils_do_install() {
             done
         fi
 
-        if test -e ${D}${sbindir} ; then
+        if test -e ${D}${sbindir}; then
             for i in ${D}${sbindir}/* ; do \
                 sed -i -e s:${STAGING_BINDIR_NATIVE}:${bindir}:g $i
             done
         fi
 
         rm -f ${D}${libdir}/${PYTHON_DIR}/site-packages/easy-install.pth
+        
+        #
+        # FIXME: Bandaid against wrong datadir computation
+        #
+        if test -e ${D}${datadir}/share; then
+            mv -f ${D}${datadir}/share/* ${D}${datadir}/
+        fi
 }
 
 EXPORT_FUNCTIONS do_compile do_install
