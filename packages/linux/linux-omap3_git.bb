@@ -5,6 +5,8 @@ KERNEL_IMAGETYPE = "uImage"
 
 COMPATIBLE_MACHINE = "beagleboard|omap3evm|overo"
 
+DEFAULT_PREFERENCE = "-1"
+
 SRCREV = "9a6536c4eb086b43acab99ef3ac8b6e61ed9b7de"
 
 PV = "2.6.28-rcfinal+${PR}+git${SRCREV}"
