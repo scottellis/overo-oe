@@ -26,6 +26,7 @@ APPS = " \
   claws-mail \
   evince \
   exhibit \
+  ekiga \
   firefox \
   gimp \
   gnome-games \
