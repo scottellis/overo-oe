@@ -1,0 +1,181 @@
+diff --git a/sound/soc/codecs/twl4030.c b/sound/soc/codecs/twl4030.c
+index ee2f0d3..8b4aafb 100644
+--- a/sound/soc/codecs/twl4030.c
++++ b/sound/soc/codecs/twl4030.c
+@@ -45,8 +45,8 @@ static const u8 twl4030_reg[TWL4030_CACHEREGNUM] = {
+ 	0xc3, /* REG_OPTION		(0x2)	*/
+ 	0x00, /* REG_UNKNOWN		(0x3)	*/
+ 	0x00, /* REG_MICBIAS_CTL	(0x4)	*/
+-	0x24, /* REG_ANAMICL		(0x5)	*/
+-	0x04, /* REG_ANAMICR		(0x6)	*/
++	0x34, /* REG_ANAMICL		(0x5)	*/
++	0x14, /* REG_ANAMICR		(0x6)	*/
+ 	0x0a, /* REG_AVADC_CTL		(0x7)	*/
+ 	0x00, /* REG_ADCMICSEL		(0x8)	*/
+ 	0x00, /* REG_DIGMIXING		(0x9)	*/
+diff --git a/drivers/usb/host/ehci-omap.c b/drivers/usb/host/ehci-omap.c
+index 1b3266c..5252e75 100644
+--- a/drivers/usb/host/ehci-omap.c
++++ b/drivers/usb/host/ehci-omap.c
+@@ -186,22 +186,6 @@ static int omap_start_ehc(struct platform_device *dev, struct usb_hcd *hcd)
+ 			cm_read_mod_reg(PLL_MOD, CM_IDLEST2));
+ 	/* End DPLL5 programming */
+ 
+-
+-	/* PRCM settings for USBHOST:
+-	 * Interface clk un-related to domain transition
+-	 */
+-	cm_write_mod_reg(0 << OMAP3430ES2_AUTO_USBHOST_SHIFT,
+-				OMAP3430ES2_USBHOST_MOD, CM_AUTOIDLE);
+-
+-	/* Disable sleep dependency with MPU and IVA */
+-	cm_write_mod_reg((0 << OMAP3430ES2_EN_MPU_SHIFT) |
+-				(0 << OMAP3430ES2_EN_IVA2_SHIFT),
+-				OMAP3430ES2_USBHOST_MOD, OMAP3430_CM_SLEEPDEP);
+-
+-	/* Disable Automatic transition of clock */
+-	cm_write_mod_reg(0 << OMAP3430ES2_CLKTRCTRL_USBHOST_SHIFT,
+-				OMAP3430ES2_USBHOST_MOD, CM_CLKSTCTRL);
+-
+ 	/* Enable Clocks for USBHOST */
+ 	ehci_clocks->usbhost_ick_clk = clk_get(&dev->dev,
+ 						USBHOST_ICKL);
+diff --git a/drivers/usb/host/ehci-omap.c b/drivers/usb/host/ehci-omap.c
+index 5252e75..96927e4 100644
+--- a/drivers/usb/host/ehci-omap.c
++++ b/drivers/usb/host/ehci-omap.c
+@@ -70,6 +70,8 @@ struct ehci_omap_clock_defs {
+ 	struct clk	*usbhost1_48m_fck_clk;
+ 	struct clk	*usbtll_fck_clk;
+ 	struct clk	*usbtll_ick_clk;
++	struct clk	*dpll5_clk;
++	struct clk	*dpll5_m2_clk;
+ };
+ 
+ /* Clock names as per clock framework: May change so keep as #defs */
+@@ -163,28 +165,29 @@ static int omap_start_ehc(struct platform_device *dev, struct usb_hcd *hcd)
+ 				((char *)hcd_to_ehci(hcd)) +
+ 					sizeof(struct ehci_hcd));
+ 
+-	/* Start DPLL5 Programming:
+-	 * Clock Framework is not doing this now:
+-	 * This will be done in clock framework later
++	/* 
++	 * Make sure DPLL5 is programmed for 120MHz
++	 * XXX should be done at DPLL init time
++	 * XXX dpll rates should be assigned to clk->rate at init time
++	 * XXX enable DPLL autoidle
+ 	 */
+-	/* Enable DPLL 5 : Based on Input of 13Mhz*/
+-	cm_write_mod_reg((12 << OMAP3430ES2_PERIPH2_DPLL_DIV_SHIFT)|
+-			(120 << OMAP3430ES2_PERIPH2_DPLL_MULT_SHIFT),
+-			PLL_MOD, OMAP3430ES2_CM_CLKSEL4);
+-
+-	cm_write_mod_reg(1 << OMAP3430ES2_DIV_120M_SHIFT,
+-			PLL_MOD, OMAP3430ES2_CM_CLKSEL5);
+-
+-	cm_write_mod_reg((7 << OMAP3430ES2_PERIPH2_DPLL_FREQSEL_SHIFT) |
+-			(7 << OMAP3430ES2_EN_PERIPH2_DPLL_SHIFT),
+-			PLL_MOD, OMAP3430ES2_CM_CLKEN2);
+-
+-	while (!(cm_read_mod_reg(PLL_MOD, CM_IDLEST2) &
+-				OMAP3430ES2_ST_PERIPH2_CLK_MASK))
+-		dev_dbg(hcd->self.controller,
+-			"idlest2 = 0x%x\n",
+-			cm_read_mod_reg(PLL_MOD, CM_IDLEST2));
+-	/* End DPLL5 programming */
++	ehci_clocks->dpll5_clk = clk_get(&dev->dev, "dpll5_ck");
++	if (IS_ERR(ehci_clocks->dpll5_clk)) {
++		WARN_ON(1);
++		return PTR_ERR(ehci_clocks->dpll5_clk);
++	};
++	if (clk_get_rate(ehci_clocks->dpll5_clk) != 120000000)
++		clk_set_rate(ehci_clocks->dpll5_clk, 120000000);
++	clk_enable(ehci_clocks->dpll5_clk);
++
++	/* Program dpll5_m2_clk divider for no division */
++	ehci_clocks->dpll5_m2_clk = clk_get(&dev->dev, "dpll5_m2_ck");
++	if (IS_ERR(ehci_clocks->dpll5_m2_clk)) {
++		WARN_ON(1);
++		return PTR_ERR(ehci_clocks->dpll5_m2_clk);
++	};
++	clk_enable(ehci_clocks->dpll5_m2_clk);
++	clk_set_rate(ehci_clocks->dpll5_m2_clk, 120000000);
+ 
+ 	/* Enable Clocks for USBHOST */
+ 	ehci_clocks->usbhost_ick_clk = clk_get(&dev->dev,
+@@ -375,6 +378,18 @@ static void omap_stop_ehc(struct platform_device *dev, struct usb_hcd *hcd)
+ 		ehci_clocks->usbtll_ick_clk = NULL;
+ 	}
+ 
++	if (ehci_clocks->dpll5_m2_clk != NULL) {
++		clk_disable(ehci_clocks->dpll5_m2_clk);
++		clk_put(ehci_clocks->dpll5_m2_clk);
++		ehci_clocks->dpll5_m2_clk = NULL;
++	}
++
++	if (ehci_clocks->dpll5_clk != NULL) {
++		clk_disable(ehci_clocks->dpll5_clk);
++		clk_put(ehci_clocks->dpll5_clk);
++		ehci_clocks->dpll5_clk = NULL;
++	}
++
+ 
+ #ifdef EXTERNAL_PHY_RESET
+ 	gpio_free(EXT_PHY_RESET_GPIO_PORT1);
+--- a/drivers/usb/host/ehci-omap.c
++++ b/drivers/usb/host/ehci-omap.c
+@@ -48,7 +48,7 @@
+  *		to get the PHY state machine in working state
+  */
+ #define EXTERNAL_PHY_RESET
+-#define	EXT_PHY_RESET_GPIO_PORT1	(57)
++#define	EXT_PHY_RESET_GPIO_PORT1	(183)
+ #define	EXT_PHY_RESET_GPIO_PORT2	(61)
+ #define	EXT_PHY_RESET_DELAY		(10)
+ 
+--- a/drivers/video/omap/omapfb_main.c
++++ b/drivers/video/omap/omapfb_main.c
+@@ -101,6 +101,19 @@ static struct caps_table_struct color_ca
+ 
+ static struct video_mode video_modes[] __initdata = {
+ 	{
++		/* 480 x 272 @ 60 Hz  Samsung LTE430WQ-F0C panel */
++		.name		= "480x272@60",
++		.x_res		= 480,
++		.y_res		= 272,
++		.hfp		= 8,
++		.hsw		= 41,
++		.hbp		= 45,
++		.vfp		= 4,
++		.vsw		= 10,
++		.vbp		= 12,
++		.pixel_clock	= 9200,
++	},
++	{
+ 		/* 640 x 480 @ 60 Hz  Reduced blanking VESA CVT 0.31M3-R */
+ 		.name		= "640x480@60",
+ 		.x_res		= 640,
+diff --git a/drivers/video/omap/lcd_overo.c b/drivers/video/omap/lcd_overo.c
+index 2bc5c92..e1c1975 100644
+--- a/drivers/video/omap/lcd_overo.c
++++ b/drivers/video/omap/lcd_overo.c
+@@ -28,7 +28,7 @@
+ #include <mach/omapfb.h>
+ #include <asm/mach-types.h>
+ 
+-#define LCD_ENABLE       144
++#define LCD_ENABLE       145
+ 
+ static int overo_panel_init(struct lcd_panel *panel,
+ 				struct omapfb_device *fbdev)
+@@ -65,7 +65,8 @@ static unsigned long overo_panel_get_caps(struct lcd_panel *panel)
+ 
+ struct lcd_panel overo_panel = {
+ 	.name		= "overo",
+-	.config		= OMAP_LCDC_PANEL_TFT,
++	.config		= OMAP_LCDC_PANEL_TFT |
++			  OMAP_LCDC_INV_HSYNC,
+ 	.bpp		= 16,
+ 	.data_lines	= 24,
+ 
