@@ -1,7 +1,7 @@
 DESCRIPTION = "Gnome videoconferencing application"
 LICENSE = "GPLv2"
 
-PR = "r1"
+PR = "r2"
 
 inherit gnome
 DEPENDS += " avahi libnotify eds-dbus libgnome gtkmm libsigc++-2.0 gstreamer gst-plugins-good gst-plugins-base gst-plugins-bad opal ptlib"
@@ -12,6 +12,14 @@ EXTRA_OECONF = "--enable-static-libs   --disable-ldap --disable-gnome --enable-g
 do_configure_append() {
 	find ${S} -name Makefile | xargs sed -i s:'-I$(includedir)':'-I.':g
  	find ${S} -name Makefile | xargs sed -i s:'-I/usr/include':'-I${STAGING_INCDIR}':g
+}
+
+do_install_append() {
+	mv ${D}${datadir}/applications/ekiga.desktop.in.in ${D}${datadir}/applications/ekiga.desktop
+	sed -i "s/@PACKAGE_NAME@/ekiga/" ${D}${datadir}/applications/ekiga.desktop
+	sed -i "s/_Name/Name/" ${D}${datadir}/applications/ekiga.desktop
+	sed -i "s/_GenericName/GenericName/" ${D}${datadir}/applications/ekiga.desktop
+	sed -i "s/_Comment/Comment/" ${D}${datadir}/applications/ekiga.desktop
 }
 
 FILES_${PN} += "${datadir}/dbus-1 ${datadir}/icons"
