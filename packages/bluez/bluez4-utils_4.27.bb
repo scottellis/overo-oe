@@ -31,6 +31,7 @@ EXTRA_OECONF = " \
 
 CONFFILES_${PN} = " \
                    ${sysconfdir}/bluetooth/hcid.conf \
+                   ${sysconfdir}/bluetooth/main.conf \
                    ${sysconfdir}/default/bluetooth \
                   "
 
@@ -41,10 +42,13 @@ CONFFILES_${PN}-compat = " \
 PACKAGES =+ "bluez-audio"
 
 FILES_${PN} = " \
+               ${base_sbindir}/bluetoothd \
                ${base_sbindir}/hcid \
+               ${libdir}/libbluetooth.so.* \
                ${libdir}/bluetooth/plugins/*.so \
                ${sysconfdir}/init.d/bluetooth \
                ${sysconfdir}/bluetooth/hcid.conf \
+               ${sysconfdir}/bluetooth/main.conf \
                ${sysconfdir}/default \
                ${sysconfdir}/dbus-1 \
                ${base_sbindir}/hciattach \
