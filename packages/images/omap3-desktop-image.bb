@@ -63,6 +63,7 @@ IMAGE_INSTALL += " \
   hicolor-icon-theme \
   gnome-cups-manager \
   gnome-icon-theme \
+  gtk-printbackend-cups \
   mime-support \
   nautilus \
   psplash \
