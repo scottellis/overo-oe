@@ -32,10 +32,10 @@ do_configure_prepend () {
 do_compile () {
 	oe_runmake proto_exists
 	base_do_compile
-	${CC} client/mount.cifs.c -o mount.cifs
 }
 
 do_install_append() {
+	mv ${D}${libdir}/libsmbclient.so ${D}${libdir}/libsmbclient.so.0 || true
 	ln -sf libsmbclient.so.0 ${D}${libdir}/libsmbclient.so
 	mkdir -p ${D}${base_sbindir}
 	rm -f ${D}${sbindir}/mount.smbfs ${D}${base_sbindir}/mount.smbfs
