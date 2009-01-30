@@ -6,6 +6,8 @@ DEPENDS = "task-base"
 
 IMAGE_EXTRA_INSTALL ?= ""
 
+RRECOMMENDS += " kernel-modules"
+
 IMAGE_INSTALL += " \
   task-base-extended \
   task-proper-tools \
