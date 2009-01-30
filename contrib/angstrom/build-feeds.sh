@@ -81,9 +81,12 @@ do
                       bluez-hcidump \
                       boa \
                       camera-assistant \
+                      cdparanoia \
                       checkers \
                       cherokee \
                       claws-mail \
+                      connman \
+                      connman-gnome \
                       contacts \
                       cvs \
                       cwiid \
@@ -167,6 +170,7 @@ do
                       iperf \
                       iptables \
                       irssi \
+                      iscsi-target \
                       jamvm \
                       kismet \
                       konqueror-embedded \
