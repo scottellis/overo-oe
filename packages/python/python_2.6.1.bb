@@ -1,7 +1,7 @@
 require python.inc
 DEPENDS = "python-native db gdbm openssl readline sqlite3 tcl tk zlib"
 DEPENDS_sharprom = "python-native db readline zlib gdbm openssl"
-PR = "ml0"
+PR = "ml2"
 
 SRC_URI = "\
   http://www.python.org/ftp/python/${PV}/Python-${PV}.tar.bz2 \
@@ -11,6 +11,7 @@ SRC_URI = "\
   file://03-fix-tkinter-detection.patch;patch=1 \
   file://04-default-is-optimized.patch;patch=1 \
   file://05-enable-ctypes-cross-build.patch;patch=1 \
+  file://06-libffi-enable-default-mips.patch;patch=1 \
   \
 # not yet pushed forward
 # sitecustomize, sitebranding
@@ -91,9 +92,12 @@ RRECOMMENDS_python-crypt = "openssl"
 # add sitecustomize
 FILES_python-core += "${libdir}/python${PYTHON_MAJMIN}/sitecustomize.py"
 
+# 2to3
+FILES_python-core += "${bindir}/2to3"
+
 # package libpython
 PACKAGES =+ "libpython2"
-FILES_libpython2 = "${libdir}/libpython*.so*"
+FILES_libpython2 = "${libdir}/libpython*.so.*"
 
 # catch debug extensions (isn't that already in python-core-dbg?)
 FILES_python-dbg += "${libdir}/python${PYTHON_MAJMIN}/lib-dynload/.debug"
