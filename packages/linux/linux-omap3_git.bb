@@ -10,7 +10,7 @@ DEFAULT_PREFERENCE = "-1"
 SRCREV = "c40ce00e32082c57070fdba39c7d7cba3228d440"
 
 PV = "2.6.29-rc3+${PR}+git${SRCREV}"
-PR = "r0"
+PR = "r1"
 
 SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/tmlind/linux-omap-2.6.git;branch=master;protocol=git \
 	   file://defconfig \
@@ -35,6 +35,18 @@ SRC_URI_append = " \
            file://smsc911x-5.patch;patch=1 \
            file://ads7846.patch;patch=1 \
            file://xccr.patch;patch=1 \
+           file://DSS2-1.patch;patch=1 \
+           file://DSS2-2.patch;patch=1 \
+           file://DSS2-3.patch;patch=1 \
+           file://DSS2-4.patch;patch=1 \
+           file://DSS2-5.patch;patch=1 \
+           file://DSS2-6.patch;patch=1 \
+           file://DSS2-7.patch;patch=1 \
+           file://DSS2-8.patch;patch=1 \
+           file://DSS2-9.patch;patch=1 \
+           file://DSS2-10.patch;patch=1 \
+           file://DSS2-11.patch;patch=1 \
+           file://DSS2-12.patch;patch=1 \
           "
 
 SRC_URI_append_beagleboard = " \
