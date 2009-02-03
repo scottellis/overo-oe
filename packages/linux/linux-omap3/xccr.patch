@@ -1,0 +1,41 @@
+From: Misael Lopez Cruz <x0052729@ti.com>
+Date: Thu, 29 Jan 2009 11:29:46 +0000 (+0200)
+Subject: ASoC: OMAP: Initialize XCCR and RCCR registers in McBSP DAI driver
+X-Git-Url: http://git.kernel.org/?p=linux%2Fkernel%2Fgit%2Ftorvalds%2Flinux-2.6.git;a=commitdiff_plain;h=ef390c0b6e3f4d2d2d43f53f4bd35e1884571a14;hp=9e70c1f099c6977d3928879e64fa6af7f903b7b0
+
+ASoC: OMAP: Initialize XCCR and RCCR registers in McBSP DAI driver
+
+This patch explicitly initializes McBSP Transmit Configuration
+Control Register (XCCR) and Receive Configuration Control
+Register (RCCR) to their reset values. Reset values are 26 ns
+of DX delay and Transmit DMA disabled for XCCR register;
+receive full cycle mode enabled and Receive DMA disabled for
+RCCR register.
+
+This patch requires a counterpart in OMAP McBSP driver before
+to apply it. The required changes in McBSP were sent and approved
+in linux-omap mailing list and patch is going upstream
+(commit 3127f8f8595a064b3f1a1837fea2177902589ac3 from linux-omap-2.6
+tree).
+
+Signed-off-by: Misael Lopez Cruz <x0052729@ti.com>
+[ jarkko.nikula@nokia.com: Commit id for counterpart patch corrected ]
+Signed-off-by: Jarkko Nikula <jarkko.nikula@nokia.com>
+Signed-off-by: Mark Brown <broonie@opensource.wolfsonmicro.com>
+---
+
+diff --git a/sound/soc/omap/omap-mcbsp.c b/sound/soc/omap/omap-mcbsp.c
+index ec5e18a..05dd5ab 100644
+--- a/sound/soc/omap/omap-mcbsp.c
++++ b/sound/soc/omap/omap-mcbsp.c
+@@ -302,6 +302,10 @@ static int omap_mcbsp_dai_set_dai_fmt(struct snd_soc_dai *cpu_dai,
+ 	regs->spcr1	|= RINTM(3);
+ 	regs->rcr2	|= RFIG;
+ 	regs->xcr2	|= XFIG;
++	if (cpu_is_omap2430() || cpu_is_omap34xx()) {
++		regs->xccr = DXENDLY(1) | XDMAEN;
++		regs->rccr = RFULL_CYCLE | RDMAEN;
++	}
+ 
+ 	switch (fmt & SND_SOC_DAIFMT_FORMAT_MASK) {
+ 	case SND_SOC_DAIFMT_I2S:
