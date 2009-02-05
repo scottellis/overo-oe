@@ -10,7 +10,7 @@ DEFAULT_PREFERENCE = "-1"
 SRCREV = "c40ce00e32082c57070fdba39c7d7cba3228d440"
 
 PV = "2.6.29-rc3+${PR}+git${SRCREV}"
-PR = "r1"
+PR = "r2"
 
 SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/tmlind/linux-omap-2.6.git;branch=master;protocol=git \
 	   file://defconfig \
@@ -22,11 +22,6 @@ SRC_URI_append = " \
            file://fix-install.patch;patch=1 \
            file://fix-audio-capture.patch;patch=1 \
            file://beagle-asoc.patch;patch=1 \
-           file://mru-fix-timings.diff;patch=1 \
-           file://mru-fix-display-panning.diff;patch=1 \
-           file://mru-improve-pixclock-config.diff;patch=1 \
-           file://mru-make-video-timings-selectable.diff;patch=1 \
-           file://mru-enable-overlay-optimalization.diff;patch=1 \
            file://smsc911x.patch;patch=1 \
            file://smsc911x-1.patch;patch=1 \
            file://smsc911x-2.patch;patch=1 \
@@ -44,9 +39,7 @@ SRC_URI_append = " \
            file://DSS2-7.patch;patch=1 \
            file://DSS2-8.patch;patch=1 \
            file://DSS2-9.patch;patch=1 \
-           file://DSS2-10.patch;patch=1 \
-           file://DSS2-11.patch;patch=1 \
-           file://DSS2-12.patch;patch=1 \
+           file://dss2-overo.patch;patch=1 \
           "
 
 SRC_URI_append_beagleboard = " \

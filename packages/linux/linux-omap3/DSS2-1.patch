@@ -1,17 +1,16 @@
 From: Tomi Valkeinen <tomi.valkeinen@nokia.com>
+Date: Mon, 2 Feb 2009 09:21:02 +0000 (+0200)
+Subject: DSS2: Documentation
+X-Git-Url: http://www.sakoman.net/cgi-bin/gitweb.cgi?p=linux-omap-dss.git;a=commitdiff_plain;h=827c175c55a8f50c3fe4ba17467094f4e14079fd
 
-DSS: Documentation for DSS2
+DSS2: Documentation
 
 Signed-off-by: Tomi Valkeinen <tomi.valkeinen@nokia.com>
 ---
 
- Documentation/arm/OMAP/DSS |  270 ++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 270 insertions(+), 0 deletions(-)
- create mode 100644 Documentation/arm/OMAP/DSS
-
 diff --git a/Documentation/arm/OMAP/DSS b/Documentation/arm/OMAP/DSS
 new file mode 100644
-index 0000000..011fee1
+index 0000000..34881e2
 --- /dev/null
 +++ b/Documentation/arm/OMAP/DSS
 @@ -0,0 +1,270 @@
@@ -140,7 +139,7 @@ index 0000000..011fee1
 +	<fb number>
 +	p:<physical address, read only>
 +	v:<virtual address, read only>
-+	s:<size, read only>
++	s:<size>
 +	t:<target overlay>
 +
 +"overlays" lists all overlays. Its format is:
@@ -286,13 +285,3 @@ index 0000000..011fee1
 +- Not sure if needed
 +
 
-
-------------------------------------------------------------------------------
-Check out the new SourceForge.net Marketplace.
-It is the best place to buy or sell services for
-just about anything Open Source.
-http://p.sf.net/sfu/Xq1LFB
-_______________________________________________
-Linux-fbdev-devel mailing list
-Linux-fbdev-devel@lists.sourceforge.net
-https://lists.sourceforge.net/lists/listinfo/linux-fbdev-devel
