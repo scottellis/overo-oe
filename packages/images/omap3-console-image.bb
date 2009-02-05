@@ -9,6 +9,7 @@ IMAGE_EXTRA_INSTALL ?= ""
 IMAGE_INSTALL += " \
   task-base-extended \
   task-proper-tools \
+  u-boot-tools-env \
   alsa-utils \
   alsa-utils-alsactl \
   alsa-utils-alsamixer \
