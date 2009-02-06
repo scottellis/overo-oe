@@ -36,7 +36,6 @@ APPS = " \
   jaaa \
   midori \
   numptyphysics \
-  omapfbplay \
   pidgin \
   swfdec \
   swfdec-mozilla \
