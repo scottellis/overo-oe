@@ -1,7 +1,7 @@
 From: Tomi Valkeinen <tomi.valkeinen@nokia.com>
-Date: Mon, 2 Feb 2009 10:12:38 +0000 (+0200)
+Date: Mon, 2 Feb 2009 08:12:38 +0000 (+0200)
 Subject: DSS2: Support for OMAP3 SDP board
-X-Git-Url: http://www.sakoman.net/cgi-bin/gitweb.cgi?p=linux-omap-dss.git;a=commitdiff_plain;h=61d4f1d3f4e4097895e2bb7cef3417662ac7627d
+X-Git-Url: http://www.sakoman.net/cgi-bin/gitweb.cgi?p=linux-omap-2.6.git;a=commitdiff_plain;h=b4ca1c2eb5b9342f009e9499fa2e437fe7ae1947
 
 DSS2: Support for OMAP3 SDP board
 
@@ -1648,18 +1648,18 @@ index 0000000..3d8a431
 +CONFIG_HAS_IOPORT=y
 +CONFIG_HAS_DMA=y
 diff --git a/arch/arm/mach-omap2/board-3430sdp.c b/arch/arm/mach-omap2/board-3430sdp.c
-index ade186b..529322f 100644
+index 8a0dba6..acc5a0a 100644
 --- a/arch/arm/mach-omap2/board-3430sdp.c
 +++ b/arch/arm/mach-omap2/board-3430sdp.c
 @@ -39,6 +39,7 @@
- #include <mach/keypad.h>
+ #include <mach/common.h>
  #include <mach/dma.h>
  #include <mach/gpmc.h>
 +#include <mach/display.h>
  
  #include <asm/io.h>
  #include <asm/delay.h>
-@@ -238,14 +239,214 @@ static struct spi_board_info sdp3430_spi_board_info[] __initdata = {
+@@ -236,14 +237,214 @@ static struct spi_board_info sdp3430_spi_board_info[] __initdata = {
  	},
  };
  
@@ -1878,7 +1878,7 @@ index ade186b..529322f 100644
  };
  
  static inline void __init sdp3430_init_smc91x(void)
-@@ -292,13 +493,8 @@ static struct omap_uart_config sdp3430_uart_config __initdata = {
+@@ -290,13 +491,8 @@ static struct omap_uart_config sdp3430_uart_config __initdata = {
  	.enabled_uarts	= ((1 << 0) | (1 << 1) | (1 << 2)),
  };
  
@@ -1892,10 +1892,10 @@ index ade186b..529322f 100644
  };
  
  static int sdp3430_batt_table[] = {
-@@ -481,6 +677,7 @@ static void __init omap_3430sdp_init(void)
+@@ -645,6 +841,7 @@ static void __init omap_3430sdp_init(void)
+ 	omap_serial_init();
  	usb_musb_init();
  	usb_ehci_init();
- 	twl4030_mmc_init(mmc);
 +	sdp3430_display_init();
  }
  
