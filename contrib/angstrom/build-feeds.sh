@@ -276,6 +276,7 @@ do
                       task-opie-apps \
                       task-opie-games \
                       task-proper-tools \
+                      task-xqtlauncher \
                       tasks \
                       texinfo \
                       thttpd \
@@ -295,6 +296,7 @@ do
                       viking \
                       vlc \
                       vpnc \
+                      w3cat \
                       wifi-radar \
                       win4 \
                       wpa-gui \
