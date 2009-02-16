@@ -3,9 +3,9 @@ index 489439d..2c6305b 100644
 --- a/arch/arm/mach-omap2/usb-ehci.c
 +++ b/arch/arm/mach-omap2/usb-ehci.c
 @@ -152,9 +152,7 @@ static void setup_ehci_io_mux(void)
+ 
  void __init usb_ehci_init(void)
  {
- #if     defined(CONFIG_USB_EHCI_HCD) || defined(CONFIG_USB_EHCI_HCD_MODULE)
 -	/* Setup Pin IO MUX for EHCI */
 -	if (cpu_is_omap34xx())
 -		setup_ehci_io_mux();
