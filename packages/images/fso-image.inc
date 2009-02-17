@@ -1,9 +1,6 @@
 #------------------------------------------------------
-# freesmartphone.org Image Recipe
+# freesmartphone.org Image Recipe Include
 #------------------------------------------------------
-
-PV = "1.1"
-PR = "r4"
 
 # no languages for now
 IMAGE_LINGUAS = ""
