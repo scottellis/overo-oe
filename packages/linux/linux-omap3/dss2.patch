@@ -9168,10 +9168,10 @@ index 0000000..1171163
 +MODULE_LICENSE("GPL");
 diff --git a/drivers/video/omap2/displays/panel-samsung-lte430wq-f0c.c b/drivers/video/omap2/displays/panel-samsung-lte430wq-f0c.c
 new file mode 100644
-index 0000000..e4bb781
+index 0000000..dcbe616
 --- /dev/null
 +++ b/drivers/video/omap2/displays/panel-samsung-lte430wq-f0c.c
-@@ -0,0 +1,108 @@
+@@ -0,0 +1,109 @@
 +/*
 + * LCD panel driver for Samsung LTE430WQ-F0C
 + *
@@ -9262,6 +9262,7 @@ index 0000000..e4bb781
 +		.vbp		= 12-10,
 +	},
 +
++	.recommended_bpp = 16,
 +	.config = OMAP_DSS_LCD_TFT | OMAP_DSS_LCD_IHS | OMAP_DSS_LCD_IVS,
 +};
 +
