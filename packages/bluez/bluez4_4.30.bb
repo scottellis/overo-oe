@@ -4,7 +4,7 @@ PRIORITY = "optional"
 DEPENDS = "gst-plugins-base alsa-lib libusb-compat libusb1 dbus-glib"
 HOMEPAGE = "http://www.bluez.org"
 LICENSE = "GPL"
-PR = "r2"
+PR = "r0"
 
 SRC_URI = "\
   http://www.kernel.org/pub/linux/bluetooth/bluez-${PV}.tar.gz \
@@ -38,6 +38,12 @@ EXTRA_OECONF = "\
   --enable-initscripts \
   --disable-pcmciarules \
 "
+
+do_install_append() {
+        install -m 0644 ${S}/audio/audio.conf ${D}/${sysconfdir}/bluetooth/
+        install -m 0644 ${S}/network/network.conf ${D}/${sysconfdir}/bluetooth/
+        install -m 0644 ${S}/input/input.conf ${D}/${sysconfdir}/bluetooth/
+}
 
 PACKAGES =+ "gst-plugin-bluez libasound-module-bluez"
 
