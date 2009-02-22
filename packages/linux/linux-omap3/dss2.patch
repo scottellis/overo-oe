@@ -5403,9 +5403,9 @@ index b38b295..5a3d3ce 100644
 --- a/arch/arm/mach-omap2/board-n800.c
 +++ b/arch/arm/mach-omap2/board-n800.c
 @@ -26,6 +26,7 @@
- #include <linux/i2c.h>
  #include <linux/i2c/lm8323.h>
  #include <linux/i2c/menelaus.h>
+ #include <linux/i2c/lp5521.h>
 +#include <linux/omapfb.h>
  #include <mach/hardware.h>
  #include <asm/mach-types.h>

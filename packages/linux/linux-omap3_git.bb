@@ -7,7 +7,7 @@ COMPATIBLE_MACHINE = "beagleboard|omap3evm|overo"
 
 DEFAULT_PREFERENCE = "-1"
 
-SRCREV = "f8e6da117f1609d2eae0df4b2055238cbce1fad3"
+SRCREV = "af9b42cda273c31996c548a076e884fb1082ac75"
 
 PV = "2.6.29-rc5+${PR}+git${SRCREV}"
 PR = "r1"
@@ -22,12 +22,10 @@ SRC_URI_append = " \
            file://fix-install.patch;patch=1 \
            file://fix-audio-capture.patch;patch=1 \
            file://beagle-asoc.patch;patch=1 \
-           file://smsc911x.patch;patch=1 \
            file://smsc911x-1.patch;patch=1 \
            file://smsc911x-2.patch;patch=1 \
            file://smsc911x-3.patch;patch=1 \
            file://smsc911x-4.patch;patch=1 \
-           file://ads7846.patch;patch=1 \
            file://dss2.patch;patch=1 \
            file://musb-otg.patch;patch=1 \
           "
