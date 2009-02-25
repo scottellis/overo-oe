@@ -2,57 +2,241 @@
 <chapter id="chapter_getting_oe">
   <title>Getting Started</title>
 
+  <section id="gettingoe_directory_setup">
+    <title>OpenEmbedded Directory Structure</title>
+
+    <para>Before you begin downloading OpenEmbedded, you need to setup your
+    working environment.</para>
+
+	<para>The first step is to decide where on your system you wish to
+    work. This document will use the <varname>$OEBASE</varname> variable to
+    denote the base directory of the OpenEmbedded environment. For
+    example, <varname>$OEBASE</varname> could
+    be <literal>/home/joe/work/oe</literal>.</para>
+
+    <para>The base directory of your OpenEmbedded environment
+    (<varname>$OEBASE</varname>) is the location where sources will be checked
+    out (or unpacked). You must choose a location with <emphasis>no symlinks
+    above it</emphasis>.</para>
+
+	<para>To create the directory structure:
+
+    <screen>
+$ mkdir -p $OEBASE/build/conf
+$ cd $OEBASE</screen>
+
+	The <literal>$OEBASE/build</literal> directory will contain your
+	local configurations and extensions to the OpenEmbedded system which allow
+	you to build your applications and images.
+    </para>
+
+	<para>The <varname>$OEBASE</varname> will also contain both bitbake/ and
+	openembedded/ directories. These will be discussed in
+	<xref linkend="gettingoe_getting_bitbake"/> and
+	<xref linkend="gettingoe_getting_oe"/>.
+	</para>
+  </section>
+
   <section id="gettingoe_getting_bitbake">
     <title>Getting <application>BitBake</application></title>
 
-    <para>The required version of <application>BitBake</application> is
-    changing rapidly. At the time of writing (end 2007)
-    <application>BitBake</application> 1.8.latest was required.</para>
+    <para>Before using OE, you must first obtain the build tool it needs:
+    bitbake.</para>
 
-    <para>A safe method is to get the <application>BitBake</application> from
-    a stable Subversion branch (those with an even minor number). <screen>
-<command>svn</command> co http://svn.berlios.de/svnroot/repos/bitbake/branches/bitbake-1.8
-...
-A   bitbake-1.8/classes/base.bbclass
-U   bitbake-1.8
-At revision 827.
-            </screen> <application>BitBake</application> is checked out now;
-    this completes the first and most critical dependency of OpenEmbedded.
-    Issuing <command>svn</command> <command>up</command> in the
-    <emphasis>bitbake-1.8</emphasis> directory will update
-    <application>BitBake</application> to the latest stable version, but
-    generally it is a good idea to stick with a specific known working version
-    of <application>BitBake</application> until OpenEmbedded asks you to
-    upgrade.</para>
+    <para>It is recommended to run bitbake without installing it, as a sibling
+    directory of <literal>openembedded/</literal>
+    and <literal>build/</literal> directories. Indeed, as bitbake is written
+    in python it does not need compilation for being used. You'll just have to
+    set the PATH variable so that the BitBake tools are accessible (see
+    <xref linkend="gettingoe_configuring_oe"/>).</para>
+
+	<section><title>Getting <application>BitBake</application> Using Subversion</title>
+	  <para>To checkout the latest version of the BitBake 1.8 branch, use the
+		following command:
+		<screen>
+$ cd $OEBASE
+$ <command>svn</command> co svn://svn.berlios.de/bitbake/branches/bitbake-1.8/ bitbake
+</screen>
+	  </para>
+
+	  <para><application>BitBake</application> is checked out now and
+		the <varname>$OEBASE</varname> directory will contain
+		a <literal>bitbake/</literal> subdirectory.</para>
+
+	  <para>If you need to access a Subversion server through a proxy, see the
+		<ulink url="http://subversion.tigris.org/faq.html#proxy">SVN FAQ</ulink>
+	  </para>
+	</section>
+
+	<section><title>Updating <application>BitBake</application></title>
+	  <para>Bitbake is being revised fairly often. Periodically it's a good
+		idea to check the repository of bitbake stable branches to see if a
+		new stable branch is available or if the current branch has been
+		revised. Compare your existing bitbake directory with the latest
+		bitbake branch in the repository. Your existing bitbake branch and
+		its 'last changed revision' number can be found as follows:
+
+		<screen>$ cd $OEBASE/bitbake; svn info</screen>
+
+		If there is a new stable branch, you will want to move or delete
+		your existing bitbake directory and repeat the process listed above
+		under "To obtain bitbake". If there is no new branch, it is easy to
+		update bitbake:
+
+		<screen>$ cd $OEBASE/bitbake; svn update</screen>
+	  </para>
+	</section>
   </section>
+
 
   <section id="gettingoe_getting_oe">
     <title>Getting OpenEmbedded</title>
 
-    <para>The OpenEmbedded metadata has a high rate of development, so it's a
-    good idea to stay up to date. You'll need monotone 0.28 to get the
-    metadata and stay up to date. Monotone is available in most distributions
-    and has binaries at <ulink url="http://venge.net/monotone/">Monotone
-    homepage</ulink>.</para>
+    <para><emphasis>Note:</emphasis> Once upon a time OpenEmbedded used
+      Monotone for version control. If you have an OE Monotone repository on
+      your computer, you should replace it with the Git repository.</para>
 
-    <para>Next step is getting snapshot of database. <screen>
-wget http://openembedded.org/snapshots/OE.mtn.bz2 http://openembedded.org/snapshots/OE.mtn.bz2.md5
-</screen> Or if you have monotone 0.30 or later: <screen>
-wget http://www.openembedded.org/snapshots/OE-this-is-for-mtn-0.30.mtn.bz2 
-wget http://www.openembedded.org/snapshots/OE-this-is-for-mtn-0.30.mtn.bz2.md5
-</screen> Then verify integrity of snapshot by checking md5sum. <screen>
-md5sum -c OE.mtn.bz2.md5sum
-</screen> Then unpack database. <screen>
-bunzip OE.mtn.bz2
-</screen> Finally checkout the development branch. <screen>
-mtn --db=OE.mtn co -b org.openembedded.dev
-</screen></para>
+    <para>The OpenEmbedded metadata has a high rate of development, so it's a
+      good idea to stay up to date. You'll need Git to get the metadata and
+      stay up to date. Git is available in most distributions and has binaries
+      at <ulink url="http://git-scm.com/">Git homepage</ulink>.</para>
+
+    <section><title>Checking Out OpenEmbedded With Git</title>
+      <para>Once you have installed Git, checkout the OpenEmbedded repository:
+        <screen>
+$ cd $OEBASE
+$ git clone git://git.openembedded.net/openembedded</screen>
+        The <literal>$OEBASE/openembedded/</literal> directory should now
+        exist.</para>
+    </section>
+
+    <section><title>Updating OpenEmbedded</title>
+      <para>The <literal>org.openembedded.dev</literal> branch of OpenEmbedded
+        is updated very frequently (as much as several times an hour). The
+        distro branches are not updated as much but still fairly often. It
+        seems good practice to update your OpenEmbedded tree at least
+        daily. To do this, run:
+        <screen>
+$ cd $OEBASE
+$ git pull</screen>
+      </para>
+    </section>
+    <section><title>Changing Branches</title>
+      <para>Working with multiple branches is very easy to do with Git. The
+        OpenEmbedded repository holds many branches. To list all branches, use this command:
+        <screen>$ git branch -a</screen>
+        Branch names that begin with <literal>origin/</literal> denote
+        branches that exist on the remote server. The name with a * in front
+        of it is the branch currently checked out. If you want to work with a
+        remote branch, you must first create a local copy of it. The following
+        command will create a local copy of a remote branch:
+        <screen>$ git branch &lt;local_name&gt; &lt;remote_name&gt;</screen>
+        To change branches, use this command:
+        <screen>$ git checkout &lt;branch_name&gt;</screen>
+        There are more complicated branch operations that can be done with git,
+        but those are beyond the scope of this document.</para>
+    </section>
   </section>
 
   <section id="gettingoe_configuring_oe">
     <title>Configuring OpenEmbedded</title>
 
-    <para>This section is a stub, help us by expanding it</para>
+    <para>At this point, your <literal>$OEBASE/</literal> directory should
+      contain at least the following subdirectories:
+      <itemizedlist>
+        <listitem><simpara><literal>build/</literal></simpara></listitem>
+        <listitem><simpara><literal>bitbake/</literal></simpara></listitem>
+        <listitem><simpara><literal>openembedded/</literal></simpara></listitem>
+      </itemizedlist>
+    </para>
+
+    <section><title>Environment Setup</title>
+      <para>There are a few environment variables that you will need to set
+        before you can build software for OpenEmbedded using BitBake. You will
+        need to set these variables every time you open a terminal for
+        development. You can automate this in
+        <filename>~/.profile</filename>, <filename>/etc/profile</filename>, or
+        perhaps use a script to set the necessary variables for using BitBake.
+      </para>
+
+      <para>Since the path to your OpenEmbedded installation will be used in
+        many places, setting it in your environment will allow you to use
+        the <varname>$OEBASE</varname> variable in all pathes and make it
+        easier to change in the future should the need arise. To
+        set <varname>$OEBASE</varname> if you use a Bourne like shell
+        <footnote>
+          <para>If you use a CSH like shell (e.g. on a FreeBSD system), you
+            will set environment variables like this:
+            <screen>
+$ setenv VAR_NAME "VAR_VALUE"</screen>
+          </para>
+        </footnote>, do this:
+
+        <screen>
+$ export OEBASE=/path/to/your/oe/installation</screen>
+
+      </para>
+
+      <para>If you followed the recommendation to use BitBake from svn, you
+        will need to add the path to the BitBake executable to
+        your <varname>PATH</varname> environment variable like this:
+
+        <screen>
+$ export PATH=$OEBASE/bitbake/bin:$PATH</screen>
+      </para>
+
+      <para>In order for bitbake to find the configuration files for
+        OpenEmbedded, you will need to set the <varname>BBPATH</varname>
+        variable.
+
+        <screen>
+$ export BBPATH=$OEBASE/build:$OEBASE/openembedded</screen>
+      </para>
+
+      <para>Finally, if you wish to allow BitBake to inherit
+        the <varname>$OEBASE</varname> variable from the environment, you will
+        need to set the <varname>BB_ENV_EXTRAWHITE</varname> variable:
+
+        <screen>
+$ export BB_ENV_EXTRAWHITE="OEBASE"</screen>
+
+        Note the absence of the "$" character which implies that you are
+        setting <varname>BB_ENV_EXTRAWHITE</varname> to the variable name, not
+        the variable value.
+      </para>
+    </section>
+
+    <section><title>Local Configuration</title>
+      <para>It is now time to create your local configuration. While you could
+        copy the default <filename>local.conf.sample</filename> like this:
+
+        <screen>
+$ cd $OEBASE
+$ cp openembedded/conf/local.conf.sample build/conf/local.conf
+$ vi build/conf/local.conf</screen>
+
+        It is actually recommended to start smaller and
+        keep <filename>local.conf.sample</filename> in the background. Add
+        entries from there step-by-step as you understand and need
+        them. Please, do not just edit
+        <filename>build/conf/local.conf.sample</filename> but
+        actually <emphasis>READ</emphasis> it (read it and then edit it).
+      </para>
+
+      <para>For building an <literal>org.openembedded.dev</literal> branch, in
+        your <filename>local.conf</filename> file, you should have at least
+        the following three
+        entries: <varname>BBFILES</varname>, <varname>DISTRO</varname>
+        and <varname>MACHINE</varname>. For example, consider the following
+        mininal <literal>local.conf</literal> file for the &Aring;ngstr&ouml;m
+        distribution and the Openmoko gta01 machine:
+
+        <screen>
+BBFILES = "${OEBASE}/openembedded/packages/*/*.bb"
+DISTRO = "angstrom-2008.1"
+MACHINE = "om-gta01"</screen>
+      </para>
+    </section>
   </section>
 
   <section id="gettingoe_building_software">
