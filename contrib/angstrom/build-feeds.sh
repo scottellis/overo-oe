@@ -83,12 +83,14 @@ do
                       bonjour \
                       camera-assistant \
                       cdparanoia \
+                      cdstatus \
                       checkers \
                       cherokee \
                       claws-mail \
                       connman \
                       connman-gnome \
                       contacts \
+                      cron \
                       cvs \
                       cwiid \
                       dates \

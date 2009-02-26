@@ -9,7 +9,7 @@ MAJV = "${@bb.data.getVar('PV',d,1)[:3]}"
 
 SRC_URI = "\
   http://download.gnome.org/sources/vala/${MAJV}/vala-${PV}.tar.bz2 \
-  file://expose-bytesarray-struct.patch;patch=1 \
+  file://static-dbus-methods.patch;patch=1 \
 "
 S = "${WORKDIR}/vala-${PV}"
 
