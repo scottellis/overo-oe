@@ -7,10 +7,10 @@ COMPATIBLE_MACHINE = "beagleboard|omap3evm|overo"
 
 DEFAULT_PREFERENCE = "-1"
 
-SRCREV = "1a19ce1c6a029c0ef00059129ce4b8c64a2925c6"
+SRCREV = "2bf450019410d15dbce63893d3f91e076a5a70c0"
 
 PV = "2.6.29-rc6+${PR}+git${SRCREV}"
-PR = "r0"
+PR = "r1"
 
 SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/tmlind/linux-omap-2.6.git;branch=master;protocol=git \
 	   file://defconfig \
@@ -29,7 +29,8 @@ SRC_URI_append = " \
            file://dss2.patch;patch=1 \
            file://musb-otg.patch;patch=1 \
            file://mmc.patch;patch=1 \
-          "
+#           file://ehci.patch;patch=1 \
+           "
 
 SRC_URI_append_beagleboard = " \
            file://beagle-ehci.patch;patch=1 \
