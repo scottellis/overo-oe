@@ -10,7 +10,7 @@ DEFAULT_PREFERENCE = "-1"
 SRCREV = "2bf450019410d15dbce63893d3f91e076a5a70c0"
 
 PV = "2.6.29-rc6+${PR}+git${SRCREV}"
-PR = "r1"
+PR = "r2"
 
 SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/tmlind/linux-omap-2.6.git;branch=master;protocol=git \
 	   file://defconfig \
@@ -29,6 +29,7 @@ SRC_URI_append = " \
            file://dss2.patch;patch=1 \
            file://musb-otg.patch;patch=1 \
            file://mmc.patch;patch=1 \
+           file://ads7846-detection.patch;patch=1 \
 #           file://ehci.patch;patch=1 \
            "
 
