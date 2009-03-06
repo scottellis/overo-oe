@@ -1,5 +1,5 @@
 LICENSE = "GPL"
-DEPENDS = "libxml2 gconf gnutls avahi dbus bzip2 gnome-mime-data zlib"
+DEPENDS = "libxml2 gconf gnutls avahi dbus dbus-glib bzip2 gnome-mime-data zlib"
 RRECOMMENDS = "gnome-vfs-plugin-file shared-mime-info"
 # Some legacy packages will require gnome-mime-data to be installed, but use of
 # it is deprecated.
@@ -21,10 +21,14 @@ EXTRA_OECONF = " \
                  --with-samba-includes=${STAGING_INCDIR} \
                "
 
-FILES_${PN} += " ${libdir}/vfs ${datadir}/dbus-1/services"
-FILES_${PN}-dbg += " ${libdir}/gnome-vfs-2.0/modules/.debug"
-FILES_${PN}-dev += " ${libdir}/gnome-vfs-2.0/include"
-FILES_${PN}-doc += " ${datadir}/gtk-doc"
+FILES_${PN} += "${libdir}/vfs ${datadir}/dbus-1/services"
+FILES_${PN}-dbg += "${libdir}/gnome-vfs-2.0/modules/.debug"
+FILES_${PN}-dev += "\
+  ${libdir}/gnome-vfs-2.0/include \
+  ${libdir}/gnome-vfs-2.0/modules/*.a \
+  ${libdir}/gnome-vfs-2.0/modules/*.la \
+"
+FILES_${PN}-doc += "${datadir}/gtk-doc"
 
 do_stage () {
 autotools_stage_all
