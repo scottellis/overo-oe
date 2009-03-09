@@ -15,16 +15,16 @@ index dee0417..2f8a952 100644
 -		"video=${videospec},mode:${videomode} " \
 +		"vram=${vram} " \
 +		"omapfb.mode=dvi:${dvimode} " \
-+		"omap-dss.def_disp=${defaultdisplay} " \
-+		"omap-dss.debug=y " \
++		"omapfb.debug=y " \
++		"omapdss.def_disp=${defaultdisplay} " \
  		"root=/dev/mmcblk0p2 rw " \
  		"rootfstype=ext3 rootwait\0" \
  	"nandargs=setenv bootargs console=${console} " \
 -		"video=${videospec},mode:${videomode} " \
 +		"vram=${vram} " \
 +		"omapfb.mode=dvi:${dvimode} " \
-+		"omap-dss.def_disp=${defaultdisplay} " \
-+		"omap-dss.debug=y " \
++		"omapfb.debug=y " \
++		"omapdss.def_disp=${defaultdisplay} " \
  		"root=/dev/mtdblock4 rw " \
  		"rootfstype=jffs2\0" \
  	"loadbootscript=fatload mmc 0 ${loadaddr} boot.scr\0" \
@@ -45,16 +45,16 @@ index dee0417..2f8a952 100644
 -		"video=${videospec},mode:${videomode} " \
 +		"vram=${vram} " \
 +		"omapfb.mode=dvi:${dvimode} " \
-+		"omap-dss.def_disp=${defaultdisplay} " \
-+		"omap-dss.debug=y " \
++		"omapfb.debug=y " \
++		"omapdss.def_disp=${defaultdisplay} " \
  		"root=/dev/mmcblk0p2 rw " \
  		"rootfstype=ext3 rootwait\0" \
  	"nandargs=setenv bootargs console=${console} " \
 -		"video=${videospec},mode:${videomode} " \
 +		"vram=${vram} " \
 +		"omapfb.mode=dvi:${dvimode} " \
-+		"omap-dss.def_disp=${defaultdisplay} " \
-+		"omap-dss.debug=y " \
++		"omapfb.debug=y " \
++		"omapdss.def_disp=${defaultdisplay} " \
  		"root=/dev/mtdblock4 rw " \
  		"rootfstype=jffs2\0" \
  	"loadbootscript=fatload mmc 0 ${loadaddr} boot.scr\0" \
