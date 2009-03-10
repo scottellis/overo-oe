@@ -2,7 +2,7 @@ DESCRIPTION = "Common X11 scripts and support files"
 LICENSE = "GPL"
 SECTION = "x11"
 RDEPENDS_${PN} = "xmodmap xrandr xdpyinfo"
-PR = "r12"
+PR = "r13"
 
 PACKAGE_ARCH = "all"
 
@@ -24,4 +24,5 @@ do_install_append() {
 do_install_append_angstrom() {
         install -m 0644 ${WORKDIR}/default.xmodmap ${D}/etc/X11/
 	install -m 0755 ${WORKDIR}/98keymap-fixup  ${D}/etc/X11/Xinit.d/
+	mv		"${D}/etc/X11/Xinit.d/30xTs_Calibrate" "${D}/etc/X11/Xinit.d/50xTs_Calibrate"
 }
