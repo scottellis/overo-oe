@@ -13,6 +13,7 @@ IMAGE_INSTALL += " \
   angstrom-gpe-task-pim \
   angstrom-gpe-task-settings \
   angstrom-x11-base-depends \
+  cellwriter \
   midori \
   psplash \
   xmms \
