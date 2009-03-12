@@ -62,6 +62,14 @@ do_install () {
 	install -d ${D}${libdir}
 	cp -pP ${BINLOCATION}/*.so* ${D}${libdir}
 
+	install -d ${D}${prefix}/demos/OGLES
+	rm -rf ${S}/GFX_Linux_SDK/OGLES/SDKPackage/Binaries/CommonX11/Demos/*/.debug
+	cp -pPR  ${S}/GFX_Linux_SDK/OGLES/SDKPackage/Binaries/CommonX11/Demos/* ${D}${prefix}/demos/OGLES
+
+	install -d ${D}${prefix}/demos/OGLES2
+	rm -rf ${S}/GFX_Linux_SDK/OGLES2/SDKPackage/Binaries/X11/Demos/*/.debug
+	cp -pPR  ${S}/GFX_Linux_SDK/OGLES2/SDKPackage/Binaries/X11/Demos/* ${D}${prefix}/demos/OGLES2
+
 	install -d ${D}${bindir}/
 	cp -pP ${BINLOCATION}/*_test ${D}${bindir}/
 	cp -pP ${BINLOCATION}/gl2info ${D}${bindir}/
