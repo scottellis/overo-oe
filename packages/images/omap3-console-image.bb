@@ -32,8 +32,9 @@ IMAGE_INSTALL += " \
   libertas-sd-firmware \
   rt73-firmware \
   zd1211-firmware \
-#  omap3-sgx-modules \
  "
+
+IMAGE_INSTALL_beagleboard += libgles-omap3
 
 IMAGE_PREPROCESS_COMMAND = "create_etc_timestamp"
 
