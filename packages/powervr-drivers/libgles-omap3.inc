@@ -29,7 +29,7 @@ PACKAGES += " xserver-kdrive-powervrsgx ${PN}-tests"
 
 FILES_${PN} = "${sysconfdir} ${libdir}/lib*.so.* ${bindir}/pvrsrvinit"
 FILES_xserver-kdrive-powervrsgx = "${bindir}/Xsgx"
-FILES_${PN}-tests = "${bindir}/*"
+FILES_${PN}-tests = "${bindir}/*  ${prefix}/demos"
 
 RRECOMMENDS_${PN} = "${PN}-tests \
                      omap3-sgx-modules"
@@ -62,14 +62,6 @@ do_install () {
 	install -d ${D}${libdir}
 	cp -pP ${BINLOCATION}/*.so* ${D}${libdir}
 
-	install -d ${D}${prefix}/demos/OGLES
-	rm -rf ${S}/GFX_Linux_SDK/OGLES/SDKPackage/Binaries/CommonX11/Demos/*/.debug
-	cp -pPR  ${S}/GFX_Linux_SDK/OGLES/SDKPackage/Binaries/CommonX11/Demos/* ${D}${prefix}/demos/OGLES
-
-	install -d ${D}${prefix}/demos/OGLES2
-	rm -rf ${S}/GFX_Linux_SDK/OGLES2/SDKPackage/Binaries/X11/Demos/*/.debug
-	cp -pPR  ${S}/GFX_Linux_SDK/OGLES2/SDKPackage/Binaries/X11/Demos/* ${D}${prefix}/demos/OGLES2
-
 	install -d ${D}${bindir}/
 	cp -pP ${BINLOCATION}/*_test ${D}${bindir}/
 	cp -pP ${BINLOCATION}/gl2info ${D}${bindir}/
@@ -79,8 +71,7 @@ do_install () {
 	cp -pP ${BINLOCATION}/pvrsrvinit ${D}${bindir}/
 	cp -pP ${BINLOCATION}/xgles1test1 ${D}${bindir}/
 
-	cp -pP ${BINLOCATION}/freedesktop/kdrive/usr/X11R6_SGX/bin/Xsgx || true
-	cp -pP ${BINLOCATION}/freedesktop/usr/X11R6_SGX/bin/Xsgx ${D}${bindir}/ || true
+	cp -pP ${BINLOCATION}/freedesktop/kdrive/usr/X11R6_SGX/bin/Xsgx ${D}${bindir}/|| true
 
 	install -d ${D}${includedir}
 	cp -pPR ${S}/GFX_Linux_SDK/OGLES2/SDKPackage/Builds/OGLES2/Include/* ${D}${includedir}/
@@ -94,6 +85,12 @@ do_install () {
 	install -d ${D}${sysconfdir}
 	echo "[default]" > ${D}${sysconfdir}/powervr.ini
 	echo "WindowSystem=libpvrPVR2D_FRONTWSEGL.so" >> ${D}${sysconfdir}/powervr.ini
+
+	install -d ${D}${prefix}/demos/OGLES/
+	cp -pPR ${S}/GFX_Linux_SDK/OGLES/SDKPackage/Binaries/CommonX11/Demos/ ${D}${prefix}/demos/OGLES/
+
+	install -d ${D}${prefix}/demos/OGLES2
+	cp -pPR ${S}/GFX_Linux_SDK/OGLES2/SDKPackage/Binaries/X11/Demos/* ${D}${prefix}/demos/OGLES2
 }
 
 do_stage () {
@@ -103,9 +100,9 @@ do_stage () {
 
 	install -d ${STAGING_INCDIR}
 	cp -pPR ${S}/GFX_Linux_SDK/OGLES2/SDKPackage/Builds/OGLES2/Include/*  ${STAGING_INCDIR}/
-    cp -pPR ${S}/GFX_Linux_SDK/OGLES/SDKPackage/Builds/OGLES/Include/* ${STAGING_INCDIR}/
-    cp -pPR ${S}/GFX_Linux_SDK/OGLES/SDKPackage/Builds/OGLES/LinuxOMAP3/Include/GLES/* ${STAGING_INCDIR}/GLES/
-    cp -pPr ${S}/GFX_Linux_SDK/OGLES2/SDKPackage/Builds/OGLES2/LinuxOMAP3/Include/GLES/* ${STAGING_INCDIR}/GLES2/
+	cp -pPR ${S}/GFX_Linux_SDK/OGLES/SDKPackage/Builds/OGLES/Include/* ${STAGING_INCDIR}/
+	cp -pPR ${S}/GFX_Linux_SDK/OGLES/SDKPackage/Builds/OGLES/LinuxOMAP3/Include/GLES/* ${STAGING_INCDIR}/GLES/
+	cp -pPR ${S}/GFX_Linux_SDK/OGLES2/SDKPackage/Builds/OGLES2/LinuxOMAP3/Include/GLES/* ${STAGING_INCDIR}/GLES2/
 }
 
 pkg_postinst() {
