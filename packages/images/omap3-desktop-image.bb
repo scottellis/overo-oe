@@ -69,3 +69,8 @@ IMAGE_INSTALL += " \
   ${XSERVER} \
   xdg-utils \
  "
+
+IMAGE_INSTALL_append_beagleboard = " \
+  libgles-omap3-demos \
+ "
+

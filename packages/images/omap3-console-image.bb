@@ -34,7 +34,9 @@ IMAGE_INSTALL += " \
   zd1211-firmware \
  "
 
-IMAGE_INSTALL_append_beagleboard = " libgles-omap3 "
+IMAGE_INSTALL_append_beagleboard = " \
+  libgles-omap3 \
+ "
 
 IMAGE_PREPROCESS_COMMAND = "create_etc_timestamp"
 
