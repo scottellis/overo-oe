@@ -25,11 +25,29 @@ S = "${WORKDIR}/OMAP35x_Graphics_SDK_${SGXPV}"
 
 BINLOCATION ?= "${S}/gfx_rel"
 
-PACKAGES += " xserver-kdrive-powervrsgx ${PN}-tests"
+PACKAGES += " xserver-kdrive-powervrsgx ${PN}-tests ${PN}-demos"
 
 FILES_${PN} = "${sysconfdir} ${libdir}/lib*.so.* ${bindir}/pvrsrvinit"
 FILES_xserver-kdrive-powervrsgx = "${bindir}/Xsgx"
-FILES_${PN}-tests = "${bindir}/*  ${prefix}/demos"
+FILES_${PN}-tests = "${bindir}"
+FILES_${PN}-demos = "${prefix}/demos"
+FILES_${PN}-dbg = "${libdir}/.debug/* ${bindir}/.debug/* \
+	${prefix}/demos/OGLES/Demos/ChameleonMan/.debug/* \
+	${prefix}/demos/OGLES/Demos/EvilSkull/.debug/* \
+	${prefix}/demos/OGLES/Demos/FiveSpheres/.debug/* \
+	${prefix}/demos/OGLES/Demos/Lighting/.debug/* \
+	${prefix}/demos/OGLES/Demos/PhantomMask/.debug/* \
+	${prefix}/demos/OGLES/Demos/Vase/.debug/* \
+	${prefix}/demos/OGLES/Demos/Mouse/.debug/* \
+	${prefix}/demos/OGLES/Demos/Skybox/.debug/* \
+	${prefix}/demos/OGLES/Demos/Particles/.debug/* \
+	${prefix}/demos/OGLES/Demos/OptimizeMesh/.debug/* \
+	${prefix}/demos/OGLES/Demos/Trilinear/.debug/* \
+	${prefix}/demos/OGLES/Demos/UserClipPlanes/.debug/* \
+	${prefix}/demos/OGLES/Demos/PolyBump/.debug/* \
+	${prefix}/demos/OGLES/Demos/ShadowTechniques/.debug/* \
+	${prefix}/demos/OGLES2/Skybox2/.debug/* \
+	"
 
 RRECOMMENDS_${PN} = "${PN}-tests \
                      omap3-sgx-modules"
@@ -87,10 +105,10 @@ do_install () {
 	echo "WindowSystem=libpvrPVR2D_FRONTWSEGL.so" >> ${D}${sysconfdir}/powervr.ini
 
 	install -d ${D}${prefix}/demos/OGLES/
-	cp -pPR ${S}/GFX_Linux_SDK/OGLES/SDKPackage/Binaries/CommonX11/Demos/ ${D}${prefix}/demos/OGLES/
+	cp -pPR ${S}/GFX_Linux_SDK/OGLES/SDKPackage/Binaries/CommonX11/Demos ${D}${prefix}/demos/OGLES/
 
 	install -d ${D}${prefix}/demos/OGLES2
-	cp -pPR ${S}/GFX_Linux_SDK/OGLES2/SDKPackage/Binaries/X11/Demos/* ${D}${prefix}/demos/OGLES2
+	cp -pPR ${S}/GFX_Linux_SDK/OGLES2/SDKPackage/Binaries/X11/Demos ${D}${prefix}/demos/OGLES2
 }
 
 do_stage () {
