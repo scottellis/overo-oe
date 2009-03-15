@@ -17,5 +17,6 @@ IMAGE_INSTALL += " \
   midori \
   psplash \
   xmms \
+  xrefresh \
  "
 
