@@ -1,21 +1,3 @@
-diff --git a/arch/arm/mach-omap2/mmc-twl4030.c b/arch/arm/mach-omap2/mmc-twl4030.c
-index 38a7c5e..f799557 100644
---- a/arch/arm/mach-omap2/mmc-twl4030.c
-+++ b/arch/arm/mach-omap2/mmc-twl4030.c
-@@ -432,11 +432,13 @@ void __init twl4030_mmc_init(struct twl4030_hsmmc_info *controllers)
- 			mmc->slots[0].ocr_mask = MMC1_OCR;
- 			break;
- 		case 2:
-+			//pr_err("MMC%d: setting power options, tranceiver= %d\n", c->mmc, c->transceiver);
- 			mmc->slots[0].set_power = twl_mmc2_set_power;
- 			if (c->transceiver)
- 				mmc->slots[0].ocr_mask = MMC2_OCR;
- 			else
- 				mmc->slots[0].ocr_mask = MMC_VDD_165_195;
-+			//pr_err("MMC%d: setting power options, ocr_mask= %08x\n", c->mmc, mmc->slots[0].ocr_mask);
- 			break;
- 		case 3:
- 			mmc->slots[0].set_power = twl_mmc3_set_power;
 diff --git a/drivers/mmc/core/core.c b/drivers/mmc/core/core.c
 index df6ce4a..f298f40 100644
 --- a/drivers/mmc/core/core.c
@@ -24,7 +6,8 @@ index df6ce4a..f298f40 100644
  		 * First we search for SDIO...
  		 */
  		err = mmc_send_io_op_cond(host, 0, &ocr);
-+		pr_warning("mmc_rescan: card ocr from io_op=0x%08x, err = %d\n", ocr, err);
++		pr_warning("%s: mmc_rescan - card ocr from io_op=0x%08x, err = %d\n", mmc_hostname(host), ocr, err);
  		if (!err) {
  			if (mmc_attach_sdio(host, ocr))
  				mmc_power_off(host);
+
