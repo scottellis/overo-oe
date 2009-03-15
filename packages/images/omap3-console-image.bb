@@ -16,6 +16,7 @@ IMAGE_INSTALL += " \
   alsa-utils-aplay \
   bash \
   bzip2 \
+  devmem2 \
   dosfstools \
   e2fsprogs-mke2fs \
   fbgrab \
