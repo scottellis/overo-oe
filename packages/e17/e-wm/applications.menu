@@ -100,6 +100,16 @@
       </And>
     </Include>
   </Menu>
+
+  <Menu>
+    <Name>Demos</Name>
+    <Directory>Demos.directory</Directory>
+    <Include>
+      <And>
+        <Category>Demos</Category>
+      </And>
+    </Include>
+  </Menu>
   
 </Menu>
 
