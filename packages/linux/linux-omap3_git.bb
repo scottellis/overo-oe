@@ -7,9 +7,9 @@ COMPATIBLE_MACHINE = "beagleboard|omap3evm|overo"
 
 #DEFAULT_PREFERENCE = "-1"
 
-SRCREV = "1e2ac5195c19b440b0b095262e11b54c093916ee"
+SRCREV = "a504a838e680d623745d3ad9cee1405ddbc4cbf9"
 
-PV = "2.6.29-rc7+${PR}+git${SRCREV}"
+PV = "2.6.29-rc8+${PR}+git${SRCREV}"
 PR = "r1"
 
 SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/tmlind/linux-omap-2.6.git;branch=master;protocol=git \
@@ -26,6 +26,9 @@ SRC_URI_append = " \
            file://smsc911x-2.patch;patch=1 \
            file://smsc911x-3.patch;patch=1 \
            file://smsc911x-4.patch;patch=1 \
+           file://regulator-01.patch;patch=1 \
+           file://regulator-02.patch;patch=1 \
+#           file://regulator-03.patch;patch=1 \
            file://dss2.patch;patch=1 \
            file://musb-otg.patch;patch=1 \
            file://mmc.patch;patch=1 \
