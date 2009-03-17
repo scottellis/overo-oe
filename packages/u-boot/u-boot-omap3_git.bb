@@ -2,10 +2,10 @@ require u-boot.inc
 
 FILESDIR = "${@os.path.dirname(bb.data.getVar('FILE',d,1))}/u-boot-omap3-git/"
 
-SRCREV = "ddbf14ef6257ed6ba3abf969bcbc82fa495addfb"
+SRCREV = "4eecc8639b2a45f156246aced55ea1cbcc63afff"
 
-PV = "2009.01+${PR}+git${SRCREV}"
-PR = "r11"
+PV = "2009.03+${PR}+git${SRCREV}"
+PR = "r1"
 PE = "1"
 
 SRC_URI = "git://gitorious.org/u-boot-omap3/mainline.git;branch=omap3-dev;protocol=git \
