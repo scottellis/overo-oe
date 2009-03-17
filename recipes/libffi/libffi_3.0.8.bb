@@ -1,34 +1,30 @@
-require packages/gcc/gcc-common.inc
+require recipes/gcc/gcc-common.inc
+
 SECTION = "libs"
 DESCRIPTION = "Foreign Function Interface library"
 LICENSE = "libffi"
 PRIORITY = "optional"
 
-inherit autotools gettext
+inherit autotools gettext pkgconfig
 
-PR = "r1"
+PR = "r0"
 
-PACKAGES = "${PN}-dbg ${PN} ${PN}-dev"
+S = "${WORKDIR}/${P}"
+
+B = "${S}/build.${HOST_SYS}.${TARGET_SYS}"
+
+PACKAGES = "${PN}-dbg ${PN} ${PN}-dev ${PN}-doc"
 
 FILES_${PN} = "${libdir}/libffi.so.*"
 
 FILES_${PN}-dev = "${includedir}/${TARGET_SYS}/ffi* \
 		   ${libdir}/libffi.a \
 		   ${libdir}/libffi.la \
-		   ${libdir}/libffi.so"
+		   ${libdir}/libffi.so \
+			 ${libdir}/pkgconfig \
+"
 
-GCC_VER = "${@bb.data.getVar('PV',d,1).split('gcc')[1]}"
-
-SRC_URI = "${GNU_MIRROR}/gcc/gcc-${GCC_VER}/gcc-${GCC_VER}.tar.bz2 \
-	   "
-
-MIRRORS_prepend () {
-${GNU_MIRROR}/gcc/	http://gcc.get-software.com/releases/
-${GNU_MIRROR}/gcc/	http://mirrors.rcn.net/pub/sourceware/gcc/releases/
-}
-
-S = "${WORKDIR}/gcc-${GCC_VER}/libffi"
-B = "${S}/build.${HOST_SYS}.${TARGET_SYS}"
+SRC_URI = "ftp://sourceware.org/pub/libffi/${P}.tar.gz"
 
 EXTRA_OECONF = "--with-gnu-ld \
                 --enable-shared \
@@ -57,10 +53,8 @@ EXTRA_OECONF_FPU = "${@get_gcc_fpu_setting(bb, d)}"
 TARGET_CC_ARCH_append_armv6 = " -D__SOFTFP__"
 TARGET_CC_ARCH_append_armv7a = " -D__SOFTFP__"
 
-
-do_configure () {
-	(cd ${S}/.. && gnu-configize) || die "failure running gnu-configize"
-	oe_runconf
+do_compile_append() {
+	sed -i -e"s|\\${libdir}/${P}/include|\\${includedir}/${TARGET_SYS}/|" libffi.pc
 }
 
 do_install_append() {
@@ -71,8 +65,8 @@ do_install_append() {
 install_libffi_headers() {
 	# follow Debian and move this to $includedir/${TARGET_SYS}
 	install -d ${D}${includedir}/${TARGET_SYS}
-	mv ${D}${libdir}/gcc/${TARGET_SYS}/${GCC_VER}/include/ffitarget.h ${D}${includedir}/${TARGET_SYS}
-	mv ${D}${libdir}/gcc/${TARGET_SYS}/${GCC_VER}/include/ffi.h ${D}${includedir}/${TARGET_SYS}
+	mv ${D}${libdir}/${P}/include/ffitarget.h ${D}${includedir}/${TARGET_SYS}
+	mv ${D}${libdir}/${P}/include/ffi.h ${D}${includedir}/${TARGET_SYS}
 }
 
 ffi_include = "ffi.h ffitarget.h"
