@@ -2,7 +2,7 @@
 Name=Skybox2 Demo
 Comment=OGLES2 Demo
 Exec=/usr/demos/OGLES2/Skybox2/OGLESSkybox2
-Icon=star.png
+Icon=star
 Type=Application
-Categories=Demos
+Categories=Demos;
 

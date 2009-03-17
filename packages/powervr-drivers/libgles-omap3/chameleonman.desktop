@@ -2,7 +2,7 @@
 Name=ChameleonMan Demo
 Comment=OGLES Demo
 Exec=/usr/demos/OGLES/ChameleonMan/OGLESChameleonMan
-Icon=star.png
+Icon=star
 Type=Application
-Categories=Demos
+Categories=Demos;
 

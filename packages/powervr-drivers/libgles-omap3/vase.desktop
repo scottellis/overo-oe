@@ -2,7 +2,7 @@
 Name=Vase Demo
 Comment=OGLES Demo
 Exec=/usr/demos/OGLES/Vase/OGLESVase
-Icon=star.png
+Icon=star
 Type=Application
-Categories=Demos
+Categories=Demos;
 

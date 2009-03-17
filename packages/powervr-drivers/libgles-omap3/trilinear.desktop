@@ -2,7 +2,7 @@
 Name=Trilinear Demo
 Comment=OGLES Demo
 Exec=/usr/demos/OGLES/Trilinear/OGLESTrilinear
-Icon=star.png
+Icon=star
 Type=Application
-Categories=Demos
+Categories=Demos;
 

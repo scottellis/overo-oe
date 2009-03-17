@@ -2,7 +2,7 @@
 Name=Shaders Demo
 Comment=OGLES2 Demo
 Exec=/usr/demos/OGLES2/Shaders/OGLESShaders
-Icon=star.png
+Icon=star
 Type=Application
-Categories=Demos
+Categories=Demos;
 

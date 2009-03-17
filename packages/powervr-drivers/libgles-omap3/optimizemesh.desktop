@@ -2,7 +2,7 @@
 Name=OptimizeMesh Demo
 Comment=OGLES Demo
 Exec=/usr/demos/OGLES/OptimizeMesh/OGLESOptimizeMesh
-Icon=star.png
+Icon=star
 Type=Application
-Categories=Demos
+Categories=Demos;
 

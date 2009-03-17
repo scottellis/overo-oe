@@ -2,7 +2,7 @@
 Name=FiveSpheres Demo
 Comment=OGLES Demo
 Exec=/usr/demos/OGLES/FiveSpheres/OGLESFiveSpheres
-Icon=star.png
+Icon=star
 Type=Application
-Categories=Demos
+Categories=Demos;
 

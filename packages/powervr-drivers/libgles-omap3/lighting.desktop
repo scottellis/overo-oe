@@ -2,7 +2,7 @@
 Name=Lighting Demo
 Comment=OGLES Demo
 Exec=/usr/demos/OGLES/Lighting/OGLESLighting
-Icon=star.png
+Icon=star
 Type=Application
-Categories=Demos
+Categories=Demos;
 

@@ -2,7 +2,7 @@
 Name=Mouse Demo
 Comment=OGLES Demo
 Exec=/usr/demos/OGLES/Mouse/OGLESMouse
-Icon=star.png
+Icon=star
 Type=Application
-Categories=Demos
+Categories=Demos;
 

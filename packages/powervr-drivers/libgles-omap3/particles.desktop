@@ -2,7 +2,7 @@
 Name=Particles Demo
 Comment=OGLES Demo
 Exec=/usr/demos/OGLES/Particles/OGLESParticles
-Icon=star.png
+Icon=star
 Type=Application
-Categories=Demos
+Categories=Demos;
 

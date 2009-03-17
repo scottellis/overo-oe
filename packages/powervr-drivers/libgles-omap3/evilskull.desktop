@@ -2,7 +2,7 @@
 Name=EvilSkull Demo
 Comment=OGLES Demo
 Exec=/usr/demos/OGLES/EvilSkull/OGLESEvilSkull
-Icon=star.png
+Icon=star
 Type=Application
-Categories=Demos
+Categories=Demos;
 

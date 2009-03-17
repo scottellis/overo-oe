@@ -2,7 +2,7 @@
 Name=PolyBump Demo
 Comment=OGLES Demo
 Exec=/usr/demos/OGLES/PolyBump/OGLESPolyBump
-Icon=star.png
+Icon=star
 Type=Application
-Categories=Demos
+Categories=Demos;
 
