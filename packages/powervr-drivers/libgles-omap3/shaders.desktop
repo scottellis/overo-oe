@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Shaders Demo
 Comment=OGLES2 Demo
-Exec=/usr/demos/OGLES2/Shaders/OGLESShaders
+Exec=/usr/demos/OGLES2/Shaders/OGLES2Shaders
 Icon=star
 Type=Application
 Categories=Demos;
