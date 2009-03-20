@@ -68,6 +68,7 @@ IMAGE_INSTALL += " \
   psplash \
   ${XSERVER} \
   xdg-utils \
+  xlsfonts \
   xrefresh \
  "
 

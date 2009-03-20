@@ -16,6 +16,7 @@ IMAGE_INSTALL += " \
   cellwriter \
   midori \
   psplash \
+  xlsfonts \
   xmms \
   xrefresh \
  "
