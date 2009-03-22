@@ -7,22 +7,17 @@
 DESCRIPTION = "Alsa Scenario Files"
 LICENSE = "MIT"
 PV = "0.2.0"
-PR = "r4"
+PR = "r7"
 
 SRC_URI = "\
   file://asound.conf \
   file://asound.state \
   file://alsa-state \
-  file://asound.state \
-  file://at91sam9263ek/asound.state \
-  file://spitz/asound.state \
-  file://tosa/asound.state \
-  file://c7x0/asound.state \
-  file://magician/asound.state \
-  file://hx4700/asound.state \
-  file://nokia800/asound.state \
-  file://akita/asound.state \
 "
+
+SRC_URI_append_a780 = "file://gsmhandset.state \
+                       file://gsmheadset.state \
+		       file://stereoout.state"
 
 inherit update-rc.d
 
@@ -48,7 +43,7 @@ CONFFILES_${PN} = "${sysconfdir}/asound.conf"
 
 FILES_alsa-states = "${sysconfdir}/*.state"
 
-PACKAGE_ARCH_${PN} = "all"
+PACKAGE_ARCH = "all"
 PACKAGE_ARCH_alsa-states = "${MACHINE_ARCH}"
 
 pkg_postinst_${PN}() {
