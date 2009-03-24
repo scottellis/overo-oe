@@ -5162,7 +5162,7 @@ index 0000000..bf7dbe1
 +CONFIG_HAS_IOPORT=y
 +CONFIG_HAS_DMA=y
 diff --git a/arch/arm/mach-omap1/board-nokia770.c b/arch/arm/mach-omap1/board-nokia770.c
-index 0b47a9b..2e075ed 100644
+index 8780ca6..ca4680a 100644
 --- a/arch/arm/mach-omap1/board-nokia770.c
 +++ b/arch/arm/mach-omap1/board-nokia770.c
 @@ -18,6 +18,7 @@
@@ -5182,7 +5182,7 @@ index 0b47a9b..2e075ed 100644
  #include <mach/mmc.h>
  #include <mach/usb.h>
 diff --git a/arch/arm/mach-omap2/board-3430sdp.c b/arch/arm/mach-omap2/board-3430sdp.c
-index 08f0d41..1692749 100644
+index 0a1099e..e2637ca 100644
 --- a/arch/arm/mach-omap2/board-3430sdp.c
 +++ b/arch/arm/mach-omap2/board-3430sdp.c
 @@ -37,6 +37,7 @@
@@ -5193,7 +5193,7 @@ index 08f0d41..1692749 100644
  
  #include <mach/control.h>
  
-@@ -240,14 +241,229 @@ static struct spi_board_info sdp3430_spi_board_info[] __initdata = {
+@@ -242,24 +243,238 @@ static struct spi_board_info sdp3430_spi_board_info[] __initdata = {
  	},
  };
  
@@ -5330,15 +5330,15 @@ index 08f0d41..1692749 100644
 +	gpio_direction_output(backlight_gpio, 0);
 +}
 +
-+static struct omap_display_data sdp3430_display_data = {
++static struct omap_dss_display_config sdp3430_display_data = {
 +	.type = OMAP_DISPLAY_TYPE_DPI,
 +	.name = "lcd",
 +	.panel_name = "sharp-ls037v7dw01",
 +	.u.dpi.data_lines = 16,
 +	.panel_enable = sdp3430_panel_enable_lcd,
 +	.panel_disable = sdp3430_panel_disable_lcd,
- };
- 
++};
++
 +static int sdp3430_panel_enable_dvi(struct omap_display *display)
 +{
 +	if (lcd_enabled) {
@@ -5361,7 +5361,7 @@ index 08f0d41..1692749 100644
 +}
 +
 +
-+static struct omap_display_data sdp3430_display_data_dvi = {
++static struct omap_dss_display_config sdp3430_display_data_dvi = {
 +	.type = OMAP_DISPLAY_TYPE_DPI,
 +	.name = "dvi",
 +	.panel_name = "panel-generic",
@@ -5392,7 +5392,7 @@ index 08f0d41..1692749 100644
 +			TWL4030_VDAC_DEV_GRP);
 +}
 +
-+static struct omap_display_data sdp3430_display_data_tv = {
++static struct omap_dss_display_config sdp3430_display_data_tv = {
 +	.type = OMAP_DISPLAY_TYPE_VENC,
 +	.name = "tv",
 +	.u.venc.type = OMAP_DSS_VENC_TYPE_SVIDEO,
@@ -5400,7 +5400,7 @@ index 08f0d41..1692749 100644
 +	.panel_disable = sdp3430_panel_disable_tv,
 +};
 +
-+static struct omap_dss_platform_data sdp3430_dss_data = {
++static struct omap_dss_board_info sdp3430_dss_data = {
 +	.dsi_power_up = sdp3430_dsi_power_up,
 +	.dsi_power_down = sdp3430_dsi_power_down,
 +	.num_displays = 3,
@@ -5417,9 +5417,20 @@ index 08f0d41..1692749 100644
 +	.dev            = {
 +		.platform_data = &sdp3430_dss_data,
 +	},
-+};
-+
-+
+ };
+ 
+ static struct regulator_consumer_supply sdp3430_vdac_supply = {
+ 	.supply		= "vdac",
+-	.dev		= &sdp3430_lcd_device.dev,
++	.dev		= &sdp3430_dss_device.dev,
+ };
+ 
+ static struct regulator_consumer_supply sdp3430_vdvi_supply = {
+ 	.supply		= "vdvi",
+-	.dev		= &sdp3430_lcd_device.dev,
++	.dev		= &sdp3430_dss_device.dev,
+ };
+ 
  static struct platform_device *sdp3430_devices[] __initdata = {
  	&sdp3430_smc91x_device,
 -	&sdp3430_lcd_device,
@@ -5427,7 +5438,7 @@ index 08f0d41..1692749 100644
  };
  
  static inline void __init sdp3430_init_smc91x(void)
-@@ -294,13 +510,8 @@ static struct omap_uart_config sdp3430_uart_config __initdata = {
+@@ -306,13 +521,8 @@ static struct omap_uart_config sdp3430_uart_config __initdata = {
  	.enabled_uarts	= ((1 << 0) | (1 << 1) | (1 << 2)),
  };
  
@@ -5441,7 +5452,7 @@ index 08f0d41..1692749 100644
  };
  
  static int sdp3430_batt_table[] = {
-@@ -651,6 +862,7 @@ static void __init omap_3430sdp_init(void)
+@@ -681,6 +891,7 @@ static void __init omap_3430sdp_init(void)
  	omap_serial_init();
  	usb_musb_init();
  	usb_ehci_init();
@@ -5450,7 +5461,7 @@ index 08f0d41..1692749 100644
  
  static void __init omap_3430sdp_map_io(void)
 diff --git a/arch/arm/mach-omap2/board-n800.c b/arch/arm/mach-omap2/board-n800.c
-index 60a414c..565c6f6 100644
+index 60a414c..689c4db 100644
 --- a/arch/arm/mach-omap2/board-n800.c
 +++ b/arch/arm/mach-omap2/board-n800.c
 @@ -39,8 +39,9 @@
@@ -5464,7 +5475,7 @@ index 60a414c..565c6f6 100644
  
  #include <../drivers/cbus/tahvo.h>
  #include <../drivers/media/video/tcm825x.h>
-@@ -161,23 +162,175 @@ static struct omap_uart_config n800_uart_config __initdata = {
+@@ -161,23 +162,176 @@ static struct omap_uart_config n800_uart_config __initdata = {
  
  #include "../../../drivers/cbus/retu.h"
  
@@ -5558,7 +5569,7 @@ index 60a414c..565c6f6 100644
 +	return 0;
 +}
 +
-+static struct omap_display_data n800_dsi_display_data = {
++static struct omap_dss_display_config n800_dsi_display_data = {
 +	.type = OMAP_DISPLAY_TYPE_DBI,
 +	.name = "lcd",
 +	.ctrl_name = "ctrl-blizzard",
@@ -5575,9 +5586,9 @@ index 60a414c..565c6f6 100644
 +		/* 8 for cmd mode, 16 for pixel data. ctrl-blizzard handles switching */
 +		.data_lines = 8,
 +	},
-+	.priv = 0, // XXX used for panel datalines
++	.panel_data = 0, // XXX used for panel datalines
 +};
-+static struct omap_dss_platform_data n800_dss_data = {
++static struct omap_dss_board_info n800_dss_data = {
 +	.num_displays = 1,
 +	.displays = {
 +		&n800_dsi_display_data,
@@ -5603,7 +5614,8 @@ index 60a414c..565c6f6 100644
 +	conf = omap_get_config(OMAP_TAG_LCD, struct omap_lcd_config);
 +	if (conf != NULL) {
 +		n800_dsi_display_data.panel_reset_gpio = conf->nreset_gpio;
-+		n800_dsi_display_data.priv = (void*)(u32)conf->data_lines; // XXX
++		n800_dsi_display_data.panel_data =
++			(void*)(u32)conf->data_lines; // XXX
 +		//printk("\n\nTULI %d\n\n", conf->data_lines);
 +	} else {
 +		printk("\n\nEI TULLU MIOTÄÄÄ\n\n");
@@ -5650,7 +5662,7 @@ index 60a414c..565c6f6 100644
  static void mipid_shutdown(struct mipid_platform_data *pdata)
  {
  	if (pdata->nreset_gpio != -1) {
-@@ -191,6 +344,7 @@ static struct mipid_platform_data n800_mipid_platform_data = {
+@@ -191,6 +345,7 @@ static struct mipid_platform_data n800_mipid_platform_data = {
  	.shutdown = mipid_shutdown,
  };
  
@@ -5658,7 +5670,7 @@ index 60a414c..565c6f6 100644
  static void __init mipid_dev_init(void)
  {
  	const struct omap_lcd_config *conf;
-@@ -201,26 +355,9 @@ static void __init mipid_dev_init(void)
+@@ -201,26 +356,9 @@ static void __init mipid_dev_init(void)
  		n800_mipid_platform_data.data_lines = conf->data_lines;
  	}
  }
@@ -5687,7 +5699,7 @@ index 60a414c..565c6f6 100644
  static void blizzard_enable_clocks(int enable)
  {
  	if (enable)
-@@ -265,14 +402,12 @@ static void __init blizzard_dev_init(void)
+@@ -265,14 +403,12 @@ static void __init blizzard_dev_init(void)
  	gpio_direction_output(N800_BLIZZARD_POWERDOWN_GPIO, 1);
  
  	blizzard_get_clocks();
@@ -5704,7 +5716,7 @@ index 60a414c..565c6f6 100644
  	{ OMAP_TAG_TMP105,			&n800_tmp105_config },
  };
  
-@@ -379,7 +514,7 @@ static struct omap2_mcspi_device_config tsc2005_mcspi_config = {
+@@ -379,7 +515,7 @@ static struct omap2_mcspi_device_config tsc2005_mcspi_config = {
  
  static struct spi_board_info n800_spi_board_info[] __initdata = {
  	{
@@ -5713,7 +5725,7 @@ index 60a414c..565c6f6 100644
  		.bus_num	= 1,
  		.chip_select	= 1,
  		.max_speed_hz	= 4000000,
-@@ -404,7 +539,7 @@ static struct spi_board_info n800_spi_board_info[] __initdata = {
+@@ -404,7 +540,7 @@ static struct spi_board_info n800_spi_board_info[] __initdata = {
  
  static struct spi_board_info n810_spi_board_info[] __initdata = {
  	{
@@ -5722,7 +5734,7 @@ index 60a414c..565c6f6 100644
  		.bus_num	 = 1,
  		.chip_select	 = 1,
  		.max_speed_hz	 = 4000000,
-@@ -572,6 +707,7 @@ static struct platform_device *n800_devices[] __initdata = {
+@@ -572,6 +708,7 @@ static struct platform_device *n800_devices[] __initdata = {
  #if defined(CONFIG_CBUS_RETU) && defined(CONFIG_LEDS_OMAP_PWM)
  	&n800_keypad_led_device,
  #endif
@@ -5730,7 +5742,7 @@ index 60a414c..565c6f6 100644
  };
  
  #ifdef CONFIG_MENELAUS
-@@ -703,9 +839,10 @@ void __init nokia_n800_common_init(void)
+@@ -703,9 +840,10 @@ void __init nokia_n800_common_init(void)
  	if (machine_is_nokia_n810())
  		i2c_register_board_info(2, n810_i2c_board_info_2,
  			ARRAY_SIZE(n810_i2c_board_info_2));
@@ -5744,7 +5756,7 @@ index 60a414c..565c6f6 100644
  }
  
  static void __init nokia_n800_init(void)
-@@ -726,6 +863,7 @@ void __init nokia_n800_map_io(void)
+@@ -726,6 +864,7 @@ void __init nokia_n800_map_io(void)
  	omap_board_config_size = ARRAY_SIZE(n800_config);
  
  	omap2_set_globals_242x();
@@ -5753,7 +5765,7 @@ index 60a414c..565c6f6 100644
  }
  
 diff --git a/arch/arm/mach-omap2/board-omap3beagle.c b/arch/arm/mach-omap2/board-omap3beagle.c
-index 346351e..31037b2 100644
+index 346351e..30fc926 100644
 --- a/arch/arm/mach-omap2/board-omap3beagle.c
 +++ b/arch/arm/mach-omap2/board-omap3beagle.c
 @@ -30,6 +30,7 @@
@@ -5871,7 +5883,7 @@ index 346351e..31037b2 100644
  
 -	gpio_request(gpio + 1, "EHCI_nOC");
 -	gpio_direction_input(gpio + 1);
-+static struct omap_display_data beagle_display_data_dvi = {
++static struct omap_dss_display_config beagle_display_data_dvi = {
 +	.type = OMAP_DISPLAY_TYPE_DPI,
 +	.name = "dvi",
 +	.panel_name = "panel-generic",
@@ -5918,7 +5930,7 @@ index 346351e..31037b2 100644
 +			TWL4030_VDAC_DEV_GRP);
 +}
 +
-+static struct omap_display_data beagle_display_data_tv = {
++static struct omap_dss_display_config beagle_display_data_tv = {
 +	.type = OMAP_DISPLAY_TYPE_VENC,
 +	.name = "tv",
 +	.u.venc.type = OMAP_DSS_VENC_TYPE_SVIDEO,
@@ -5929,7 +5941,7 @@ index 346351e..31037b2 100644
 -static struct platform_device omap3_beagle_lcd_device = {
 -	.name		= "omap3beagle_lcd",
 -	.id		= -1,
-+static struct omap_dss_platform_data beagle_dss_data = {
++static struct omap_dss_board_info beagle_dss_data = {
 +	.num_displays = 2,
 +	.displays = {
 +		&beagle_display_data_dvi,
@@ -6370,7 +6382,7 @@ index 024d7c4..7a720ec 100644
  
  static void __init omap3_evm_map_io(void)
 diff --git a/arch/arm/mach-omap2/board-overo.c b/arch/arm/mach-omap2/board-overo.c
-index 071f4b0..c03a122 100644
+index 071f4b0..bac60e3 100644
 --- a/arch/arm/mach-omap2/board-overo.c
 +++ b/arch/arm/mach-omap2/board-overo.c
 @@ -41,6 +41,7 @@
@@ -6435,7 +6447,7 @@ index 071f4b0..c03a122 100644
 +	dvi_enabled = 0;
 +}
 +
-+static struct omap_display_data overo_display_data_dvi = {
++static struct omap_dss_display_config overo_display_data_dvi = {
 +	.type = OMAP_DISPLAY_TYPE_DPI,
 +	.name = "dvi",
 +	.panel_name = "panel-generic",
@@ -6464,16 +6476,16 @@ index 071f4b0..c03a122 100644
 +	lcd_enabled = 0;
 +}
 +
-+static struct omap_display_data overo_display_data_lcd = {
++static struct omap_dss_display_config overo_display_data_lcd = {
 +	.type = OMAP_DISPLAY_TYPE_DPI,
-+	.name = "lcd",
++	.name = "lcd43",
 +	.panel_name = "samsung-lte430wq-f0c",
 +	.u.dpi.data_lines = 24,
 +	.panel_enable = overo_panel_enable_lcd,
 +	.panel_disable = overo_panel_disable_lcd,
 + };
 +
-+static struct omap_dss_platform_data overo_dss_data = {
++static struct omap_dss_board_info overo_dss_data = {
 +	.num_displays = 2,
 +	.displays = {
 +		&overo_display_data_dvi,
@@ -6596,10 +6608,10 @@ index 3746222..1dc3415 100644
  void omapfb_reserve_sdram(void) {}
 diff --git a/arch/arm/plat-omap/include/mach/display.h b/arch/arm/plat-omap/include/mach/display.h
 new file mode 100644
-index 0000000..b0880a5
+index 0000000..6288353
 --- /dev/null
 +++ b/arch/arm/plat-omap/include/mach/display.h
-@@ -0,0 +1,519 @@
+@@ -0,0 +1,520 @@
 +/*
 + * linux/include/asm-arm/arch-omap/display.h
 + *
@@ -6778,7 +6790,7 @@ index 0000000..b0880a5
 +int dsi_vc_send_null(int channel);
 +
 +/* Board specific data */
-+struct omap_display_data {
++struct omap_dss_display_config {
 +	enum omap_display_type type;
 +
 +	union {
@@ -6817,7 +6829,8 @@ index 0000000..b0880a5
 +	const char *ctrl_name;
 +	const char *panel_name;
 +
-+	void *priv;
++	void *panel_data;
++	void *ctrl_data;
 +
 +	/* platform specific enable/disable */
 +	int (*panel_enable)(struct omap_display *display);
@@ -6831,12 +6844,12 @@ index 0000000..b0880a5
 +struct device;
 +
 +/* Board specific data */
-+struct omap_dss_platform_data {
++struct  omap_dss_board_info {
 +	unsigned (*get_last_off_on_transaction_id)(struct device *dev);
 +	int (*dsi_power_up)(void);
 +	void (*dsi_power_down)(void);
 +	int num_displays;
-+	struct omap_display_data *displays[];
++	struct omap_dss_display_config *displays[];
 +};
 +
 +struct omap_ctrl {
@@ -7047,7 +7060,7 @@ index 0000000..b0880a5
 +
 +	enum omap_dss_display_state state;
 +
-+	struct omap_display_data hw_config;	/* board specific data */
++	struct omap_dss_display_config hw_config; /* board specific data */
 +	struct omap_ctrl *ctrl;			/* static common data */
 +	struct omap_panel *panel;		/* static common data */
 +
@@ -9285,7 +9298,7 @@ index 0000000..8382acb
 +MODULE_LICENSE("GPL");
 diff --git a/drivers/video/omap2/displays/panel-n800.c b/drivers/video/omap2/displays/panel-n800.c
 new file mode 100644
-index 0000000..1171163
+index 0000000..91d3e37
 --- /dev/null
 +++ b/drivers/video/omap2/displays/panel-n800.c
 @@ -0,0 +1,435 @@
@@ -9446,7 +9459,7 @@ index 0000000..1171163
 +
 +	pn800_write(md, 0xc2, (u8 *)initpar, sizeof(initpar));
 +
-+	data_lines = (int)md->display->hw_config.priv; // XXX
++	data_lines = (int)md->display->hw_config.panel_data; // XXX
 +
 +	set_data_lines(md, data_lines);
 +}
@@ -9726,10 +9739,10 @@ index 0000000..1171163
 +MODULE_LICENSE("GPL");
 diff --git a/drivers/video/omap2/displays/panel-samsung-lte430wq-f0c.c b/drivers/video/omap2/displays/panel-samsung-lte430wq-f0c.c
 new file mode 100644
-index 0000000..e4bb781
+index 0000000..4618956
 --- /dev/null
 +++ b/drivers/video/omap2/displays/panel-samsung-lte430wq-f0c.c
-@@ -0,0 +1,108 @@
+@@ -0,0 +1,109 @@
 +/*
 + * LCD panel driver for Samsung LTE430WQ-F0C
 + *
@@ -9820,6 +9833,7 @@ index 0000000..e4bb781
 +		.vbp		= 12-10,
 +	},
 +
++	.recommended_bpp = 16,
 +	.config = OMAP_DSS_LCD_TFT | OMAP_DSS_LCD_IHS | OMAP_DSS_LCD_IVS,
 +};
 +
@@ -10065,7 +10079,7 @@ index 0000000..980c72c
 +omapdss-$(CONFIG_OMAP2_DSS_DSI) += dsi.o
 diff --git a/drivers/video/omap2/dss/core.c b/drivers/video/omap2/dss/core.c
 new file mode 100644
-index 0000000..2ef9839
+index 0000000..ae7cd06
 --- /dev/null
 +++ b/drivers/video/omap2/dss/core.c
 @@ -0,0 +1,641 @@
@@ -10136,7 +10150,7 @@ index 0000000..2ef9839
 +/* CONTEXT */
 +static unsigned dss_get_ctx_id(void)
 +{
-+	struct omap_dss_platform_data *pdata = core.pdev->dev.platform_data;
++	struct omap_dss_board_info *pdata = core.pdev->dev.platform_data;
 +
 +	if (!pdata->get_last_off_on_transaction_id)
 +		return 0;
@@ -10475,7 +10489,7 @@ index 0000000..2ef9839
 +/* DSI powers */
 +int dss_dsi_power_up(void)
 +{
-+	struct omap_dss_platform_data *pdata = core.pdev->dev.platform_data;
++	struct omap_dss_board_info *pdata = core.pdev->dev.platform_data;
 +
 +	if (!pdata->dsi_power_up)
 +		return 0; /* presume power is always on then */
@@ -10485,7 +10499,7 @@ index 0000000..2ef9839
 +
 +void dss_dsi_power_down(void)
 +{
-+	struct omap_dss_platform_data *pdata = core.pdev->dev.platform_data;
++	struct omap_dss_board_info *pdata = core.pdev->dev.platform_data;
 +
 +	if (!pdata->dsi_power_down)
 +		return;
@@ -10712,7 +10726,7 @@ index 0000000..2ef9839
 +
 diff --git a/drivers/video/omap2/dss/dispc.c b/drivers/video/omap2/dss/dispc.c
 new file mode 100644
-index 0000000..fcc3574
+index 0000000..ae3e9d0
 --- /dev/null
 +++ b/drivers/video/omap2/dss/dispc.c
 @@ -0,0 +1,2781 @@
@@ -12900,7 +12914,7 @@ index 0000000..fcc3574
 +static void omap_dispc_set_irqs(void)
 +{
 +	unsigned long flags;
-+	u32 mask = dispc.irq_error_mask;
++	u32 mask = dispc.irq_error_mask | DISPC_IRQ_WAKEUP;
 +	int i;
 +	struct omap_dispc_isr_data *isr_data;
 +
@@ -13499,7 +13513,7 @@ index 0000000..fcc3574
 +
 diff --git a/drivers/video/omap2/dss/display.c b/drivers/video/omap2/dss/display.c
 new file mode 100644
-index 0000000..a86a1a8
+index 0000000..1a55010
 --- /dev/null
 +++ b/drivers/video/omap2/dss/display.c
 @@ -0,0 +1,687 @@
@@ -13876,7 +13890,7 @@ index 0000000..a86a1a8
 +
 +void dss_init_displays(struct platform_device *pdev)
 +{
-+	struct omap_dss_platform_data *pdata = pdev->dev.platform_data;
++	struct omap_dss_board_info *pdata = pdev->dev.platform_data;
 +	int i, r;
 +
 +	INIT_LIST_HEAD(&display_list);
@@ -14577,10 +14591,10 @@ index 0000000..b41b07e
 +
 diff --git a/drivers/video/omap2/dss/dsi.c b/drivers/video/omap2/dss/dsi.c
 new file mode 100644
-index 0000000..a537292
+index 0000000..ea5a58e
 --- /dev/null
 +++ b/drivers/video/omap2/dss/dsi.c
-@@ -0,0 +1,3707 @@
+@@ -0,0 +1,3693 @@
 +/*
 + * linux/drivers/video/omap2/dss/dsi.c
 + *
@@ -15583,9 +15597,6 @@ index 0000000..a537292
 +
 +	DSSDBG("dsi_pll_program\n");
 +
-+	enable_clocks(1);
-+	dsi_enable_pll_clock(1);
-+
 +	dsi.dsiphy = cinfo->dsiphy;
 +	dsi.ddr_clk = dsi.dsiphy / 4;
 +	dsi.dsi1_pll_fclk = cinfo->dsi1_pll_fclk;
@@ -15671,9 +15682,6 @@ index 0000000..a537292
 +
 +	DSSDBG("PLL config done\n");
 +err:
-+	enable_clocks(0);
-+	dsi_enable_pll_clock(0);
-+
 +	return r;
 +}
 +
@@ -15730,9 +15738,6 @@ index 0000000..a537292
 +	if (r)
 +		goto err1;
 +
-+	enable_clocks(0);
-+	dsi_enable_pll_clock(0);
-+
 +	DSSDBG("PLL init done\n");
 +
 +	return 0;
@@ -15746,6 +15751,9 @@ index 0000000..a537292
 +
 +void dsi_pll_uninit(void)
 +{
++	enable_clocks(0);
++	dsi_enable_pll_clock(0);
++
 +	dsi.pll_locked = 0;
 +	dsi_pll_power(DSI_PLL_POWER_OFF);
 +	dss_dsi_power_down();
@@ -16947,9 +16955,6 @@ index 0000000..a537292
 +	if (display->ctrl->pixel_size != 24)
 +		return -EINVAL;
 +
-+	enable_clocks(1);
-+	dsi_enable_pll_clock(1);
-+
 +	scr_width = ovl->info.screen_width;
 +	data = ovl->info.vaddr;
 +
@@ -17007,7 +17012,6 @@ index 0000000..a537292
 +				DSSERR("fifo stalls overflow, pixels left %d\n",
 +						pixels_left);
 +				dsi_if_enable(0);
-+				enable_clocks(0);
 +				return -EIO;
 +			}
 +		}
@@ -17020,7 +17024,6 @@ index 0000000..a537292
 +				DSSERR("fifo stalls overflow, pixels left %d\n",
 +					       pixels_left);
 +				dsi_if_enable(0);
-+				enable_clocks(0);
 +				return -EIO;
 +			}
 +		}
@@ -17031,7 +17034,6 @@ index 0000000..a537292
 +				DSSERR("fifo stalls overflow, pixels left %d\n",
 +					       pixels_left);
 +				dsi_if_enable(0);
-+				enable_clocks(0);
 +				return -EIO;
 +			}
 +		}
@@ -17063,9 +17065,6 @@ index 0000000..a537292
 +	}
 +
 +	perf_show("L4");
-+
-+	enable_clocks(0);
-+	dsi_enable_pll_clock(0);
 +
 +	return 0;
 +}
@@ -17179,13 +17178,9 @@ index 0000000..a537292
 +	dsi.update_region.h = h;
 +	dsi.update_region.bytespp = bytespp;
 +
-+	enable_clocks(1);
-+
 +	dispc_setup_partial_planes(display, &x, &y, &w, &h);
 +
 +	dispc_set_lcd_size(w, h);
-+
-+	enable_clocks(0);
 +}
 +
 +static void dsi_update_screen_dispc(struct omap_display *display)
@@ -17204,9 +17199,6 @@ index 0000000..a537292
 +	if (dsi.update_mode == OMAP_DSS_UPDATE_MANUAL)
 +		DSSDBG("dsi_update_screen_dispc(%d,%d %dx%d)\n",
 +				x, y, w, h);
-+
-+	enable_clocks(1);
-+	dsi_enable_pll_clock(1);
 +
 +	/* TODO: one packet could be longer, I think? Max is the line buffer */
 +	line_packet_len = w * bytespp + 1;	/* 1 byte for DCS cmd */
@@ -17297,9 +17289,6 @@ index 0000000..a537292
 +#ifdef CONFIG_OMAP2_DSS_FAKE_VSYNC
 +	dispc_fake_vsync_irq();
 +#endif
-+	enable_clocks(0);
-+	dsi_enable_pll_clock(0);
-+
 +	dsi.framedone_scheduled = 0;
 +
 +	/* XXX check that fifo is not full. otherwise we would sleep and never
@@ -17374,10 +17363,21 @@ index 0000000..a537292
 +		struct dsi_cmd_update *upd)
 +{
 +	int r;
-+	int x = upd->x, y = upd->y, w = upd->w, h = upd->h;
++	u16 x = upd->x, y = upd->y, w = upd->w, h = upd->h;
++	u16 dw, dh;
 +
 +	if (dsi.update_mode == OMAP_DSS_UPDATE_DISABLED)
 +		return 0;
++
++	display->get_resolution(display, &dw, &dh);
++	if  (x > dw || y > dh)
++		return 0;
++
++	if (x + w > dw)
++		w = dw - x;
++
++	if (y + h > dh)
++		h = dh - y;
 +
 +	if (dsi.update_mode == OMAP_DSS_UPDATE_MANUAL)
 +		DSSDBGF("%d,%d %dx%d", x, y, w, h);
@@ -21596,7 +21596,7 @@ index 0000000..fbff2b2
 +}
 diff --git a/drivers/video/omap2/dss/venc.c b/drivers/video/omap2/dss/venc.c
 new file mode 100644
-index 0000000..c0a514e
+index 0000000..aceed9f
 --- /dev/null
 +++ b/drivers/video/omap2/dss/venc.c
 @@ -0,0 +1,600 @@
@@ -21753,7 +21753,7 @@ index 0000000..c0a514e
 +
 +	.savid__eavid				= 0x06A70108,
 +	.flen__fal				= 0x00180270,
-+	.lal__phase_reset			= 0x00180270,
++	.lal__phase_reset			= 0x00040135,
 +	.hs_int_start_stop_x			= 0x00880358,
 +	.hs_ext_start_stop_x			= 0x000F035F,
 +	.vs_int_start_x				= 0x01A70000,
@@ -22913,10 +22913,10 @@ index 0000000..7f18d2a
 +
 diff --git a/drivers/video/omap2/omapfb/omapfb-main.c b/drivers/video/omap2/omapfb/omapfb-main.c
 new file mode 100644
-index 0000000..aef6eed
+index 0000000..e4186ec
 --- /dev/null
 +++ b/drivers/video/omap2/omapfb/omapfb-main.c
-@@ -0,0 +1,1937 @@
+@@ -0,0 +1,1944 @@
 +/*
 + * linux/drivers/video/omap2/omapfb-main.c
 + *
@@ -23312,6 +23312,13 @@ index 0000000..aef6eed
 +	yres_max = 2048;
 +
 +	bytespp = var->bits_per_pixel >> 3;
++
++	/* XXX: some applications seem to set virtual res to 0. */
++	if (var->xres_virtual == 0)
++		var->xres_virtual = var->xres;
++
++	if (var->yres_virtual == 0)
++		var->yres_virtual = var->yres;
 +
 +	if (var->xres_virtual < xres_min || var->yres_virtual < yres_min)
 +		return -EINVAL;

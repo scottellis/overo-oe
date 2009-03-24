@@ -7,10 +7,10 @@ COMPATIBLE_MACHINE = "beagleboard|omap3evm|overo"
 
 #DEFAULT_PREFERENCE = "-1"
 
-SRCREV = "f4223ec219313d631c3f620220ed23670c158a34"
+SRCREV = "90e758af52ba803cba233fabee81176d99589f09"
 
-PV = "2.6.29-rc8+${PR}+git${SRCREV}"
-PR = "r2"
+PV = "2.6.29-rcfinal+${PR}+git${SRCREV}"
+PR = "r0"
 
 SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/tmlind/linux-omap-2.6.git;branch=master;protocol=git \
 	   file://defconfig \
