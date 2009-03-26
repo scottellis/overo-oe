@@ -1,6 +1,6 @@
 SUMMARY = "Qt is a versatile cross-platform application framework -- this is the embedded version."
 SECTION = "libs"
-LICENSE = "GPL"
+LICENSE = "GPL QPL"
 PRIORITY = "optional"
 HOMEPAGE = "http://www.trolltech.com"
 DEPENDS += "tslib"
@@ -11,11 +11,12 @@ SRC_URI = "ftp://ftp.trolltech.com/qt/source/qt-embedded-linux-opensource-src-${
            file://0002-fix-resinit-declaration.patch;patch=1 \
            file://0003-no-tools.patch;patch=1 \
            file://0004-no-qmake.patch;patch=1 \
-           file://0005-fix-mkspecs.patch;patch=1 \
            file://0006-freetype-host-includes.patch;patch=1 \
            file://0007-openssl-host-includes.patch;patch=1 \
            file://0008-qt-lib-infix.patch;patch=1 \
            file://0009-support-2bpp.patch;patch=1 \
+           file://g++.conf \
+           file://linux.conf \
            "
 S = "${WORKDIR}/qt-embedded-linux-opensource-src-${PV}"
 

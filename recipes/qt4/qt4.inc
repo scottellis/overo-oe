@@ -23,7 +23,7 @@ EXTRA_ENV = 'QMAKE="${STAGING_BINDIR_NATIVE}/qmake2 -after \
 export QT_CONF_PATH="${WORKDIR}/qt.conf"
 
 # Library packages
-QT_LIB_NAMES = "Qt3Support QtAssistantClient QtCLucene QtCore QtDBus QtDesigner QtDesignerComponents QtGui QtHelp QtNetwork QtOpenGL QtScript QtSql QtSvg QtTest QtUiTools QtWebKit QtXml phonon"
+QT_LIB_NAMES = "Qt3Support QtAssistantClient QtCLucene QtCore QtDBus QtDesigner QtDesignerComponents QtGui QtHelp QtNetwork QtOpenGL QtScript QtScriptTools QtSql QtSvg QtTest QtUiTools QtWebKit QtXml phonon"
 python __anonymous () {
     import bb
 
@@ -88,7 +88,8 @@ do_configure() {
     unset QMAKESPEC
     unset QTDIR
     ln -sf ${STAGING_BINDIR_NATIVE}/qmake2 bin/qmake
-    ln -s linux-g++ mkspecs/${TARGET_OS}-oe-g++
+    ln -sf linux-g++ mkspecs/${TARGET_OS}-oe-g++
+    cp -f ${WORKDIR}/g++.conf ${WORKDIR}/linux.conf mkspecs/common/
 
     echo "[Paths]"                                 > $QT_CONF_PATH
     echo "Prefix=${prefix}"                       >> $QT_CONF_PATH
