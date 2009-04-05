@@ -171,6 +171,7 @@ def package_qa_get_elf(path, bits32):
 # 6 - .pc contains reference to /usr/include or workdir
 # 7 - the desktop file is not valid
 # 8 - .la contains reference to the workdir
+# 9 - LDFLAGS ignored
 
 def package_qa_clean_path(path,d):
     """ Remove the common prefix from the path. In this case it is the TMPDIR"""
@@ -343,6 +344,8 @@ def package_qa_hash_style(path, name, d, elf):
     gnu_hash = "--hash-style=gnu" in bb.data.getVar('LDFLAGS', d, True)
     if not gnu_hash:
         gnu_hash = "--hash-style=both" in bb.data.getVar('LDFLAGS', d, True)
+    if not gnu_hash:
+        return True
 
     objdump = bb.data.getVar('OBJDUMP', d, True)
     env_path = bb.data.getVar('PATH', d, True)
