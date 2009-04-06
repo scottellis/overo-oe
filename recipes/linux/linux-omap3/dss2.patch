@@ -317,14 +317,14 @@ index 0000000..9e902a2
 +
 diff --git a/arch/arm/configs/dss_omap3_beagle_defconfig b/arch/arm/configs/dss_omap3_beagle_defconfig
 new file mode 100644
-index 0000000..8a428db
+index 0000000..7143168
 --- /dev/null
 +++ b/arch/arm/configs/dss_omap3_beagle_defconfig
-@@ -0,0 +1,1369 @@
+@@ -0,0 +1,1371 @@
 +#
 +# Automatically generated make config: don't edit
-+# Linux kernel version: 2.6.29-rc3-omap1
-+# Mon Feb  2 12:09:46 2009
++# Linux kernel version: 2.6.29-omap1
++# Thu Apr  2 11:24:09 2009
 +#
 +CONFIG_ARM=y
 +CONFIG_SYS_SUPPORTS_APM_EMULATION=y
@@ -356,7 +356,7 @@ index 0000000..8a428db
 +CONFIG_BROKEN_ON_SMP=y
 +CONFIG_INIT_ENV_ARG_LIMIT=32
 +CONFIG_LOCALVERSION=""
-+# CONFIG_LOCALVERSION_AUTO is not set
++CONFIG_LOCALVERSION_AUTO=y
 +CONFIG_SWAP=y
 +CONFIG_SYSVIPC=y
 +CONFIG_SYSVIPC_SYSCTL=y
@@ -390,6 +390,7 @@ index 0000000..8a428db
 +CONFIG_INITRAMFS_SOURCE=""
 +CONFIG_CC_OPTIMIZE_FOR_SIZE=y
 +CONFIG_SYSCTL=y
++CONFIG_ANON_INODES=y
 +CONFIG_EMBEDDED=y
 +CONFIG_UID16=y
 +# CONFIG_SYSCTL_SYSCALL is not set
@@ -400,10 +401,8 @@ index 0000000..8a428db
 +CONFIG_PRINTK=y
 +CONFIG_BUG=y
 +CONFIG_ELF_CORE=y
-+CONFIG_COMPAT_BRK=y
 +CONFIG_BASE_FULL=y
 +CONFIG_FUTEX=y
-+CONFIG_ANON_INODES=y
 +CONFIG_EPOLL=y
 +CONFIG_SIGNALFD=y
 +CONFIG_TIMERFD=y
@@ -411,6 +410,7 @@ index 0000000..8a428db
 +CONFIG_SHMEM=y
 +CONFIG_AIO=y
 +CONFIG_VM_EVENT_COUNTERS=y
++CONFIG_COMPAT_BRK=y
 +CONFIG_SLAB=y
 +# CONFIG_SLUB is not set
 +# CONFIG_SLOB is not set
@@ -609,7 +609,7 @@ index 0000000..8a428db
 +#
 +CONFIG_ZBOOT_ROM_TEXT=0x0
 +CONFIG_ZBOOT_ROM_BSS=0x0
-+CONFIG_CMDLINE="root=/dev/nfs nfsroot=192.168.0.1:/home/user/buildroot ip=192.168.0.2:192.168.0.1:192.168.0.1:255.255.255.0:tgt:eth0:off rw console=ttyS2,115200n8"
++CONFIG_CMDLINE="root=/dev/nfs nfsroot=192.168.2.14:/tftpboot/rootfs ip=192.168.2.15 nolock,rsize=1024,wsize=1024 rw"
 +# CONFIG_XIP_KERNEL is not set
 +# CONFIG_KEXEC is not set
 +
@@ -646,8 +646,7 @@ index 0000000..8a428db
 +# Power management options
 +#
 +CONFIG_PM=y
-+CONFIG_PM_DEBUG=y
-+# CONFIG_PM_VERBOSE is not set
++# CONFIG_PM_DEBUG is not set
 +# CONFIG_SUSPEND is not set
 +# CONFIG_APM_EMULATION is not set
 +CONFIG_ARCH_SUSPEND_POSSIBLE=y
@@ -828,7 +827,6 @@ index 0000000..8a428db
 +# LPDDR flash memory drivers
 +#
 +# CONFIG_MTD_LPDDR is not set
-+# CONFIG_MTD_QINFO_PROBE is not set
 +
 +#
 +# UBI - Unsorted block images
@@ -988,7 +986,6 @@ index 0000000..8a428db
 +# CONFIG_LEGACY_PTYS is not set
 +# CONFIG_IPMI_HANDLER is not set
 +CONFIG_HW_RANDOM=y
-+# CONFIG_NVRAM is not set
 +# CONFIG_R3964 is not set
 +# CONFIG_RAW_DRIVER is not set
 +# CONFIG_TCG_TPM is not set
@@ -1007,7 +1004,6 @@ index 0000000..8a428db
 +# CONFIG_I2C_GPIO is not set
 +# CONFIG_I2C_OCORES is not set
 +CONFIG_I2C_OMAP=y
-+# CONFIG_I2C2_OMAP_BEAGLE is not set
 +# CONFIG_I2C_SIMTEC is not set
 +
 +#
@@ -1031,11 +1027,9 @@ index 0000000..8a428db
 +# CONFIG_SENSORS_PCA9539 is not set
 +# CONFIG_SENSORS_PCF8591 is not set
 +# CONFIG_TWL4030_MADC is not set
-+# CONFIG_TWL4030_PWRBUTTON is not set
 +# CONFIG_TWL4030_POWEROFF is not set
 +# CONFIG_SENSORS_MAX6875 is not set
 +# CONFIG_SENSORS_TSL2550 is not set
-+# CONFIG_LP5521 is not set
 +# CONFIG_I2C_DEBUG_CORE is not set
 +# CONFIG_I2C_DEBUG_ALGO is not set
 +# CONFIG_I2C_DEBUG_BUS is not set
@@ -1147,7 +1141,7 @@ index 0000000..8a428db
 +# CONFIG_FB_MB862XX is not set
 +# CONFIG_FB_OMAP_BOOTLOADER_INIT is not set
 +CONFIG_OMAP2_DSS=m
-+CONFIG_OMAP2_DSS_VRAM_SIZE=4
++CONFIG_OMAP2_DSS_VRAM_SIZE=12
 +CONFIG_OMAP2_DSS_DEBUG_SUPPORT=y
 +# CONFIG_OMAP2_DSS_RFBI is not set
 +CONFIG_OMAP2_DSS_VENC=y
@@ -1155,16 +1149,19 @@ index 0000000..8a428db
 +# CONFIG_OMAP2_DSS_DSI is not set
 +# CONFIG_OMAP2_DSS_FAKE_VSYNC is not set
 +CONFIG_OMAP2_DSS_MIN_FCK_PER_PCK=0
-+CONFIG_FB_OMAP2=m
-+CONFIG_FB_OMAP2_DEBUG_SUPPORT=y
-+# CONFIG_FB_OMAP2_FORCE_AUTO_UPDATE is not set
-+CONFIG_FB_OMAP2_NUM_FBS=3
 +
 +#
 +# OMAP2/3 Display Device Drivers
 +#
 +CONFIG_PANEL_GENERIC=m
++# CONFIG_PANEL_SAMSUNG_LTE430WQ_F0C is not set
 +# CONFIG_PANEL_SHARP_LS037V7DW01 is not set
++# CONFIG_PANEL_N800 is not set
++# CONFIG_CTRL_BLIZZARD is not set
++CONFIG_FB_OMAP2=m
++CONFIG_FB_OMAP2_DEBUG_SUPPORT=y
++# CONFIG_FB_OMAP2_FORCE_AUTO_UPDATE is not set
++CONFIG_FB_OMAP2_NUM_FBS=3
 +# CONFIG_BACKLIGHT_LCD_SUPPORT is not set
 +
 +#
@@ -1322,7 +1319,12 @@ index 0000000..8a428db
 +# on-CPU RTC drivers
 +#
 +# CONFIG_DMADEVICES is not set
-+# CONFIG_REGULATOR is not set
++CONFIG_REGULATOR=y
++# CONFIG_REGULATOR_DEBUG is not set
++# CONFIG_REGULATOR_FIXED_VOLTAGE is not set
++# CONFIG_REGULATOR_VIRTUAL_CONSUMER is not set
++# CONFIG_REGULATOR_BQ24022 is not set
++CONFIG_REGULATOR_TWL4030=y
 +# CONFIG_UIO is not set
 +# CONFIG_STAGING is not set
 +
@@ -1692,14 +1694,14 @@ index 0000000..8a428db
 +CONFIG_HAS_DMA=y
 diff --git a/arch/arm/configs/dss_omap_3430sdp_defconfig b/arch/arm/configs/dss_omap_3430sdp_defconfig
 new file mode 100644
-index 0000000..3d8a431
+index 0000000..dc30dce
 --- /dev/null
 +++ b/arch/arm/configs/dss_omap_3430sdp_defconfig
-@@ -0,0 +1,1633 @@
+@@ -0,0 +1,1634 @@
 +#
 +# Automatically generated make config: don't edit
-+# Linux kernel version: 2.6.29-rc3-omap1
-+# Mon Feb  2 12:12:22 2009
++# Linux kernel version: 2.6.29-omap1
++# Thu Apr  2 11:11:24 2009
 +#
 +CONFIG_ARM=y
 +CONFIG_SYS_SUPPORTS_APM_EMULATION=y
@@ -1731,7 +1733,7 @@ index 0000000..3d8a431
 +CONFIG_BROKEN_ON_SMP=y
 +CONFIG_INIT_ENV_ARG_LIMIT=32
 +CONFIG_LOCALVERSION=""
-+# CONFIG_LOCALVERSION_AUTO is not set
++CONFIG_LOCALVERSION_AUTO=y
 +CONFIG_SWAP=y
 +CONFIG_SYSVIPC=y
 +CONFIG_SYSVIPC_SYSCTL=y
@@ -1765,6 +1767,7 @@ index 0000000..3d8a431
 +CONFIG_INITRAMFS_SOURCE=""
 +CONFIG_CC_OPTIMIZE_FOR_SIZE=y
 +CONFIG_SYSCTL=y
++CONFIG_ANON_INODES=y
 +CONFIG_EMBEDDED=y
 +CONFIG_UID16=y
 +# CONFIG_SYSCTL_SYSCALL is not set
@@ -1775,10 +1778,8 @@ index 0000000..3d8a431
 +CONFIG_PRINTK=y
 +CONFIG_BUG=y
 +CONFIG_ELF_CORE=y
-+CONFIG_COMPAT_BRK=y
 +CONFIG_BASE_FULL=y
 +CONFIG_FUTEX=y
-+CONFIG_ANON_INODES=y
 +CONFIG_EPOLL=y
 +CONFIG_SIGNALFD=y
 +CONFIG_TIMERFD=y
@@ -1786,6 +1787,7 @@ index 0000000..3d8a431
 +CONFIG_SHMEM=y
 +CONFIG_AIO=y
 +CONFIG_VM_EVENT_COUNTERS=y
++CONFIG_COMPAT_BRK=y
 +CONFIG_SLAB=y
 +# CONFIG_SLUB is not set
 +# CONFIG_SLOB is not set
@@ -2025,12 +2027,9 @@ index 0000000..3d8a431
 +# Power management options
 +#
 +CONFIG_PM=y
-+CONFIG_PM_DEBUG=y
-+# CONFIG_PM_VERBOSE is not set
-+CONFIG_CAN_PM_TRACE=y
++# CONFIG_PM_DEBUG is not set
 +CONFIG_PM_SLEEP=y
 +CONFIG_SUSPEND=y
-+# CONFIG_PM_TEST_SUSPEND is not set
 +CONFIG_SUSPEND_FREEZER=y
 +# CONFIG_APM_EMULATION is not set
 +CONFIG_ARCH_SUSPEND_POSSIBLE=y
@@ -2229,7 +2228,6 @@ index 0000000..3d8a431
 +# LPDDR flash memory drivers
 +#
 +# CONFIG_MTD_LPDDR is not set
-+# CONFIG_MTD_QINFO_PROBE is not set
 +
 +#
 +# UBI - Unsorted block images
@@ -2324,6 +2322,7 @@ index 0000000..3d8a431
 +# CONFIG_ENC28J60 is not set
 +# CONFIG_SMC911X is not set
 +# CONFIG_SMSC911X is not set
++# CONFIG_DNET is not set
 +# CONFIG_IBM_NEW_EMAC_ZMII is not set
 +# CONFIG_IBM_NEW_EMAC_RGMII is not set
 +# CONFIG_IBM_NEW_EMAC_TAH is not set
@@ -2388,7 +2387,6 @@ index 0000000..3d8a431
 +# CONFIG_KEYBOARD_NEWTON is not set
 +# CONFIG_KEYBOARD_STOWAWAY is not set
 +CONFIG_KEYBOARD_TWL4030=y
-+# CONFIG_KEYBOARD_LM8323 is not set
 +# CONFIG_KEYBOARD_GPIO is not set
 +# CONFIG_INPUT_MOUSE is not set
 +# CONFIG_INPUT_JOYSTICK is not set
@@ -2452,7 +2450,6 @@ index 0000000..3d8a431
 +# CONFIG_LEGACY_PTYS is not set
 +# CONFIG_IPMI_HANDLER is not set
 +CONFIG_HW_RANDOM=y
-+# CONFIG_NVRAM is not set
 +# CONFIG_R3964 is not set
 +# CONFIG_RAW_DRIVER is not set
 +# CONFIG_TCG_TPM is not set
@@ -2495,11 +2492,9 @@ index 0000000..3d8a431
 +# CONFIG_SENSORS_PCA9539 is not set
 +# CONFIG_SENSORS_PCF8591 is not set
 +# CONFIG_TWL4030_MADC is not set
-+# CONFIG_TWL4030_PWRBUTTON is not set
 +# CONFIG_TWL4030_POWEROFF is not set
 +# CONFIG_SENSORS_MAX6875 is not set
 +# CONFIG_SENSORS_TSL2550 is not set
-+# CONFIG_LP5521 is not set
 +# CONFIG_I2C_DEBUG_CORE is not set
 +# CONFIG_I2C_DEBUG_ALGO is not set
 +# CONFIG_I2C_DEBUG_BUS is not set
@@ -2644,7 +2639,7 @@ index 0000000..3d8a431
 +# CONFIG_FB_OMAP_LCD_VGA is not set
 +# CONFIG_FB_OMAP_BOOTLOADER_INIT is not set
 +CONFIG_OMAP2_DSS=m
-+CONFIG_OMAP2_DSS_VRAM_SIZE=4
++CONFIG_OMAP2_DSS_VRAM_SIZE=8
 +CONFIG_OMAP2_DSS_DEBUG_SUPPORT=y
 +# CONFIG_OMAP2_DSS_RFBI is not set
 +CONFIG_OMAP2_DSS_VENC=y
@@ -2652,16 +2647,19 @@ index 0000000..3d8a431
 +# CONFIG_OMAP2_DSS_DSI is not set
 +# CONFIG_OMAP2_DSS_FAKE_VSYNC is not set
 +CONFIG_OMAP2_DSS_MIN_FCK_PER_PCK=0
-+CONFIG_FB_OMAP2=m
-+CONFIG_FB_OMAP2_DEBUG_SUPPORT=y
-+# CONFIG_FB_OMAP2_FORCE_AUTO_UPDATE is not set
-+CONFIG_FB_OMAP2_NUM_FBS=3
 +
 +#
 +# OMAP2/3 Display Device Drivers
 +#
 +CONFIG_PANEL_GENERIC=m
++# CONFIG_PANEL_SAMSUNG_LTE430WQ_F0C is not set
 +CONFIG_PANEL_SHARP_LS037V7DW01=m
++# CONFIG_PANEL_N800 is not set
++# CONFIG_CTRL_BLIZZARD is not set
++CONFIG_FB_OMAP2=m
++CONFIG_FB_OMAP2_DEBUG_SUPPORT=y
++# CONFIG_FB_OMAP2_FORCE_AUTO_UPDATE is not set
++CONFIG_FB_OMAP2_NUM_FBS=3
 +# CONFIG_BACKLIGHT_LCD_SUPPORT is not set
 +
 +#
@@ -2957,7 +2955,12 @@ index 0000000..3d8a431
 +# on-CPU RTC drivers
 +#
 +# CONFIG_DMADEVICES is not set
-+# CONFIG_REGULATOR is not set
++CONFIG_REGULATOR=y
++# CONFIG_REGULATOR_DEBUG is not set
++# CONFIG_REGULATOR_FIXED_VOLTAGE is not set
++# CONFIG_REGULATOR_VIRTUAL_CONSUMER is not set
++# CONFIG_REGULATOR_BQ24022 is not set
++CONFIG_REGULATOR_TWL4030=y
 +# CONFIG_UIO is not set
 +# CONFIG_STAGING is not set
 +
@@ -3331,14 +3334,14 @@ index 0000000..3d8a431
 +CONFIG_HAS_DMA=y
 diff --git a/arch/arm/configs/dss_overo_defconfig b/arch/arm/configs/dss_overo_defconfig
 new file mode 100644
-index 0000000..bf7dbe1
+index 0000000..755a1b6
 --- /dev/null
 +++ b/arch/arm/configs/dss_overo_defconfig
-@@ -0,0 +1,1826 @@
+@@ -0,0 +1,1862 @@
 +#
 +# Automatically generated make config: don't edit
-+# Linux kernel version: 2.6.29-rc3-omap1
-+# Sat Feb 14 12:23:43 2009
++# Linux kernel version: 2.6.29-omap1
++# Thu Apr  2 11:30:57 2009
 +#
 +CONFIG_ARM=y
 +CONFIG_SYS_SUPPORTS_APM_EMULATION=y
@@ -3406,6 +3409,7 @@ index 0000000..bf7dbe1
 +CONFIG_INITRAMFS_SOURCE=""
 +CONFIG_CC_OPTIMIZE_FOR_SIZE=y
 +CONFIG_SYSCTL=y
++CONFIG_ANON_INODES=y
 +CONFIG_EMBEDDED=y
 +CONFIG_UID16=y
 +# CONFIG_SYSCTL_SYSCALL is not set
@@ -3416,10 +3420,8 @@ index 0000000..bf7dbe1
 +CONFIG_PRINTK=y
 +CONFIG_BUG=y
 +# CONFIG_ELF_CORE is not set
-+# CONFIG_COMPAT_BRK is not set
 +CONFIG_BASE_FULL=y
 +CONFIG_FUTEX=y
-+CONFIG_ANON_INODES=y
 +CONFIG_EPOLL=y
 +CONFIG_SIGNALFD=y
 +CONFIG_TIMERFD=y
@@ -3428,6 +3430,7 @@ index 0000000..bf7dbe1
 +CONFIG_AIO=y
 +CONFIG_VM_EVENT_COUNTERS=y
 +CONFIG_SLUB_DEBUG=y
++# CONFIG_COMPAT_BRK is not set
 +# CONFIG_SLAB is not set
 +CONFIG_SLUB=y
 +# CONFIG_SLOB is not set
@@ -3630,7 +3633,7 @@ index 0000000..bf7dbe1
 +#
 +CONFIG_ZBOOT_ROM_TEXT=0x0
 +CONFIG_ZBOOT_ROM_BSS=0x0
-+CONFIG_CMDLINE=" debug "
++CONFIG_CMDLINE="root=/dev/nfs nfsroot=192.168.2.14:/tftpboot/rootfs ip=192.168.2.15 nolock,rsize=1024,wsize=1024 rw"
 +# CONFIG_XIP_KERNEL is not set
 +CONFIG_KEXEC=y
 +CONFIG_ATAGS_PROC=y
@@ -3678,12 +3681,9 @@ index 0000000..bf7dbe1
 +# Power management options
 +#
 +CONFIG_PM=y
-+CONFIG_PM_DEBUG=y
-+# CONFIG_PM_VERBOSE is not set
-+CONFIG_CAN_PM_TRACE=y
++# CONFIG_PM_DEBUG is not set
 +CONFIG_PM_SLEEP=y
 +CONFIG_SUSPEND=y
-+# CONFIG_PM_TEST_SUSPEND is not set
 +CONFIG_SUSPEND_FREEZER=y
 +# CONFIG_APM_EMULATION is not set
 +CONFIG_ARCH_SUSPEND_POSSIBLE=y
@@ -3810,6 +3810,7 @@ index 0000000..bf7dbe1
 +CONFIG_LIB80211_CRYPT_WEP=m
 +CONFIG_LIB80211_CRYPT_CCMP=m
 +CONFIG_LIB80211_CRYPT_TKIP=m
++# CONFIG_LIB80211_DEBUG is not set
 +CONFIG_MAC80211=y
 +
 +#
@@ -3925,7 +3926,6 @@ index 0000000..bf7dbe1
 +# LPDDR flash memory drivers
 +#
 +# CONFIG_MTD_LPDDR is not set
-+# CONFIG_MTD_QINFO_PROBE is not set
 +
 +#
 +# UBI - Unsorted block images
@@ -4110,7 +4110,6 @@ index 0000000..bf7dbe1
 +CONFIG_MOUSE_PS2_ALPS=y
 +CONFIG_MOUSE_PS2_LOGIPS2PP=y
 +CONFIG_MOUSE_PS2_SYNAPTICS=y
-+CONFIG_MOUSE_PS2_LIFEBOOK=y
 +CONFIG_MOUSE_PS2_TRACKPOINT=y
 +# CONFIG_MOUSE_PS2_ELANTECH is not set
 +# CONFIG_MOUSE_PS2_TOUCHKIT is not set
@@ -4167,7 +4166,6 @@ index 0000000..bf7dbe1
 +# CONFIG_LEGACY_PTYS is not set
 +# CONFIG_IPMI_HANDLER is not set
 +CONFIG_HW_RANDOM=y
-+# CONFIG_NVRAM is not set
 +# CONFIG_R3964 is not set
 +# CONFIG_RAW_DRIVER is not set
 +# CONFIG_TCG_TPM is not set
@@ -4209,12 +4207,10 @@ index 0000000..bf7dbe1
 +# CONFIG_SENSORS_PCA9539 is not set
 +# CONFIG_SENSORS_PCF8591 is not set
 +CONFIG_TWL4030_MADC=m
-+CONFIG_TWL4030_PWRBUTTON=y
 +CONFIG_TWL4030_POWEROFF=y
 +# CONFIG_SENSORS_MAX6875 is not set
 +# CONFIG_SENSORS_TSL2550 is not set
 +# CONFIG_SENSORS_TSL2563 is not set
-+# CONFIG_LP5521 is not set
 +# CONFIG_I2C_DEBUG_CORE is not set
 +# CONFIG_I2C_DEBUG_ALGO is not set
 +# CONFIG_I2C_DEBUG_BUS is not set
@@ -4547,7 +4543,7 @@ index 0000000..bf7dbe1
 +# CONFIG_FB_MB862XX is not set
 +# CONFIG_FB_OMAP_BOOTLOADER_INIT is not set
 +CONFIG_OMAP2_DSS=m
-+CONFIG_OMAP2_DSS_VRAM_SIZE=8
++CONFIG_OMAP2_DSS_VRAM_SIZE=12
 +CONFIG_OMAP2_DSS_DEBUG_SUPPORT=y
 +# CONFIG_OMAP2_DSS_RFBI is not set
 +CONFIG_OMAP2_DSS_VENC=y
@@ -4586,7 +4582,42 @@ index 0000000..bf7dbe1
 +CONFIG_DUMMY_CONSOLE=y
 +# CONFIG_FRAMEBUFFER_CONSOLE is not set
 +# CONFIG_LOGO is not set
-+# CONFIG_SOUND is not set
++CONFIG_SOUND=y
++CONFIG_SOUND_OSS_CORE=y
++CONFIG_SND=y
++CONFIG_SND_TIMER=y
++CONFIG_SND_PCM=y
++CONFIG_SND_SEQUENCER=m
++# CONFIG_SND_SEQ_DUMMY is not set
++CONFIG_SND_OSSEMUL=y
++CONFIG_SND_MIXER_OSS=y
++CONFIG_SND_PCM_OSS=y
++CONFIG_SND_PCM_OSS_PLUGINS=y
++CONFIG_SND_SEQUENCER_OSS=y
++# CONFIG_SND_HRTIMER is not set
++# CONFIG_SND_DYNAMIC_MINORS is not set
++CONFIG_SND_SUPPORT_OLD_API=y
++CONFIG_SND_VERBOSE_PROCFS=y
++CONFIG_SND_VERBOSE_PRINTK=y
++CONFIG_SND_DEBUG=y
++# CONFIG_SND_DEBUG_VERBOSE is not set
++# CONFIG_SND_PCM_XRUN_DEBUG is not set
++CONFIG_SND_DRIVERS=y
++# CONFIG_SND_DUMMY is not set
++# CONFIG_SND_VIRMIDI is not set
++# CONFIG_SND_MTPAV is not set
++# CONFIG_SND_SERIAL_U16550 is not set
++# CONFIG_SND_MPU401 is not set
++CONFIG_SND_ARM=y
++CONFIG_SND_SPI=y
++CONFIG_SND_SOC=y
++CONFIG_SND_OMAP_SOC=y
++CONFIG_SND_OMAP_SOC_MCBSP=y
++CONFIG_SND_OMAP_SOC_OVERO=y
++CONFIG_SND_SOC_I2C_AND_SPI=y
++# CONFIG_SND_SOC_ALL_CODECS is not set
++CONFIG_SND_SOC_TWL4030=y
++# CONFIG_SOUND_PRIME is not set
 +CONFIG_HID_SUPPORT=y
 +CONFIG_HID=y
 +CONFIG_HID_DEBUG=y
@@ -4615,7 +4646,9 @@ index 0000000..bf7dbe1
 +CONFIG_USB_MUSB_PERIPHERAL=y
 +# CONFIG_USB_MUSB_OTG is not set
 +CONFIG_USB_GADGET_MUSB_HDRC=y
-+CONFIG_MUSB_PIO_ONLY=y
++# CONFIG_MUSB_PIO_ONLY is not set
++CONFIG_USB_INVENTRA_DMA=y
++# CONFIG_USB_TI_CPPI_DMA is not set
 +# CONFIG_USB_MUSB_DEBUG is not set
 +
 +#
@@ -4692,6 +4725,7 @@ index 0000000..bf7dbe1
 +# CONFIG_LEDS_OMAP_PWM is not set
 +# CONFIG_LEDS_PCA9532 is not set
 +CONFIG_LEDS_GPIO=y
++# CONFIG_LEDS_LP5521 is not set
 +# CONFIG_LEDS_PCA955X is not set
 +
 +#
@@ -4765,7 +4799,12 @@ index 0000000..bf7dbe1
 +# on-CPU RTC drivers
 +#
 +# CONFIG_DMADEVICES is not set
-+# CONFIG_REGULATOR is not set
++CONFIG_REGULATOR=y
++# CONFIG_REGULATOR_DEBUG is not set
++# CONFIG_REGULATOR_FIXED_VOLTAGE is not set
++# CONFIG_REGULATOR_VIRTUAL_CONSUMER is not set
++# CONFIG_REGULATOR_BQ24022 is not set
++CONFIG_REGULATOR_TWL4030=y
 +# CONFIG_UIO is not set
 +# CONFIG_STAGING is not set
 +
@@ -4994,7 +5033,7 @@ index 0000000..bf7dbe1
 +# CONFIG_DEBUG_LOCKING_API_SELFTESTS is not set
 +CONFIG_STACKTRACE=y
 +# CONFIG_DEBUG_KOBJECT is not set
-+# CONFIG_DEBUG_BUGVERBOSE is not set
++CONFIG_DEBUG_BUGVERBOSE=y
 +# CONFIG_DEBUG_INFO is not set
 +# CONFIG_DEBUG_VM is not set
 +# CONFIG_DEBUG_WRITECOUNT is not set
@@ -5030,8 +5069,8 @@ index 0000000..bf7dbe1
 +# CONFIG_SAMPLES is not set
 +CONFIG_HAVE_ARCH_KGDB=y
 +# CONFIG_KGDB is not set
-+# CONFIG_DEBUG_USER is not set
-+# CONFIG_DEBUG_ERRORS is not set
++CONFIG_DEBUG_USER=y
++CONFIG_DEBUG_ERRORS=y
 +# CONFIG_DEBUG_STACK_USAGE is not set
 +# CONFIG_DEBUG_LL is not set
 +
@@ -5182,7 +5221,7 @@ index 8780ca6..ca4680a 100644
  #include <mach/mmc.h>
  #include <mach/usb.h>
 diff --git a/arch/arm/mach-omap2/board-3430sdp.c b/arch/arm/mach-omap2/board-3430sdp.c
-index 0a1099e..e2637ca 100644
+index 0a1099e..3c664a9 100644
 --- a/arch/arm/mach-omap2/board-3430sdp.c
 +++ b/arch/arm/mach-omap2/board-3430sdp.c
 @@ -37,6 +37,7 @@
@@ -5193,13 +5232,10 @@ index 0a1099e..e2637ca 100644
  
  #include <mach/control.h>
  
-@@ -242,24 +243,238 @@ static struct spi_board_info sdp3430_spi_board_info[] __initdata = {
+@@ -242,6 +243,35 @@ static struct spi_board_info sdp3430_spi_board_info[] __initdata = {
  	},
  };
  
--static struct platform_device sdp3430_lcd_device = {
--	.name		= "sdp2430_lcd",
--	.id		= -1,
 +
 +#define SDP2430_LCD_PANEL_BACKLIGHT_GPIO	91
 +#define SDP2430_LCD_PANEL_ENABLE_GPIO		154
@@ -5229,6 +5265,13 @@ index 0a1099e..e2637ca 100644
 +static int lcd_enabled;
 +static int dvi_enabled;
 +
+ static struct platform_device sdp3430_lcd_device = {
+ 	.name		= "sdp2430_lcd",
+ 	.id		= -1,
+@@ -257,9 +287,198 @@ static struct regulator_consumer_supply sdp3430_vdvi_supply = {
+ 	.dev		= &sdp3430_lcd_device.dev,
+ };
+ 
 +static void enable_vpll2(int enable)
 +{
 +	u8 ded_val, grp_val;
@@ -5288,7 +5331,6 @@ index 0a1099e..e2637ca 100644
 +err0:
 +	return;
 +}
-+
 +
 +static int sdp3430_panel_enable_lcd(struct omap_display *display)
 +{
@@ -5417,20 +5459,8 @@ index 0a1099e..e2637ca 100644
 +	.dev            = {
 +		.platform_data = &sdp3430_dss_data,
 +	},
- };
- 
- static struct regulator_consumer_supply sdp3430_vdac_supply = {
- 	.supply		= "vdac",
--	.dev		= &sdp3430_lcd_device.dev,
-+	.dev		= &sdp3430_dss_device.dev,
- };
- 
- static struct regulator_consumer_supply sdp3430_vdvi_supply = {
- 	.supply		= "vdvi",
--	.dev		= &sdp3430_lcd_device.dev,
-+	.dev		= &sdp3430_dss_device.dev,
- };
- 
++};
++
  static struct platform_device *sdp3430_devices[] __initdata = {
  	&sdp3430_smc91x_device,
 -	&sdp3430_lcd_device,
@@ -5438,7 +5468,7 @@ index 0a1099e..e2637ca 100644
  };
  
  static inline void __init sdp3430_init_smc91x(void)
-@@ -306,13 +521,8 @@ static struct omap_uart_config sdp3430_uart_config __initdata = {
+@@ -306,13 +525,8 @@ static struct omap_uart_config sdp3430_uart_config __initdata = {
  	.enabled_uarts	= ((1 << 0) | (1 << 1) | (1 << 2)),
  };
  
@@ -5452,7 +5482,7 @@ index 0a1099e..e2637ca 100644
  };
  
  static int sdp3430_batt_table[] = {
-@@ -681,6 +891,7 @@ static void __init omap_3430sdp_init(void)
+@@ -681,6 +895,7 @@ static void __init omap_3430sdp_init(void)
  	omap_serial_init();
  	usb_musb_init();
  	usb_ehci_init();
@@ -5461,10 +5491,18 @@ index 0a1099e..e2637ca 100644
  
  static void __init omap_3430sdp_map_io(void)
 diff --git a/arch/arm/mach-omap2/board-n800.c b/arch/arm/mach-omap2/board-n800.c
-index 60a414c..689c4db 100644
+index cb32b61..6de60ae 100644
 --- a/arch/arm/mach-omap2/board-n800.c
 +++ b/arch/arm/mach-omap2/board-n800.c
-@@ -39,8 +39,9 @@
+@@ -27,6 +27,7 @@
+ #include <linux/i2c/lm8323.h>
+ #include <linux/i2c/menelaus.h>
+ #include <linux/i2c/lp5521.h>
++#include <linux/omapfb.h>
+ #include <mach/hardware.h>
+ #include <asm/mach-types.h>
+ #include <asm/mach/arch.h>
+@@ -39,8 +40,9 @@
  #include <mach/lcd_mipid.h>
  #include <mach/clock.h>
  #include <mach/gpio-switch.h>
@@ -5475,7 +5513,7 @@ index 60a414c..689c4db 100644
  
  #include <../drivers/cbus/tahvo.h>
  #include <../drivers/media/video/tcm825x.h>
-@@ -161,23 +162,176 @@ static struct omap_uart_config n800_uart_config __initdata = {
+@@ -161,23 +163,176 @@ static struct omap_uart_config n800_uart_config __initdata = {
  
  #include "../../../drivers/cbus/retu.h"
  
@@ -5662,7 +5700,7 @@ index 60a414c..689c4db 100644
  static void mipid_shutdown(struct mipid_platform_data *pdata)
  {
  	if (pdata->nreset_gpio != -1) {
-@@ -191,6 +345,7 @@ static struct mipid_platform_data n800_mipid_platform_data = {
+@@ -191,6 +346,7 @@ static struct mipid_platform_data n800_mipid_platform_data = {
  	.shutdown = mipid_shutdown,
  };
  
@@ -5670,7 +5708,7 @@ index 60a414c..689c4db 100644
  static void __init mipid_dev_init(void)
  {
  	const struct omap_lcd_config *conf;
-@@ -201,26 +356,9 @@ static void __init mipid_dev_init(void)
+@@ -201,26 +357,9 @@ static void __init mipid_dev_init(void)
  		n800_mipid_platform_data.data_lines = conf->data_lines;
  	}
  }
@@ -5699,7 +5737,7 @@ index 60a414c..689c4db 100644
  static void blizzard_enable_clocks(int enable)
  {
  	if (enable)
-@@ -265,14 +403,12 @@ static void __init blizzard_dev_init(void)
+@@ -265,14 +404,12 @@ static void __init blizzard_dev_init(void)
  	gpio_direction_output(N800_BLIZZARD_POWERDOWN_GPIO, 1);
  
  	blizzard_get_clocks();
@@ -5716,7 +5754,7 @@ index 60a414c..689c4db 100644
  	{ OMAP_TAG_TMP105,			&n800_tmp105_config },
  };
  
-@@ -379,7 +515,7 @@ static struct omap2_mcspi_device_config tsc2005_mcspi_config = {
+@@ -379,7 +516,7 @@ static struct omap2_mcspi_device_config tsc2005_mcspi_config = {
  
  static struct spi_board_info n800_spi_board_info[] __initdata = {
  	{
@@ -5725,7 +5763,7 @@ index 60a414c..689c4db 100644
  		.bus_num	= 1,
  		.chip_select	= 1,
  		.max_speed_hz	= 4000000,
-@@ -404,7 +540,7 @@ static struct spi_board_info n800_spi_board_info[] __initdata = {
+@@ -404,7 +541,7 @@ static struct spi_board_info n800_spi_board_info[] __initdata = {
  
  static struct spi_board_info n810_spi_board_info[] __initdata = {
  	{
@@ -5734,15 +5772,15 @@ index 60a414c..689c4db 100644
  		.bus_num	 = 1,
  		.chip_select	 = 1,
  		.max_speed_hz	 = 4000000,
-@@ -572,6 +708,7 @@ static struct platform_device *n800_devices[] __initdata = {
- #if defined(CONFIG_CBUS_RETU) && defined(CONFIG_LEDS_OMAP_PWM)
- 	&n800_keypad_led_device,
+@@ -582,6 +719,7 @@ static struct platform_device *n800_devices[] __initdata = {
+ #if defined(CONFIG_CBUS_RETU_HEADSET)
+ 	&retu_headset_device,
  #endif
 +	&n800_dss_device,
  };
  
  #ifdef CONFIG_MENELAUS
-@@ -703,9 +840,10 @@ void __init nokia_n800_common_init(void)
+@@ -713,9 +851,10 @@ void __init nokia_n800_common_init(void)
  	if (machine_is_nokia_n810())
  		i2c_register_board_info(2, n810_i2c_board_info_2,
  			ARRAY_SIZE(n810_i2c_board_info_2));
@@ -5756,7 +5794,7 @@ index 60a414c..689c4db 100644
  }
  
  static void __init nokia_n800_init(void)
-@@ -726,6 +864,7 @@ void __init nokia_n800_map_io(void)
+@@ -735,6 +874,7 @@ void __init nokia_n800_map_io(void)
  	omap_board_config_size = ARRAY_SIZE(n800_config);
  
  	omap2_set_globals_242x();
@@ -5765,7 +5803,7 @@ index 60a414c..689c4db 100644
  }
  
 diff --git a/arch/arm/mach-omap2/board-omap3beagle.c b/arch/arm/mach-omap2/board-omap3beagle.c
-index 346351e..30fc926 100644
+index 346351e..b67e7a5 100644
 --- a/arch/arm/mach-omap2/board-omap3beagle.c
 +++ b/arch/arm/mach-omap2/board-omap3beagle.c
 @@ -30,6 +30,7 @@
@@ -5784,105 +5822,37 @@ index 346351e..30fc926 100644
  
  #include "twl4030-generic-scripts.h"
  #include "mmc-twl4030.h"
-@@ -126,69 +128,164 @@ static struct twl4030_hsmmc_info mmc[] = {
- 	{}	/* Terminator */
+@@ -312,10 +314,6 @@ static void __init omap3_beagle_init_irq(void)
+ 	omap_gpio_init();
+ }
+ 
+-static struct omap_lcd_config omap3_beagle_lcd_config __initdata = {
+-	.ctrl_name	= "internal",
+-};
+-
+ static struct gpio_led gpio_leds[] = {
+ 	{
+ 		.name			= "beagleboard::usr0",
+@@ -369,13 +367,94 @@ static struct platform_device keys_gpio = {
+ 	},
  };
  
--static struct regulator_consumer_supply beagle_vmmc1_supply = {
--	.supply			= "vmmc",
-+static void __init omap3_beagle_init_irq(void)
-+{
-+	omap2_init_common_hw(mt46h32m32lf6_sdrc_params);
-+	omap_init_irq();
-+	omap_gpio_init();
-+}
-+
-+static struct gpio_led gpio_leds[] = {
-+	{
-+		.name			= "beagleboard::usr0",
-+		.default_trigger	= "heartbeat",
-+		.gpio			= 150,
-+	},
-+	{
-+		.name			= "beagleboard::usr1",
-+		.default_trigger	= "mmc0",
-+		.gpio			= 149,
-+	},
-+	{
-+		.name			= "beagleboard::pmu_stat",
-+		.gpio			= -EINVAL,	/* gets replaced */
-+		.active_low		= true,
-+	},
- };
- 
--static struct regulator_consumer_supply beagle_vsim_supply = {
--	.supply			= "vmmc_aux",
-+static struct gpio_led_platform_data gpio_led_info = {
-+	.leds		= gpio_leds,
-+	.num_leds	= ARRAY_SIZE(gpio_leds),
- };
- 
--static struct gpio_led gpio_leds[];
-+static struct platform_device leds_gpio = {
-+	.name	= "leds-gpio",
-+	.id	= -1,
-+	.dev	= {
-+		.platform_data	= &gpio_led_info,
-+	},
-+};
- 
--static int beagle_twl_gpio_setup(struct device *dev,
--		unsigned gpio, unsigned ngpio)
-+static struct gpio_keys_button gpio_buttons[] = {
-+	{
-+		.code			= BTN_EXTRA,
-+		.gpio			= 7,
-+		.desc			= "user",
-+		.wakeup			= 1,
-+	},
-+};
-+
-+static struct gpio_keys_platform_data gpio_key_info = {
-+	.buttons	= gpio_buttons,
-+	.nbuttons	= ARRAY_SIZE(gpio_buttons),
-+};
-+
-+static struct platform_device keys_gpio = {
-+	.name	= "gpio-keys",
-+	.id	= -1,
-+	.dev	= {
-+		.platform_data	= &gpio_key_info,
-+	},
-+};
-+
 +/* DSS */
 +
 +static int beagle_enable_dvi(struct omap_display *display)
- {
--	/* gpio + 0 is "mmc0_cd" (input/IRQ) */
--	omap_cfg_reg(AH8_34XX_GPIO29);
--	mmc[0].gpio_cd = gpio + 0;
--	twl4030_mmc_init(mmc);
++{
 +	if (display->hw_config.panel_reset_gpio != -1)
 +		gpio_direction_output(display->hw_config.panel_reset_gpio, 1);
- 
--	/* link regulators to MMC adapters */
--	beagle_vmmc1_supply.dev = mmc[0].dev;
--	beagle_vsim_supply.dev = mmc[0].dev;
++
 +	return 0;
 +}
- 
--	/* REVISIT: need ehci-omap hooks for external VBUS
--	 * power switch and overcurrent detect
--	 */
++
 +static void beagle_disable_dvi(struct omap_display *display)
 +{
 +	if (display->hw_config.panel_reset_gpio != -1)
 +		gpio_direction_output(display->hw_config.panel_reset_gpio, 0);
 +}
- 
--	gpio_request(gpio + 1, "EHCI_nOC");
--	gpio_direction_input(gpio + 1);
++
 +static struct omap_dss_display_config beagle_display_data_dvi = {
 +	.type = OMAP_DISPLAY_TYPE_DPI,
 +	.name = "dvi",
@@ -5892,13 +5862,8 @@ index 346351e..30fc926 100644
 +	.panel_enable = beagle_enable_dvi,
 +	.panel_disable = beagle_disable_dvi,
 +};
- 
--	/* TWL4030_GPIO_MAX + 0 == ledA, EHCI nEN_USB_PWR (out, active low) */
--	gpio_request(gpio + TWL4030_GPIO_MAX, "nEN_USB_PWR");
--	gpio_direction_output(gpio + TWL4030_GPIO_MAX, 1);
- 
--	/* TWL4030_GPIO_MAX + 1 == ledB, PMU_STAT (out, active low LED) */
--	gpio_leds[2].gpio = gpio + TWL4030_GPIO_MAX + 1;
++
++
 +static int beagle_panel_enable_tv(struct omap_display *display)
 +{
 +#define ENABLE_VDAC_DEDICATED           0x03
@@ -5909,19 +5874,10 @@ index 346351e..30fc926 100644
 +			TWL4030_VDAC_DEDICATED);
 +	twl4030_i2c_write_u8(TWL4030_MODULE_PM_RECEIVER,
 +			ENABLE_VDAC_DEV_GRP, TWL4030_VDAC_DEV_GRP);
- 
- 	return 0;
- }
- 
--static struct twl4030_gpio_platform_data beagle_gpio_data = {
--	.gpio_base	= OMAP_MAX_GPIO_LINES,
--	.irq_base	= TWL4030_GPIO_IRQ_BASE,
--	.irq_end	= TWL4030_GPIO_IRQ_END,
--	.use_leds	= true,
--	.pullups	= BIT(1),
--	.pulldowns	= BIT(2) | BIT(6) | BIT(7) | BIT(8) | BIT(13)
--				| BIT(15) | BIT(16) | BIT(17),
--	.setup		= beagle_twl_gpio_setup,
++
++	return 0;
++}
++
 +static void beagle_panel_disable_tv(struct omap_display *display)
 +{
 +	twl4030_i2c_write_u8(TWL4030_MODULE_PM_RECEIVER, 0x00,
@@ -5936,11 +5892,8 @@ index 346351e..30fc926 100644
 +	.u.venc.type = OMAP_DSS_VENC_TYPE_SVIDEO,
 +	.panel_enable = beagle_panel_enable_tv,
 +	.panel_disable = beagle_panel_disable_tv,
- };
- 
--static struct platform_device omap3_beagle_lcd_device = {
--	.name		= "omap3beagle_lcd",
--	.id		= -1,
++};
++
 +static struct omap_dss_board_info beagle_dss_data = {
 +	.num_displays = 2,
 +	.displays = {
@@ -5966,155 +5919,6 @@ index 346351e..30fc926 100644
 +		printk(KERN_ERR "Unable to get DVI reset GPIO\n");
 +}
 +
-+static struct regulator_consumer_supply beagle_vmmc1_supply = {
-+	.supply			= "vmmc",
-+};
-+
-+static struct regulator_consumer_supply beagle_vsim_supply = {
-+	.supply			= "vmmc_aux",
- };
- 
- static struct regulator_consumer_supply beagle_vdac_supply = {
- 	.supply		= "vdac",
--	.dev		= &omap3_beagle_lcd_device.dev,
-+	.dev		= &beagle_dss_device.dev,
- };
- 
- static struct regulator_consumer_supply beagle_vdvi_supply = {
- 	.supply		= "vdvi",
--	.dev		= &omap3_beagle_lcd_device.dev,
-+	.dev		= &beagle_dss_device.dev,
- };
- 
- /* VMMC1 for MMC1 pins CMD, CLK, DAT0..DAT3 (20 mA, plus card == max 220 mA) */
-@@ -250,6 +347,48 @@ static struct regulator_init_data beagle_vpll2 = {
- 	.consumer_supplies	= &beagle_vdvi_supply,
- };
- 
-+static struct gpio_led gpio_leds[];
-+
-+static int beagle_twl_gpio_setup(struct device *dev,
-+		unsigned gpio, unsigned ngpio)
-+{
-+	/* gpio + 0 is "mmc0_cd" (input/IRQ) */
-+	omap_cfg_reg(AH8_34XX_GPIO29);
-+	mmc[0].gpio_cd = gpio + 0;
-+	twl4030_mmc_init(mmc);
-+
-+	/* link regulators to MMC adapters */
-+	beagle_vmmc1_supply.dev = mmc[0].dev;
-+	beagle_vsim_supply.dev = mmc[0].dev;
-+
-+	/* REVISIT: need ehci-omap hooks for external VBUS
-+	 * power switch and overcurrent detect
-+	 */
-+
-+	gpio_request(gpio + 1, "EHCI_nOC");
-+	gpio_direction_input(gpio + 1);
-+
-+	/* TWL4030_GPIO_MAX + 0 == ledA, EHCI nEN_USB_PWR (out, active low) */
-+	gpio_request(gpio + TWL4030_GPIO_MAX, "nEN_USB_PWR");
-+	gpio_direction_output(gpio + TWL4030_GPIO_MAX, 1);
-+
-+	/* TWL4030_GPIO_MAX + 1 == ledB, PMU_STAT (out, active low LED) */
-+	gpio_leds[2].gpio = gpio + TWL4030_GPIO_MAX + 1;
-+
-+	return 0;
-+}
-+
-+static struct twl4030_gpio_platform_data beagle_gpio_data = {
-+	.gpio_base	= OMAP_MAX_GPIO_LINES,
-+	.irq_base	= TWL4030_GPIO_IRQ_BASE,
-+	.irq_end	= TWL4030_GPIO_IRQ_END,
-+	.use_leds	= true,
-+	.pullups	= BIT(1),
-+	.pulldowns	= BIT(2) | BIT(6) | BIT(7) | BIT(8) | BIT(13)
-+				| BIT(15) | BIT(16) | BIT(17),
-+	.setup		= beagle_twl_gpio_setup,
-+};
-+
- static const struct twl4030_resconfig beagle_resconfig[] = {
- 	/* disable regulators that u-boot left enabled; the
- 	 * devices' drivers should be managing these.
-@@ -257,8 +396,8 @@ static const struct twl4030_resconfig beagle_resconfig[] = {
- 	{ .resource = RES_VAUX3, },	/* not even connected! */
- 	{ .resource = RES_VMMC1, },
- 	{ .resource = RES_VSIM, },
--	{ .resource = RES_VPLL2, },
--	{ .resource = RES_VDAC, },
-+	/*{ .resource = RES_VPLL2, },
-+	{ .resource = RES_VDAC, },*/
- 	{ .resource = RES_VUSB_1V5, },
- 	{ .resource = RES_VUSB_1V8, },
- 	{ .resource = RES_VUSB_3V1, },
-@@ -305,77 +444,12 @@ static int __init omap3_beagle_i2c_init(void)
- 	return 0;
- }
- 
--static void __init omap3_beagle_init_irq(void)
--{
--	omap2_init_common_hw(mt46h32m32lf6_sdrc_params);
--	omap_init_irq();
--	omap_gpio_init();
--}
--
--static struct omap_lcd_config omap3_beagle_lcd_config __initdata = {
--	.ctrl_name	= "internal",
--};
--
--static struct gpio_led gpio_leds[] = {
--	{
--		.name			= "beagleboard::usr0",
--		.default_trigger	= "heartbeat",
--		.gpio			= 150,
--	},
--	{
--		.name			= "beagleboard::usr1",
--		.default_trigger	= "mmc0",
--		.gpio			= 149,
--	},
--	{
--		.name			= "beagleboard::pmu_stat",
--		.gpio			= -EINVAL,	/* gets replaced */
--		.active_low		= true,
--	},
--};
--
--static struct gpio_led_platform_data gpio_led_info = {
--	.leds		= gpio_leds,
--	.num_leds	= ARRAY_SIZE(gpio_leds),
--};
--
--static struct platform_device leds_gpio = {
--	.name	= "leds-gpio",
--	.id	= -1,
--	.dev	= {
--		.platform_data	= &gpio_led_info,
--	},
--};
--
--static struct gpio_keys_button gpio_buttons[] = {
--	{
--		.code			= BTN_EXTRA,
--		.gpio			= 7,
--		.desc			= "user",
--		.wakeup			= 1,
--	},
--};
--
--static struct gpio_keys_platform_data gpio_key_info = {
--	.buttons	= gpio_buttons,
--	.nbuttons	= ARRAY_SIZE(gpio_buttons),
--};
--
--static struct platform_device keys_gpio = {
--	.name	= "gpio-keys",
--	.id	= -1,
--	.dev	= {
--		.platform_data	= &gpio_key_info,
--	},
--};
--
  static struct omap_board_config_kernel omap3_beagle_config[] __initdata = {
  	{ OMAP_TAG_UART,	&omap3_beagle_uart_config },
 -	{ OMAP_TAG_LCD,		&omap3_beagle_lcd_config },
@@ -6126,7 +5930,7 @@ index 346351e..30fc926 100644
  	&leds_gpio,
  	&keys_gpio,
  };
-@@ -428,13 +502,11 @@ static void __init omap3_beagle_init(void)
+@@ -428,13 +507,11 @@ static void __init omap3_beagle_init(void)
  	omap_serial_init();
  
  	omap_cfg_reg(J25_34XX_GPIO170);
@@ -6142,7 +5946,7 @@ index 346351e..30fc926 100644
  
  static void __init omap3_beagle_map_io(void)
 diff --git a/arch/arm/mach-omap2/board-omap3evm.c b/arch/arm/mach-omap2/board-omap3evm.c
-index 024d7c4..7a720ec 100644
+index 024d7c4..6f5a866 100644
 --- a/arch/arm/mach-omap2/board-omap3evm.c
 +++ b/arch/arm/mach-omap2/board-omap3evm.c
 @@ -36,6 +36,7 @@
@@ -6153,7 +5957,7 @@ index 024d7c4..7a720ec 100644
  
  #include "sdram-micron-mt46h32m32lf-6.h"
  #include "twl4030-generic-scripts.h"
-@@ -216,13 +217,201 @@ static int __init omap3_evm_i2c_init(void)
+@@ -216,13 +217,215 @@ static int __init omap3_evm_i2c_init(void)
  	return 0;
  }
  
@@ -6272,7 +6076,7 @@ index 024d7c4..7a720ec 100644
 +	lcd_enabled = 0;
 +}
 +
-+static struct omap_display_data omap3_evm_display_data = {
++static struct omap_dss_display_config omap3_evm_display_data = {
 +	.type = OMAP_DISPLAY_TYPE_DPI,
 +	.name = "lcd",
 +	.panel_name = "sharp-ls037v7dw01",
@@ -6300,7 +6104,7 @@ index 024d7c4..7a720ec 100644
 +			TWL4030_VDAC_DEV_GRP);
 +}
 +
-+static struct omap_display_data omap3_evm_display_data_tv = {
++static struct omap_dss_display_config omap3_evm_display_data_tv = {
 +	.type = OMAP_DISPLAY_TYPE_VENC,
 +	.name = "tv",
 +	.u.venc.type = OMAP_DSS_VENC_TYPE_SVIDEO,
@@ -6315,6 +6119,13 @@ index 024d7c4..7a720ec 100644
 +		printk(KERN_ERR "cannot enable DVI, LCD is enabled\n");
 +		return -EINVAL;
 +	}
++	if (omap_rev() > OMAP3430_REV_ES1_0) {
++		twl4030_i2c_write_u8(TWL4030_MODULE_PM_RECEIVER,
++			ENABLE_VPLL2_DEDICATED, TWL4030_VPLL2_DEDICATED);
++		twl4030_i2c_write_u8(TWL4030_MODULE_PM_RECEIVER,
++			ENABLE_VPLL2_DEV_GRP, TWL4030_VPLL2_DEV_GRP);
++	}
++
 +	twl4030_i2c_write_u8(TWL4030_MODULE_GPIO, 0x80,
 +			TWL4030_GPIODATA_IN3);
 +	twl4030_i2c_write_u8(TWL4030_MODULE_GPIO, 0x80,
@@ -6326,6 +6137,13 @@ index 024d7c4..7a720ec 100644
 +
 +static void omap3_evm_panel_disable_dvi(struct omap_display *display)
 +{
++	if (omap_rev() > OMAP3430_REV_ES1_0) {
++		twl4030_i2c_write_u8(TWL4030_MODULE_PM_RECEIVER, 0x0,
++				TWL4030_VPLL2_DEDICATED);
++		twl4030_i2c_write_u8(TWL4030_MODULE_PM_RECEIVER, 0x0,
++				TWL4030_VPLL2_DEV_GRP);
++	}
++
 +	twl4030_i2c_write_u8(TWL4030_MODULE_GPIO, 0x00,
 +			TWL4030_GPIODATA_IN3);
 +	twl4030_i2c_write_u8(TWL4030_MODULE_GPIO, 0x00,
@@ -6334,7 +6152,7 @@ index 024d7c4..7a720ec 100644
 +}
 +
 +
-+static struct omap_display_data omap3_evm_display_data_dvi = {
++static struct omap_dss_display_config omap3_evm_display_data_dvi = {
 +	.type = OMAP_DISPLAY_TYPE_DPI,
 +	.name = "dvi",
 +	.panel_name = "panel-generic",
@@ -6343,7 +6161,7 @@ index 024d7c4..7a720ec 100644
 +	.panel_disable = omap3_evm_panel_disable_dvi,
 +};
 +
-+static struct omap_dss_platform_data omap3_evm_dss_data = {
++static struct omap_dss_board_info omap3_evm_dss_data = {
 +	.num_displays = 3,
 +	.displays = {
 +		&omap3_evm_display_data,
@@ -6360,7 +6178,7 @@ index 024d7c4..7a720ec 100644
  };
  
  static void ads7846_dev_init(void)
-@@ -281,11 +470,10 @@ static void __init omap3_evm_init_irq(void)
+@@ -281,11 +484,10 @@ static void __init omap3_evm_init_irq(void)
  
  static struct omap_board_config_kernel omap3_evm_config[] __initdata = {
  	{ OMAP_TAG_UART,	&omap3_evm_uart_config },
@@ -6373,7 +6191,7 @@ index 024d7c4..7a720ec 100644
  	&omap3evm_smc911x_device,
  };
  
-@@ -305,6 +493,7 @@ static void __init omap3_evm_init(void)
+@@ -305,6 +507,7 @@ static void __init omap3_evm_init(void)
  	usb_ehci_init();
  	omap3evm_flash_init();
  	ads7846_dev_init();
@@ -6382,7 +6200,7 @@ index 024d7c4..7a720ec 100644
  
  static void __init omap3_evm_map_io(void)
 diff --git a/arch/arm/mach-omap2/board-overo.c b/arch/arm/mach-omap2/board-overo.c
-index 071f4b0..bac60e3 100644
+index 071f4b0..ea0f695 100644
 --- a/arch/arm/mach-omap2/board-overo.c
 +++ b/arch/arm/mach-omap2/board-overo.c
 @@ -41,6 +41,7 @@
@@ -6393,16 +6211,16 @@ index 071f4b0..bac60e3 100644
  #include <mach/gpio.h>
  #include <mach/gpmc.h>
  #include <mach/hardware.h>
-@@ -55,6 +56,9 @@
- #define GPMC_CS0_BASE  0x60
- #define GPMC_CS_SIZE   0x30
+@@ -176,6 +177,9 @@ static void __init overo_ads7846_init(void)
+ static inline void __init overo_ads7846_init(void) { return; }
+ #endif
  
 +static int lcd_enabled;
 +static int dvi_enabled;
 +
- #if defined(CONFIG_SMSC911X) || defined(CONFIG_SMSC911X_MODULE)
- 
- #include <linux/smsc911x.h>
+ static struct mtd_partition overo_nand_partitions[] = {
+ 	{
+ 		.name           = "xloader",
 @@ -360,22 +364,101 @@ static void __init overo_init_irq(void)
  	omap_gpio_init();
  }
@@ -6608,10 +6426,10 @@ index 3746222..1dc3415 100644
  void omapfb_reserve_sdram(void) {}
 diff --git a/arch/arm/plat-omap/include/mach/display.h b/arch/arm/plat-omap/include/mach/display.h
 new file mode 100644
-index 0000000..6288353
+index 0000000..6b702c7
 --- /dev/null
 +++ b/arch/arm/plat-omap/include/mach/display.h
-@@ -0,0 +1,520 @@
+@@ -0,0 +1,523 @@
 +/*
 + * linux/include/asm-arm/arch-omap/display.h
 + *
@@ -6825,6 +6643,8 @@ index 0000000..6288353
 +	int panel_reset_gpio;
 +	int ctrl_reset_gpio;
 +
++	int max_backlight_level;
++
 +	const char *name;		/* for debug */
 +	const char *ctrl_name;
 +	const char *panel_name;
@@ -6839,6 +6659,7 @@ index 0000000..6288353
 +	void (*ctrl_disable)(struct omap_display *display);
 +	int (*set_backlight)(struct omap_display *display,
 +			int level);
++	int (*get_backlight)(struct omap_display *display);
 +};
 +
 +struct device;
@@ -8861,10 +8682,10 @@ index 0000000..72134db
 +obj-y += omapfb/
 diff --git a/drivers/video/omap2/displays/Kconfig b/drivers/video/omap2/displays/Kconfig
 new file mode 100644
-index 0000000..35e4bee
+index 0000000..3feecee
 --- /dev/null
 +++ b/drivers/video/omap2/displays/Kconfig
-@@ -0,0 +1,32 @@
+@@ -0,0 +1,39 @@
 +menu "OMAP2/3 Display Device Drivers"
 +        depends on OMAP2_DSS
 +
@@ -8896,19 +8717,28 @@ index 0000000..35e4bee
 +        help
 +          Blizzard Controller (hack)
 +
++config PANEL_ACX565AKM
++        tristate "ACX565AKM LCD Panel"
++        depends on OMAP2_DSS_SDI
++        select BACKLIGHT_CLASS_DEVICE
++        help
++          LCD Panel used in RX51
++
 +endmenu
 diff --git a/drivers/video/omap2/displays/Makefile b/drivers/video/omap2/displays/Makefile
 new file mode 100644
-index 0000000..1b74b7e
+index 0000000..9bafcb6
 --- /dev/null
 +++ b/drivers/video/omap2/displays/Makefile
-@@ -0,0 +1,6 @@
+@@ -0,0 +1,8 @@
 +obj-$(CONFIG_PANEL_GENERIC) += panel-generic.o
 +obj-$(CONFIG_PANEL_SAMSUNG_LTE430WQ_F0C) += panel-samsung-lte430wq-f0c.o
 +obj-$(CONFIG_PANEL_SHARP_LS037V7DW01) += panel-sharp-ls037v7dw01.o
 +
 +obj-$(CONFIG_CTRL_BLIZZARD) += ctrl-blizzard.o
 +obj-$(CONFIG_PANEL_N800) += panel-n800.o
++
++obj-$(CONFIG_PANEL_ACX565AKM) += panel-acx565akm.o
 diff --git a/drivers/video/omap2/displays/ctrl-blizzard.c b/drivers/video/omap2/displays/ctrl-blizzard.c
 new file mode 100644
 index 0000000..6698e4d
@@ -9194,6 +9024,739 @@ index 0000000..6698e4d
 +MODULE_AUTHOR("Tomi Valkeinen <tomi.valkeinen@nokia.com>");
 +MODULE_DESCRIPTION("Blizzard Driver");
 +MODULE_LICENSE("GPL");
+diff --git a/drivers/video/omap2/displays/panel-acx565akm.c b/drivers/video/omap2/displays/panel-acx565akm.c
+new file mode 100644
+index 0000000..2679d6c
+--- /dev/null
++++ b/drivers/video/omap2/displays/panel-acx565akm.c
+@@ -0,0 +1,712 @@
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/clk.h>
++#include <linux/platform_device.h>
++#include <linux/delay.h>
++#include <linux/spi/spi.h>
++#include <linux/jiffies.h>
++#include <linux/sched.h>
++#include <linux/backlight.h>
++#include <linux/fb.h>
++
++#include <mach/display.h>
++#include <mach/dma.h>
++
++#include "panel-acx565akm.h"
++
++#define MIPID_CMD_READ_DISP_ID         0x04
++#define MIPID_CMD_READ_RED             0x06
++#define MIPID_CMD_READ_GREEN           0x07
++#define MIPID_CMD_READ_BLUE            0x08
++#define MIPID_CMD_READ_DISP_STATUS     0x09
++#define MIPID_CMD_RDDSDR               0x0F
++#define MIPID_CMD_SLEEP_IN             0x10
++#define MIPID_CMD_SLEEP_OUT            0x11
++#define MIPID_CMD_DISP_OFF             0x28
++#define MIPID_CMD_DISP_ON              0x29
++#define MIPID_CMD_WRITE_DISP_BRIGHTNESS        0x51
++#define MIPID_CMD_READ_DISP_BRIGHTNESS 0x52
++#define MIPID_CMD_WRITE_CTRL_DISP      0x53
++
++#define CTRL_DISP_BRIGHTNESS_CTRL_ON   (1 << 5)
++#define CTRL_DISP_AMBIENT_LIGHT_CTRL_ON        (1 << 4)
++#define CTRL_DISP_BACKLIGHT_ON         (1 << 2)
++#define CTRL_DISP_AUTO_BRIGHTNESS_ON   (1 << 1)
++
++#define MIPID_CMD_READ_CTRL_DISP       0x54
++#define MIPID_CMD_WRITE_CABC           0x55
++#define MIPID_CMD_READ_CABC            0x56
++
++#define MIPID_VER_LPH8923              3
++#define MIPID_VER_LS041Y3              4
++#define MIPID_VER_L4F00311             8
++#define MIPID_VER_ACX565AKM            9
++
++struct acx565akm_device {
++       struct backlight_device *bl_dev;
++       int             enabled;
++       int             model;
++       int             revision;
++       u8              display_id[3];
++       int             has_bc:1;
++       int             has_cabc:1;
++       unsigned int    saved_bklight_level;
++       unsigned long   hw_guard_end;           /* next value of jiffies
++                                                  when we can issue the
++                                                  next sleep in/out command */
++       unsigned long   hw_guard_wait;          /* max guard time in jiffies */
++
++       struct spi_device       *spi;
++       struct mutex            mutex;
++       struct omap_panel       panel;
++       struct omap_display     *display;
++};
++
++static int acx565akm_bl_update_status(struct backlight_device *dev);
++
++static void acx565akm_transfer(struct acx565akm_device *md, int cmd,
++                             const u8 *wbuf, int wlen, u8 *rbuf, int rlen)
++{
++       struct spi_message      m;
++       struct spi_transfer     *x, xfer[5];
++       int                     r;
++
++       BUG_ON(md->spi == NULL);
++
++       spi_message_init(&m);
++
++       memset(xfer, 0, sizeof(xfer));
++       x = &xfer[0];
++
++       cmd &=  0xff;
++       x->tx_buf       = &cmd;
++       x->bits_per_word = 9;
++       x->len          = 2;
++
++       if (rlen > 1 && wlen == 0) {
++               /*
++                * Between the command and the response data there is a
++                * dummy clock cycle. Add an extra bit after the command
++                * word to account for this.
++                */
++               x->bits_per_word = 10;
++               cmd <<= 1;
++       }
++       spi_message_add_tail(x, &m);
++
++       if (wlen) {
++               x++;
++               x->tx_buf       = wbuf;
++               x->len          = wlen;
++               x->bits_per_word = 9;
++               spi_message_add_tail(x, &m);
++       }
++
++       if (rlen) {
++               x++;
++               x->rx_buf       = rbuf;
++               x->len          = rlen;
++               spi_message_add_tail(x, &m);
++       }
++
++       r = spi_sync(md->spi, &m);
++       if (r < 0)
++               dev_dbg(&md->spi->dev, "spi_sync %d\n", r);
++}
++
++static inline void acx565akm_cmd(struct acx565akm_device *md, int cmd)
++{
++       acx565akm_transfer(md, cmd, NULL, 0, NULL, 0);
++}
++
++static inline void acx565akm_write(struct acx565akm_device *md,
++                              int reg, const u8 *buf, int len)
++{
++       acx565akm_transfer(md, reg, buf, len, NULL, 0);
++}
++
++static inline void acx565akm_read(struct acx565akm_device *md,
++                             int reg, u8 *buf, int len)
++{
++       acx565akm_transfer(md, reg, NULL, 0, buf, len);
++}
++
++static void hw_guard_start(struct acx565akm_device *md, int guard_msec)
++{
++       md->hw_guard_wait = msecs_to_jiffies(guard_msec);
++       md->hw_guard_end = jiffies + md->hw_guard_wait;
++}
++
++static void hw_guard_wait(struct acx565akm_device *md)
++{
++       unsigned long wait = md->hw_guard_end - jiffies;
++
++       if ((long)wait > 0 && wait <= md->hw_guard_wait) {
++               set_current_state(TASK_UNINTERRUPTIBLE);
++               schedule_timeout(wait);
++       }
++}
++
++static void set_sleep_mode(struct acx565akm_device *md, int on)
++{
++       int cmd, sleep_time = 50;
++
++       if (on)
++               cmd = MIPID_CMD_SLEEP_IN;
++       else
++               cmd = MIPID_CMD_SLEEP_OUT;
++       hw_guard_wait(md);
++       acx565akm_cmd(md, cmd);
++       hw_guard_start(md, 120);
++       /*
++        * When we enable the panel, it seems we _have_ to sleep
++        * 120 ms before sending the init string. When disabling the
++        * panel we'll sleep for the duration of 2 frames, so that the
++        * controller can still provide the PCLK,HS,VS signals. */
++       if (!on)
++               sleep_time = 120;
++       msleep(sleep_time);
++}
++
++static void set_display_state(struct acx565akm_device *md, int enabled)
++{
++       int cmd = enabled ? MIPID_CMD_DISP_ON : MIPID_CMD_DISP_OFF;
++
++       acx565akm_cmd(md, cmd);
++}
++
++static int panel_enabled(struct acx565akm_device *md)
++{
++       u32 disp_status;
++       int enabled;
++
++       acx565akm_read(md, MIPID_CMD_READ_DISP_STATUS, (u8 *)&disp_status, 4);
++       disp_status = __be32_to_cpu(disp_status);
++       enabled = (disp_status & (1 << 17)) && (disp_status & (1 << 10));
++       dev_dbg(&md->spi->dev,
++               "LCD panel %senabled by bootloader (status 0x%04x)\n",
++               enabled ? "" : "not ", disp_status);
++       return enabled;
++}
++
++static void enable_backlight_ctrl(struct acx565akm_device *md, int enable)
++{
++       u16 ctrl;
++
++       acx565akm_read(md, MIPID_CMD_READ_CTRL_DISP, (u8 *)&ctrl, 1);
++       if (enable) {
++               ctrl |= CTRL_DISP_BRIGHTNESS_CTRL_ON |
++                       CTRL_DISP_BACKLIGHT_ON;
++       } else {
++               ctrl &= ~(CTRL_DISP_BRIGHTNESS_CTRL_ON |
++                         CTRL_DISP_BACKLIGHT_ON);
++       }
++
++       ctrl |= 1 << 8;
++       acx565akm_write(md, MIPID_CMD_WRITE_CTRL_DISP, (u8 *)&ctrl, 2);
++}
++
++static void set_cabc_mode(struct acx565akm_device *md, int mode)
++{
++       u16 cabc_ctrl;
++
++       cabc_ctrl = 0;
++       acx565akm_read(md, MIPID_CMD_READ_CABC, (u8 *)&cabc_ctrl, 1);
++       cabc_ctrl &= ~3;
++       cabc_ctrl |= (1 << 8) | (mode & 3);
++       acx565akm_write(md, MIPID_CMD_WRITE_CABC, (u8 *)&cabc_ctrl, 2);
++}
++
++static int get_cabc_mode(struct acx565akm_device *md)
++{
++       u8 cabc_ctrl;
++
++       acx565akm_read(md, MIPID_CMD_READ_CABC, &cabc_ctrl, 1);
++       return cabc_ctrl & 3;
++}
++
++static int panel_detect(struct acx565akm_device *md)
++{
++       acx565akm_read(md, MIPID_CMD_READ_DISP_ID, md->display_id, 3);
++       dev_dbg(&md->spi->dev, "MIPI display ID: %02x%02x%02x\n",
++               md->display_id[0], md->display_id[1], md->display_id[2]);
++
++       switch (md->display_id[0]) {
++       case 0x10:
++               md->model = MIPID_VER_ACX565AKM;
++               md->panel.name = "acx565akm";
++               md->has_bc = 1;
++               md->has_cabc = 1;
++               break;
++       case 0x29:
++               md->model = MIPID_VER_L4F00311;
++               md->panel.name = "l4f00311";
++               break;
++       case 0x45:
++               md->model = MIPID_VER_LPH8923;
++               md->panel.name = "lph8923";
++               break;
++       case 0x83:
++               md->model = MIPID_VER_LS041Y3;
++               md->panel.name = "ls041y3";
++               break;
++       default:
++               md->panel.name = "unknown";
++               dev_err(&md->spi->dev, "invalid display ID\n");
++               return -ENODEV;
++       }
++
++       md->revision = md->display_id[1];
++
++       pr_info("omapfb: %s rev %02x LCD detected\n",
++                       md->panel.name, md->revision);
++
++       return 0;
++}
++
++static int acx565akm_panel_enable(struct omap_display *display)
++{
++       struct acx565akm_device *md =
++               (struct acx565akm_device *)display->panel->priv;
++
++       dev_dbg(&md->spi->dev, "%s\n", __func__);
++
++       mutex_lock(&md->mutex);
++
++       if (display->hw_config.panel_enable)
++               display->hw_config.panel_enable(display);
++
++       md->enabled = panel_enabled(md);
++
++       if (md->enabled) {
++               dev_dbg(&md->spi->dev, "panel already enabled\n");
++               mutex_unlock(&md->mutex);
++               return 0;
++       }
++
++       set_sleep_mode(md, 0);
++       md->enabled = 1;
++       set_display_state(md, 1);
++
++       mutex_unlock(&md->mutex);
++
++       return acx565akm_bl_update_status(md->bl_dev);
++}
++
++static void acx565akm_panel_disable(struct omap_display *display)
++{
++       struct acx565akm_device *md =
++               (struct acx565akm_device *)display->panel->priv;
++
++       dev_dbg(&md->spi->dev, "%s\n", __func__);
++
++       mutex_lock(&md->mutex);
++
++       if (!md->enabled) {
++               mutex_unlock(&md->mutex);
++               return;
++       }
++       set_display_state(md, 0);
++       set_sleep_mode(md, 1);
++       md->enabled = 0;
++
++       if (display->hw_config.panel_disable)
++               display->hw_config.panel_disable(display);
++
++       mutex_unlock(&md->mutex);
++}
++
++#if 0
++static void acx565akm_set_mode(struct omap_display *display,
++                             int x_res, int y_res, int bpp)
++{
++       struct acx565akm_device *md =
++               (struct acx565akm_device *)display->panel->priv;
++       u16 par;
++
++       switch (bpp) {
++       case 16:
++               par = 0x150;
++               break;
++       case 18:
++               par = 0x160;
++               break;
++       case 24:
++               par = 0x170;
++               break;
++       }
++
++       acx565akm_write(md, 0x3a, (u8 *)&par, 2);
++}
++#endif
++
++static int acx565akm_panel_suspend(struct omap_display *display)
++{
++       acx565akm_panel_disable(display);
++       return 0;
++}
++
++static int acx565akm_panel_resume(struct omap_display *display)
++{
++       return acx565akm_panel_enable(display);
++}
++
++static void acx565akm_set_brightness(struct acx565akm_device *md, int level)
++{
++       int bv;
++
++       bv = level | (1 << 8);
++       acx565akm_write(md, MIPID_CMD_WRITE_DISP_BRIGHTNESS, (u8 *)&bv, 2);
++
++       if (level)
++               enable_backlight_ctrl(md, 1);
++       else
++               enable_backlight_ctrl(md, 0);
++}
++
++static int acx565akm_get_actual_brightness(struct acx565akm_device *md)
++{
++       u8 bv;
++
++       acx565akm_read(md, MIPID_CMD_READ_DISP_BRIGHTNESS, &bv, 1);
++
++       return bv;
++}
++
++static int acx565akm_bl_update_status(struct backlight_device *dev)
++{
++       struct acx565akm_device *md = dev_get_drvdata(&dev->dev);
++       struct omap_display *display = md->display;
++       int r;
++       int level;
++
++       dev_dbg(&md->spi->dev, "%s\n", __func__);
++
++       if (display->hw_config.set_backlight == NULL)
++               return -ENODEV;
++
++       mutex_lock(&md->mutex);
++
++       if (dev->props.fb_blank == FB_BLANK_UNBLANK &&
++                       dev->props.power == FB_BLANK_UNBLANK)
++               level = dev->props.brightness;
++       else
++               level = 0;
++
++       r = 0;
++       if (md->has_bc)
++               acx565akm_set_brightness(md, level);
++       else
++               if (display->hw_config.set_backlight != NULL)
++                       r = display->hw_config.set_backlight(display, level);
++       else
++               r = -ENODEV;
++
++       mutex_unlock(&md->mutex);
++
++       return r;
++}
++
++static int acx565akm_bl_get_intensity(struct backlight_device *dev)
++{
++       struct acx565akm_device *md = dev_get_drvdata(&dev->dev);
++       struct omap_display *display = md->display;
++
++       dev_dbg(&dev->dev, "%s\n", __func__);
++
++       if (md->has_bc && display->hw_config.set_backlight == NULL)
++               return -ENODEV;
++
++       if (dev->props.fb_blank == FB_BLANK_UNBLANK &&
++                       dev->props.power == FB_BLANK_UNBLANK) {
++               if (md->has_bc)
++                       return acx565akm_get_actual_brightness(md);
++               else
++                       return dev->props.brightness;
++       }
++
++       return 0;
++}
++
++static struct backlight_ops acx565akm_bl_ops = {
++       .get_brightness = acx565akm_bl_get_intensity,
++       .update_status  = acx565akm_bl_update_status,
++};
++
++static const char *cabc_modes[] = {
++       "off",          /* used also always when CABC is not supported */
++       "ui",
++       "still-image",
++       "moving-image",
++};
++
++static ssize_t show_cabc_mode(struct device *dev,
++               struct device_attribute *attr,
++               char *buf)
++{
++       struct acx565akm_device *md = dev_get_drvdata(dev);
++       const char *mode_str;
++       int mode;
++       int len;
++
++       if (!md->has_cabc)
++               mode = 0;
++       else
++               mode = get_cabc_mode(md);
++       mode_str = "unknown";
++       if (mode >= 0 && mode < ARRAY_SIZE(cabc_modes))
++               mode_str = cabc_modes[mode];
++       len = snprintf(buf, PAGE_SIZE, "%s\n", mode_str);
++
++       return len < PAGE_SIZE - 1 ? len : PAGE_SIZE - 1;
++}
++
++static ssize_t store_cabc_mode(struct device *dev,
++               struct device_attribute *attr,
++               const char *buf, size_t count)
++{
++       struct acx565akm_device *md = dev_get_drvdata(dev);
++       int i;
++
++       for (i = 0; i < ARRAY_SIZE(cabc_modes); i++) {
++               const char *mode_str = cabc_modes[i];
++               int cmp_len = strlen(mode_str);
++
++               if (count > 0 && buf[count - 1] == '\n')
++                       count--;
++               if (count != cmp_len)
++                       continue;
++
++               if (strncmp(buf, mode_str, cmp_len) == 0)
++                       break;
++       }
++
++       if (i == ARRAY_SIZE(cabc_modes))
++               return -EINVAL;
++
++       if (!md->has_cabc && i != 0)
++               return -EINVAL;
++
++       mutex_lock(&md->mutex);
++       set_cabc_mode(md, i);
++       mutex_unlock(&md->mutex);
++
++       return count;
++}
++
++static ssize_t show_cabc_available_modes(struct device *dev,
++               struct device_attribute *attr,
++               char *buf)
++{
++       struct acx565akm_device *md = dev_get_drvdata(dev);
++       int len;
++       int i;
++
++       if (!md->has_cabc)
++               return snprintf(buf, PAGE_SIZE, "%s\n", cabc_modes[0]);
++
++       for (i = 0, len = 0;
++            len < PAGE_SIZE && i < ARRAY_SIZE(cabc_modes); i++)
++               len += snprintf(&buf[len], PAGE_SIZE - len, "%s%s%s",
++                       i ? " " : "", cabc_modes[i],
++                       i == ARRAY_SIZE(cabc_modes) - 1 ? "\n" : "");
++
++       return len < PAGE_SIZE ? len : PAGE_SIZE - 1;
++}
++
++static DEVICE_ATTR(cabc_mode, S_IRUGO | S_IWUSR,
++               show_cabc_mode, store_cabc_mode);
++static DEVICE_ATTR(cabc_available_modes, S_IRUGO,
++               show_cabc_available_modes, NULL);
++
++static struct attribute *bldev_attrs[] = {
++       &dev_attr_cabc_mode.attr,
++       &dev_attr_cabc_available_modes.attr,
++       NULL,
++};
++
++static struct attribute_group bldev_attr_group = {
++       .attrs = bldev_attrs,
++};
++
++static int acx565akm_panel_init(struct omap_display *display)
++{
++       struct omap_panel *panel = display->panel;
++       struct acx565akm_panel_data *panel_data = display->hw_config.panel_data;
++       struct acx565akm_device *md = (struct acx565akm_device *)panel->priv;
++
++       struct backlight_device *bldev;
++       int brightness;
++       int max_brightness;
++       int r;
++
++       dev_dbg(&md->spi->dev, "%s\n", __func__);
++
++       if (!panel_data) {
++               dev_err(&md->spi->dev, "no panel data\n");
++               return -ENODEV;
++       }
++
++       mutex_init(&md->mutex);
++       md->display = display;
++
++       if (display->hw_config.panel_enable)
++               display->hw_config.panel_enable(display);
++
++       md->enabled = panel_enabled(md);
++
++       r = panel_detect(md);
++       if (r) {
++               if (!md->enabled && display->hw_config.panel_disable)
++                       display->hw_config.panel_disable(display);
++               mutex_unlock(&md->mutex);
++               return r;
++       }
++
++       if (!panel_data->bc_connected) {
++               md->has_bc = 0;
++               md->has_cabc = 0;
++       }
++
++#if 0
++       acx565akm_set_mode(display, panel->timings.x_res, panel->timings.y_res,
++                         panel->bpp);
++#endif
++
++       if (!md->enabled)
++               display->hw_config.panel_disable(display);
++
++       bldev = backlight_device_register("acx565akm", &md->spi->dev,
++                       md, &acx565akm_bl_ops);
++       md->bl_dev = bldev;
++
++       if (md->has_cabc) {
++               r = sysfs_create_group(&bldev->dev.kobj, &bldev_attr_group);
++               if (r) {
++                       dev_err(&bldev->dev, "failed to create sysfs files\n");
++                       backlight_device_unregister(bldev);
++                       return r;
++               }
++       }
++
++       bldev->props.fb_blank = FB_BLANK_UNBLANK;
++       bldev->props.power = FB_BLANK_UNBLANK;
++
++       if (md->has_bc)
++               max_brightness = 255;
++       else
++               max_brightness = display->hw_config.max_backlight_level;
++
++       if (md->has_bc)
++               brightness = acx565akm_get_actual_brightness(md);
++       else {
++               if (display->hw_config.get_backlight != NULL)
++                       brightness = display->hw_config.get_backlight(display);
++               else
++                       brightness = 0;
++       }
++
++       bldev->props.max_brightness = max_brightness;
++       bldev->props.brightness = brightness;
++       acx565akm_bl_update_status(bldev);
++
++       return 0;
++}
++
++static struct omap_panel acx565akm_panel = {
++       .name           = "panel-acx565akm",
++       .init           = acx565akm_panel_init,
++       .suspend        = acx565akm_panel_suspend,
++       .resume         = acx565akm_panel_resume,
++       .enable         = acx565akm_panel_enable,
++       .disable        = acx565akm_panel_disable,
++
++       .timings = {
++               .x_res = 800,
++               .y_res = 480,
++
++               .pixel_clock    = 24000,
++
++               .hsw            = 4,
++               .hfp            = 16,
++               .hbp            = 12,
++
++               .vsw            = 3,
++               .vfp            = 3,
++               .vbp            = 3,
++       },
++
++       .config         = OMAP_DSS_LCD_TFT,
++
++       .recommended_bpp = 16,
++
++       /*
++        * supported modes: 12bpp(444), 16bpp(565), 18bpp(666),  24bpp(888)
++        * resolutions.
++        */
++};
++
++static int acx565akm_spi_probe(struct spi_device *spi)
++{
++       struct acx565akm_device *md;
++
++       dev_dbg(&md->spi->dev, "%s\n", __func__);
++
++       md = kzalloc(sizeof(*md), GFP_KERNEL);
++       if (md == NULL) {
++               dev_err(&spi->dev, "out of memory\n");
++               return -ENOMEM;
++       }
++
++       spi->mode = SPI_MODE_3;
++       md->spi = spi;
++       dev_set_drvdata(&spi->dev, md);
++       md->panel = acx565akm_panel;
++       acx565akm_panel.priv = md;
++
++       omap_dss_register_panel(&acx565akm_panel);
++
++       return 0;
++}
++
++static int acx565akm_spi_remove(struct spi_device *spi)
++{
++       struct acx565akm_device *md = dev_get_drvdata(&spi->dev);
++
++       dev_dbg(&md->spi->dev, "%s\n", __func__);
++
++       sysfs_remove_group(&md->bl_dev->dev.kobj, &bldev_attr_group);
++       backlight_device_unregister(md->bl_dev);
++       omap_dss_unregister_panel(&acx565akm_panel);
++
++       kfree(md);
++
++       return 0;
++}
++
++static struct spi_driver acx565akm_spi_driver = {
++       .driver = {
++               .name   = "acx565akm",
++               .bus    = &spi_bus_type,
++               .owner  = THIS_MODULE,
++       },
++       .probe  = acx565akm_spi_probe,
++       .remove = __devexit_p(acx565akm_spi_remove),
++};
++
++static int __init acx565akm_init(void)
++{
++       return spi_register_driver(&acx565akm_spi_driver);
++}
++
++static void __exit acx565akm_exit(void)
++{
++       spi_unregister_driver(&acx565akm_spi_driver);
++}
++
++module_init(acx565akm_init);
++module_exit(acx565akm_exit);
++
++MODULE_AUTHOR("Tomi Valkeinen <tomi.valkeinen@nokia.com>");
++MODULE_DESCRIPTION("acx565akm LCD Driver");
++MODULE_LICENSE("GPL");
+diff --git a/drivers/video/omap2/displays/panel-acx565akm.h b/drivers/video/omap2/displays/panel-acx565akm.h
+new file mode 100644
+index 0000000..6d3727b
+--- /dev/null
++++ b/drivers/video/omap2/displays/panel-acx565akm.h
+@@ -0,0 +1,9 @@
++#ifndef __DRIVERS_VIDEO_OMAP2_DISPLAYS_PANEL_ACX565AKM_H
++#define __DRIVERS_VIDEO_OMAP2_DISPLAYS_PANEL_ACX565AKM_H
++
++struct acx565akm_panel_data {
++       unsigned bc_connected:1;
++};
++
++#endif
++
 diff --git a/drivers/video/omap2/displays/panel-generic.c b/drivers/video/omap2/displays/panel-generic.c
 new file mode 100644
 index 0000000..8382acb
@@ -10726,10 +11289,10 @@ index 0000000..ae7cd06
 +
 diff --git a/drivers/video/omap2/dss/dispc.c b/drivers/video/omap2/dss/dispc.c
 new file mode 100644
-index 0000000..ae3e9d0
+index 0000000..2480a03
 --- /dev/null
 +++ b/drivers/video/omap2/dss/dispc.c
-@@ -0,0 +1,2781 @@
+@@ -0,0 +1,2971 @@
 +/*
 + * linux/drivers/video/omap2/dss/dispc.c
 + *
@@ -10761,6 +11324,8 @@ index 0000000..ae3e9d0
 +#include <linux/io.h>
 +#include <linux/jiffies.h>
 +#include <linux/seq_file.h>
++#include <linux/delay.h>
++#include <linux/workqueue.h>
 +
 +#include <mach/sram.h>
 +#include <mach/board.h>
@@ -10892,6 +11457,10 @@ index 0000000..ae3e9d0
 +
 +	u32		irq_error_mask;
 +	struct omap_dispc_isr_data registered_isr[DISPC_MAX_NR_ISRS];
++
++	spinlock_t error_lock;
++	u32 error_irqs;
++	struct work_struct error_work;
 +
 +	u32		ctx[DISPC_SZ_REGS / sizeof(u32)];
 +} dispc;
@@ -11504,7 +12073,7 @@ index 0000000..ae3e9d0
 +	dispc_write_reg(vsi_reg[plane-1], val);
 +}
 +
-+static void _dispc_set_pix_inc(enum omap_plane plane, u16 inc)
++static void _dispc_set_pix_inc(enum omap_plane plane, s32 inc)
 +{
 +	const struct dispc_reg ri_reg[] = { DISPC_GFX_PIXEL_INC,
 +				     DISPC_VID_PIXEL_INC(0),
@@ -11513,7 +12082,7 @@ index 0000000..ae3e9d0
 +	dispc_write_reg(ri_reg[plane], inc);
 +}
 +
-+static void _dispc_set_row_inc(enum omap_plane plane, u16 inc)
++static void _dispc_set_row_inc(enum omap_plane plane, s32 inc)
 +{
 +	const struct dispc_reg ri_reg[] = { DISPC_GFX_ROW_INC,
 +				     DISPC_VID_ROW_INC(0),
@@ -11849,7 +12418,7 @@ index 0000000..ae3e9d0
 +	}
 +}
 +
-+static int pixinc(int pixels, u8 ps)
++static s32 pixinc(int pixels, u8 ps)
 +{
 +	if (pixels == 1)
 +		return 1;
@@ -11866,7 +12435,7 @@ index 0000000..ae3e9d0
 +		u16 width, u16 height,
 +		enum omap_color_mode color_mode, bool fieldmode,
 +		unsigned *offset0, unsigned *offset1,
-+		u16 *row_inc, u16 *pix_inc)
++		s32 *row_inc, s32 *pix_inc)
 +{
 +	u8 ps;
 +	u16 fbw, fbh;
@@ -12022,14 +12591,31 @@ index 0000000..ae3e9d0
 +	const int maxdownscale = cpu_is_omap34xx() ? 4 : 2;
 +	bool five_taps = height > out_height * 2;
 +	bool fieldmode = 0;
-+	int cconv;
++	int cconv = 0;
 +	unsigned offset0, offset1;
-+	u16 row_inc;
-+	u16 pix_inc;
++	s32 row_inc;
++	s32 pix_inc;
++
++	if (paddr == 0)
++		return -EINVAL;
 +
 +	if (plane == OMAP_DSS_GFX) {
 +		if (width != out_width || height != out_height)
 +			return -EINVAL;
++
++		switch (color_mode) {
++		case OMAP_DSS_COLOR_ARGB16:
++		case OMAP_DSS_COLOR_RGB16:
++		case OMAP_DSS_COLOR_RGB24P:
++		case OMAP_DSS_COLOR_RGB24U:
++		case OMAP_DSS_COLOR_ARGB32:
++		case OMAP_DSS_COLOR_RGBA32:
++		case OMAP_DSS_COLOR_RGBX32:
++			break;
++
++		default:
++			return -EINVAL;
++		}
 +	} else {
 +		/* video plane */
 +		if (width > (2048 >> five_taps))
@@ -12045,37 +12631,26 @@ index 0000000..ae3e9d0
 +
 +		switch (color_mode) {
 +		case OMAP_DSS_COLOR_RGB16:
++		case OMAP_DSS_COLOR_RGB24P:
 +		case OMAP_DSS_COLOR_RGB24U:
++		case OMAP_DSS_COLOR_RGBX32:
++			break;
++
++		case OMAP_DSS_COLOR_ARGB16:
++		case OMAP_DSS_COLOR_ARGB32:
++		case OMAP_DSS_COLOR_RGBA32:
++			if (plane == OMAP_DSS_VIDEO1)
++				return -EINVAL;
++			break;
++
 +		case OMAP_DSS_COLOR_YUV2:
 +		case OMAP_DSS_COLOR_UYVY:
++			cconv = 1;
 +			break;
 +
 +		default:
 +			return -EINVAL;
 +		}
-+	}
-+
-+
-+	switch (color_mode) {
-+	case OMAP_DSS_COLOR_RGB16:
-+	case OMAP_DSS_COLOR_ARGB16:
-+	case OMAP_DSS_COLOR_RGB24P:
-+	case OMAP_DSS_COLOR_RGB24U:
-+	case OMAP_DSS_COLOR_ARGB32:
-+	case OMAP_DSS_COLOR_RGBA32:
-+	case OMAP_DSS_COLOR_RGBX32:
-+		cconv = 0;
-+		break;
-+
-+	case OMAP_DSS_COLOR_YUV2:
-+	case OMAP_DSS_COLOR_UYVY:
-+		BUG_ON(plane == OMAP_DSS_GFX);
-+		cconv = 1;
-+		break;
-+
-+	default:
-+		BUG();
-+		return 1;
 +	}
 +
 +	if (ilace && height >= out_height)
@@ -12320,6 +12895,22 @@ index 0000000..ae3e9d0
 +	enable_clocks(0);
 +}
 +
++u32 dispc_get_default_color(enum omap_channel channel)
++{
++	const struct dispc_reg def_reg[] = { DISPC_DEFAULT_COLOR0,
++				DISPC_DEFAULT_COLOR1 };
++	u32 l;
++
++	BUG_ON(channel != OMAP_DSS_CHANNEL_DIGIT &&
++	       channel != OMAP_DSS_CHANNEL_LCD);
++
++	enable_clocks(1);
++	l = dispc_read_reg(def_reg[channel]);
++	enable_clocks(0);
++
++	return l;
++}
++
 +void dispc_set_trans_key(enum omap_channel ch,
 +		enum omap_dss_color_key_type type,
 +		u32 trans_key)
@@ -12337,6 +12928,28 @@ index 0000000..ae3e9d0
 +	enable_clocks(0);
 +}
 +
++void dispc_get_trans_key(enum omap_channel ch,
++		enum omap_dss_color_key_type *type,
++		u32 *trans_key)
++{
++	const struct dispc_reg tr_reg[] = {
++		DISPC_TRANS_COLOR0, DISPC_TRANS_COLOR1 };
++
++	enable_clocks(1);
++	if (type) {
++		if (ch == OMAP_DSS_CHANNEL_LCD)
++			*type = REG_GET(DISPC_CONFIG, 11, 11) >> 11;
++		else if (ch == OMAP_DSS_CHANNEL_DIGIT)
++			*type = REG_GET(DISPC_CONFIG, 13, 13) >> 13;
++		else
++			BUG();
++	}
++
++	if (trans_key)
++		*trans_key = dispc_read_reg(tr_reg[ch]);
++	enable_clocks(0);
++}
++
 +void dispc_enable_trans_key(enum omap_channel ch, bool enable)
 +{
 +	enable_clocks(1);
@@ -12346,6 +12959,22 @@ index 0000000..ae3e9d0
 +		REG_FLD_MOD(DISPC_CONFIG, enable, 12, 12);
 +	enable_clocks(0);
 +}
++
++bool dispc_trans_key_enabled(enum omap_channel ch)
++{
++	bool enabled;
++
++	enable_clocks(1);
++	if (ch == OMAP_DSS_CHANNEL_LCD)
++		enabled = REG_GET(DISPC_CONFIG, 10, 10);
++	else if (ch == OMAP_DSS_CHANNEL_DIGIT)
++		enabled = REG_GET(DISPC_CONFIG, 12, 12);
++	else BUG();
++	enable_clocks(0);
++
++	return enabled;
++}
++
 +
 +void dispc_set_tft_data_lines(u8 data_lines)
 +{
@@ -12420,19 +13049,35 @@ index 0000000..ae3e9d0
 +{
 +	u32 timing_h, timing_v;
 +
-+	BUG_ON(hsw < 1 || hsw > 64);
-+	BUG_ON(hfp < 1 || hfp > 256);
-+	BUG_ON(hbp < 1 || hbp > 256);
++	if (cpu_is_omap24xx() || omap_rev() < OMAP3430_REV_ES3_0) {
++		BUG_ON(hsw < 1 || hsw > 64);
++		BUG_ON(hfp < 1 || hfp > 256);
++		BUG_ON(hbp < 1 || hbp > 256);
 +
-+	BUG_ON(vsw < 1 || vsw > 64);
-+	BUG_ON(vfp < 0 || vfp > 255);
-+	BUG_ON(vbp < 0 || vbp > 255);
++		BUG_ON(vsw < 1 || vsw > 64);
++		BUG_ON(vfp < 0 || vfp > 255);
++		BUG_ON(vbp < 0 || vbp > 255);
 +
-+	timing_h = FLD_VAL(hsw-1, 5, 0) | FLD_VAL(hfp-1, 15, 8) |
-+		FLD_VAL(hbp-1, 27, 20);
++		timing_h = FLD_VAL(hsw-1, 5, 0) | FLD_VAL(hfp-1, 15, 8) |
++			FLD_VAL(hbp-1, 27, 20);
 +
-+	timing_v = FLD_VAL(vsw-1, 5, 0) | FLD_VAL(vfp, 15, 8) |
-+		FLD_VAL(vbp, 27, 20);
++		timing_v = FLD_VAL(vsw-1, 5, 0) | FLD_VAL(vfp, 15, 8) |
++			FLD_VAL(vbp, 27, 20);
++	} else {
++		BUG_ON(hsw < 1 || hsw > 256);
++		BUG_ON(hfp < 1 || hfp > 4096);
++		BUG_ON(hbp < 1 || hbp > 4096);
++
++		BUG_ON(vsw < 1 || vsw > 256);
++		BUG_ON(vfp < 0 || vfp > 4095);
++		BUG_ON(vbp < 0 || vbp > 4095);
++
++		timing_h = FLD_VAL(hsw-1, 7, 0) | FLD_VAL(hfp-1, 19, 8) |
++			FLD_VAL(hbp-1, 31, 20);
++
++		timing_v = FLD_VAL(vsw-1, 7, 0) | FLD_VAL(vfp, 19, 8) |
++			FLD_VAL(vbp, 31, 20);
++	}
 +
 +	enable_clocks(1);
 +	dispc_write_reg(DISPC_TIMING_H, timing_h);
@@ -12914,7 +13559,7 @@ index 0000000..ae3e9d0
 +static void omap_dispc_set_irqs(void)
 +{
 +	unsigned long flags;
-+	u32 mask = dispc.irq_error_mask | DISPC_IRQ_WAKEUP;
++	u32 mask = dispc.irq_error_mask;
 +	int i;
 +	struct omap_dispc_isr_data *isr_data;
 +
@@ -13049,8 +13694,8 @@ index 0000000..ae3e9d0
 +{
 +	int i;
 +	u32 irqstatus = dispc_read_reg(DISPC_IRQSTATUS);
-+	static int errors;
 +	u32 handledirqs = 0;
++	u32 unhandled_errors;
 +	struct omap_dispc_isr_data *isr_data;
 +
 +#ifdef DEBUG
@@ -13073,19 +13718,124 @@ index 0000000..ae3e9d0
 +		}
 +	}
 +
-+	if (irqstatus & ~handledirqs & dispc.irq_error_mask) {
-+		if (printk_ratelimit()) {
-+			DSSERR("dispc irq error status %04x\n",
-+			       irqstatus);
-+		}
-+		if (errors++ > 100) {
-+			DSSERR("Excessive DISPC errors\n"
-+					"Turning off lcd and digit\n");
-+			_enable_lcd_out(0);
-+			_enable_digit_out(0);
++	unhandled_errors = irqstatus & ~handledirqs & dispc.irq_error_mask;
++
++	if (unhandled_errors) {
++		spin_lock(&dispc.error_lock);
++		dispc.error_irqs |= unhandled_errors;
++		spin_unlock(&dispc.error_lock);
++
++		dispc.irq_error_mask &= ~unhandled_errors;
++		omap_dispc_set_irqs();
++
++		schedule_work(&dispc.error_work);
++	}
++}
++
++static void dispc_error_worker(struct work_struct *work)
++{
++	int i;
++	u32 errors;
++	unsigned long flags;
++
++	spin_lock_irqsave(&dispc.error_lock, flags);
++	errors = dispc.error_irqs;
++	dispc.error_irqs = 0;
++	spin_unlock_irqrestore(&dispc.error_lock, flags);
++
++	if (errors & DISPC_IRQ_GFX_FIFO_UNDERFLOW) {
++		DSSERR("GFX_FIFO_UNDERFLOW, disabling GFX\n");
++		for (i = 0; i < omap_dss_get_num_overlays(); ++i) {
++			struct omap_overlay *ovl;
++			ovl = omap_dss_get_overlay(i);
++
++			if (!(ovl->caps & OMAP_DSS_OVL_CAP_DISPC))
++				continue;
++
++			if (ovl->id == 0) {
++				dispc_enable_plane(ovl->id, 0);
++				dispc_go(ovl->manager->id);
++				mdelay(50);
++				break;
++			}
 +		}
 +	}
 +
++	if (errors & DISPC_IRQ_VID1_FIFO_UNDERFLOW) {
++		DSSERR("VID1_FIFO_UNDERFLOW, disabling VID1\n");
++		for (i = 0; i < omap_dss_get_num_overlays(); ++i) {
++			struct omap_overlay *ovl;
++			ovl = omap_dss_get_overlay(i);
++
++			if (!(ovl->caps & OMAP_DSS_OVL_CAP_DISPC))
++				continue;
++
++			if (ovl->id == 1) {
++				dispc_enable_plane(ovl->id, 0);
++				dispc_go(ovl->manager->id);
++				mdelay(50);
++				break;
++			}
++		}
++	}
++
++	if (errors & DISPC_IRQ_VID2_FIFO_UNDERFLOW) {
++		DSSERR("VID2_FIFO_UNDERFLOW, disabling VID2\n");
++		for (i = 0; i < omap_dss_get_num_overlays(); ++i) {
++			struct omap_overlay *ovl;
++			ovl = omap_dss_get_overlay(i);
++
++			if (!(ovl->caps & OMAP_DSS_OVL_CAP_DISPC))
++				continue;
++
++			if (ovl->id == 2) {
++				dispc_enable_plane(ovl->id, 0);
++				dispc_go(ovl->manager->id);
++				mdelay(50);
++				break;
++			}
++		}
++	}
++
++	if (errors & DISPC_IRQ_SYNC_LOST) {
++		DSSERR("SYNC_LOST, disabling LCD\n");
++		for (i = 0; i < omap_dss_get_num_overlay_managers(); ++i) {
++			struct omap_overlay_manager *mgr;
++			mgr = omap_dss_get_overlay_manager(i);
++
++			if (mgr->id == OMAP_DSS_CHANNEL_LCD) {
++				mgr->display->disable(mgr->display);
++				break;
++			}
++		}
++	}
++
++	if (errors & DISPC_IRQ_SYNC_LOST_DIGIT) {
++		DSSERR("SYNC_LOST_DIGIT, disabling TV\n");
++		for (i = 0; i < omap_dss_get_num_overlay_managers(); ++i) {
++			struct omap_overlay_manager *mgr;
++			mgr = omap_dss_get_overlay_manager(i);
++
++			if (mgr->id == OMAP_DSS_CHANNEL_DIGIT) {
++				mgr->display->disable(mgr->display);
++				break;
++			}
++		}
++	}
++
++	if (errors & DISPC_IRQ_OCP_ERR) {
++		DSSERR("OCP_ERR\n");
++		for (i = 0; i < omap_dss_get_num_overlay_managers(); ++i) {
++			struct omap_overlay_manager *mgr;
++			mgr = omap_dss_get_overlay_manager(i);
++
++			if (mgr->caps & OMAP_DSS_OVL_CAP_DISPC)
++				mgr->display->disable(mgr->display);
++		}
++	}
++
++	dispc.irq_error_mask |= errors;
++	omap_dispc_set_irqs();
 +}
 +
 +int omap_dispc_wait_for_irq_timeout(u32 irqmask, unsigned long timeout)
@@ -13208,6 +13958,9 @@ index 0000000..ae3e9d0
 +	u32 rev;
 +
 +	spin_lock_init(&dispc.irq_lock);
++	spin_lock_init(&dispc.error_lock);
++
++	INIT_WORK(&dispc.error_work, dispc_error_worker);
 +
 +	dispc.base = ioremap(DISPC_BASE, DISPC_SZ_REGS);
 +	if (!dispc.base) {
@@ -13513,10 +14266,10 @@ index 0000000..ae3e9d0
 +
 diff --git a/drivers/video/omap2/dss/display.c b/drivers/video/omap2/dss/display.c
 new file mode 100644
-index 0000000..1a55010
+index 0000000..9aaf392
 --- /dev/null
 +++ b/drivers/video/omap2/dss/display.c
-@@ -0,0 +1,687 @@
+@@ -0,0 +1,693 @@
 +/*
 + * linux/drivers/video/omap2/dss/display.c
 + *
@@ -13651,27 +14404,33 @@ index 0000000..1a55010
 +
 +	return snprintf(buf, PAGE_SIZE, "%u,%u/%u/%u/%u,%u/%u/%u/%u\n",
 +			t.pixel_clock,
-+			t.x_res, t.hsw, t.hfp, t.hbp,
-+			t.y_res, t.vsw, t.vfp, t.vbp);
++			t.x_res, t.hfp, t.hbp, t.hsw,
++			t.y_res, t.vfp, t.vbp, t.vsw);
 +}
 +
 +static ssize_t display_timings_store(struct omap_display *display,
 +		const char *buf, size_t size)
 +{
 +	struct omap_video_timings t;
-+	int r;
++	int r, found;
 +
 +	if (!display->set_timings || !display->check_timings)
 +		return -ENOENT;
 +
++	found = 0;
++#ifdef CONFIG_OMAP2_DSS_VENC
 +	if (strncmp("pal", buf, 3) == 0) {
 +		t = omap_dss_pal_timings;
++		found = 1;
 +	} else if (strncmp("ntsc", buf, 4) == 0) {
 +		t = omap_dss_ntsc_timings;
-+	} else if (sscanf(buf, "%u,%hu/%hu/%hu/%hu,%hu/%hu/%hu/%hu",
++		found = 1;
++	}
++#endif
++	if (!found && sscanf(buf, "%u,%hu/%hu/%hu/%hu,%hu/%hu/%hu/%hu",
 +				&t.pixel_clock,
-+				&t.x_res, &t.hsw, &t.hfp, &t.hbp,
-+				&t.y_res, &t.vsw, &t.vfp, &t.vbp) != 9)
++				&t.x_res, &t.hfp, &t.hbp, &t.hsw,
++				&t.y_res, &t.vfp, &t.vbp, &t.vsw) != 9)
 +		return -EINVAL;
 +
 +	if ((r = display->check_timings(display, &t)))
@@ -14206,10 +14965,10 @@ index 0000000..1a55010
 +EXPORT_SYMBOL(omap_dss_unregister_panel);
 diff --git a/drivers/video/omap2/dss/dpi.c b/drivers/video/omap2/dss/dpi.c
 new file mode 100644
-index 0000000..b41b07e
+index 0000000..71fffca
 --- /dev/null
 +++ b/drivers/video/omap2/dss/dpi.c
-@@ -0,0 +1,379 @@
+@@ -0,0 +1,393 @@
 +/*
 + * linux/drivers/video/omap2/dss/dpi.c
 + *
@@ -14239,8 +14998,9 @@ index 0000000..b41b07e
 +
 +#include <mach/board.h>
 +#include <mach/display.h>
-+#include "dss.h"
++#include <mach/cpu.h>
 +
++#include "dss.h"
 +
 +static struct {
 +	int update_enabled;
@@ -14484,15 +15244,28 @@ index 0000000..b41b07e
 +	unsigned long fck;
 +	unsigned long pck;
 +
-+	if (timings->hsw < 1 || timings->hsw > 64 ||
-+		timings->hfp < 1 || timings->hfp > 256 ||
-+		timings->hbp < 1 || timings->hbp > 256) {
-+		return -EINVAL;
-+	}
++	if (cpu_is_omap24xx() || omap_rev() < OMAP3430_REV_ES3_0) {
++		if (timings->hsw < 1 || timings->hsw > 64 ||
++				timings->hfp < 1 || timings->hfp > 256 ||
++				timings->hbp < 1 || timings->hbp > 256) {
++			return -EINVAL;
++		}
 +
-+	if (timings->vsw < 1 || timings->vsw > 64 ||
-+		timings->vfp > 256 || timings->vbp > 256) {
-+		return -EINVAL;
++		if (timings->vsw < 1 || timings->vsw > 64 ||
++				timings->vfp > 255 || timings->vbp > 255) {
++			return -EINVAL;
++		}
++	} else {
++		if (timings->hsw < 1 || timings->hsw > 256 ||
++				timings->hfp < 1 || timings->hfp > 4096 ||
++				timings->hbp < 1 || timings->hbp > 4096) {
++			return -EINVAL;
++		}
++
++		if (timings->vsw < 1 || timings->vsw > 64 ||
++				timings->vfp > 4095 || timings->vbp > 4095) {
++			return -EINVAL;
++		}
 +	}
 +
 +	if (timings->pixel_clock == 0)
@@ -14591,10 +15364,10 @@ index 0000000..b41b07e
 +
 diff --git a/drivers/video/omap2/dss/dsi.c b/drivers/video/omap2/dss/dsi.c
 new file mode 100644
-index 0000000..ea5a58e
+index 0000000..4442931
 --- /dev/null
 +++ b/drivers/video/omap2/dss/dsi.c
-@@ -0,0 +1,3693 @@
+@@ -0,0 +1,3752 @@
 +/*
 + * linux/drivers/video/omap2/dss/dsi.c
 + *
@@ -14787,7 +15560,7 @@ index 0000000..ea5a58e
 +	DSI_FIFO_SIZE_128	= 4,
 +};
 +
-+#define DSI_CMD_FIFO_LEN_BYTES (16 * sizeof(struct dsi_cmd_item))
++#define DSI_CMD_FIFO_LEN 16
 +
 +struct dsi_cmd_update {
 +	int bytespp;
@@ -14816,6 +15589,7 @@ index 0000000..ea5a58e
 +
 +enum dsi_cmd {
 +	DSI_CMD_UPDATE,
++	DSI_CMD_AUTOUPDATE,
 +	DSI_CMD_SYNC,
 +	DSI_CMD_MEM_READ,
 +	DSI_CMD_TEST,
@@ -14852,7 +15626,8 @@ index 0000000..ea5a58e
 +	unsigned long	ddr_clk;	/* Hz */
 +
 +	struct {
-+		enum fifo_size	fifo_size;
++		struct omap_display *display;
++		enum fifo_size fifo_size;
 +		int dest_per;	/* destination peripheral 0-3 */
 +	} vc[4];
 +
@@ -14863,20 +15638,14 @@ index 0000000..ea5a58e
 +	struct completion bta_completion;
 +
 +	struct work_struct framedone_work;
-+	struct workqueue_struct *framedone_workqueue;
++	struct work_struct process_work;
++	struct workqueue_struct *workqueue;
 +
 +	enum omap_dss_update_mode user_update_mode;
 +	enum omap_dss_update_mode target_update_mode;
 +	enum omap_dss_update_mode update_mode;
 +	int use_te;
 +	int framedone_scheduled; /* helps to catch strange framedone bugs */
-+
-+
-+	struct {
-+		struct omap_display *display;
-+		int x, y, w, h;
-+		int bytespp;
-+	} update_region;
 +
 +	unsigned long cache_req_pck;
 +	unsigned long cache_clk_freq;
@@ -14888,10 +15657,18 @@ index 0000000..ea5a58e
 +	atomic_t          cmd_fifo_full;
 +	atomic_t          cmd_pending;
 +
++	bool autoupdate_setup;
++
 +#ifdef DEBUG
 +	ktime_t perf_setup_time;
 +	ktime_t perf_start_time;
 +	int perf_measure_frames;
++
++	struct {
++		int x, y, w, h;
++		int bytespp;
++	} update_region;
++
 +#endif
 +	int debug_process;
 +	int debug_read;
@@ -14903,9 +15680,10 @@ index 0000000..ea5a58e
 +module_param_named(dsi_perf, dsi_perf, bool, 0644);
 +#endif
 +
-+static void dsi_process_cmd_fifo(void);
++static void dsi_process_cmd_fifo(struct work_struct *work);
 +static void dsi_push_update(struct omap_display *display,
 +		int x, int y, int w, int h);
++static void dsi_push_autoupdate(struct omap_display *display);
 +
 +static inline void dsi_write_reg(const struct dsi_reg idx, u32 val)
 +{
@@ -16986,11 +17764,13 @@ index 0000000..ea5a58e
 +
 +	data += start_offset;
 +
++#ifdef DEBUG
 +	dsi.update_region.x = x;
 +	dsi.update_region.y = y;
 +	dsi.update_region.w = w;
 +	dsi.update_region.h = h;
 +	dsi.update_region.bytespp = bytespp;
++#endif
 +
 +	perf_mark_start();
 +
@@ -17166,35 +17946,52 @@ index 0000000..ea5a58e
 +static void dsi_setup_update_dispc(struct omap_display *display,
 +			u16 x, u16 y, u16 w, u16 h)
 +{
-+	int bytespp = 3;
-+
 +	DSSDBG("dsi_setup_update_dispc(%d,%d %dx%d)\n",
 +			x, y, w, h);
 +
-+	dsi.update_region.display = display;
++#ifdef DEBUG
 +	dsi.update_region.x = x;
 +	dsi.update_region.y = y;
 +	dsi.update_region.w = w;
 +	dsi.update_region.h = h;
-+	dsi.update_region.bytespp = bytespp;
++	dsi.update_region.bytespp = 3; // XXX
++#endif
 +
 +	dispc_setup_partial_planes(display, &x, &y, &w, &h);
 +
 +	dispc_set_lcd_size(w, h);
 +}
 +
-+static void dsi_update_screen_dispc(struct omap_display *display)
++static void dsi_setup_autoupdate_dispc(struct omap_display *display)
++{
++	u16 w, h;
++
++	display->get_resolution(display, &w, &h);
++
++#ifdef DEBUG
++	dsi.update_region.x = 0;
++	dsi.update_region.y = 0;
++	dsi.update_region.w = w;
++	dsi.update_region.h = h;
++	dsi.update_region.bytespp = 3; // XXX
++#endif
++
++	/* the overlay settings may not have been applied, if we were in manual
++	 * mode earlier, so do it here */
++	display->manager->apply(display->manager);
++
++	dispc_set_lcd_size(w, h);
++
++	dsi.autoupdate_setup = 0;
++}
++
++static void dsi_update_screen_dispc(struct omap_display *display,
++		u16 x, u16 y, u16 w, u16 h)
 +{
 +	int bytespp = 3;
 +	int total_len;
 +	int line_packet_len;
-+	u16 x, y, w, h;
 +	u32 l;
-+
-+	x = dsi.update_region.x;
-+	y = dsi.update_region.y;
-+	w = dsi.update_region.w;
-+	h = dsi.update_region.h;
 +
 +	if (dsi.update_mode == OMAP_DSS_UPDATE_MANUAL)
 +		DSSDBG("dsi_update_screen_dispc(%d,%d %dx%d)\n",
@@ -17242,7 +18039,7 @@ index 0000000..ea5a58e
 +	 * is sending the data. Thus we have to wait until we can do a new
 +	 * transfer or turn the clocks off. We do that in a separate work
 +	 * func. */
-+	queue_work(dsi.framedone_workqueue, &dsi.framedone_work);
++	queue_work(dsi.workqueue, &dsi.framedone_work);
 +}
 +
 +static void framedone_worker(struct work_struct *work)
@@ -17296,43 +18093,19 @@ index 0000000..ea5a58e
 +	/* We check for target_update_mode, not update_mode. No reason to push
 +	 * new updates if we're turning auto update off */
 +	if (dsi.target_update_mode == OMAP_DSS_UPDATE_AUTO)
-+		dsi_push_update(dsi.update_region.display,
-+				dsi.update_region.x,
-+				dsi.update_region.y,
-+				dsi.update_region.w,
-+				dsi.update_region.h);
++		dsi_push_autoupdate(dsi.vc[1].display);
 +
 +	atomic_set(&dsi.cmd_pending, 0);
-+	dsi_process_cmd_fifo();
++	dsi_process_cmd_fifo(NULL);
 +}
 +
 +static void dsi_start_auto_update(struct omap_display *display)
 +{
-+	int bytespp = 3;
-+	u16 w, h;
-+
 +	DSSDBG("starting auto update\n");
 +
-+	display->get_resolution(display, &w, &h);
++	dsi.autoupdate_setup = 1;
 +
-+	dsi.update_region.display = display;
-+	dsi.update_region.x = 0;
-+	dsi.update_region.y = 0;
-+	dsi.update_region.w = w;
-+	dsi.update_region.h = h;
-+	dsi.update_region.bytespp = bytespp;
-+
-+	/* the overlay settings may not have been applied, if we were in manual
-+	 * mode earlier, so do it here */
-+	display->manager->apply(display->manager);
-+
-+	dispc_set_lcd_size(w, h);
-+
-+	dsi_push_update(dsi.update_region.display,
-+			dsi.update_region.x,
-+			dsi.update_region.y,
-+			dsi.update_region.w,
-+			dsi.update_region.h);
++	dsi_push_autoupdate(display);
 +}
 +
 +
@@ -17369,6 +18142,9 @@ index 0000000..ea5a58e
 +	if (dsi.update_mode == OMAP_DSS_UPDATE_DISABLED)
 +		return 0;
 +
++	if (display->state != OMAP_DSS_DISPLAY_ACTIVE)
++		return 0;
++
 +	display->get_resolution(display, &dw, &dh);
 +	if  (x > dw || y > dh)
 +		return 0;
@@ -17379,21 +18155,45 @@ index 0000000..ea5a58e
 +	if (y + h > dh)
 +		h = dh - y;
 +
-+	if (dsi.update_mode == OMAP_DSS_UPDATE_MANUAL)
-+		DSSDBGF("%d,%d %dx%d", x, y, w, h);
-+
-+	if (display->state != OMAP_DSS_DISPLAY_ACTIVE)
-+		return 0;
++	DSSDBGF("%d,%d %dx%d", x, y, w, h);
 +
 +	perf_mark_setup();
 +
 +	if (display->manager->caps & OMAP_DSS_OVL_MGR_CAP_DISPC) {
-+		if (dsi.update_mode == OMAP_DSS_UPDATE_MANUAL)
-+			dsi_setup_update_dispc(display, x, y, w, h);
-+		dsi_update_screen_dispc(display);
++		dsi_setup_update_dispc(display, x, y, w, h);
++		dsi_update_screen_dispc(display, x, y, w, h);
 +		return 1;
 +	} else {
 +		r = dsi_update_screen_l4(display, x, y, w, h);
++		if (r)
++			DSSERR("L4 update failed\n");
++		return 0;
++	}
++}
++
++/* returns 1 for async op, and 0 for sync op */
++static int dsi_do_autoupdate(struct omap_display *display)
++{
++	int r;
++	u16 w, h;
++
++	if (dsi.update_mode == OMAP_DSS_UPDATE_DISABLED)
++		return 0;
++
++	if (display->state != OMAP_DSS_DISPLAY_ACTIVE)
++		return 0;
++
++	display->get_resolution(display, &w, &h);
++
++	perf_mark_setup();
++
++	if (display->manager->caps & OMAP_DSS_OVL_MGR_CAP_DISPC) {
++		if (dsi.autoupdate_setup)
++			dsi_setup_autoupdate_dispc(display);
++		dsi_update_screen_dispc(display, 0, 0, w, h);
++		return 1;
++	} else {
++		r = dsi_update_screen_l4(display, 0, 0, w, h);
 +		if (r)
 +			DSSERR("L4 update failed\n");
 +		return 0;
@@ -17492,7 +18292,7 @@ index 0000000..ea5a58e
 +		dsi_start_auto_update(display);
 +}
 +
-+static void dsi_process_cmd_fifo(void)
++static void dsi_process_cmd_fifo(struct work_struct *work)
 +{
 +	int len;
 +	struct dsi_cmd_item p;
@@ -17528,6 +18328,9 @@ index 0000000..ea5a58e
 +
 +		display = p.display;
 +
++		if (dsi.debug_process)
++			DSSDBG("processing cmd %d\n", p.cmd);
++
 +		switch (p.cmd) {
 +		case DSI_CMD_UPDATE:
 +			if (dsi_do_update(display, &p.u.r)) {
@@ -17537,6 +18340,17 @@ index 0000000..ea5a58e
 +			} else {
 +				if (dsi.debug_process)
 +					DSSDBG("sync update\n");
++			}
++			break;
++
++		case DSI_CMD_AUTOUPDATE:
++			if (dsi_do_autoupdate(display)) {
++				if (dsi.debug_process)
++					DSSDBG("async autoupdate\n");
++				exit = 1;
++			} else {
++				if (dsi.debug_process)
++					DSSDBG("sync autoupdate\n");
 +			}
 +			break;
 +
@@ -17564,6 +18378,8 @@ index 0000000..ea5a58e
 +
 +		case DSI_CMD_SET_ROTATE:
 +			display->ctrl->set_rotate(display, p.u.rotate);
++			if (dsi.update_mode == OMAP_DSS_UPDATE_AUTO)
++				dsi.autoupdate_setup = 1;
 +			break;
 +
 +		case DSI_CMD_SET_MIRROR:
@@ -17590,15 +18406,16 @@ index 0000000..ea5a58e
 +
 +	while (1) {
 +		unsigned long flags;
-+		int available;
++		unsigned avail, used;
 +
 +		spin_lock_irqsave(dsi.cmd_fifo->lock, flags);
-+		available = DSI_CMD_FIFO_LEN_BYTES - __kfifo_len(dsi.cmd_fifo);
++		used = __kfifo_len(dsi.cmd_fifo) / sizeof(struct dsi_cmd_item);
++		avail = DSI_CMD_FIFO_LEN - used;
 +
 +		if (dsi.debug_process)
-+			DSSDBG("%d items left in fifo\n",
-+					available / sizeof(*p));
-+		if (available < sizeof(*p)) {
++			DSSDBG("%u/%u items left in fifo\n", avail, used);
++
++		if (avail == 0) {
 +			if (dsi.debug_process)
 +				DSSDBG("cmd fifo full, waiting...\n");
 +			spin_unlock_irqrestore(dsi.cmd_fifo->lock, flags);
@@ -17610,7 +18427,7 @@ index 0000000..ea5a58e
 +		}
 +
 +		ret = __kfifo_put(dsi.cmd_fifo, (unsigned char *)p,
-+				  sizeof(*p));
++				sizeof(*p));
 +
 +		spin_unlock_irqrestore(dsi.cmd_fifo->lock, flags);
 +
@@ -17619,7 +18436,7 @@ index 0000000..ea5a58e
 +		break;
 +	}
 +
-+	dsi_process_cmd_fifo();
++	queue_work(dsi.workqueue, &dsi.process_work);
 +}
 +
 +static void dsi_push_update(struct omap_display *display,
@@ -17635,8 +18452,17 @@ index 0000000..ea5a58e
 +	p.u.r.w = w;
 +	p.u.r.h = h;
 +
-+	if (dsi.update_mode == OMAP_DSS_UPDATE_MANUAL)
-+		DSSDBG("pushing UPDATE %d,%d %dx%d\n", x, y, w, h);
++	DSSDBG("pushing UPDATE %d,%d %dx%d\n", x, y, w, h);
++
++	dsi_push_cmd(&p);
++}
++
++static void dsi_push_autoupdate(struct omap_display *display)
++{
++	struct dsi_cmd_item p;
++
++	p.display = display;
++	p.cmd = DSI_CMD_AUTOUPDATE;
 +
 +	dsi_push_cmd(&p);
 +}
@@ -17953,7 +18779,7 @@ index 0000000..ea5a58e
 +
 +	mutex_unlock(&dsi.lock);
 +
-+	return 0;
++	return dsi_wait_sync(display);
 +
 +err2:
 +	dsi_display_uninit_dispc(display);
@@ -18055,7 +18881,7 @@ index 0000000..ea5a58e
 +
 +	mutex_unlock(&dsi.lock);
 +
-+	return 0;
++	return dsi_wait_sync(display);
 +}
 +
 +static enum omap_dss_update_mode dsi_display_get_update_mode(
@@ -18073,7 +18899,7 @@ index 0000000..ea5a58e
 +
 +	dsi_push_set_te(display, enable);
 +
-+	return 0;
++	return dsi_wait_sync(display);
 +}
 +
 +static int dsi_display_get_te(struct omap_display *display)
@@ -18092,7 +18918,7 @@ index 0000000..ea5a58e
 +
 +	dsi_push_set_rotate(display, rotate);
 +
-+	return 0;
++	return dsi_wait_sync(display);
 +}
 +
 +static u8 dsi_display_get_rotate(struct omap_display *display)
@@ -18112,7 +18938,7 @@ index 0000000..ea5a58e
 +
 +	dsi_push_set_mirror(display, mirror);
 +
-+	return 0;
++	return dsi_wait_sync(display);
 +}
 +
 +static bool dsi_display_get_mirror(struct omap_display *display)
@@ -18235,6 +19061,9 @@ index 0000000..ea5a58e
 +	display->configure_overlay = dsi_configure_overlay;
 +
 +	display->caps = OMAP_DSS_DISPLAY_CAP_MANUAL_UPDATE;
++
++	dsi.vc[0].display = display;
++	dsi.vc[1].display = display;
 +}
 +
 +int dsi_init(void)
@@ -18242,7 +19071,9 @@ index 0000000..ea5a58e
 +	u32 rev;
 +
 +	spin_lock_init(&dsi.cmd_lock);
-+	dsi.cmd_fifo = kfifo_alloc(DSI_CMD_FIFO_LEN_BYTES, GFP_KERNEL,
++	dsi.cmd_fifo = kfifo_alloc(
++			DSI_CMD_FIFO_LEN * sizeof(struct dsi_cmd_item),
++			GFP_KERNEL,
 +			&dsi.cmd_lock);
 +
 +	init_completion(&dsi.cmd_done);
@@ -18251,8 +19082,9 @@ index 0000000..ea5a58e
 +
 +	init_completion(&dsi.bta_completion);
 +
-+	dsi.framedone_workqueue = create_singlethread_workqueue("dsi");
++	dsi.workqueue = create_singlethread_workqueue("dsi");
 +	INIT_WORK(&dsi.framedone_work, framedone_worker);
++	INIT_WORK(&dsi.process_work, dsi_process_cmd_fifo);
 +
 +	mutex_init(&dsi.lock);
 +
@@ -18278,8 +19110,8 @@ index 0000000..ea5a58e
 +
 +void dsi_exit(void)
 +{
-+	flush_workqueue(dsi.framedone_workqueue);
-+	destroy_workqueue(dsi.framedone_workqueue);
++	flush_workqueue(dsi.workqueue);
++	destroy_workqueue(dsi.workqueue);
 +
 +	iounmap(dsi.base);
 +
@@ -18641,10 +19473,10 @@ index 0000000..adc1f34
 +
 diff --git a/drivers/video/omap2/dss/dss.h b/drivers/video/omap2/dss/dss.h
 new file mode 100644
-index 0000000..2013ae4
+index 0000000..bac5ece
 --- /dev/null
 +++ b/drivers/video/omap2/dss/dss.h
-@@ -0,0 +1,326 @@
+@@ -0,0 +1,331 @@
 +/*
 + * linux/drivers/video/omap2/dss/dss.h
 + *
@@ -18929,10 +19761,15 @@ index 0000000..2013ae4
 +void dispc_set_loadmode(enum omap_dss_load_mode mode);
 +
 +void dispc_set_default_color(enum omap_channel channel, u32 color);
++u32 dispc_get_default_color(enum omap_channel channel);
 +void dispc_set_trans_key(enum omap_channel ch,
 +		enum omap_dss_color_key_type type,
 +		u32 trans_key);
++void dispc_get_trans_key(enum omap_channel ch,
++		enum omap_dss_color_key_type *type,
++		u32 *trans_key);
 +void dispc_enable_trans_key(enum omap_channel ch, bool enable);
++bool dispc_trans_key_enabled(enum omap_channel ch);
 +
 +void dispc_set_lcd_timings(struct omap_video_timings *timings);
 +unsigned long dispc_fclk_rate(void);
@@ -18973,10 +19810,10 @@ index 0000000..2013ae4
 +#endif
 diff --git a/drivers/video/omap2/dss/manager.c b/drivers/video/omap2/dss/manager.c
 new file mode 100644
-index 0000000..7c25146
+index 0000000..b0fee80
 --- /dev/null
 +++ b/drivers/video/omap2/dss/manager.c
-@@ -0,0 +1,463 @@
+@@ -0,0 +1,576 @@
 +/*
 + * linux/drivers/video/omap2/dss/manager.c
 + *
@@ -19074,23 +19911,136 @@ index 0000000..7c25146
 +	return size;
 +}
 +
++static ssize_t manager_default_color_show(struct omap_overlay_manager *mgr,
++					  char *buf)
++{
++	u32 default_color;
++
++	default_color = dispc_get_default_color(mgr->id);
++	return snprintf(buf, PAGE_SIZE, "%d", default_color);
++}
++
++static ssize_t manager_default_color_store(struct omap_overlay_manager *mgr,
++					   const char *buf, size_t size)
++{
++	u32 default_color;
++
++	if (sscanf(buf, "%d", &default_color) != 1)
++		return -EINVAL;
++	dispc_set_default_color(mgr->id, default_color);
++
++	return size;
++}
++
++static const char *color_key_type_str[] = {
++	"gfx-destination",
++	"video-source",
++};
++
++static ssize_t manager_color_key_type_show(struct omap_overlay_manager *mgr,
++					   char *buf)
++{
++	enum omap_dss_color_key_type key_type;
++
++	dispc_get_trans_key(mgr->id, &key_type, NULL);
++	BUG_ON(key_type >= ARRAY_SIZE(color_key_type_str));
++
++	return snprintf(buf, PAGE_SIZE, "%s\n", color_key_type_str[key_type]);
++}
++
++static ssize_t manager_color_key_type_store(struct omap_overlay_manager *mgr,
++					    const char *buf, size_t size)
++{
++	enum omap_dss_color_key_type key_type;
++	u32 key_value;
++
++	for (key_type = OMAP_DSS_COLOR_KEY_GFX_DST;
++	     key_type < ARRAY_SIZE(color_key_type_str); key_type++) {
++		if (sysfs_streq(buf, color_key_type_str[key_type]))
++			break;
++	}
++	if (key_type == ARRAY_SIZE(color_key_type_str))
++		return -EINVAL;
++	dispc_get_trans_key(mgr->id, NULL, &key_value);
++	dispc_set_trans_key(mgr->id, key_type, key_value);
++
++	return size;
++}
++
++static ssize_t manager_color_key_value_show(struct omap_overlay_manager *mgr,
++					    char *buf)
++{
++	u32 key_value;
++
++	dispc_get_trans_key(mgr->id, NULL, &key_value);
++
++	return snprintf(buf, PAGE_SIZE, "%d\n", key_value);
++}
++
++static ssize_t manager_color_key_value_store(struct omap_overlay_manager *mgr,
++					     const char *buf, size_t size)
++{
++	enum omap_dss_color_key_type key_type;
++	u32 key_value;
++
++	if (sscanf(buf, "%d", &key_value) != 1)
++		return -EINVAL;
++	dispc_get_trans_key(mgr->id, &key_type, NULL);
++	dispc_set_trans_key(mgr->id, key_type, key_value);
++
++	return size;
++}
++
++static ssize_t manager_color_key_enabled_show(struct omap_overlay_manager *mgr,
++					      char *buf)
++{
++	return snprintf(buf, PAGE_SIZE, "%d\n",
++			dispc_trans_key_enabled(mgr->id));
++}
++
++static ssize_t manager_color_key_enabled_store(struct omap_overlay_manager *mgr,
++					       const char *buf, size_t size)
++{
++	int enable;
++
++	if (sscanf(buf, "%d", &enable) != 1)
++		return -EINVAL;
++
++	dispc_enable_trans_key(mgr->id, enable);
++
++	return size;
++}
++
++
 +struct manager_attribute {
 +	struct attribute attr;
 +	ssize_t (*show)(struct omap_overlay_manager *, char *);
 +	ssize_t	(*store)(struct omap_overlay_manager *, const char *, size_t);
 +};
 +
-+#define OVERLAY_ATTR(_name, _mode, _show, _store) \
++#define MANAGER_ATTR(_name, _mode, _show, _store) \
 +	struct manager_attribute manager_attr_##_name = \
 +	__ATTR(_name, _mode, _show, _store)
 +
-+static OVERLAY_ATTR(name, S_IRUGO, manager_name_show, NULL);
-+static OVERLAY_ATTR(display, S_IRUGO|S_IWUSR,
++static MANAGER_ATTR(name, S_IRUGO, manager_name_show, NULL);
++static MANAGER_ATTR(display, S_IRUGO|S_IWUSR,
 +		manager_display_show, manager_display_store);
++static MANAGER_ATTR(default_color, S_IRUGO|S_IWUSR,
++		manager_default_color_show, manager_default_color_store);
++static MANAGER_ATTR(color_key_type, S_IRUGO|S_IWUSR,
++		manager_color_key_type_show, manager_color_key_type_store);
++static MANAGER_ATTR(color_key_value, S_IRUGO|S_IWUSR,
++		manager_color_key_value_show, manager_color_key_value_store);
++static MANAGER_ATTR(color_key_enabled, S_IRUGO|S_IWUSR,
++		manager_color_key_enabled_show, manager_color_key_enabled_store);
 +
 +static struct attribute *manager_sysfs_attrs[] = {
 +	&manager_attr_name.attr,
 +	&manager_attr_display.attr,
++	&manager_attr_default_color.attr,
++	&manager_attr_color_key_type.attr,
++	&manager_attr_color_key_value.attr,
++	&manager_attr_color_key_enabled.attr,
 +	NULL
 +};
 +
@@ -19442,10 +20392,10 @@ index 0000000..7c25146
 +
 diff --git a/drivers/video/omap2/dss/overlay.c b/drivers/video/omap2/dss/overlay.c
 new file mode 100644
-index 0000000..968edbe
+index 0000000..9209acf
 --- /dev/null
 +++ b/drivers/video/omap2/dss/overlay.c
-@@ -0,0 +1,587 @@
+@@ -0,0 +1,590 @@
 +/*
 + * linux/drivers/video/omap2/dss/overlay.c
 + *
@@ -19778,6 +20728,9 @@ index 0000000..968edbe
 +{
 +	int r;
 +	struct omap_overlay_info old_info;
++
++	if (info->paddr == 0)
++		return -EINVAL;
 +
 +	old_info = ovl->info;
 +	ovl->info = *info;
@@ -22913,10 +23866,10 @@ index 0000000..7f18d2a
 +
 diff --git a/drivers/video/omap2/omapfb/omapfb-main.c b/drivers/video/omap2/omapfb/omapfb-main.c
 new file mode 100644
-index 0000000..e4186ec
+index 0000000..afe40a9
 --- /dev/null
 +++ b/drivers/video/omap2/omapfb/omapfb-main.c
-@@ -0,0 +1,1944 @@
+@@ -0,0 +1,2016 @@
 +/*
 + * linux/drivers/video/omap2/omapfb-main.c
 + *
@@ -23125,52 +24078,165 @@ index 0000000..e4186ec
 +		return ofbi->region.vaddr;
 +}
 +
++static struct omapfb_colormode omapfb_colormodes[] = {
++	{
++		.dssmode = OMAP_DSS_COLOR_UYVY,
++		.bits_per_pixel = 16,
++		.nonstd = OMAPFB_COLOR_YUV422,
++	}, {
++		.dssmode = OMAP_DSS_COLOR_YUV2,
++		.bits_per_pixel = 16,
++		.nonstd = OMAPFB_COLOR_YUY422,
++	}, {
++		.dssmode = OMAP_DSS_COLOR_ARGB16,
++		.bits_per_pixel = 16,
++		.red	= { .length = 4, .offset = 8, .msb_right = 0 },
++		.green	= { .length = 4, .offset = 4, .msb_right = 0 },
++		.blue	= { .length = 4, .offset = 0, .msb_right = 0 },
++		.transp	= { .length = 4, .offset = 12, .msb_right = 0 },
++	}, {
++		.dssmode = OMAP_DSS_COLOR_RGB16,
++		.bits_per_pixel = 16,
++		.red	= { .length = 5, .offset = 11, .msb_right = 0 },
++		.green	= { .length = 6, .offset = 5, .msb_right = 0 },
++		.blue	= { .length = 5, .offset = 0, .msb_right = 0 },
++		.transp	= { .length = 0, .offset = 0, .msb_right = 0 },
++	}, {
++		.dssmode = OMAP_DSS_COLOR_RGB24P,
++		.bits_per_pixel = 24,
++		.red	= { .length = 8, .offset = 16, .msb_right = 0 },
++		.green	= { .length = 8, .offset = 8, .msb_right = 0 },
++		.blue	= { .length = 8, .offset = 0, .msb_right = 0 },
++		.transp	= { .length = 0, .offset = 0, .msb_right = 0 },
++	}, {
++		.dssmode = OMAP_DSS_COLOR_RGB24U,
++		.bits_per_pixel = 32,
++		.red	= { .length = 8, .offset = 16, .msb_right = 0 },
++		.green	= { .length = 8, .offset = 8, .msb_right = 0 },
++		.blue	= { .length = 8, .offset = 0, .msb_right = 0 },
++		.transp	= { .length = 0, .offset = 0, .msb_right = 0 },
++	}, {
++		.dssmode = OMAP_DSS_COLOR_ARGB32,
++		.bits_per_pixel = 32,
++		.red	= { .length = 8, .offset = 16, .msb_right = 0 },
++		.green	= { .length = 8, .offset = 8, .msb_right = 0 },
++		.blue	= { .length = 8, .offset = 0, .msb_right = 0 },
++		.transp	= { .length = 8, .offset = 24, .msb_right = 0 },
++	}, {
++		.dssmode = OMAP_DSS_COLOR_RGBA32,
++		.bits_per_pixel = 32,
++		.red	= { .length = 8, .offset = 24, .msb_right = 0 },
++		.green	= { .length = 8, .offset = 16, .msb_right = 0 },
++		.blue	= { .length = 8, .offset = 8, .msb_right = 0 },
++		.transp	= { .length = 8, .offset = 0, .msb_right = 0 },
++	}, {
++		.dssmode = OMAP_DSS_COLOR_RGBX32,
++		.bits_per_pixel = 32,
++		.red	= { .length = 8, .offset = 24, .msb_right = 0 },
++		.green	= { .length = 8, .offset = 16, .msb_right = 0 },
++		.blue	= { .length = 8, .offset = 8, .msb_right = 0 },
++		.transp	= { .length = 0, .offset = 0, .msb_right = 0 },
++	},
++};
++
++static bool cmp_var_to_colormode(struct fb_var_screeninfo *var,
++		struct omapfb_colormode *color)
++{
++	bool cmp_component(struct fb_bitfield *f1, struct fb_bitfield *f2)
++	{
++		return f1->length == f2->length &&
++			f1->offset == f2->offset &&
++			f1->msb_right == f2->msb_right;
++	}
++
++	if (var->bits_per_pixel == 0 ||
++			var->red.length == 0 ||
++			var->blue.length == 0 ||
++			var->green.length == 0)
++		return 0;
++
++	return var->bits_per_pixel == color->bits_per_pixel &&
++		cmp_component(&var->red, &color->red) &&
++		cmp_component(&var->green, &color->green) &&
++		cmp_component(&var->blue, &color->blue) &&
++		cmp_component(&var->transp, &color->transp);
++}
++
++static void assign_colormode_to_var(struct fb_var_screeninfo *var,
++		struct omapfb_colormode *color)
++{
++	var->bits_per_pixel = color->bits_per_pixel;
++	var->nonstd = color->nonstd;
++	var->red = color->red;
++	var->green = color->green;
++	var->blue = color->blue;
++	var->transp = color->transp;
++}
++
 +static enum omap_color_mode fb_mode_to_dss_mode(struct fb_var_screeninfo *var)
 +{
-+	switch (var->nonstd) {
-+	case 0:
++	enum omap_color_mode dssmode;
++	int i;
++
++	/* first match with nonstd field */
++	if (var->nonstd) {
++		for (i = 0; i < ARRAY_SIZE(omapfb_colormodes); ++i) {
++			struct omapfb_colormode *mode = &omapfb_colormodes[i];
++			if (var->nonstd == mode->nonstd) {
++				assign_colormode_to_var(var, mode);
++				return mode->dssmode;
++			}
++		}
++
++		return -EINVAL;
++	}
++
++	/* then try exact match of bpp and colors */
++	for (i = 0; i < ARRAY_SIZE(omapfb_colormodes); ++i) {
++		struct omapfb_colormode *mode = &omapfb_colormodes[i];
++		if (cmp_var_to_colormode(var, mode)) {
++			assign_colormode_to_var(var, mode);
++			return mode->dssmode;
++		}
++	}
++
++	/* match with bpp if user has not filled color fields
++	 * properly */
++	switch (var->bits_per_pixel) {
++	case 1:
++		dssmode = OMAP_DSS_COLOR_CLUT1;
 +		break;
-+	case OMAPFB_COLOR_YUV422:
-+		return OMAP_DSS_COLOR_UYVY;
-+
-+	case OMAPFB_COLOR_YUY422:
-+		return OMAP_DSS_COLOR_YUV2;
-+
-+	case OMAPFB_COLOR_ARGB16:
-+		return OMAP_DSS_COLOR_ARGB16;
-+
-+	case OMAPFB_COLOR_ARGB32:
-+		return OMAP_DSS_COLOR_ARGB32;
-+
-+	case OMAPFB_COLOR_RGBA32:
-+		return OMAP_DSS_COLOR_RGBA32;
-+
-+	case OMAPFB_COLOR_RGBX32:
-+		return OMAP_DSS_COLOR_RGBX32;
-+
++	case 2:
++		dssmode = OMAP_DSS_COLOR_CLUT2;
++		break;
++	case 4:
++		dssmode = OMAP_DSS_COLOR_CLUT4;
++		break;
++	case 8:
++		dssmode = OMAP_DSS_COLOR_CLUT8;
++		break;
++	case 12:
++		dssmode = OMAP_DSS_COLOR_RGB12U;
++		break;
++	case 16:
++		dssmode = OMAP_DSS_COLOR_RGB16;
++		break;
++	case 24:
++		dssmode = OMAP_DSS_COLOR_RGB24P;
++		break;
++	case 32:
++		dssmode = OMAP_DSS_COLOR_RGB24U;
++		break;
 +	default:
 +		return -EINVAL;
 +	}
 +
-+	switch (var->bits_per_pixel) {
-+	case 1:
-+		return OMAP_DSS_COLOR_CLUT1;
-+	case 2:
-+		return OMAP_DSS_COLOR_CLUT2;
-+	case 4:
-+		return OMAP_DSS_COLOR_CLUT4;
-+	case 8:
-+		return OMAP_DSS_COLOR_CLUT8;
-+	case 12:
-+		return OMAP_DSS_COLOR_RGB12U;
-+	case 16:
-+		return OMAP_DSS_COLOR_RGB16;
-+	case 24:
-+		return OMAP_DSS_COLOR_RGB24P;
-+	case 32:
-+		return OMAP_DSS_COLOR_RGB24U;
-+	default:
-+		return -EINVAL;
++	for (i = 0; i < ARRAY_SIZE(omapfb_colormodes); ++i) {
++		struct omapfb_colormode *mode = &omapfb_colormodes[i];
++		if (dssmode == mode->dssmode) {
++			assign_colormode_to_var(var, mode);
++			return mode->dssmode;
++		}
 +	}
 +
 +	return -EINVAL;
@@ -23250,25 +24316,6 @@ index 0000000..e4186ec
 +
 +	if (ofbi->region.size == 0)
 +		return 0;
-+
-+	/* if we are using non standard mode, fix the bpp first */
-+	switch (var->nonstd) {
-+	case 0:
-+		break;
-+	case OMAPFB_COLOR_YUV422:
-+	case OMAPFB_COLOR_YUY422:
-+	case OMAPFB_COLOR_ARGB16:
-+		var->bits_per_pixel = 16;
-+		break;
-+	case OMAPFB_COLOR_ARGB32:
-+	case OMAPFB_COLOR_RGBA32:
-+	case OMAPFB_COLOR_RGBX32:
-+		var->bits_per_pixel = 32;
-+		break;
-+	default:
-+		DBG("invalid nonstd mode\n");
-+		return -EINVAL;
-+	}
 +
 +	mode = fb_mode_to_dss_mode(var);
 +	if (mode < 0) {
@@ -23383,34 +24430,6 @@ index 0000000..e4186ec
 +		var->xoffset = var->xres_virtual - var->xres;
 +	if (var->yres + var->yoffset > var->yres_virtual)
 +		var->yoffset = var->yres_virtual - var->yres;
-+
-+	if (var->bits_per_pixel == 16) {
-+		var->red.offset  = 11; var->red.length   = 5;
-+		var->red.msb_right   = 0;
-+		var->green.offset = 5;  var->green.length = 6;
-+		var->green.msb_right = 0;
-+		var->blue.offset = 0;  var->blue.length  = 5;
-+		var->blue.msb_right  = 0;
-+	} else if (var->bits_per_pixel == 24) {
-+		var->red.offset  = 16; var->red.length   = 8;
-+		var->red.msb_right   = 0;
-+		var->green.offset = 8;  var->green.length = 8;
-+		var->green.msb_right = 0;
-+		var->blue.offset = 0;  var->blue.length  = 8;
-+		var->blue.msb_right  = 0;
-+		var->transp.offset = 0; var->transp.length = 0;
-+	} else if (var->bits_per_pixel == 32) {
-+		var->red.offset  = 16; var->red.length   = 8;
-+		var->red.msb_right   = 0;
-+		var->green.offset = 8;  var->green.length = 8;
-+		var->green.msb_right = 0;
-+		var->blue.offset = 0;  var->blue.length  = 8;
-+		var->blue.msb_right  = 0;
-+		var->transp.offset = 0; var->transp.length = 0;
-+	} else {
-+		DBG("failed to setup fb color mask\n");
-+		return -EINVAL;
-+	}
 +
 +	DBG("xres = %d, yres = %d, vxres = %d, vyres = %d\n",
 +			var->xres, var->yres,
@@ -24046,6 +25065,7 @@ index 0000000..e4186ec
 +
 +		if(!va) {
 +			printk(KERN_ERR "vrfb: ioremap failed\n");
++			omap_vrfb_release_ctx(&rg->vrfb);
 +			return -ENOMEM;
 +		}
 +
@@ -24377,6 +25397,11 @@ index 0000000..e4186ec
 +		goto err;
 +
 +	set_fb_fix(fbi);
++
++	r = fb_alloc_cmap(&fbi->cmap, 256, 0);
++	if (r)
++		dev_err(fbdev->dev, "unable to allocate color map memory\n");
++
 +err:
 +	return r;
 +}
@@ -25240,10 +26265,10 @@ index 0000000..2c88718
 +
 diff --git a/drivers/video/omap2/omapfb/omapfb.h b/drivers/video/omap2/omapfb/omapfb.h
 new file mode 100644
-index 0000000..d130e48
+index 0000000..65e9e6e
 --- /dev/null
 +++ b/drivers/video/omap2/omapfb/omapfb.h
-@@ -0,0 +1,143 @@
+@@ -0,0 +1,153 @@
 +/*
 + * linux/drivers/video/omap2/omapfb.h
 + *
@@ -25332,6 +26357,16 @@ index 0000000..d130e48
 +	struct omap_overlay *overlays[10];
 +	unsigned num_managers;
 +	struct omap_overlay_manager *managers[10];
++};
++
++struct omapfb_colormode {
++	enum omap_color_mode dssmode;
++	u32 bits_per_pixel;
++	u32 nonstd;
++	struct fb_bitfield red;
++	struct fb_bitfield green;
++	struct fb_bitfield blue;
++	struct fb_bitfield transp;
 +};
 +
 +u32 omapfb_get_region_paddr(struct omapfb_info *ofbi);
@@ -25811,3 +26846,27 @@ index 0000000..96190b2
 +#endif /* __KERNEL__ */
 +
 +#endif /* __OMAPFB_H */
+diff --git a/net/core/dev.c b/net/core/dev.c
+index e3fe5c7..c1e9dc0 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -2588,9 +2588,9 @@ static int process_backlog(struct napi_struct *napi, int quota)
+ 		local_irq_disable();
+ 		skb = __skb_dequeue(&queue->input_pkt_queue);
+ 		if (!skb) {
++			__napi_complete(napi);
+ 			local_irq_enable();
+-			napi_complete(napi);
+-			goto out;
++			break;
+ 		}
+ 		local_irq_enable();
+ 
+@@ -2599,7 +2599,6 @@ static int process_backlog(struct napi_struct *napi, int quota)
+ 
+ 	napi_gro_flush(napi);
+ 
+-out:
+ 	return work;
+ }
+ 
