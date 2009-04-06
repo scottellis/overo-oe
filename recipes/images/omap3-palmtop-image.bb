@@ -3,10 +3,6 @@
 require omap3-console-image.bb
 
 IMAGE_INSTALL += " \
-  alsa-utils \
-  alsa-utils-alsactl \
-  alsa-utils-alsamixer \
-  alsa-utils-aplay \
   angstrom-gpe-task-apps \
   angstrom-gpe-task-base \
   angstrom-gpe-task-game \
