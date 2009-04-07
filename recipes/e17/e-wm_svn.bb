@@ -108,6 +108,7 @@ FILES_${PN} = "\
   ${bindir}/* \
   ${libdir}/enlightenment/modules/*/*.* \
   ${libdir}/enlightenment/modules/*/*/* \
+  ${libdir}/enlightenment/preload/e_precache.so \
   ${datadir}/locale \
   ${datadir}/enlightenment/data/icons \
   ${datadir}/enlightenment/data/input_methods \
