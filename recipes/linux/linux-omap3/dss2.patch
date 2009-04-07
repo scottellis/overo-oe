@@ -11289,10 +11289,10 @@ index 0000000..ae7cd06
 +
 diff --git a/drivers/video/omap2/dss/dispc.c b/drivers/video/omap2/dss/dispc.c
 new file mode 100644
-index 0000000..2480a03
+index 0000000..ae7be3d
 --- /dev/null
 +++ b/drivers/video/omap2/dss/dispc.c
-@@ -0,0 +1,2971 @@
+@@ -0,0 +1,3127 @@
 +/*
 + * linux/drivers/video/omap2/dss/dispc.c
 + *
@@ -12321,11 +12321,11 @@ index 0000000..2480a03
 +static void _dispc_set_scaling(enum omap_plane plane,
 +		u16 orig_width, u16 orig_height,
 +		u16 out_width, u16 out_height,
-+		bool ilace)
++		bool ilace, bool five_taps)
 +{
 +	int fir_hinc;
 +	int fir_vinc;
-+	int hscaleup, vscaleup, five_taps;
++	int hscaleup, vscaleup;
 +	int fieldmode = 0;
 +	int accu0 = 0;
 +	int accu1 = 0;
@@ -12335,7 +12335,6 @@ index 0000000..2480a03
 +
 +	hscaleup = orig_width <= out_width;
 +	vscaleup = orig_height <= out_height;
-+	five_taps = orig_height > out_height * 2;
 +
 +	_dispc_set_scale_coef(plane, hscaleup, vscaleup, five_taps);
 +
@@ -12578,6 +12577,73 @@ index 0000000..2480a03
 +	}
 +}
 +
++static unsigned long calc_fclk_five_taps(u16 width, u16 height,
++		u16 out_width, u16 out_height, enum omap_color_mode color_mode)
++{
++	u32 fclk = 0;
++	/* FIXME venc pclk? */
++	u64 tmp, pclk = dispc_pclk_rate();
++
++	if (height > out_height) {
++		/* FIXME get real display PPL */
++		unsigned int ppl = 800;
++
++		tmp = pclk * height * out_width;
++		do_div(tmp, 2 * out_height * ppl);
++		fclk = tmp;
++
++		if (height > 2 * out_height) {
++			tmp = pclk * (height - 2 * out_height) * out_width;
++			do_div(tmp, 2 * out_height * (ppl - out_width));
++			fclk = max(fclk, (u32) tmp);
++		}
++	}
++
++	if (width > out_width) {
++		tmp = pclk * width;
++		do_div(tmp, out_width);
++		fclk = max(fclk, (u32) tmp);
++
++		if (color_mode == OMAP_DSS_COLOR_RGB24U)
++			fclk <<= 1;
++	}
++
++	return fclk;
++}
++
++static unsigned long calc_fclk(u16 width, u16 height,
++		u16 out_width, u16 out_height,
++		enum omap_color_mode color_mode, bool five_taps)
++{
++	unsigned int hf, vf;
++
++	if (five_taps)
++		return calc_fclk_five_taps(width, height,
++				out_width, out_height, color_mode);
++
++	/*
++	 * FIXME how to determine the 'A' factor
++	 * for the no downscaling case ?
++	 */
++
++	if (width > 3 * out_width)
++		hf = 4;
++	else if (width > 2 * out_width)
++		hf = 3;
++	else if (width > out_width)
++		hf = 2;
++	else
++		hf = 1;
++
++	if (height > out_height)
++		vf = 2;
++	else
++		vf = 1;
++
++	/* FIXME venc pclk? */
++	return dispc_pclk_rate() * vf * hf;
++}
++
 +static int _dispc_setup_plane(enum omap_plane plane,
 +		enum omap_channel channel_out,
 +		u32 paddr, u16 screen_width,
@@ -12589,15 +12655,30 @@ index 0000000..2480a03
 +		u8 rotation, int mirror)
 +{
 +	const int maxdownscale = cpu_is_omap34xx() ? 4 : 2;
-+	bool five_taps = height > out_height * 2;
++	bool five_taps = 0;
 +	bool fieldmode = 0;
 +	int cconv = 0;
 +	unsigned offset0, offset1;
 +	s32 row_inc;
 +	s32 pix_inc;
++	u16 frame_height = height;
 +
 +	if (paddr == 0)
 +		return -EINVAL;
++
++	if (ilace && height >= out_height)
++		fieldmode = 1;
++
++	if (ilace) {
++		if (fieldmode)
++			height /= 2;
++		pos_y /= 2;
++		out_height /= 2;
++
++		DSSDBG("adjusting for ilace: height %d, pos_y %d, "
++				"out_height %d\n",
++				height, pos_y, out_height);
++	}
 +
 +	if (plane == OMAP_DSS_GFX) {
 +		if (width != out_width || height != out_height)
@@ -12618,8 +12699,8 @@ index 0000000..2480a03
 +		}
 +	} else {
 +		/* video plane */
-+		if (width > (2048 >> five_taps))
-+			return -EINVAL;
++
++		unsigned long fclk;
 +
 +		if (out_width < width / maxdownscale ||
 +		   out_width > width * 8)
@@ -12651,29 +12732,39 @@ index 0000000..2480a03
 +		default:
 +			return -EINVAL;
 +		}
++
++		/* Must use 5-tap filter? */
++		five_taps = height > out_height * 2;
++
++		/* Try to use 5-tap filter whenever possible. */
++		if (cpu_is_omap34xx() && !five_taps &&
++		    height > out_height && width <= 1024) {
++			fclk = calc_fclk_five_taps(width, height,
++					out_width, out_height, color_mode);
++			if (fclk <= dispc_fclk_rate())
++				five_taps = true;
++		}
++
++		if (width > (2048 >> five_taps))
++			return -EINVAL;
++
++		fclk = calc_fclk(width, height, out_width, out_height,
++				color_mode, five_taps);
++
++		DSSDBG("required fclk rate = %lu Hz\n", fclk);
++		DSSDBG("current fclk rate = %lu Hz\n", dispc_fclk_rate());
++
++		if (fclk > dispc_fclk_rate())
++			return -EINVAL;
 +	}
 +
-+	if (ilace && height >= out_height)
-+		fieldmode = 1;
-+
 +	calc_rotation_offset(rotation, mirror,
-+			screen_width, width, height, color_mode,
++			screen_width, width, frame_height, color_mode,
 +			fieldmode,
 +			&offset0, &offset1, &row_inc, &pix_inc);
 +
 +	DSSDBG("offset0 %u, offset1 %u, row_inc %d, pix_inc %d\n",
 +			offset0, offset1, row_inc, pix_inc);
-+
-+	if (ilace) {
-+		if (fieldmode)
-+			height /= 2;
-+		pos_y /= 2;
-+		out_height /= 2;
-+
-+		DSSDBG("adjusting for ilace: height %d, pos_y %d, "
-+				"out_height %d\n",
-+				height, pos_y, out_height);
-+	}
 +
 +	_dispc_set_channel_out(plane, channel_out);
 +	_dispc_set_color_mode(plane, color_mode);
@@ -12694,7 +12785,7 @@ index 0000000..2480a03
 +	if (plane != OMAP_DSS_GFX) {
 +		_dispc_set_scaling(plane, width, height,
 +				   out_width, out_height,
-+				   ilace);
++				   ilace, five_taps);
 +		_dispc_set_vid_size(plane, out_width, out_height);
 +		_dispc_set_vid_color_conv(plane, cconv);
 +	}
@@ -13143,6 +13234,21 @@ index 0000000..2480a03
 +	BUG();
 +#endif
 +	return r;
++}
++
++unsigned long dispc_lclk_rate(void)
++{
++	int lcd;
++	unsigned long r;
++	u32 l;
++
++	l = dispc_read_reg(DISPC_DIVISOR);
++
++	lcd = FLD_GET(l, 23, 16);
++
++	r = dispc_fclk_rate();
++
++	return r / lcd;
 +}
 +
 +unsigned long dispc_pclk_rate(void)
@@ -13798,28 +13904,78 @@ index 0000000..2480a03
 +	}
 +
 +	if (errors & DISPC_IRQ_SYNC_LOST) {
++		struct omap_overlay_manager *manager = NULL;
++		bool enable = false;
++
 +		DSSERR("SYNC_LOST, disabling LCD\n");
++
 +		for (i = 0; i < omap_dss_get_num_overlay_managers(); ++i) {
 +			struct omap_overlay_manager *mgr;
 +			mgr = omap_dss_get_overlay_manager(i);
 +
 +			if (mgr->id == OMAP_DSS_CHANNEL_LCD) {
++				manager = mgr;
++				enable = mgr->display->state ==
++						OMAP_DSS_DISPLAY_ACTIVE;
 +				mgr->display->disable(mgr->display);
 +				break;
 +			}
 +		}
++
++		if (manager) {
++			for (i = 0; i < omap_dss_get_num_overlays(); ++i) {
++				struct omap_overlay *ovl;
++				ovl = omap_dss_get_overlay(i);
++
++				if (!(ovl->caps & OMAP_DSS_OVL_CAP_DISPC))
++					continue;
++
++				if (ovl->id != 0 && ovl->manager == manager)
++					dispc_enable_plane(ovl->id, 0);
++			}
++
++			dispc_go(manager->id);
++			mdelay(50);
++			if (enable)
++				manager->display->enable(manager->display);
++		}
 +	}
 +
 +	if (errors & DISPC_IRQ_SYNC_LOST_DIGIT) {
++		struct omap_overlay_manager *manager = NULL;
++		bool enable = false;
++
 +		DSSERR("SYNC_LOST_DIGIT, disabling TV\n");
++
 +		for (i = 0; i < omap_dss_get_num_overlay_managers(); ++i) {
 +			struct omap_overlay_manager *mgr;
 +			mgr = omap_dss_get_overlay_manager(i);
 +
 +			if (mgr->id == OMAP_DSS_CHANNEL_DIGIT) {
++				manager = mgr;
++				enable = mgr->display->state ==
++						OMAP_DSS_DISPLAY_ACTIVE;
 +				mgr->display->disable(mgr->display);
 +				break;
 +			}
++		}
++
++		if (manager) {
++			for (i = 0; i < omap_dss_get_num_overlays(); ++i) {
++				struct omap_overlay *ovl;
++				ovl = omap_dss_get_overlay(i);
++
++				if (!(ovl->caps & OMAP_DSS_OVL_CAP_DISPC))
++					continue;
++
++				if (ovl->id != 0 && ovl->manager == manager)
++					dispc_enable_plane(ovl->id, 0);
++			}
++
++			dispc_go(manager->id);
++			mdelay(50);
++			if (enable)
++				manager->display->enable(manager->display);
 +		}
 +	}
 +
@@ -15364,10 +15520,10 @@ index 0000000..71fffca
 +
 diff --git a/drivers/video/omap2/dss/dsi.c b/drivers/video/omap2/dss/dsi.c
 new file mode 100644
-index 0000000..4442931
+index 0000000..66ac6ea
 --- /dev/null
 +++ b/drivers/video/omap2/dss/dsi.c
-@@ -0,0 +1,3752 @@
+@@ -0,0 +1,3768 @@
 +/*
 + * linux/drivers/video/omap2/dss/dsi.c
 + *
@@ -16474,7 +16630,10 @@ index 0000000..4442931
 +	enable_clocks(1);
 +	dsi_enable_pll_clock(1);
 +
-+	/* configure dispc fck and pixel clock to something sane */
++	/* XXX this should be calculated depending on the screen size,
++	 * required framerate and DSI speed.
++	 * For now 48MHz is enough for 864x480@60 with 360Mbps/lane
++	 * with two lanes */
 +	r = dispc_calc_clock_div(1, 48 * 1000 * 1000, &cinfo);
 +	if (r)
 +		goto err0;
@@ -16489,7 +16648,7 @@ index 0000000..4442931
 +	if (r)
 +		goto err0;
 +
-+	/* PLL does not come out of reset without this... */
++	/* XXX PLL does not come out of reset without this... */
 +	dispc_pck_free_enable(1);
 +
 +	if (wait_for_bit_change(DSI_PLL_STATUS, 0, 1) != 1) {
@@ -16498,8 +16657,8 @@ index 0000000..4442931
 +		goto err1;
 +	}
 +
-+	/* ... but if left on, we get problems when planes do not
-+	 * fill the whole display. No idea about this XXX */
++	/* XXX ... but if left on, we get problems when planes do not
++	 * fill the whole display. No idea about this */
 +	dispc_pck_free_enable(0);
 +
 +	if (enable_hsclk && enable_hsdiv)
@@ -17584,6 +17743,7 @@ index 0000000..4442931
 +{
 +	u32 r;
 +	int buswidth = 0;
++	int div;
 +
 +	dsi_config_tx_fifo(DSI_FIFO_SIZE_128,
 +			DSI_FIFO_SIZE_0,
@@ -17624,8 +17784,9 @@ index 0000000..4442931
 +	r = FLD_MOD(r, 1, 1, 1);	/* CS_RX_EN */
 +	r = FLD_MOD(r, 1, 2, 2);	/* ECC_RX_EN */
 +	r = FLD_MOD(r, 1, 3, 3);	/* TX_FIFO_ARBITRATION */
-+	/* XXX what should the ratio be */
-+	r = FLD_MOD(r, 0, 4, 4);	/* VP_CLK_RATIO, VP_PCLK = VP_CLK/2 */
++
++	div = dispc_lclk_rate() / dispc_pclk_rate();
++	r = FLD_MOD(r, div == 2 ? 0 : 1, 4, 4);	/* VP_CLK_RATIO */
 +	r = FLD_MOD(r, buswidth, 7, 6); /* VP_DATA_BUS_WIDTH */
 +	r = FLD_MOD(r, 0, 8, 8);	/* VP_CLK_POL */
 +	r = FLD_MOD(r, 2, 13, 12);	/* LINE_BUFFER, 2 lines */
@@ -17989,17 +18150,28 @@ index 0000000..4442931
 +		u16 x, u16 y, u16 w, u16 h)
 +{
 +	int bytespp = 3;
++	int len;
 +	int total_len;
-+	int line_packet_len;
++	int packet_payload;
++	int packet_len;
 +	u32 l;
 +
 +	if (dsi.update_mode == OMAP_DSS_UPDATE_MANUAL)
 +		DSSDBG("dsi_update_screen_dispc(%d,%d %dx%d)\n",
 +				x, y, w, h);
 +
-+	/* TODO: one packet could be longer, I think? Max is the line buffer */
-+	line_packet_len = w * bytespp + 1;	/* 1 byte for DCS cmd */
-+	total_len = line_packet_len * h;
++	len = w * h * bytespp;
++
++	/* XXX: one packet could be longer, I think? Line buffer is
++	 * 1024 x 24bits, but we have to put DCS cmd there also.
++	 * 1023 * 3 should work, but causes strange color effects. */
++	packet_payload = min(w, (u16)1020) * bytespp;
++
++	packet_len = packet_payload + 1;	/* 1 byte for DCS cmd */
++	total_len = (len / packet_payload) * packet_len;
++
++	if (len % packet_payload)
++		total_len += (len % packet_payload) + 1;
 +
 +	display->ctrl->setup_update(display, x, y, w, h);
 +
@@ -18011,7 +18183,7 @@ index 0000000..4442931
 +	l = FLD_VAL(total_len, 23, 0); /* TE_SIZE */
 +	dsi_write_reg(DSI_VC_TE(1), l);
 +
-+	dsi_vc_write_long_header(1, DSI_DT_DCS_LONG_WRITE, line_packet_len, 0);
++	dsi_vc_write_long_header(1, DSI_DT_DCS_LONG_WRITE, packet_len, 0);
 +
 +	if (dsi.use_te)
 +		l = FLD_MOD(l, 1, 30, 30); /* TE_EN */
@@ -19473,10 +19645,10 @@ index 0000000..adc1f34
 +
 diff --git a/drivers/video/omap2/dss/dss.h b/drivers/video/omap2/dss/dss.h
 new file mode 100644
-index 0000000..bac5ece
+index 0000000..0be42b6
 --- /dev/null
 +++ b/drivers/video/omap2/dss/dss.h
-@@ -0,0 +1,331 @@
+@@ -0,0 +1,332 @@
 +/*
 + * linux/drivers/video/omap2/dss/dss.h
 + *
@@ -19773,6 +19945,7 @@ index 0000000..bac5ece
 +
 +void dispc_set_lcd_timings(struct omap_video_timings *timings);
 +unsigned long dispc_fclk_rate(void);
++unsigned long dispc_lclk_rate(void);
 +unsigned long dispc_pclk_rate(void);
 +void dispc_set_pol_freq(struct omap_panel *panel);
 +void find_lck_pck_divs(bool is_tft, unsigned long req_pck, unsigned long fck,
@@ -20392,10 +20565,10 @@ index 0000000..b0fee80
 +
 diff --git a/drivers/video/omap2/dss/overlay.c b/drivers/video/omap2/dss/overlay.c
 new file mode 100644
-index 0000000..9209acf
+index 0000000..c047206
 --- /dev/null
 +++ b/drivers/video/omap2/dss/overlay.c
-@@ -0,0 +1,590 @@
+@@ -0,0 +1,592 @@
 +/*
 + * linux/drivers/video/omap2/dss/overlay.c
 + *
@@ -20679,6 +20852,11 @@ index 0000000..9209acf
 +
 +	info = &ovl->info;
 +
++	if (info->paddr == 0) {
++		DSSDBG("check_overlay failed: paddr 0\n");
++		return -EINVAL;
++	}
++
 +	display->get_resolution(display, &dw, &dh);
 +
 +	DSSDBG("check_overlay %d: (%d,%d %dx%d -> %dx%d) disp (%dx%d)\n",
@@ -20728,9 +20906,6 @@ index 0000000..9209acf
 +{
 +	int r;
 +	struct omap_overlay_info old_info;
-+
-+	if (info->paddr == 0)
-+		return -EINVAL;
 +
 +	old_info = ovl->info;
 +	ovl->info = *info;
@@ -22549,10 +22724,10 @@ index 0000000..fbff2b2
 +}
 diff --git a/drivers/video/omap2/dss/venc.c b/drivers/video/omap2/dss/venc.c
 new file mode 100644
-index 0000000..aceed9f
+index 0000000..b655df4
 --- /dev/null
 +++ b/drivers/video/omap2/dss/venc.c
-@@ -0,0 +1,600 @@
+@@ -0,0 +1,655 @@
 +/*
 + * linux/drivers/video/omap2/dss/venc.c
 + *
@@ -22585,6 +22760,7 @@ index 0000000..aceed9f
 +#include <linux/completion.h>
 +#include <linux/delay.h>
 +#include <linux/string.h>
++#include <linux/seq_file.h>
 +
 +#include <mach/display.h>
 +#include <mach/cpu.h>
@@ -22636,6 +22812,7 @@ index 0000000..aceed9f
 +#define VENC_TVDETGP_INT_START_STOP_Y		0xB4
 +#define VENC_GEN_CTRL				0xB8
 +#define VENC_OUTPUT_CONTROL			0xC4
++#define VENC_OUTPUT_TEST			0xC8
 +#define VENC_DAC_B__DAC_C			0xC8
 +
 +struct venc_config {
@@ -23152,6 +23329,59 @@ index 0000000..aceed9f
 +	display->get_timings = venc_get_timings;
 +	display->set_timings = venc_set_timings;
 +	display->check_timings = venc_check_timings;
++}
++
++void venc_dump_regs(struct seq_file *s)
++{
++#define DUMPREG(r) seq_printf(s, "%-35s %08x\n", #r, venc_read_reg(r))
++
++	venc_enable_clocks(1);
++
++	DUMPREG(VENC_F_CONTROL);
++	DUMPREG(VENC_VIDOUT_CTRL);
++	DUMPREG(VENC_SYNC_CTRL);
++	DUMPREG(VENC_LLEN);
++	DUMPREG(VENC_FLENS);
++	DUMPREG(VENC_HFLTR_CTRL);
++	DUMPREG(VENC_CC_CARR_WSS_CARR);
++	DUMPREG(VENC_C_PHASE);
++	DUMPREG(VENC_GAIN_U);
++	DUMPREG(VENC_GAIN_V);
++	DUMPREG(VENC_GAIN_Y);
++	DUMPREG(VENC_BLACK_LEVEL);
++	DUMPREG(VENC_BLANK_LEVEL);
++	DUMPREG(VENC_X_COLOR);
++	DUMPREG(VENC_M_CONTROL);
++	DUMPREG(VENC_BSTAMP_WSS_DATA);
++	DUMPREG(VENC_S_CARR);
++	DUMPREG(VENC_LINE21);
++	DUMPREG(VENC_LN_SEL);
++	DUMPREG(VENC_L21__WC_CTL);
++	DUMPREG(VENC_HTRIGGER_VTRIGGER);
++	DUMPREG(VENC_SAVID__EAVID);
++	DUMPREG(VENC_FLEN__FAL);
++	DUMPREG(VENC_LAL__PHASE_RESET);
++	DUMPREG(VENC_HS_INT_START_STOP_X);
++	DUMPREG(VENC_HS_EXT_START_STOP_X);
++	DUMPREG(VENC_VS_INT_START_X);
++	DUMPREG(VENC_VS_INT_STOP_X__VS_INT_START_Y);
++	DUMPREG(VENC_VS_INT_STOP_Y__VS_EXT_START_X);
++	DUMPREG(VENC_VS_EXT_STOP_X__VS_EXT_START_Y);
++	DUMPREG(VENC_VS_EXT_STOP_Y);
++	DUMPREG(VENC_AVID_START_STOP_X);
++	DUMPREG(VENC_AVID_START_STOP_Y);
++	DUMPREG(VENC_FID_INT_START_X__FID_INT_START_Y);
++	DUMPREG(VENC_FID_INT_OFFSET_Y__FID_EXT_START_X);
++	DUMPREG(VENC_FID_EXT_START_Y__FID_EXT_OFFSET_Y);
++	DUMPREG(VENC_TVDETGP_INT_START_STOP_X);
++	DUMPREG(VENC_TVDETGP_INT_START_STOP_Y);
++	DUMPREG(VENC_GEN_CTRL);
++	DUMPREG(VENC_OUTPUT_CONTROL);
++	DUMPREG(VENC_OUTPUT_TEST);
++
++	venc_enable_clocks(0);
++
++#undef DUMPREG
 +}
 diff --git a/drivers/video/omap2/omapfb/Kconfig b/drivers/video/omap2/omapfb/Kconfig
 new file mode 100644
@@ -23866,10 +24096,10 @@ index 0000000..7f18d2a
 +
 diff --git a/drivers/video/omap2/omapfb/omapfb-main.c b/drivers/video/omap2/omapfb/omapfb-main.c
 new file mode 100644
-index 0000000..afe40a9
+index 0000000..12ce0c3
 --- /dev/null
 +++ b/drivers/video/omap2/omapfb/omapfb-main.c
-@@ -0,0 +1,2016 @@
+@@ -0,0 +1,2018 @@
 +/*
 + * linux/drivers/video/omap2/omapfb-main.c
 + *
@@ -25118,7 +25348,9 @@ index 0000000..afe40a9
 +		display->get_resolution(display, &w, &h);
 +
 +		if (ofbi->rotation_type == OMAPFB_ROT_VRFB) {
++#ifdef DEBUG
 +			int oldw = w, oldh = h;
++#endif
 +
 +			omap_vrfb_adjust_size(&w, &h, bytespp);
 +
