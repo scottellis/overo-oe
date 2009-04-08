@@ -4,7 +4,8 @@ LICENCE = "proprietary-binary"
 #HACK! These are binaries, so we can't guarantee that LDFLAGS match :(
 INSANE_SKIP_${PN} = True
 INSANE_SKIP_${PN}-tests = True
-
+INSANE_SKIP_${PN}-demos = True
+INSANE_SKIP_xserver-kdrive-powervrsgx = True
 
 PROVIDES += "virtual/egl"
 
