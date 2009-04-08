@@ -5803,7 +5803,7 @@ index cb32b61..6de60ae 100644
  }
  
 diff --git a/arch/arm/mach-omap2/board-omap3beagle.c b/arch/arm/mach-omap2/board-omap3beagle.c
-index 346351e..b67e7a5 100644
+index 346351e..fc70ae3 100644
 --- a/arch/arm/mach-omap2/board-omap3beagle.c
 +++ b/arch/arm/mach-omap2/board-omap3beagle.c
 @@ -30,6 +30,7 @@
@@ -5822,6 +5822,17 @@ index 346351e..b67e7a5 100644
  
  #include "twl4030-generic-scripts.h"
  #include "mmc-twl4030.h"
+@@ -257,8 +259,8 @@ static const struct twl4030_resconfig beagle_resconfig[] = {
+ 	{ .resource = RES_VAUX3, },	/* not even connected! */
+ 	{ .resource = RES_VMMC1, },
+ 	{ .resource = RES_VSIM, },
+-	{ .resource = RES_VPLL2, },
+-	{ .resource = RES_VDAC, },
++	/*{ .resource = RES_VPLL2, },
++	{ .resource = RES_VDAC, },*/
+ 	{ .resource = RES_VUSB_1V5, },
+ 	{ .resource = RES_VUSB_1V8, },
+ 	{ .resource = RES_VUSB_3V1, },
 @@ -312,10 +314,6 @@ static void __init omap3_beagle_init_irq(void)
  	omap_gpio_init();
  }
