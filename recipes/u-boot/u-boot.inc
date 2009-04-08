@@ -54,6 +54,7 @@ PACKAGES = "u-boot-tools-env"
 FILES_u-boot-tools-env = "${sbindir}/fw_printenv"
 FILES_u-boot-tools-env += "${sbindir}/fw_setenv"
 FILES_u-boot-tools-env += "${sysconfdir}/fw_env.config"
+INSANE_SKIP_u-boot-tools-env = True
 
 PACKAGES += "u-boot-tools-env-dbg"
 FILES_u-boot-tools-env-dbg = "${sbindir}/.debug/fw_printenv"
