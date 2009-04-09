@@ -60,6 +60,7 @@ IMAGE_INSTALL += " \
   ${E_CONFIG} \
   ${E_MODULES} \
   hicolor-icon-theme \
+  gnome-bluetooth \
   gnome-cups-manager \
   gnome-icon-theme \
   gtk-printbackend-cups \
