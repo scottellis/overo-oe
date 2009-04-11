@@ -23,6 +23,7 @@ E_MODULES = " \
 
 APPS = " \
   abiword \
+  cheese \
   claws-mail \
   evince \
   exhibit \
@@ -63,6 +64,7 @@ IMAGE_INSTALL += " \
   gnome-bluetooth \
   gnome-cups-manager \
   gnome-icon-theme \
+  gnome-themes \
   gtk-printbackend-cups \
   mime-support \
   nautilus \
