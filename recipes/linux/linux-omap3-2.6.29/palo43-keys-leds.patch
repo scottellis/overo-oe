@@ -1,0 +1,95 @@
+--- /tmp/board-overo.c	2009-04-09 15:11:46.000000000 +0200
++++ git/arch/arm/mach-omap2/board-overo.c	2009-04-09 16:39:40.000000000 +0200
+@@ -29,6 +29,11 @@
+ #include <linux/i2c/twl4030.h>
+ #include <linux/regulator/machine.h>
+ 
++#include <linux/leds.h>
++#include <linux/gpio.h>
++#include <linux/input.h>
++#include <linux/gpio_keys.h>
++
+ #include <linux/mtd/mtd.h>
+ #include <linux/mtd/nand.h>
+ #include <linux/mtd/partitions.h>
+@@ -87,6 +92,8 @@
+ 	},
+ };
+ 
++static struct gpio_led gpio_leds[];
++
+ static inline void __init overo_init_smsc911x(void)
+ {
+ 	unsigned long cs_mem_base;
+@@ -364,6 +371,62 @@
+ 	omap_gpio_init();
+ }
+ 
++static struct gpio_led gpio_leds[] = {
++	{
++		.name			= "palo43::gpio21",
++		.default_trigger	= "mmc0",
++		.gpio			= 21,
++		.active_low = 1,
++	},
++	{
++		.name			= "palo43::gpio22",
++		.default_trigger	= "heartbeat",
++		.gpio			= 22,
++		.active_low = 1,
++	},
++};
++
++static struct gpio_led_platform_data gpio_led_info = {
++	.leds		= gpio_leds,
++	.num_leds	= ARRAY_SIZE(gpio_leds),
++};
++
++static struct platform_device leds_gpio = {
++	.name	= "leds-gpio",
++	.id	= -1,
++	.dev	= {
++		.platform_data	= &gpio_led_info,
++	},
++};
++
++static struct gpio_keys_button gpio_buttons[] = {
++	{
++		.code			= KEY_F,
++		.gpio			= 23,
++		.desc			= "gpio23",
++		.wakeup			= 1,
++	},
++	{
++		.code			= KEY_F11,
++		.gpio			= 24,
++		.desc			= "gpio24",
++		.wakeup			= 1,
++	},
++};
++
++static struct gpio_keys_platform_data gpio_key_info = {
++	.buttons	= gpio_buttons,
++	.nbuttons	= ARRAY_SIZE(gpio_buttons),
++};
++
++static struct platform_device keys_gpio = {
++	.name	= "gpio-keys",
++	.id	= -1,
++	.dev	= {
++		.platform_data	= &gpio_key_info,
++	},
++};
++
+ /* DSS */
+ 
+ #define OVERO_GPIO_LCD_EN 144
+@@ -459,6 +522,8 @@
+ 
+ static struct platform_device *overo_devices[] __initdata = {
+ 	&overo_dss_device,
++	&leds_gpio,
++	&keys_gpio,
+ };
+ 
+ static void __init overo_init(void)
