@@ -5,7 +5,7 @@ KERNEL_IMAGETYPE = "uImage"
 
 COMPATIBLE_MACHINE = "beagleboard|omap3evm|overo"
 
-#DEFAULT_PREFERENCE = "-1"
+DEFAULT_PREFERENCE = "-1"
 
 SRCREV = "90e758af52ba803cba233fabee81176d99589f09"
 
