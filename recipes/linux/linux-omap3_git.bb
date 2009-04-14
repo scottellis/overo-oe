@@ -7,10 +7,10 @@ COMPATIBLE_MACHINE = "beagleboard|omap3evm|overo"
 
 DEFAULT_PREFERENCE = "-1"
 
-SRCREV = "90e758af52ba803cba233fabee81176d99589f09"
+SRCREV = "12323321f004c9e83061c9a9d06046b050d6d4c7"
 
-PV = "2.6.29-rcfinal+${PR}+git${SRCREV}"
-PR = "r2"
+PV = "2.6.30-rc1+${PR}+git${SRCREV}"
+PR = "r0"
 
 SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/tmlind/linux-omap-2.6.git;branch=master;protocol=git \
 	   file://defconfig \
@@ -21,11 +21,6 @@ SRC_URI_append = " \
            file://no-empty-flash-warnings.patch;patch=1 \
            file://fix-install.patch;patch=1 \
            file://fix-audio-capture.patch;patch=1 \
-           file://beagle-asoc.patch;patch=1 \
-           file://smsc911x-1.patch;patch=1 \
-           file://smsc911x-2.patch;patch=1 \
-           file://smsc911x-3.patch;patch=1 \
-           file://smsc911x-4.patch;patch=1 \
            file://dss2.patch;patch=1 \
            file://musb-otg.patch;patch=1 \
            file://mmc.patch;patch=1 \

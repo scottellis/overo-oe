@@ -5221,7 +5221,7 @@ index 8780ca6..ca4680a 100644
  #include <mach/mmc.h>
  #include <mach/usb.h>
 diff --git a/arch/arm/mach-omap2/board-3430sdp.c b/arch/arm/mach-omap2/board-3430sdp.c
-index 0a1099e..3c664a9 100644
+index 03acac7..ed108f4 100644
 --- a/arch/arm/mach-omap2/board-3430sdp.c
 +++ b/arch/arm/mach-omap2/board-3430sdp.c
 @@ -37,6 +37,7 @@
@@ -5232,7 +5232,7 @@ index 0a1099e..3c664a9 100644
  
  #include <mach/control.h>
  
-@@ -242,6 +243,35 @@ static struct spi_board_info sdp3430_spi_board_info[] __initdata = {
+@@ -244,6 +245,35 @@ static struct spi_board_info sdp3430_spi_board_info[] __initdata = {
  	},
  };
  
@@ -5268,7 +5268,7 @@ index 0a1099e..3c664a9 100644
  static struct platform_device sdp3430_lcd_device = {
  	.name		= "sdp2430_lcd",
  	.id		= -1,
-@@ -257,9 +287,198 @@ static struct regulator_consumer_supply sdp3430_vdvi_supply = {
+@@ -259,9 +289,198 @@ static struct regulator_consumer_supply sdp3430_vdvi_supply = {
  	.dev		= &sdp3430_lcd_device.dev,
  };
  
@@ -5468,7 +5468,7 @@ index 0a1099e..3c664a9 100644
  };
  
  static inline void __init sdp3430_init_smc91x(void)
-@@ -306,13 +525,8 @@ static struct omap_uart_config sdp3430_uart_config __initdata = {
+@@ -308,13 +527,8 @@ static struct omap_uart_config sdp3430_uart_config __initdata = {
  	.enabled_uarts	= ((1 << 0) | (1 << 1) | (1 << 2)),
  };
  
@@ -5482,7 +5482,7 @@ index 0a1099e..3c664a9 100644
  };
  
  static int sdp3430_batt_table[] = {
-@@ -681,6 +895,7 @@ static void __init omap_3430sdp_init(void)
+@@ -683,6 +897,7 @@ static void __init omap_3430sdp_init(void)
  	omap_serial_init();
  	usb_musb_init();
  	usb_ehci_init();
@@ -5491,7 +5491,7 @@ index 0a1099e..3c664a9 100644
  
  static void __init omap_3430sdp_map_io(void)
 diff --git a/arch/arm/mach-omap2/board-n800.c b/arch/arm/mach-omap2/board-n800.c
-index cb32b61..6de60ae 100644
+index f1552f0..d09f956 100644
 --- a/arch/arm/mach-omap2/board-n800.c
 +++ b/arch/arm/mach-omap2/board-n800.c
 @@ -27,6 +27,7 @@
@@ -5502,18 +5502,19 @@ index cb32b61..6de60ae 100644
  #include <mach/hardware.h>
  #include <asm/mach-types.h>
  #include <asm/mach/arch.h>
-@@ -39,8 +40,9 @@
+@@ -39,9 +40,10 @@
  #include <mach/lcd_mipid.h>
  #include <mach/clock.h>
  #include <mach/gpio-switch.h>
 -#include <mach/omapfb.h>
  #include <mach/blizzard.h>
+ #include <mach/board-nokia.h>
 +#include <mach/display.h>
 +#include <mach/vram.h>
  
  #include <../drivers/cbus/tahvo.h>
  #include <../drivers/media/video/tcm825x.h>
-@@ -161,23 +163,176 @@ static struct omap_uart_config n800_uart_config __initdata = {
+@@ -162,23 +164,176 @@ static struct omap_uart_config n800_uart_config __initdata = {
  
  #include "../../../drivers/cbus/retu.h"
  
@@ -5700,7 +5701,7 @@ index cb32b61..6de60ae 100644
  static void mipid_shutdown(struct mipid_platform_data *pdata)
  {
  	if (pdata->nreset_gpio != -1) {
-@@ -191,6 +346,7 @@ static struct mipid_platform_data n800_mipid_platform_data = {
+@@ -192,6 +347,7 @@ static struct mipid_platform_data n800_mipid_platform_data = {
  	.shutdown = mipid_shutdown,
  };
  
@@ -5708,7 +5709,7 @@ index cb32b61..6de60ae 100644
  static void __init mipid_dev_init(void)
  {
  	const struct omap_lcd_config *conf;
-@@ -201,26 +357,9 @@ static void __init mipid_dev_init(void)
+@@ -202,26 +358,9 @@ static void __init mipid_dev_init(void)
  		n800_mipid_platform_data.data_lines = conf->data_lines;
  	}
  }
@@ -5737,7 +5738,7 @@ index cb32b61..6de60ae 100644
  static void blizzard_enable_clocks(int enable)
  {
  	if (enable)
-@@ -265,14 +404,12 @@ static void __init blizzard_dev_init(void)
+@@ -266,14 +405,12 @@ static void __init blizzard_dev_init(void)
  	gpio_direction_output(N800_BLIZZARD_POWERDOWN_GPIO, 1);
  
  	blizzard_get_clocks();
@@ -5754,7 +5755,7 @@ index cb32b61..6de60ae 100644
  	{ OMAP_TAG_TMP105,			&n800_tmp105_config },
  };
  
-@@ -379,7 +516,7 @@ static struct omap2_mcspi_device_config tsc2005_mcspi_config = {
+@@ -380,7 +517,7 @@ static struct omap2_mcspi_device_config tsc2005_mcspi_config = {
  
  static struct spi_board_info n800_spi_board_info[] __initdata = {
  	{
@@ -5763,7 +5764,7 @@ index cb32b61..6de60ae 100644
  		.bus_num	= 1,
  		.chip_select	= 1,
  		.max_speed_hz	= 4000000,
-@@ -404,7 +541,7 @@ static struct spi_board_info n800_spi_board_info[] __initdata = {
+@@ -405,7 +542,7 @@ static struct spi_board_info n800_spi_board_info[] __initdata = {
  
  static struct spi_board_info n810_spi_board_info[] __initdata = {
  	{
@@ -5772,7 +5773,7 @@ index cb32b61..6de60ae 100644
  		.bus_num	 = 1,
  		.chip_select	 = 1,
  		.max_speed_hz	 = 4000000,
-@@ -582,6 +719,7 @@ static struct platform_device *n800_devices[] __initdata = {
+@@ -583,6 +720,7 @@ static struct platform_device *n800_devices[] __initdata = {
  #if defined(CONFIG_CBUS_RETU_HEADSET)
  	&retu_headset_device,
  #endif
@@ -5780,7 +5781,7 @@ index cb32b61..6de60ae 100644
  };
  
  #ifdef CONFIG_MENELAUS
-@@ -713,9 +851,10 @@ void __init nokia_n800_common_init(void)
+@@ -714,9 +852,10 @@ void __init nokia_n800_common_init(void)
  	if (machine_is_nokia_n810())
  		i2c_register_board_info(2, n810_i2c_board_info_2,
  			ARRAY_SIZE(n810_i2c_board_info_2));
@@ -5794,7 +5795,7 @@ index cb32b61..6de60ae 100644
  }
  
  static void __init nokia_n800_init(void)
-@@ -735,6 +874,7 @@ void __init nokia_n800_map_io(void)
+@@ -736,6 +875,7 @@ void __init nokia_n800_map_io(void)
  	omap_board_config_size = ARRAY_SIZE(n800_config);
  
  	omap2_set_globals_242x();
@@ -5803,7 +5804,7 @@ index cb32b61..6de60ae 100644
  }
  
 diff --git a/arch/arm/mach-omap2/board-omap3beagle.c b/arch/arm/mach-omap2/board-omap3beagle.c
-index 346351e..fc70ae3 100644
+index 19bc2a1..55db61e 100644
 --- a/arch/arm/mach-omap2/board-omap3beagle.c
 +++ b/arch/arm/mach-omap2/board-omap3beagle.c
 @@ -30,6 +30,7 @@
@@ -5819,10 +5820,10 @@ index 346351e..fc70ae3 100644
  #include <mach/nand.h>
  #include <mach/mux.h>
 +#include <mach/display.h>
+ #include <mach/timer-gp.h>
  
  #include "twl4030-generic-scripts.h"
- #include "mmc-twl4030.h"
-@@ -257,8 +259,8 @@ static const struct twl4030_resconfig beagle_resconfig[] = {
+@@ -258,8 +260,8 @@ static const struct twl4030_resconfig beagle_resconfig[] = {
  	{ .resource = RES_VAUX3, },	/* not even connected! */
  	{ .resource = RES_VMMC1, },
  	{ .resource = RES_VSIM, },
@@ -5833,7 +5834,7 @@ index 346351e..fc70ae3 100644
  	{ .resource = RES_VUSB_1V5, },
  	{ .resource = RES_VUSB_1V8, },
  	{ .resource = RES_VUSB_3V1, },
-@@ -312,10 +314,6 @@ static void __init omap3_beagle_init_irq(void)
+@@ -316,10 +318,6 @@ static void __init omap3_beagle_init_irq(void)
  	omap_gpio_init();
  }
  
@@ -5844,7 +5845,7 @@ index 346351e..fc70ae3 100644
  static struct gpio_led gpio_leds[] = {
  	{
  		.name			= "beagleboard::usr0",
-@@ -369,13 +367,94 @@ static struct platform_device keys_gpio = {
+@@ -373,13 +371,94 @@ static struct platform_device keys_gpio = {
  	},
  };
  
@@ -5941,7 +5942,7 @@ index 346351e..fc70ae3 100644
  	&leds_gpio,
  	&keys_gpio,
  };
-@@ -428,13 +507,11 @@ static void __init omap3_beagle_init(void)
+@@ -432,13 +511,11 @@ static void __init omap3_beagle_init(void)
  	omap_serial_init();
  
  	omap_cfg_reg(J25_34XX_GPIO170);
@@ -5957,7 +5958,7 @@ index 346351e..fc70ae3 100644
  
  static void __init omap3_beagle_map_io(void)
 diff --git a/arch/arm/mach-omap2/board-omap3evm.c b/arch/arm/mach-omap2/board-omap3evm.c
-index 024d7c4..6f5a866 100644
+index 6eb3c52..dd80ce8 100644
 --- a/arch/arm/mach-omap2/board-omap3evm.c
 +++ b/arch/arm/mach-omap2/board-omap3evm.c
 @@ -36,6 +36,7 @@
@@ -5968,7 +5969,7 @@ index 024d7c4..6f5a866 100644
  
  #include "sdram-micron-mt46h32m32lf-6.h"
  #include "twl4030-generic-scripts.h"
-@@ -216,13 +217,215 @@ static int __init omap3_evm_i2c_init(void)
+@@ -224,13 +225,215 @@ static int __init omap3_evm_i2c_init(void)
  	return 0;
  }
  
@@ -6189,7 +6190,7 @@ index 024d7c4..6f5a866 100644
  };
  
  static void ads7846_dev_init(void)
-@@ -281,11 +484,10 @@ static void __init omap3_evm_init_irq(void)
+@@ -289,11 +492,10 @@ static void __init omap3_evm_init_irq(void)
  
  static struct omap_board_config_kernel omap3_evm_config[] __initdata = {
  	{ OMAP_TAG_UART,	&omap3_evm_uart_config },
@@ -6202,7 +6203,7 @@ index 024d7c4..6f5a866 100644
  	&omap3evm_smc911x_device,
  };
  
-@@ -305,6 +507,7 @@ static void __init omap3_evm_init(void)
+@@ -313,6 +515,7 @@ static void __init omap3_evm_init(void)
  	usb_ehci_init();
  	omap3evm_flash_init();
  	ads7846_dev_init();
@@ -6211,20 +6212,28 @@ index 024d7c4..6f5a866 100644
  
  static void __init omap3_evm_map_io(void)
 diff --git a/arch/arm/mach-omap2/board-overo.c b/arch/arm/mach-omap2/board-overo.c
-index 071f4b0..ea0f695 100644
+index f357de9..ce3ce84 100644
 --- a/arch/arm/mach-omap2/board-overo.c
 +++ b/arch/arm/mach-omap2/board-overo.c
-@@ -41,6 +41,7 @@
- #include <mach/board-overo.h>
+@@ -40,6 +40,7 @@
+ 
  #include <mach/board.h>
  #include <mach/common.h>
 +#include <mach/display.h>
  #include <mach/gpio.h>
  #include <mach/gpmc.h>
  #include <mach/hardware.h>
-@@ -176,6 +177,9 @@ static void __init overo_ads7846_init(void)
- static inline void __init overo_ads7846_init(void) { return; }
- #endif
+@@ -52,6 +53,7 @@
+ 
+ #define OVERO_GPIO_BT_XGATE	15
+ #define OVERO_GPIO_W2W_NRESET	16
++#define OVERO_GPIO_PENDOWN	114
+ #define OVERO_GPIO_BT_NRESET	164
+ #define OVERO_GPIO_USBH_CPEN	168
+ #define OVERO_GPIO_USBH_NRESET	183
+@@ -185,6 +187,9 @@ static inline void __init overo_init_smsc911x(void) { return; }
+ 
+ 
  
 +static int lcd_enabled;
 +static int dvi_enabled;
@@ -6232,7 +6241,7 @@ index 071f4b0..ea0f695 100644
  static struct mtd_partition overo_nand_partitions[] = {
  	{
  		.name           = "xloader",
-@@ -360,22 +364,101 @@ static void __init overo_init_irq(void)
+@@ -369,22 +374,101 @@ static void __init overo_init_irq(void)
  	omap_gpio_init();
  }
  
@@ -6283,10 +6292,8 @@ index 071f4b0..ea0f695 100644
 +	.u.dpi.data_lines = 24,
 +	.panel_enable = overo_panel_enable_dvi,
 +	.panel_disable = overo_panel_disable_dvi,
- };
- 
--static struct omap_lcd_config overo_lcd_config __initdata = {
--	.ctrl_name	= "internal",
++};
++
 +static int overo_panel_enable_lcd(struct omap_display *display)
 +{
 +	if (dvi_enabled) {
@@ -6320,8 +6327,10 @@ index 071f4b0..ea0f695 100644
 +		&overo_display_data_dvi,
 +		&overo_display_data_lcd,
 +	}
-+};
-+
+ };
+ 
+-static struct omap_lcd_config overo_lcd_config __initdata = {
+-	.ctrl_name	= "internal",
 +static struct platform_device overo_dss_device = {
 +	.name          = "omapdss",
 +	.id            = -1,
@@ -6341,19 +6350,20 @@ index 071f4b0..ea0f695 100644
  };
  
  static void __init overo_init(void)
-@@ -390,6 +473,7 @@ static void __init overo_init(void)
+@@ -399,7 +483,7 @@ static void __init overo_init(void)
  	overo_flash_init();
  	overo_init_smsc911x();
  	overo_ads7846_init();
+-	overo_init_smsc911x();
 +	overo_display_init();
  
  	if ((gpio_request(OVERO_GPIO_W2W_NRESET,
  			  "OVERO_GPIO_W2W_NRESET") == 0) &&
 diff --git a/arch/arm/mach-omap2/io.c b/arch/arm/mach-omap2/io.c
-index adbe21f..a04e3ee 100644
+index 916fcd3..0ec1697 100644
 --- a/arch/arm/mach-omap2/io.c
 +++ b/arch/arm/mach-omap2/io.c
-@@ -18,13 +18,13 @@
+@@ -18,6 +18,7 @@
  #include <linux/module.h>
  #include <linux/kernel.h>
  #include <linux/init.h>
@@ -6361,8 +6371,9 @@ index adbe21f..a04e3ee 100644
  #include <linux/io.h>
  
  #include <asm/tlb.h>
- 
+@@ -25,7 +26,6 @@
  #include <asm/mach/map.h>
+ 
  #include <mach/mux.h>
 -#include <mach/omapfb.h>
  #include <mach/sram.h>
@@ -6966,7 +6977,7 @@ index 0000000..6b702c7
 +#endif
 diff --git a/arch/arm/plat-omap/include/mach/omapfb.h b/arch/arm/plat-omap/include/mach/omapfb.h
 deleted file mode 100644
-index b226bdf..0000000
+index 7b74d12..0000000
 --- a/arch/arm/plat-omap/include/mach/omapfb.h
 +++ /dev/null
 @@ -1,398 +0,0 @@
@@ -7248,8 +7259,8 @@ index b226bdf..0000000
 -					  void *fbi);
 -
 -struct omapfb_mem_region {
--	u32		paddr;
--	void __iomem	*vaddr;
+-	dma_addr_t	paddr;
+-	void		*vaddr;
 -	unsigned long	size;
 -	u8		type;		/* OMAPFB_PLANE_MEM_* */
 -	unsigned	alloc:1;	/* allocated by the driver */
@@ -8247,11 +8258,11 @@ index 0000000..7e0f8fc
 +EXPORT_SYMBOL(omap_vrfb_request_ctx);
 +
 diff --git a/drivers/video/Kconfig b/drivers/video/Kconfig
-index fb19803..8b3752b 100644
+index 7826bdc..6ce4794 100644
 --- a/drivers/video/Kconfig
 +++ b/drivers/video/Kconfig
-@@ -2132,6 +2132,7 @@ config FB_MX3
-          an LCD display with your i.MX31 system, say Y here.
+@@ -2148,6 +2148,7 @@ config FB_BROADSHEET
+ 	  a bridge adapter.
  
  source "drivers/video/omap/Kconfig"
 +source "drivers/video/omap2/Kconfig"
@@ -8259,10 +8270,10 @@ index fb19803..8b3752b 100644
  source "drivers/video/backlight/Kconfig"
  source "drivers/video/display/Kconfig"
 diff --git a/drivers/video/Makefile b/drivers/video/Makefile
-index 2a998ca..1db8dd4 100644
+index 0dbd6c6..f1243f8 100644
 --- a/drivers/video/Makefile
 +++ b/drivers/video/Makefile
-@@ -120,6 +120,7 @@ obj-$(CONFIG_FB_SM501)            += sm501fb.o
+@@ -123,6 +123,7 @@ obj-$(CONFIG_FB_SM501)            += sm501fb.o
  obj-$(CONFIG_FB_XILINX)           += xilinxfb.o
  obj-$(CONFIG_FB_SH_MOBILE_LCDC)	  += sh_mobile_lcdcfb.o
  obj-$(CONFIG_FB_OMAP)             += omap/
@@ -8323,7 +8334,7 @@ index c140c21..1915af5 100644
  
  #include "dispc.h"
 diff --git a/drivers/video/omap/hwa742.c b/drivers/video/omap/hwa742.c
-index f24df0b..9b4c506 100644
+index 8aa6e47..7836593 100644
 --- a/drivers/video/omap/hwa742.c
 +++ b/drivers/video/omap/hwa742.c
 @@ -25,9 +25,9 @@
@@ -8629,7 +8640,7 @@ index ab39492..633e33c 100644
  #include <asm/mach-types.h>
  
 diff --git a/drivers/video/omap/omapfb_main.c b/drivers/video/omap/omapfb_main.c
-index 3bb4247..c6306af 100644
+index 7617dd4..952322b 100644
 --- a/drivers/video/omap/omapfb_main.c
 +++ b/drivers/video/omap/omapfb_main.c
 @@ -27,9 +27,9 @@
@@ -27089,27 +27100,3 @@ index 0000000..96190b2
 +#endif /* __KERNEL__ */
 +
 +#endif /* __OMAPFB_H */
-diff --git a/net/core/dev.c b/net/core/dev.c
-index e3fe5c7..c1e9dc0 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -2588,9 +2588,9 @@ static int process_backlog(struct napi_struct *napi, int quota)
- 		local_irq_disable();
- 		skb = __skb_dequeue(&queue->input_pkt_queue);
- 		if (!skb) {
-+			__napi_complete(napi);
- 			local_irq_enable();
--			napi_complete(napi);
--			goto out;
-+			break;
- 		}
- 		local_irq_enable();
- 
-@@ -2599,7 +2599,6 @@ static int process_backlog(struct napi_struct *napi, int quota)
- 
- 	napi_gro_flush(napi);
- 
--out:
- 	return work;
- }
- 
