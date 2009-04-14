@@ -23,7 +23,6 @@ SRC_URI_append = " \
            file://fix-audio-capture.patch;patch=1 \
            file://dss2.patch;patch=1 \
            file://musb-otg.patch;patch=1 \
-           file://mmc.patch;patch=1 \
            file://ads7846-detection.patch;patch=1 \
            file://neon-deadlock.patch;patch=1 \
            "
