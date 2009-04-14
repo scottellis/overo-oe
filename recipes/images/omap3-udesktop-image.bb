@@ -16,7 +16,6 @@ APPS = " \
   gnumeric \
   gpe-soundbite \
   midori \
-  omapfbplay \
   pidgin \
   swfdec-mozilla \
   synergy \
