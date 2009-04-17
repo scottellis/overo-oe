@@ -4,6 +4,9 @@ require omap3-console-image.bb
 
 IMAGE_LINGUAS = "de-de fr-fr en-gb en-us pt-br es-es"
 
+ANGSTROM_EXTRA_INSTALL ?= ""
+SPLASH = "exquisite exquisite-themes exquisite-theme-angstrom"
+
 E_CONFIG = " \
   e-wm-config-angstrom \
   e-wm-config-illume \
@@ -68,7 +71,7 @@ IMAGE_INSTALL += " \
   gtk-printbackend-cups \
   mime-support \
   nautilus \
-  psplash \
+  ${SPLASH} \
   ${XSERVER} \
   xdg-utils \
   xlsfonts \

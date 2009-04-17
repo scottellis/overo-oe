@@ -2,6 +2,8 @@
 
 require omap3-console-image.bb
 
+SPLASH ?= "psplash"
+
 IMAGE_INSTALL += " \
   angstrom-gpe-task-apps \
   angstrom-gpe-task-base \
@@ -11,7 +13,7 @@ IMAGE_INSTALL += " \
   angstrom-x11-base-depends \
   cellwriter \
   midori \
-  psplash \
+  ${SPLASH} \
   xlsfonts \
   xmms \
   xrefresh \
