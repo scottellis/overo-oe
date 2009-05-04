@@ -10,8 +10,8 @@ iface lo inet loopback
 #
 
 #auto eth0
-iface eth0 inet dhcp
-iface eth1 inet dhcp
+#iface eth0 inet dhcp
+#iface eth1 inet dhcp
 
 #
 # Wireless interfaces
@@ -20,7 +20,7 @@ iface eth1 inet dhcp
 # Example of an unencrypted (no WEP or WPA) wireless connection
 # that connects to any available access point:
 #
-auto wlan0
+allow-hotplug wlan0
 iface wlan0 inet dhcp
 	wireless_mode managed
 	wireless_essid any
