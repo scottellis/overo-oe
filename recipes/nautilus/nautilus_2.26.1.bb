@@ -2,6 +2,8 @@
 # Copyright (C) 2005, Advanced Micro Devices, Inc.  All Rights Reserved
 # Released under the MIT license (see packages/COPYING)
 
+PR = "r1"
+
 inherit gnome
 
 SRC_URI += "file://idl-sysroot.patch;patch=1 \
@@ -12,7 +14,7 @@ export SYSROOT = "${STAGING_DIR_HOST}"
 
 LICENSE="GPL"
 
-DEPENDS += " gvfs tracker librsvg libexif eel esound gnome-desktop orbit2-native"
+DEPENDS += " gvfs tracker librsvg libexif eel esound gnome-desktop orbit2-native libunique"
 RDEPENDS = "gvfs gvfsd-ftp gvfsd-sftp gvfsd-trash"
 
 EXTRA_OECONF = " --disable-gtk-doc  --disable-update-mimedb "
