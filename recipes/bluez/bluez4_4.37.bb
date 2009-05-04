@@ -8,15 +8,19 @@ LICENSE = "GPL"
 # For angstrom we want this to replace at least bluez-libs
 PROVIDES_append_angstrom = " bluez-utils bluez-libs"
 
+PR = "r4"
+
 SRC_URI = "\
   http://www.kernel.org/pub/linux/bluetooth/bluez-${PV}.tar.gz \
   file://fix-dfutool-usb-declaration-mismatch.patch;patch=1 \
   file://sbc-thumb.patch;patch=1 \
   file://bluetooth.conf \
+  file://bluetooth.default \
+  file://bluetooth.init \
 "
 S = "${WORKDIR}/bluez-${PV}"
 
-inherit autotools_stage
+inherit autotools_stage update-rc.d
 AUTOTOOLS_STAGE_PKGCONFIG = "1"
 
 EXTRA_OECONF = "\
@@ -45,7 +49,13 @@ do_install_append() {
         install -m 0644 ${S}/input/input.conf ${D}/${sysconfdir}/bluetooth/
         # at_console doesn't really work with the current state of OE, so punch some more holes so people can actually use BT
         install -m 0644 ${WORKDIR}/bluetooth.conf ${D}/${sysconfdir}/dbus-1/system.d/
+
+	install -m 0644 ${WORKDIR}/bluetooth.default ${D}${sysconfdir}/default/bluetooth
+	install -m 0755 ${WORKDIR}/bluetooth.init    ${D}${sysconfdir}/init.d/bluetooth
 }
+
+INITSCRIPT_NAME = "bluetooth"
+INITSCRIPT_PARAMS = "defaults 23 19"
 
 PACKAGES =+ "gst-plugin-bluez libasound-module-bluez"
 
