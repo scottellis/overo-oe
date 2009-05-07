@@ -27,7 +27,7 @@ EXTRA_OECONF = "--disable-gtk-doc"
 # enforced.
 export MKDIR_P = "mkdir -p"
 export mkdir_p = "mkdir -p"
-export INSTALL = "${STAGING_BINDIR_NATIVE}/install-sh"
+export INSTALL = "${STAGING_BINDIR_NATIVE}/install"
 
 do_stage() {
 	autotools_stage_includes
