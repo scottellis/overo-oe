@@ -6,4 +6,4 @@ DEPENDS = "gtk+ libgpewidget gpe-icons"
 SECTION = "gpe"
 PRIORITY = "optional"
 
-
+SRC_URI += "file://fix-install.patch;patch=1"

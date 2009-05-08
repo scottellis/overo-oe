@@ -7,4 +7,6 @@ SECTION = "gpe"
 PRIORITY = "optional"
 
 SRC_URI += "file://fix_makefile.patch;patch=1 \
-            file://no-render-h.patch;patch=1"
+            file://fix_install.patch;patch=1 \
+            file://no-render-h.patch;patch=1 \
+           "
