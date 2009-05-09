@@ -1,5 +1,7 @@
 LICENSE = "GPL"
 inherit gpe
+PR = "r1"
+
 
 DESCRIPTION = "GTK+2 port of the well known game, Tetris."
 DEPENDS = "gtk+ libgpewidget gpe-icons"

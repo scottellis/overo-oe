@@ -5,6 +5,7 @@ DEPENDS = "gtk+ libgpewidget gpe-icons"
 RDEPENDS = "gpe-icons"
 SECTION = "gpe"
 PRIORITY = "optional"
+PR = "r3"
 
 SRC_URI += " \
            file://plucker-no-host-includes.patch;patch=1 \
@@ -13,6 +14,4 @@ SRC_URI += " \
 
 PARALLEL_MAKE=""
 EXTRA_OEMAKE="RANLIB=${RANLIB}"
-
-PR = "r2"
 

@@ -1,5 +1,6 @@
 LICENSE = "GPL"
 inherit gpe pkgconfig
+PR = "r1"
 
 DESCRIPTION = "GPE analog clock-watch"
 DEPENDS = "gtk+ libgpewidget"
