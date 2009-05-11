@@ -8,7 +8,7 @@ LICENSE = "GPL"
 # For angstrom we want this to replace at least bluez-libs
 PROVIDES_append_angstrom = " bluez-utils bluez-libs"
 
-PR = "r4"
+PR = "r5"
 
 SRC_URI = "\
   http://www.kernel.org/pub/linux/bluetooth/bluez-${PV}.tar.gz \
