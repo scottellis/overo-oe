@@ -32,6 +32,7 @@ APPS = " \
   evince \
   exhibit \
   ekiga \
+  empathy \
   firefox \
   gimp \
   gnome-games \
