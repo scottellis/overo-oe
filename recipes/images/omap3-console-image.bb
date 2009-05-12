@@ -22,9 +22,11 @@ IMAGE_INSTALL += " \
   fbgrab \
   fbset \
   fbset-modes \
+  i2c-tools \
   ksymoops \
   mkfs-jffs2 \
   mtd-utils \
+  nano \
   openssh-scp \
   openssh-ssh \
   procps \
