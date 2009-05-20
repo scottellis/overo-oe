@@ -1,5 +1,7 @@
 require gnome-mplayer.inc
 
+DEFAULT_PREFERENCE = "-1"
+
 SRCDATE = "20080101"
 PV = "0.9.5+svn${SRCDATE}"
 PR = "r6"
