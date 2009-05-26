@@ -5,7 +5,7 @@ DEPENDS = "gst-plugins-base alsa-lib libusb-compat dbus-glib"
 HOMEPAGE = "http://www.bluez.org"
 LICENSE = "GPL"
 
-PR = "r1"
+PR = "r2"
 
 # For angstrom we want this to replace at least bluez-libs
 PROVIDES_append_angstrom = " bluez-utils bluez-libs"
@@ -15,6 +15,8 @@ SRC_URI = "\
   file://fix-dfutool-usb-declaration-mismatch.patch;patch=1 \
   file://sbc-thumb.patch;patch=1 \
   file://bluetooth.conf \
+  file://bluetooth.default \
+  file://bluetooth.init \
 "
 S = "${WORKDIR}/bluez-${PV}"
 
@@ -47,6 +49,9 @@ do_install_append() {
         install -m 0644 ${S}/input/input.conf ${D}/${sysconfdir}/bluetooth/
         # at_console doesn't really work with the current state of OE, so punch some more holes so people can actually use BT
         install -m 0644 ${WORKDIR}/bluetooth.conf ${D}/${sysconfdir}/dbus-1/system.d/
+
+	install -m 0644 ${WORKDIR}/bluetooth.default ${D}${sysconfdir}/default/bluetooth
+	install -m 0755 ${WORKDIR}/bluetooth.init    ${D}${sysconfdir}/init.d/bluetooth
 }
 
 INITSCRIPT_NAME = "bluetooth"
