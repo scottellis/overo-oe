@@ -26,6 +26,7 @@ SRC_URI_append = " \
            file://ads7846-detection.patch;patch=1 \
            file://neon-deadlock.patch;patch=1 \
            file://madc.patch;patch=1 \
+           file://quiet-single-block-retry-warning.patch;patch=1 \
            "
 
 SRC_URI_append_beagleboard = " \
