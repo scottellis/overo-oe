@@ -25,6 +25,7 @@ SRC_URI_append = " \
            file://musb-otg.patch;patch=1 \
            file://ads7846-detection.patch;patch=1 \
            file://neon-deadlock.patch;patch=1 \
+           file://madc.patch;patch=1 \
            "
 
 SRC_URI_append_beagleboard = " \
