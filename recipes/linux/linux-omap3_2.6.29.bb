@@ -8,7 +8,7 @@ COMPATIBLE_MACHINE = "beagleboard|omap3evm|overo"
 SRCREV = "90e758af52ba803cba233fabee81176d99589f09"
 
 PV = "2.6.29"
-PR = "r0"
+PR = "r1"
 
 SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/tmlind/linux-omap-2.6.git;branch=master;protocol=git \
 	   file://defconfig \
@@ -29,6 +29,7 @@ SRC_URI_append = " \
            file://mmc.patch;patch=1 \
            file://ads7846-detection.patch;patch=1 \
            file://neon-deadlock.patch;patch=1 \
+           file://madc.patch;patch=1 \
            "
 
 SRC_URI_append_beagleboard = " \
