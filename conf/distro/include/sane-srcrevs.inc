@@ -13,7 +13,7 @@
 
 SRCREV_pn-accelges ?= "206"
 SRCREV_pn-aircrack-ng ?= "802"
-SRCREV_pn-alsa-scenario ?= "633aaccc37f845146e490090dbd2a1ebb8064fd6"
+SRCREV_pn-alsa-scenario ?= "8bd7f83d847424eb44704cf1649974b2fda8d8f1"
 SRCREV_pn-app-restarter ?= "4552"
 SRCREV_pn-assassin ?= "268"
 SRCREV_pn-assassin-thumbnail ?= "4690"
@@ -74,6 +74,7 @@ SRCREV_pn-gcc-cross-initial ?= ${GCCREV}
 SRCREV_pn-gcc-cross-intermediate ?= ${GCCREV}
 SRCREV_pn-gcc-cross-sdk ?= ${GCCREV}
 SRCREV_pn-gconf-dbus ?= "641"
+SRCREV_pn-gnet ?= "495"
 SRCREV_pn-gnuradio ?= "10302"
 SRCREV_pn-gpe-conf ?= "9900"
 SRCREV_pn-gpe-contacts ?= "9312"
@@ -100,7 +101,7 @@ SRCREV_pn-libgsm0710 ?= "50079c58e6f4a21edd6ab33ef2365abb1f5441d2"
 SRCREV_pn-libgsm0710mux ?= "114044266a094c61a2c25ee5a823635ae50a4e89"
 SRCREV_pn-libgsmd ?= "4505"
 SRCREV_pn-libiac ?= "1590"
-SRCREV_pn-libjana ?= "713"
+SRCREV_pn-libjana = "749"
 SRCREV_pn-libmokogsmd2 ?= "4334"
 SRCREV_pn-libmokojournal2 ?= "3473"
 SRCREV_pn-libmokopanelui2 ?= "4568"

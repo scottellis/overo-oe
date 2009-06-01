@@ -10,10 +10,10 @@ LICENSE = "GPL"
 
 FILESPATH = "${FILE_DIRNAME}/bluez-utils-${PV}:${FILE_DIRNAME}/bluez-utils"
 
-# ti patch should be sent it upstream!
 SRC_URI = "http://bluez.sourceforge.net/download/bluez-utils-${PV}.tar.gz \
            file://hcid.conf \
-           file://hciattach-ti-bts.patch;patch=1 \
+           file://bluetooth.default \
+           file://bluetooth.init \
            file://sbc-thumb.patch;patch=1"
 
 S = "${WORKDIR}/bluez-utils-${PV}"
