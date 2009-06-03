@@ -11,7 +11,7 @@ SRC_URI = "http://ftp.mozilla.org/pub/mozilla.org/firefox/nightly/${MOZPV}-candi
 
 S = "${WORKDIR}/mozilla-central"
 
-#DEFAULT_PREFERENCE = "-1"
+DEFAULT_PREFERENCE = "-1"
 
 inherit mozilla
 require firefox.inc
