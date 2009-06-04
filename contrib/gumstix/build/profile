@@ -2,7 +2,7 @@
 # Environment setup for oe
 #
 
-export BB_ENV_EXTRAWHITE="MACHINE DISTRO ANGSTROM_MODE OVEROTOP OEBRANCH USERBRANCH"
+export BB_ENV_EXTRAWHITE="MACHINE DISTRO ANGSTROM_MODE OVEROTOP OEBRANCH USERBRANCH TITOOLSDIR"
 
 export OVEROTOP="${HOME}/overo-oe"
 export OEBRANCH="${OVEROTOP}/org.openembedded.dev"
@@ -10,6 +10,8 @@ export USERBRANCH="${OVEROTOP}/user.collection"
 
 export PATH="${OVEROTOP}/bitbake/bin:$PATH"
 export BBPATH="${OVEROTOP}/build:${USERBRANCH}:${OEBRANCH}"
+
+export TITOOLSDIR="${OVEROTOP}/ti"
 
 umask 0002
 

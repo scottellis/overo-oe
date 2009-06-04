@@ -82,5 +82,6 @@ IMAGE_INSTALL += " \
 
 IMAGE_INSTALL_append_beagleboard = " \
   libgles-omap3-demos \
- "
+#  task-gstreamer-ti \ 
+"
 
