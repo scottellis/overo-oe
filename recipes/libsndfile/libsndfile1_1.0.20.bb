@@ -7,6 +7,8 @@ LICENSE = "LGPL"
 SRC_URI = "http://www.mega-nerd.com/libsndfile/libsndfile-${PV}.tar.gz \
           "
 
+DEPENDS = "libsamplerate0"
+
 S = "${WORKDIR}/libsndfile-${PV}"
 
 inherit autotools_stage  lib_package pkgconfig
