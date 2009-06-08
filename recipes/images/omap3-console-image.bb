@@ -6,19 +6,31 @@ DEPENDS = "task-base"
 
 IMAGE_EXTRA_INSTALL ?= ""
 
-IMAGE_INSTALL += " \
-  task-base-extended \
-  task-proper-tools \
-  u-boot-tools-env \
+AUDIO_INSTALL = " \
   alsa-utils \
-  alsa-utils-alsactl \
-  alsa-utils-alsamixer \
   alsa-utils-aplay \
+  alsa-utils-amixer \
+ "
+
+BASE_INSTALL = " \
+  task-base-extended \
+ "
+
+FIRMWARE_INSTALL = " \
+  libertas-sd-firmware \
+  linux-firmware \
+  rt73-firmware \
+  zd1211-firmware \
+ "
+
+GLES_INSTALL = ""
+GLES_INSTALL_append_beagleboard  = " libgles-omap3"
+
+TOOLS_INSTALL = " \
   bash \
   bzip2 \
   devmem2 \
   dosfstools \
-  e2fsprogs-mke2fs \
   fbgrab \
   fbset \
   fbset-modes \
@@ -32,14 +44,20 @@ IMAGE_INSTALL += " \
   procps \
   socat \
   strace \
-  ${IMAGE_EXTRA_INSTALL} \
-  libertas-sd-firmware \
-  rt73-firmware \
-  zd1211-firmware \
+  task-proper-tools \
+  u-boot-tools-env \
  "
 
-IMAGE_INSTALL_append_beagleboard = " \
-  libgles-omap3 \
+IMAGE_INSTALL += " \
+  ${BASE_INSTALL} \
+  ${AUDIO_INSTALL} \
+  ${GLES_INSTALL} \
+  ${IMAGE_EXTRA_INSTALL} \
+  ${TOOLS_INSTALL} \
+ "
+
+RRECOMMENDS += " \
+  ${FIRMWARE_INSTALL} \
  "
 
 IMAGE_PREPROCESS_COMMAND = "create_etc_timestamp"
