@@ -10,6 +10,7 @@ AUDIO_INSTALL = " \
   alsa-utils \
   alsa-utils-aplay \
   alsa-utils-amixer \
+  angstrom-zeroconf-audio \
  "
 
 BASE_INSTALL = " \
@@ -17,8 +18,8 @@ BASE_INSTALL = " \
  "
 
 FIRMWARE_INSTALL = " \
+#  linux-firmware \
   libertas-sd-firmware \
-  linux-firmware \
   rt73-firmware \
   zd1211-firmware \
  "
@@ -51,13 +52,10 @@ TOOLS_INSTALL = " \
 IMAGE_INSTALL += " \
   ${BASE_INSTALL} \
   ${AUDIO_INSTALL} \
+  ${FIRMWARE_INSTALL} \
   ${GLES_INSTALL} \
   ${IMAGE_EXTRA_INSTALL} \
   ${TOOLS_INSTALL} \
- "
-
-RRECOMMENDS += " \
-  ${FIRMWARE_INSTALL} \
  "
 
 IMAGE_PREPROCESS_COMMAND = "create_etc_timestamp"
