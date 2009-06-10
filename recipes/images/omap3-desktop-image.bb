@@ -5,25 +5,9 @@ require omap3-console-image.bb
 IMAGE_LINGUAS = "de-de fr-fr en-gb en-us pt-br es-es"
 
 ANGSTROM_EXTRA_INSTALL ?= ""
+
 SPLASH ?= "psplash"
 #SPLASH ?= "exquisite exquisite-themes exquisite-theme-angstrom"
-
-E_CONFIG = " \
-  e-wm-config-angstrom \
-  e-wm-config-illume \
-  e-wm-config-standard \
-  e-wm-config-netbook \
-  e-wm-config-default \
-  e-wm-config-minimalist \
-  e-wm-config-scaleable \
-"
-
-E_MODULES = " \
-  flame \
-  news \
-  places \
-  rain \
-"
 
 APPS = " \
   abiword \
@@ -38,9 +22,11 @@ APPS = " \
   gnome-games \
   gnome-mplayer \
   gnumeric \
+  gpe-scap \
   gpe-soundbite \
   jaaa \
   midori \
+  nautilus \
   numptyphysics \
   pidgin \
   swfdec \
@@ -51,33 +37,83 @@ APPS = " \
   angstrom-x11vnc-xinit \
   xmms \
   xterm \
-"
+ "
 
-IMAGE_INSTALL += " \
-  ${APPS} \
-  angstrom-x11-base-depends \
-  angstrom-gpe-task-base \
-  angstrom-gpe-task-settings \
-  angstrom-zeroconf-audio \
-  angstrom-gnome-icon-theme-enable \
-  cups \
+E_CONFIG = " \
+  e-wm-config-angstrom \
+  e-wm-config-illume \
+  e-wm-config-standard \
+  e-wm-config-netbook \
+  e-wm-config-default \
+  e-wm-config-minimalist \
+  e-wm-config-scaleable \
+ "
+
+E_MODULES = " \
+  news \
+  places \
+ "
+
+E17 = " \
   e-wm \
+  entrance \
   e-wm-sysactions \
   ${E_CONFIG} \
   ${E_MODULES} \
-  hicolor-icon-theme \
-  gnome-bluetooth \
+ "
+
+FONTS = " \
+  ttf-dejavu-common \
+  ttf-dejavu-sans \
+  ttf-dejavu-serif \
+  ttf-dejavu-sans-mono \
+  ttf-arphic-uming \
+ "  
+
+MEDIA = " \
+#  bigbuckbunny-180 \
+ "
+
+PRINT = " \
+  cups \
   gnome-cups-manager \
-  gnome-icon-theme \
-  gnome-themes \
   gtk-printbackend-cups \
+ "
+
+SETTINGS = " \
+  connman-gnome \
+  gnome-bluetooth \
+  gpe-conf \
+  gpe-package \
+ "
+
+XSERVER_BASE = " \
+  dbus-x11 \
+  fontconfig-utils \
+  gnome-icon-theme angstrom-gnome-icon-theme-enable \
+  gnome-themes \
+  gpe-dm \
+  gpe-session-scripts \
+  hicolor-icon-theme \
   mime-support \
-  nautilus \
-  ${SPLASH} \
-  ${XSERVER} \
+  xauth \
   xdg-utils \
+  xhost \
+  xset \
   xlsfonts \
   xrefresh \
+ "
+
+IMAGE_INSTALL += " \
+  ${APPS} \
+  ${E17} \
+  ${FONTS} \
+  ${MEDIA} \
+  ${PRINT} \
+  ${SETTINGS} \
+  ${SPLASH} \
+  ${XSERVER} \
+  ${XSERVER_BASE} \
  "
 
 IMAGE_INSTALL_append_beagleboard = " \
