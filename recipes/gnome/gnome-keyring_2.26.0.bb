@@ -3,9 +3,9 @@ SECTION = "x11/gnome"
 
 inherit autotools gnome pkgconfig
 
-DEPENDS = "gconf-dbus gtk+ libtasn1 libtasn1-native libgcrypt"
+DEPENDS = "gconf gtk+ libtasn1 libtasn1-native libgcrypt"
 
-EXTRA_OECONF = "--disable-gtk-doc"
+EXTRA_OECONF = "--disable-gtk-doc --enable-pam --with-pam-dir=${libdir}/security/"
 
 SRC_URI += "file://tasn.m4 file://org.gnome.keyring.service"
 
