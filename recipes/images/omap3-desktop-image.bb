@@ -88,10 +88,13 @@ SETTINGS = " \
  "
 
 XSERVER_BASE = " \
+  ${XSERVER} \
   dbus-x11 \
   fontconfig-utils \
   gnome-icon-theme angstrom-gnome-icon-theme-enable \
   gnome-themes \
+  gtk-theme-clearlooks \
+  gtk-engine-clearlooks \
   gpe-dm \
   gpe-session-scripts \
   hicolor-icon-theme \
@@ -112,7 +115,6 @@ IMAGE_INSTALL += " \
   ${PRINT} \
   ${SETTINGS} \
   ${SPLASH} \
-  ${XSERVER} \
   ${XSERVER_BASE} \
  "
 
