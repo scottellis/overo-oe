@@ -15,7 +15,7 @@ SRCREV = "097aef044ced5937dd7e288bfee58b6138939117"
 PV = "2.27.5"
 PR_append = "+gitr${SRCREV}"
 
-DEPENDS = "obexd obex-data-server gconf-dbus gtk+ dbus-glib libunique libnotify hal bluez4 gnome-keyring"
+DEPENDS = "obexd obex-data-server gconf gtk+ dbus-glib libunique libnotify hal bluez4 gnome-keyring"
 RRECOMMENDS_${PN} += "obexd obex-data-server"
 RCONFLICTS_${PN} = "bluez-gnome"
 

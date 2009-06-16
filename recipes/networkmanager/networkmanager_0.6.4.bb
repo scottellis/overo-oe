@@ -3,7 +3,7 @@ SECTION = "network/misc"
 LICENSE = "GPL"
 HOMEPAGE = "http://www.gnome.org"
 PRIORITY = "optional"
-DEPENDS = "libnl dbus dbus-glib libhal-nm libgpewidget gnome-keyring gconf-dbus wireless-tools libglade"
+DEPENDS = "libnl dbus dbus-glib libhal-nm libgpewidget gnome-keyring gconf wireless-tools libglade"
 RDEPENDS = "wpa-supplicant iproute2 dhcdbd gnome-keyring hicolor-icon-theme"
 
 PR = "r5"
