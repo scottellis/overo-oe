@@ -7,11 +7,11 @@ COMPATIBLE_MACHINE = "omap5912osk|omap1710h3|omap2430sdp|omap2420h4|beagleboard|
 
 DEFAULT_PREFERENCE = "-1"
 
-SRCREV = "9d76f46e79302058464b569dbad9af8c594dbe53"
+SRCREV = "cbfc461bd5c4d0aff8501dd82db18146a22f49cf"
 
-PV = "2.6.29-pm0+gitr${SRCREV}"
+PV = "2.6.29-pm1+gitr${SRCREV}"
 
-SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/khilman/linux-omap-pm.git;protocol=git;branch=pm \
+SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/khilman/linux-omap-pm.git;protocol=git;branch=pm-2.6.29 \
 	   file://defconfig"
 
 SRC_URI_append = " \
