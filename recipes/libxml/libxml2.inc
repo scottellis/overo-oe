@@ -19,6 +19,7 @@ do_stage() {
  	install -m 0644 libxml.m4 ${STAGING_DATADIR}/aclocal/
 	#this is need it by php during its install
 	install -m 0755 xml2-config ${STAGING_BINDIR_CROSS}
+	ln -s ${STAGING_INCDIR}/libxml2/libxml ${STAGING_INCDIR}/libxml
 }
 
 DEBIANNAME_${PN} = "libxml2"
