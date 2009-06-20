@@ -45,6 +45,7 @@ TOOLS_INSTALL = " \
   procps \
   socat \
   strace \
+  sudo \
   task-proper-tools \
   u-boot-tools-env \
  "
