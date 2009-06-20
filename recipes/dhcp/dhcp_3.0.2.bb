@@ -3,6 +3,9 @@ DESCRIPTION = "Internet Software Consortium DHCP package"
 HOMEPAGE = "http://www.isc.org/"
 LICENSE = "BSD"
 PR = "r8"
+
+TARGET_CC_ARCH += "${LDFLAGS}"
+
 SRC_URI = "ftp://ftp.isc.org/isc/dhcp/dhcp-3.0-history/dhcp-${PV}.tar.gz \
 	   file://noattrmode.patch;patch=1 \
 	   file://fixincludes.patch;patch=1 \
