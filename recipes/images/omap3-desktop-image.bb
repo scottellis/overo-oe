@@ -15,7 +15,7 @@ APPS = " \
   claws-mail \
   evince \
   exhibit \
-  ekiga \
+#  ekiga \
   empathy \
   firefox \
   gimp \
