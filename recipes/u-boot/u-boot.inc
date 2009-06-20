@@ -7,6 +7,7 @@ PROVIDES = "virtual/bootloader"
 
 DEPENDS = "mtd-utils"
 
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 PARALLEL_MAKE=""
 
 EXTRA_OEMAKE = "CROSS_COMPILE=${TARGET_PREFIX}"

@@ -7,6 +7,8 @@ USERDISTRO := "${DISTRO}"
 DISTRO = "angstrom"
 DISTRO_NAME = "Angstrom"
 
+BUILDNAME = "Angstrom ${DISTRO_VERSION}"
+
 TARGET_VENDOR = "-angstrom"
 
 # Add FEED_ARCH to overrides
@@ -191,7 +193,7 @@ SEPPUKU_AUTOBUILD    = "1"
 SEPPUKU_PRODUCT      = "Openembedded"
 SEPPUKU_COMPONENT    = "org.openembedded.dev"
 
-OESTATS_SERVER      ?= "tinderbox.openembedded.net"
+OESTATS_SERVER      ?= "tinderbox.openembedded.org"
 
 
 

@@ -15,4 +15,3 @@ SRC_URI = "git://gitorious.org/u-boot-omap3/mainline.git;branch=omap3-dev;protoc
 
 S = "${WORKDIR}/git"
 
-PACKAGE_ARCH = "${MACHINE_ARCH}"

@@ -224,7 +224,7 @@ SRCREV_pn-python-pycrypto ?= "d087280d7e9643a3e3f68f209932119fe6738b3c"
 SRCREV_pn-python-pyrtc ?= "eb39ce7fb81bfa64e1a9eb5f142ca3d1065be3fa"
 SRCREV_pn-python-pyyaml ?= "344"
 QEMUSRCREV ?= "4242"
-SRCREV_pn-tslib ?= "53"
+SRCREV_pn-tslib ?= "77"
 SRCREV_pn-qemu-native ?= "${QEMUSRCREV}"
 SRCREV_pn-qemu-sdk ?= "${QEMUSRCREV}"
 SRCREV_pn-qemu ?= "${QEMUSRCREV}"
@@ -266,7 +266,7 @@ SRCREV_pn-zhone ?= "f38cc52fbf11f7fe945797a6b8ade29ed479d924"
 # Enlightenment Foundation Libraries
 # Caution: This is not alphabetically, but (roughly) dependency-sorted.
 # Please leave it like that.
-EFL_SRCREV ?= "40978"
+EFL_SRCREV ?= "41038"
 SRCREV_pn-edb-native ?= "${EFL_SRCREV}"
 SRCREV_pn-edb ?= "${EFL_SRCREV}"
 SRCREV_pn-eina-native ?= "${EFL_SRCREV}"

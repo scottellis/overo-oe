@@ -42,17 +42,18 @@ SRC_URI = "file://OMAP35x_Graphics_SDK_setuplinux_${SGXPV}.bin \
            file://shaders.desktop \
            file://skybox2.desktop \
           "
+
 S = "${WORKDIR}/OMAP35x_Graphics_SDK_${SGXPV}"
 
 BINLOCATION ?= "${S}/gfx_rel"
 
 PACKAGES += " xserver-kdrive-powervrsgx ${PN}-tests ${PN}-demos"
 
-FILES_${PN} = "${sysconfdir} ${libdir}/lib*.so.* ${bindir}/pvrsrvinit"
+FILES_${PN} = "${sysconfdir} ${libdir}/lib*.so.* ${libdir}/ES*/* ${bindir}/pvrsrvinit ${bindir}/*/*"
 FILES_xserver-kdrive-powervrsgx = "${bindir}/Xsgx"
 FILES_${PN}-tests = "${bindir}"
 FILES_${PN}-demos = "${prefix}/demos ${prefix}/share/applications "
-FILES_${PN}-dbg = "${libdir}/.debug/* ${bindir}/.debug/* \
+FILES_${PN}-dbg = "${libdir}/.debug/* ${bindir}/.debug/* ${libdir}/ES*/.debug ${bindir}/*/.debug\
 	${prefix}/demos/OGLES/*/.debug/* \
 	${prefix}/demos/OGLES2/*/.debug/* \
 	"
@@ -68,8 +69,9 @@ INITSCRIPT_PARAMS = "start 30 5 2 . stop 40 0 1 6 ."
 do_accept_license() {
 	export HOME="${WORKDIR}"
 	echo "Y
+q 
 Y
-${S}" | ${WORKDIR}/OMAP35x_Graphics_SDK_setuplinux_${SGXPV}.bin
+${S}" | ${WORKDIR}/OMAP35x_Graphics_SDK_setuplinux_${SGXPV}.bin --mode console
 }
 
 addtask accept_license after do_unpack before do_configure

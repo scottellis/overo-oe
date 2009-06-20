@@ -11,14 +11,14 @@ LICENSE = "GPL"
 SECTION = "base"
 PRIORITY = "required"
 
-INC_PR = "r21"
+INC_PR = "r22"
 
 SRC_URI = "\
   http://www.busybox.net/downloads/busybox-${PV}.tar.gz \
   file://busybox-cron \
   file://busybox-httpd \
   file://busybox-udhcpd \
-  file://default.script \
+  file://default.script file://simple.script \
   file://dhcp-hostname.patch;patch=1 \
   file://hwclock.sh \
   file://ifupdown-spurious-environ.patch;patch=1 \
@@ -33,26 +33,37 @@ SRC_URI_append_nylon = " file://xargs-double-size.patch;patch=1"
 
 export EXTRA_CFLAGS = "${CFLAGS}"
 EXTRA_OEMAKE_append = " CROSS=${HOST_PREFIX}"
-PACKAGES =+ "${PN}-mountall ${PN}-httpd ${PN}-udhcpd"
+PACKAGES =+ "${PN}-mountall ${PN}-httpd ${PN}-syslog ${PN}-udhcpd"
+
 # We need this RRECOMMENDS because libc dlopens libgcc
 # and shlib mechanism can not detect it because its not
 # listed in the NEEDED field.
 RRECOMMENDS += "libgcc"
+
 FILES_${PN}-mountall = "${sysconfdir}/default/mountall"
 RDEPENDS_${PN} += "${PN}-mountall"
+
+# Make busybox recommend busybox-syslog for those images that expect it
+RRECOMMENDS_${PN} += "libgcc ${PN}-syslog"
+
 FILES_${PN}-httpd = "${sysconfdir}/init.d/busybox-httpd /srv/www"
+FILES_${PN}-syslog = "${sysconfdir}/init.d/syslog ${sysconfdir}/syslog.conf"
 FILES_${PN}-udhcpd = "${sysconfdir}/init.d/busybox-udhcpd"
 
 FILES_${PN} += "${datadir}/udhcpc"
 
-INITSCRIPT_PACKAGES = "${PN} ${PN}-httpd ${PN}-udhcpd"
+INITSCRIPT_PACKAGES = "${PN}-httpd ${PN}-syslog ${PN}-udhcpd"
 INITSCRIPT_NAME_${PN}-httpd = "busybox-httpd"
+INITSCRIPT_NAME_${PN}-syslog = "syslog"
 INITSCRIPT_NAME_${PN}-udhcpd = "busybox-udhcpd" 
-INITSCRIPT_NAME_${PN} = "syslog"
-CONFFILES_${PN} = "${sysconfdir}/syslog.conf"
+CONFFILES_${PN}-syslog = "${sysconfdir}/syslog.conf"
 
 # This disables the syslog startup links in slugos (see slugos-init)
-INITSCRIPT_PARAMS_${PN}_slugos = "start 20 ."
+INITSCRIPT_PARAMS_${PN}-syslog_slugos = "start 20 ."
+
+RDEPENDS_${PN}-httpd += "${PN}"
+RDEPENDS_${PN}-syslog += "${PN}"
+RDEPENDS_${PN}-udhcpd += "${PN}"
 
 # Use gcc for linking so LDFLAGS actually makes sense
 LD = "${CC} -nostdlib"
@@ -89,8 +100,10 @@ do_install () {
 	install -m 0755 ${S}/busybox ${D}${base_bindir}
 	ln -sf busybox ${D}${base_bindir}/sh
 
-	install -m 0755 ${WORKDIR}/syslog ${D}${sysconfdir}/init.d/
-	install -m 644 ${WORKDIR}/syslog.conf ${D}${sysconfdir}/
+	if grep -q "CONFIG_SYSLOGD=y" ${WORKDIR}/defconfig; then
+		install -m 0755 ${WORKDIR}/syslog ${D}${sysconfdir}/init.d/
+		install -m 644 ${WORKDIR}/syslog.conf ${D}${sysconfdir}/
+	fi
 	if grep "CONFIG_CROND=y" ${WORKDIR}/defconfig; then
 		install -m 0755 ${WORKDIR}/busybox-cron ${D}${sysconfdir}/init.d/
 	fi
@@ -107,7 +120,7 @@ do_install () {
 	if grep "CONFIG_APP_UDHCPC=y" ${WORKDIR}/defconfig; then
 		install -d ${D}${sysconfdir}/udhcpc.d
 		install -d ${D}${datadir}/udhcpc
-		install -m 0755 ${S}/examples/udhcp/simple.script ${D}${sysconfdir}/udhcpc.d/50default
+                install -m 0755 ${WORKDIR}/simple.script ${D}${sysconfdir}/udhcpc.d/50default
 		install -m 0755 ${WORKDIR}/default.script ${D}${datadir}/udhcpc/default.script
 	fi
 	if grep "CONFIG_FEATURE_MOUNT_FSTAB=y" ${WORKDIR}/defconfig; then
