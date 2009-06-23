@@ -40,6 +40,7 @@ TOOLS_INSTALL = " \
   mkfs-jffs2 \
   mtd-utils \
   nano \
+  openssh-misc \
   openssh-scp \
   openssh-ssh \
   procps \
