@@ -9,8 +9,8 @@ DEFAULT_PREFERENCE = "-1"
 
 SRCREV = "151c7a7fc30cceb58e7999adbf3ad5e0c734b4a7"
 
-PV = "2.6.30-rc8+${PR}+git${SRCREV}"
-PR = "r0"
+PV = "2.6.30-rcfinal+${PR}+git${SRCREV}"
+PR = "r1"
 
 SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/tmlind/linux-omap-2.6.git;branch=master;protocol=git \
 	   file://defconfig \
@@ -27,6 +27,7 @@ SRC_URI_append = " \
            file://neon-deadlock.patch;patch=1 \
            file://madc.patch;patch=1 \
            file://quiet-single-block-retry-warning.patch;patch=1 \
+           file://rc8-to-final.diff;patch=1 \
            "
 
 SRC_URI_append_beagleboard = " \
