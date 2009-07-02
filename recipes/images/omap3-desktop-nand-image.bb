@@ -21,9 +21,7 @@ APPS = " \
   gnumeric \
   gpe-scap \
   gpe-soundbite \
-  jaaa \
   midori \
-  numptyphysics \
   pidgin \
   synergy \
   vnc \
@@ -61,7 +59,6 @@ FONTS = " \
   ttf-dejavu-sans \
   ttf-dejavu-serif \
   ttf-dejavu-sans-mono \
-  ttf-arphic-uming \
  "  
 
 PRINT = " \
