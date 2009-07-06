@@ -14,16 +14,13 @@ APPS = " \
   cheese \
   claws-mail \
   evince \
-  exhibit \
+  firefox \
   gimp \
   gnome-games \
   gnome-mplayer \
   gnumeric \
-  gpe-scap \
   gpe-soundbite \
-  midori \
   pidgin \
-  synergy \
   vnc \
   x11vnc \
   angstrom-x11vnc-xinit \
