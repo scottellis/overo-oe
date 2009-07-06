@@ -31,6 +31,7 @@ TOOLS_INSTALL = " \
   bash \
   bzip2 \
   devmem2 \
+  dhcp-client \
   dosfstools \
   fbgrab \
   fbset \
@@ -40,6 +41,7 @@ TOOLS_INSTALL = " \
   mkfs-jffs2 \
   mtd-utils \
   nano \
+  ntp ntpdate \
   openssh-misc \
   openssh-scp \
   openssh-ssh \
