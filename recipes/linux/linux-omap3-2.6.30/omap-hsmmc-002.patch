@@ -1,0 +1,31 @@
+From 908a0774d4e60408542fc848d00f8fdafd540762 Mon Sep 17 00:00:00 2001
+From: Adrian Hunter <adrian.hunter@nokia.com>
+Date: Sat, 16 May 2009 09:35:17 +0300
+Subject: [PATCH] omap_hsmmc: clear interrupt status after init sequence
+
+Clear the interrupt status after sending the initialization sequence,
+as specified in the TRM.
+
+Signed-off-by: Adrian Hunter <adrian.hunter@nokia.com>
+---
+ drivers/mmc/host/omap_hsmmc.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/drivers/mmc/host/omap_hsmmc.c b/drivers/mmc/host/omap_hsmmc.c
+index 066ed2e..af10012 100644
+--- a/drivers/mmc/host/omap_hsmmc.c
++++ b/drivers/mmc/host/omap_hsmmc.c
+@@ -354,6 +354,10 @@ static void send_init_stream(struct mmc_omap_host *host)
+ 
+ 	OMAP_HSMMC_WRITE(host->base, CON,
+ 		OMAP_HSMMC_READ(host->base, CON) & ~INIT_STREAM);
++
++	OMAP_HSMMC_WRITE(host->base, STAT, STAT_CLEAR);
++	OMAP_HSMMC_READ(host->base, STAT);
++
+ 	enable_irq(host->irq);
+ }
+ 
+-- 
+1.5.6.3
+

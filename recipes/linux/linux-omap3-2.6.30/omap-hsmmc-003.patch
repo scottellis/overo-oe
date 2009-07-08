@@ -1,0 +1,36 @@
+From d060f6d385adc1bd2e7b34b036915836df93624d Mon Sep 17 00:00:00 2001
+From: Adrian Hunter <adrian.hunter@nokia.com>
+Date: Sat, 16 May 2009 10:05:40 +0300
+Subject: [PATCH] omap_hsmmc: cater for weird CMD6 behaviour
+
+Sometimes the controller unexpectedly produces a TC (transfer
+complete) interrupt before the CC (command complete) interrupt for
+command 6 (SWITCH).  This is a problem because the CC interrupt
+can get mixed up with the next request.  Add a hack for CMD6.
+
+Signed-off-by: Adrian Hunter <adrian.hunter@nokia.com>
+---
+ drivers/mmc/host/omap_hsmmc.c |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
+
+diff --git a/drivers/mmc/host/omap_hsmmc.c b/drivers/mmc/host/omap_hsmmc.c
+index af10012..ee25ce4 100644
+--- a/drivers/mmc/host/omap_hsmmc.c
++++ b/drivers/mmc/host/omap_hsmmc.c
+@@ -470,6 +470,13 @@ mmc_omap_xfer_done(struct mmc_omap_host *host, struct mmc_data *data)
+ 		data->bytes_xfered = 0;
+ 
+ 	if (!data->stop) {
++		/* TC before CC from CMD6 - don't know why, but it happens */
++		if (host->cmd && host->cmd->opcode == 6 &&
++		    host->response_busy) {
++			host->response_busy = 0;
++			return;
++		}
++
+ 		host->mrq = NULL;
+ 		mmc_request_done(host->mmc, mrq);
+ 		return;
+-- 
+1.5.6.3
+
