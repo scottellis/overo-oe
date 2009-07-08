@@ -11,7 +11,6 @@ SPLASH ?= "psplash"
 
 APPS = " \
   abiword \
-  cheese \
   claws-mail \
   evince \
   firefox \
