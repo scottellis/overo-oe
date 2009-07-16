@@ -1,23 +1,24 @@
 require linux.inc
 
+DEFAULT_PREFERENCE = "-1"
+
 DESCRIPTION = "Linux kernel for OMAP3 processors"
 KERNEL_IMAGETYPE = "uImage"
 
 COMPATIBLE_MACHINE = "beagleboard|omap3evm|overo"
 
-DEFAULT_PREFERENCE = "-1"
-
 SRCREV = "151c7a7fc30cceb58e7999adbf3ad5e0c734b4a7"
 
 PV = "2.6.30-rcfinal+${PR}+git${SRCREV}"
-PR = "r1"
+
+# The main PR is now using MACHINE_KERNEL_PR, for omap3 see conf/machine/include/omap3.inc
 
 SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/tmlind/linux-omap-2.6.git;branch=master;protocol=git \
 	   file://defconfig \
           "
 
 SRC_URI_append = " \
-           file://logo_linux_clut224.ppm \
+           file://${BOOT_SPLASH} \
            file://no-empty-flash-warnings.patch;patch=1 \
            file://fix-install.patch;patch=1 \
            file://fix-audio-capture.patch;patch=1 \

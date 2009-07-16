@@ -4,6 +4,8 @@ LICENSE = "GPL"
 
 inherit kernel
 
+BOOT_SPLASH ?= "logo_linux_clut224.ppm"
+
 RPSRC = "http://www.rpsys.net/openzaurus/patches/archive"
 
 # Enable OABI compat for people stuck with obsolete userspace
@@ -56,10 +58,10 @@ do_configure_prepend() {
         echo "" > ${S}/.config
 
         #
-        # logo support, if you supply logo_linux_clut224.ppm in SRC_URI, then it's going to be used
+        # logo support, if you supply BOOT_SPLASH in SRC_URI, then it's going to be used
         #
-        if [ -e ${WORKDIR}/logo_linux_clut224.ppm ]; then
-                install -m 0644 ${WORKDIR}/logo_linux_clut224.ppm drivers/video/logo/logo_linux_clut224.ppm
+        if [ -e ${WORKDIR}/${BOOT_SPLASH} ]; then
+                install -m 0644 ${WORKDIR}/${BOOT_SPLASH} drivers/video/logo/logo_linux_clut224.ppm
                 echo "CONFIG_LOGO=y"                    >> ${S}/.config
                 echo "CONFIG_LOGO_LINUX_CLUT224=y"      >> ${S}/.config
         fi
