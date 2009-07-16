@@ -36,6 +36,7 @@ SRC_URI_append = " \
 
 SRC_URI_append_beagleboard = " \
            file://beagle-ehci.patch;patch=1 \
+           file://beagle-writable-uboot.patch;patch=1 \
           "
 
 SRC_URI_append_omap3evm = " \
