@@ -2,8 +2,6 @@ require hal.inc
 
 DEFAULT_PREFERENCE = "-1"
 
-PR = "r1"
-
 # The following code finds the right linux/input.h,
 # which also works with external-toolchain/SDK
 do_configure() {
