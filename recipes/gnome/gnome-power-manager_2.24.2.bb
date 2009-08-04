@@ -12,6 +12,10 @@ EXTRA_OECONF = " --disable-scrollkeeper \
                  ac_cv_header_X11_extensions_dpms_h=yes \
                "
 
+do_configure_prepend() {
+        sed -i -e 's:	man	::g' ${S}/Makefile.am
+}
+
 do_configure_append() {
         rm config.log
         # Sigh... --enable-compile-warnings=no doesn't actually turn off -Werror
@@ -31,6 +35,6 @@ FILES_${PN} += "${datadir}/icons \
 		${datadir}/gnome/autostart \
 		"
 
-FILE_{PN}-doc += "${datadir}/omf \
-                  ${datadir}/gnome/help "
+FILES_${PN}-doc += "${datadir}/omf \
+                    ${datadir}/gnome/help "
 

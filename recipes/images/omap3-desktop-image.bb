@@ -67,7 +67,6 @@ FONTS = " \
   ttf-dejavu-sans \
   ttf-dejavu-serif \
   ttf-dejavu-sans-mono \
-  ttf-arphic-uming \
  "  
 
 MEDIA = " \
