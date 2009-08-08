@@ -16,6 +16,9 @@ SRC_URI_append = " file://setDPI.sh \
                    file://xtscal-fix.patch;patch=1 \
 "
 
+SRC_URI_append_angstrom = " file://xtscal-fix.patch;patch=1 "
+RDEPENDS_append_angstrom = " tslib-calibrate "
+
 do_install_append() {
 	install -m 0755 "${WORKDIR}/setDPI.sh" "${D}/etc/X11/Xinit.d/50setdpi"
 	install -m 0755 "${WORKDIR}/89xdgautostart.sh" "${D}/etc/X11/Xsession.d/89xdgautostart"
