@@ -23,10 +23,12 @@ EXTRA_OECONF = " --enable-authentication-scheme=shadow \
                  --with-console-kit \
                  --disable-scrollkeeper "
 
-do_install_append() {
+do_install_prepend() {
 	mkdir -p ${D}/var/lib/gdm/.gconf.mandatory
 	cp ${WORKDIR}/%gconf-tree.xml ${D}/var/lib/gdm/.gconf.mandatory/ 
+}
 
+do_install_append() {
 	install -d ${D}/${sysconfdir}/init.d
 	install -m 0755 ${WORKDIR}/gdm ${D}/${sysconfdir}/init.d/
 
