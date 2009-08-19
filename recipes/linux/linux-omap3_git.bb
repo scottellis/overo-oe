@@ -7,9 +7,9 @@ KERNEL_IMAGETYPE = "uImage"
 
 COMPATIBLE_MACHINE = "beagleboard|omap3evm|overo"
 
-SRCREV = "151c7a7fc30cceb58e7999adbf3ad5e0c734b4a7"
+SRCREV = "e087f6fcae40fac0569f4e69215d818130ddecc4"
 
-PV = "2.6.30-rcfinal+${PR}+git${SRCREV}"
+PV = "2.6.31-rc5+${PR}+git${SRCREV}"
 
 # The main PR is now using MACHINE_KERNEL_PR, for omap3 see conf/machine/include/omap3.inc
 
@@ -23,25 +23,23 @@ SRC_URI_append = " \
            file://fix-install.patch;patch=1 \
            file://fix-audio-capture.patch;patch=1 \
            file://dss2.patch;patch=1 \
-           file://musb-otg.patch;patch=1 \
            file://ads7846-detection.patch;patch=1 \
            file://neon-deadlock.patch;patch=1 \
            file://madc.patch;patch=1 \
            file://quiet-single-block-retry-warning.patch;patch=1 \
-           file://rc8-to-final.diff;patch=1 \
+           file://ehci-phy-reset.patch;patch=1 \
            "
 
 SRC_URI_append_beagleboard = " \
-           file://beagle-ehci.patch;patch=1 \
            file://beagle-writable-uboot.patch;patch=1 \
+           file://tincan.patch;patch=1 \
           "
 
 SRC_URI_append_omap3evm = " \
           "
 
 SRC_URI_append_overo = " \
-           file://overo-ehci.patch;patch=1 \
+           file://0001-ARM-OMAP3-Fix-EHCI-initialization-for-Overo.patch;patch=1 \
           "
-
 
 S = "${WORKDIR}/git"
