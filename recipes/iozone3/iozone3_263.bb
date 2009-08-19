@@ -12,6 +12,8 @@ S = "${WORKDIR}/${PN}_${PV}/src/current/"
 
 EXTRA_OEMAKE = "linux-arm CC='${CC}'"
 
+TARGET_CC_ARCH += "${LDFLAGS}"
+
 do_install() {
        install -d ${D}${bindir} \
                   ${D}${mandir}/man1 \
