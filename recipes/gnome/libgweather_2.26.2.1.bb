@@ -22,4 +22,3 @@ FILES_${PN} += "${datadir}/gnome* \
 PACKAGES =+ "${PN}-locationdata"
 FILES_${PN}-locationdata = "${datadir}/libgweather/Locations*"
 
-
