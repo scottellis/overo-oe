@@ -13,7 +13,6 @@ SRC_URI_append = " file://setDPI.sh \
                    file://89xdgautostart.sh \
                    file://avoid-rotated-server.patch;patch=1 \
                    file://ts-handling-cleanup.diff;patch=1 \
-                   file://xtscal-fix.patch;patch=1 \
 "
 
 SRC_URI_append_angstrom = " file://xtscal-fix.patch;patch=1 "
