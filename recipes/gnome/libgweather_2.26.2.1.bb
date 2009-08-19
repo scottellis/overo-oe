@@ -1,6 +1,8 @@
 LICENSE = "LGPL"
 DEPENDS = "libgnome libsoup-2.4 gtk+"
 
+PR = "r2"
+
 inherit gnome
 
 EXTRA_OEMAKE = "ORBIT_IDL=${STAGING_BINDIR_NATIVE}/orbit-idl-2"
@@ -17,10 +19,7 @@ do_stage() {
 FILES_${PN} += "${datadir}/gnome* \
                 ${datadir}/icons"
 
-PACKAGES += "${PN}-locationdata"
+PACKAGES =+ "${PN}-locationdata"
 FILES_${PN}-locationdata = "${datadir}/libgweather/Locations*"
-
-PACKAGES += "libpanel-applet"
-FILES_libpanel-applet = "${libdir}/libpanel-applet-2.so.*"
 
 
