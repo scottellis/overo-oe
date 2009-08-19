@@ -14,7 +14,6 @@ APPS = " \
   cheese \
   claws-mail \
   evince \
-  exhibit \
 #  ekiga \
   empathy \
   firefox \
