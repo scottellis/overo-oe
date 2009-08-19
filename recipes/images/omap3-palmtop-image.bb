@@ -1,4 +1,4 @@
-# gpe image for omap3 machines with lcd/touchscreen + midori
+# gpe image for omap3 machines with lcd/touchscreen
 
 require omap3-console-image.bb
 
@@ -11,8 +11,8 @@ IMAGE_INSTALL += " \
   angstrom-gpe-task-pim \
   angstrom-gpe-task-settings \
   angstrom-x11-base-depends \
-  cellwriter \
   midori \
+  mplayer \
   ${SPLASH} \
   xlsfonts \
   xmms \
