@@ -5,7 +5,7 @@ DEFAULT_PREFERENCE = "-1"
 DESCRIPTION = "Linux kernel for OMAP3 processors"
 KERNEL_IMAGETYPE = "uImage"
 
-COMPATIBLE_MACHINE = "beagleboard|omap3evm|overo"
+COMPATIBLE_MACHINE = "beagleboard|omap3|omap3evm|overo"
 
 SRCREV = "e087f6fcae40fac0569f4e69215d818130ddecc4"
 
@@ -28,18 +28,10 @@ SRC_URI_append = " \
            file://madc.patch;patch=1 \
            file://quiet-single-block-retry-warning.patch;patch=1 \
            file://ehci-phy-reset.patch;patch=1 \
-           "
-
-SRC_URI_append_beagleboard = " \
+           file://nand-hw-ecc.patch;patch=1 \
+           file://0001-ARM-OMAP3-Fix-EHCI-initialization-for-Overo.patch;patch=1 \
            file://beagle-writable-uboot.patch;patch=1 \
            file://tincan.patch;patch=1 \
-          "
-
-SRC_URI_append_omap3evm = " \
-          "
-
-SRC_URI_append_overo = " \
-           file://0001-ARM-OMAP3-Fix-EHCI-initialization-for-Overo.patch;patch=1 \
-          "
+           "
 
 S = "${WORKDIR}/git"
