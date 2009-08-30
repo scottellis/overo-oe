@@ -22,7 +22,6 @@ SRC_URI_append = " \
            file://no-empty-flash-warnings.patch;patch=1 \
            file://fix-install.patch;patch=1 \
            file://fix-audio-capture.patch;patch=1 \
-           file://dss2.patch;patch=1 \
            file://ads7846-detection.patch;patch=1 \
            file://neon-deadlock.patch;patch=1 \
            file://madc-driver.patch;patch=1 \
@@ -32,6 +31,7 @@ SRC_URI_append = " \
            file://0001-ARM-OMAP3-Fix-EHCI-initialization-for-Overo.patch;patch=1 \
            file://0001-ARM-OMAP3-Fix-EHCI-initialization-for-Beagle.patch;patch=1 \
            file://beagle-writable-uboot.patch;patch=1 \
+           file://dss2.patch;patch=1 \
            file://tincan.patch;patch=1 \
            "
 
