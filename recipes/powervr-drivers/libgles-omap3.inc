@@ -25,6 +25,7 @@ PROVIDES += "virtual/egl"
 # voila!
 
 SRC_URI = "file://OMAP35x_Graphics_SDK_setuplinux_${SGXPV}.bin \
+           file://cputype \
            file://rc.pvr \
            file://chameleonman.desktop \
            file://evilskull.desktop \
@@ -83,6 +84,8 @@ do_install () {
 	cp -pP ${BINLOCATION}/*.so* ${D}${libdir}
 
 	install -d ${D}${bindir}/
+	install -m 0755 ${WORKDIR}/cputype ${D}${bindir}/
+
 	cp -pP ${BINLOCATION}/*_test ${D}${bindir}/
 	cp -pP ${BINLOCATION}/gl2info ${D}${bindir}/
 	cp -pP ${BINLOCATION}/gles1test1 ${D}${bindir}/
