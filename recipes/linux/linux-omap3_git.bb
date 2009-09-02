@@ -7,9 +7,9 @@ KERNEL_IMAGETYPE = "uImage"
 
 COMPATIBLE_MACHINE = "beagleboard|omap3|omap3evm|overo"
 
-SRCREV = "a6da08dc9f3a1e4903a8a1649afe1759c469feeb"
+SRCREV = "3777b1e9ffb6e0901be93cbe201ae8e96003179b"
 
-PV = "2.6.31-rc7+${PR}+git${SRCREV}"
+PV = "2.6.31-rc8+${PR}+git${SRCREV}"
 
 # The main PR is now using MACHINE_KERNEL_PR, for omap3 see conf/machine/include/omap3.inc
 
@@ -30,6 +30,7 @@ SRC_URI_append = " \
            file://ehci-phy-reset.patch;patch=1 \
            file://0001-ARM-OMAP3-Fix-EHCI-initialization-for-Overo.patch;patch=1 \
            file://0001-ARM-OMAP3-Fix-EHCI-initialization-for-Beagle.patch;patch=1 \
+           file://0001-implement-TIF_RESTORE_SIGMASK-support-and-enable-the.patch;patch=1 \
            file://beagle-writable-uboot.patch;patch=1 \
            file://dss2.patch;patch=1 \
            file://tincan.patch;patch=1 \
