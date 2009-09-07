@@ -32,6 +32,8 @@ SRC_URI_append = " \
            file://0001-ARM-OMAP3-Fix-EHCI-initialization-for-Beagle.patch;patch=1 \
            file://0001-implement-TIF_RESTORE_SIGMASK-support-and-enable-the.patch;patch=1 \
            file://beagle-writable-uboot.patch;patch=1 \
+           file://cache_copy-page-tweak.patch;patch=1 \
+           file://cache_l1cache-shift.patch;patch=1 \
            file://dss2.patch;patch=1 \
            file://tincan.patch;patch=1 \
            "
