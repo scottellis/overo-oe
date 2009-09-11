@@ -163,6 +163,8 @@ SRC_URI_append = " \
            file://vfp/04-vfp-threads.patch;patch=1 \
            file://vfp/05-vfp-signal-handlers.patch;patch=1 \
            file://arch-has-holes.diff;patch=1 \
+           file://cache/l1cache-shift.patch;patch=1 \
+           file://cache/copy-page-tweak.patch;patch=1 \
 "
 
 
@@ -170,6 +172,7 @@ SRC_URI_append_beagleboard = " file://logo_linux_clut224.ppm \
 			                   file://beagle-asoc.patch;patch=1 \
                                file://tincantools-puppy.diff;patch=1 \
                                file://tincantools-zippy.diff;patch=1 \
+			       file://beaglebug/beaglebug-full.patch;patch=1 \
 "
 
 SRC_URI_append_omap3evm = " \

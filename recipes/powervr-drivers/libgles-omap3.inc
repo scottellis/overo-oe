@@ -1,6 +1,8 @@
 DESCRIPTION = "libGLES for the omap3"
 LICENCE = "proprietary-binary"
 
+RDEPENDS_${PN} += "devmem2"
+
 #HACK! These are binaries, so we can't guarantee that LDFLAGS match :(
 INSANE_SKIP_${PN} = True
 INSANE_SKIP_${PN}-tests = True

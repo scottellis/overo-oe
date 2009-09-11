@@ -9,7 +9,7 @@ JAVA_arm ?= ""
 JAVA_armeb ?= ""
 JAVA_mipsel ?= ""
 JAVA_sh3 ?= ""
-OBJC_linux-uclibcgnueabi ?= ""
+OBJC_linux-uclibceabi ?= ""
 OBJC_linux-uclibc ?= ""
 OBJC_avr ?= ""
 OBJC ?= ",objc"
@@ -41,7 +41,7 @@ EXTRA_OECONF = "${@['--enable-clocale=generic', ''][bb.data.getVar('USE_NLS', d,
 EXTRA_OECONF_append_linux               = " --enable-__cxa_atexit"
 EXTRA_OECONF_append_linux-gnueabi       = " --enable-__cxa_atexit"
 EXTRA_OECONF_append_linux-uclibc        = " --disable-__cxa_atexit"
-EXTRA_OECONF_append_linux-uclibcgnueabi = " --disable-__cxa_atexit"
+EXTRA_OECONF_append_linux-uclibceabi    = " --disable-__cxa_atexit"
 EXTRA_OECONF_FPU = "${@get_gcc_fpu_setting(bb, d)}"
 CPPFLAGS = ""
 
@@ -80,14 +80,16 @@ do_configure () {
 	sed -i 's/^LDFLAGS = $/LDFLAGS = @LDFLAGS@/' ${S}/Makefile.tpl
 
 	(cd ${S} && gnu-configize) || die "failure running gnu-configize"
-
 	# splice our idea of where the headers live into gcc's world
 	echo "NATIVE_SYSTEM_HEADER_DIR = ${layout_includedir}" > ${T}/t-oe
 	sed 's%^tmake_file=.*$%& ${T}/t-oe%' < ${S}/gcc/Makefile.in >${S}/gcc/Makefile.in.new
 	mv ${S}/gcc/Makefile.in.new ${S}/gcc/Makefile.in
-
-	echo "#define STANDARD_INCLUDE_DIR \"${layout_includedir}\"" >> ${S}/gcc/defaults.h
-
+	cat ${S}/gcc/defaults.h | grep -v "\#endif.*GCC_DEFAULTS_H" > ${S}/gcc/defaults.h.new
+	echo "#ifndef STANDARD_INCLUDE_DIR" >> ${S}/gcc/defaults.h.new
+	echo "#define STANDARD_INCLUDE_DIR \"${layout_includedir}\"" >> ${S}/gcc/defaults.h.new
+	echo "#endif" >> ${S}/gcc/defaults.h.new
+	echo "#endif /* ! GCC_DEFAULTS_H */" >> ${S}/gcc/defaults.h.new
+	mv ${S}/gcc/defaults.h.new ${S}/gcc/defaults.h
 	oe_runconf
 
 	# make sure that no @LDFLAG@ is left in the generated Makefile
