@@ -7,9 +7,9 @@ KERNEL_IMAGETYPE = "uImage"
 
 COMPATIBLE_MACHINE = "beagleboard|omap3|omap3evm|overo"
 
-SRCREV = "3777b1e9ffb6e0901be93cbe201ae8e96003179b"
+SRCREV = "52a962f09ab2306a2ac6e22c2d3bac1a76ac8993"
 
-PV = "2.6.31-rc8+${PR}+git${SRCREV}"
+PV = "2.6.31-rcfinal+${PR}+git${SRCREV}"
 
 # The main PR is now using MACHINE_KERNEL_PR, for omap3 see conf/machine/include/omap3.inc
 
@@ -27,6 +27,7 @@ SRC_URI_append = " \
            file://madc-driver.patch;patch=1 \
            file://madc.patch;patch=1 \
            file://quiet-single-block-retry-warning.patch;patch=1 \
+           file://dss2.patch;patch=1 \
            file://ehci-phy-reset.patch;patch=1 \
            file://0001-ARM-OMAP3-Fix-EHCI-initialization-for-Overo.patch;patch=1 \
            file://0001-ARM-OMAP3-Fix-EHCI-initialization-for-Beagle.patch;patch=1 \
@@ -34,7 +35,6 @@ SRC_URI_append = " \
            file://beagle-writable-uboot.patch;patch=1 \
            file://cache_copy-page-tweak.patch;patch=1 \
            file://cache_l1cache-shift.patch;patch=1 \
-           file://dss2.patch;patch=1 \
            file://tincan.patch;patch=1 \
            "
 

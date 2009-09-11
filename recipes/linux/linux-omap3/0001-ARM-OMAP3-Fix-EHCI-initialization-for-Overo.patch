@@ -24,7 +24,7 @@ index a9d7c2e..a220a54 100644
 -	usb_ehci_init(EHCI_HCD_OMAP_MODE_PHY, false, true, 183, -EINVAL);
 +	usb_ehci_init(EHCI_HCD_OMAP_MODE_PHY, false, true,
 +			-EINVAL, OVERO_GPIO_USBH_NRESET);
- 	overo_ads7846_init();
+ 	overo_spi_init();
  	overo_init_smsc911x();
  
 @@ -437,14 +438,6 @@ static void __init overo_init(void)
