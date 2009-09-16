@@ -1,7 +1,7 @@
-diff --git a/board/omap3/beagle/beagle.h b/board/omap3/beagle/beagle.h
+diff --git a/board/ti/beagle/beagle.h b/board/ti/beagle/beagle.h
 index 00b15cb..36eae5c 100644
---- a/board/omap3/beagle/beagle.h
-+++ b/board/omap3/beagle/beagle.h
+--- a/board/ti/beagle/beagle.h
++++ b/board/ti/beagle/beagle.h
 @@ -201,16 +201,16 @@ const omap3_sysinfo sysinfo = {
   MUX_VAL(CP(MMC1_DAT6),		(IEN  | PTU | EN  | M0)) /*MMC1_DAT6*/\
   MUX_VAL(CP(MMC1_DAT7),		(IEN  | PTU | EN  | M0)) /*MMC1_DAT7*/\
