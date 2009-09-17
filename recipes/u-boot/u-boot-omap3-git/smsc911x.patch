@@ -1,0 +1,12 @@
+--- git/include/configs/omap3_overo.h-orig	2009-09-17 13:06:08.000000000 -0700
++++ git/include/configs/omap3_overo.h	2009-09-17 13:06:49.000000000 -0700
+@@ -29,7 +29,7 @@
+ #define CONFIG_OMAP34XX		1	/* which is a 34XX */
+ #define CONFIG_OMAP3430		1	/* which is in a 3430 */
+ #define CONFIG_OMAP3_OVERO	1	/* working with overo */
+-//#define CONFIG_OMAP3_OVERO_TOBI	1	/* overo mounted on tobi */
++#define CONFIG_OMAP3_OVERO_TOBI	1	/* overo mounted on tobi */
+ 
+ #include <asm/arch/cpu.h>	/* get chip and board defs */
+ #include <asm/arch/omap3.h>
+
