@@ -29,6 +29,7 @@ SRC_URI_append = " \
            file://quiet-single-block-retry-warning.patch;patch=1 \
            file://dss2.patch;patch=1 \
            file://ehci-phy-reset.patch;patch=1 \
+           file://ehci-shutdown.patch;patch=1 \
            file://0001-ARM-OMAP3-Fix-EHCI-initialization-for-Overo.patch;patch=1 \
            file://0001-ARM-OMAP3-Fix-EHCI-initialization-for-Beagle.patch;patch=1 \
            file://0001-implement-TIF_RESTORE_SIGMASK-support-and-enable-the.patch;patch=1 \
