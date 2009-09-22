@@ -9,4 +9,18 @@
  
  #include <asm/arch/cpu.h>	/* get chip and board defs */
  #include <asm/arch/omap3.h>
-
+--- git/drivers/net/smc911x.c-orig	2009-09-21 13:28:25.000000000 -0700
++++ git/drivers/net/smc911x.c	2009-09-21 13:29:53.000000000 -0700
+@@ -253,6 +253,12 @@ int smc911x_initialize(u8 dev_num, int b
+ 
+ 	dev->iobase = base_addr;
+ 
++	/* test to see if chip is present (-1 if not) */
++	if (smc911x_reg_read(dev, MAC_CSR_CMD) == -1) {
++		free(dev);
++		return 0;
++	}
++
+ 	addrh = smc911x_get_mac_csr(dev, ADDRH);
+ 	addrl = smc911x_get_mac_csr(dev, ADDRL);
+ 	dev->enetaddr[0] = addrl;
