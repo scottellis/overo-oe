@@ -5,6 +5,8 @@ DEPENDS = "packagekit libsexy gconf policykit policykit-gnome libunique gnome-me
 
 PR = "r1"
 
+PR = "r1"
+
 inherit gnome
 
 SRC_URI = "http://www.packagekit.org/releases/gnome-packagekit-${PV}.tar.gz"
