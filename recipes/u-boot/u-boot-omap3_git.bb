@@ -2,14 +2,14 @@ require u-boot.inc
 
 FILESDIR = "${@os.path.dirname(bb.data.getVar('FILE',d,1))}/u-boot-omap3-git/"
 
-SRCREV = "8c3c42e7b84169cf1561985c40e8d1de5f300e06"
+SRCREV = "f5d89a12bc201e7040f1d3262222cc2f1958cee5"
 
 PV = "2009.08+${PR}+git${SRCREV}"
-PR = "r4"
+PR = "r7"
 PE = "1"
 
 SRC_URI = "git://git.denx.de/u-boot-ti.git;protocol=git \
-           file://fw-env.patch;patch=1 \
+           file://fw-env.config \
            file://dss2.patch;patch=1 \
            file://tincan.patch;patch=1 \
            file://smsc911x.patch;patch=1 \

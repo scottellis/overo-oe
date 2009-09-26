@@ -25,6 +25,16 @@ do_compile () {
 	oe_runmake env
 }
 
+do_install () {
+	if [ -e ${WORKDIR}/fw_env.config ] ; then
+		install -d ${D}$base_sbindir}
+		install -d ${D}${sysconfdir}
+		install -m 644 ${WORKDIR}/fw_env.config ${D}${sysconfdir}/fw_env.config
+		install -m 755 ${S}/tools/env/fw_printenv ${D}${base_sbindir}/fw_printenv
+		install -m 755 ${S}/tools/env/fw_printenv ${D}${base_sbindir}/fw_setenv
+	fi
+}
+
 do_deploy () {
 	install -d ${DEPLOY_DIR_IMAGE}
 	install ${S}/u-boot.bin ${DEPLOY_DIR_IMAGE}/${UBOOT_IMAGE}
