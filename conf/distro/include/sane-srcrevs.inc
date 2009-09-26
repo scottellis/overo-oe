@@ -128,7 +128,7 @@ SRCREV_pn-moblin-proto ?= "8f2cb524fe06555182c25b4ba3202d7b368ac0ce"
 SRCREV_pn-moko-gtk-engine ?= "4734"
 SRCREV_pn-mokoko ?= "127"
 SRCREV_pn-mpd-alsa ?= "6952"
-SRCREV_pn-mplayer ?= "29699"
+SRCREV_pn-mplayer ?= "29716"
 SRCREV_pn-mplayer-maemo ?= "342"
 SRCREV_pn-multicat ?= "f894801916cc4d0e912e4553490dc215276c52a9"
 SRCREV_pn-multitap-pad ?= "373"
@@ -248,7 +248,7 @@ SRCREV_pn-xserver-kdrive-glamo ?= "9b28d998424c77fbc057dd3a022ccbb122793a52"
 # Enlightenment Foundation Libraries
 # Caution: This is not alphabetically, but (roughly) dependency-sorted.
 # Please leave it like that.
-EFL_SRCREV ?= "41533"
+EFL_SRCREV ?= "42645"
 SRCREV_pn-edb-native ?= "${EFL_SRCREV}"
 SRCREV_pn-edb ?= "${EFL_SRCREV}"
 SRCREV_pn-eina-native ?= "${EFL_SRCREV}"
