@@ -9,7 +9,7 @@ PR = "r8"
 PE = "1"
 
 SRC_URI = "git://git.denx.de/u-boot-ti.git;protocol=git \
-           file://fw-env.config \
+           file://fw_env.config \
            file://tincan.patch;patch=1 \
           "
 
