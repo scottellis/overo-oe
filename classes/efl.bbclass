@@ -23,8 +23,7 @@ do_stage() {
 	autotools_stage_all
 }
 
-# This construction is stupid, someone with more E knowledge should change it to =+ or something
-PACKAGES = "${PN}-dbg ${PN} ${PN}-themes ${PN}-dev ${PN}-doc ${PN}-tests"
+PACKAGES = "${PN}-dbg ${PN} ${PN}-themes ${PN}-dev ${PN}-tests"
 
 FILES_${PN} = "${libdir}/*.so.*"
 
