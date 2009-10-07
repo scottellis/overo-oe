@@ -38,6 +38,7 @@ SRC_URI_append = " \
            file://cache_l1cache-shift.patch;patch=1 \
            file://tincan.patch;patch=1 \
            file://smsc911x-detect.patch;patch=1 \
+           file://tobi-duo.patch;patch=1 \
            "
 
 S = "${WORKDIR}/git"
