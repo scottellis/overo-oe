@@ -1,0 +1,14 @@
+--- git/drivers/net/smsc911x.c-orig	2009-09-21 11:33:46.000000000 -0700
++++ git/drivers/net/smsc911x.c	2009-10-06 15:12:14.000000000 -0700
+@@ -2021,8 +2021,10 @@ static int __devinit smsc911x_drv_probe(
+ 	}
+ 
+ 	retval = smsc911x_init(dev);
+-	if (retval < 0)
++	if (retval < 0) {
++		retval = -ENODEV;
+ 		goto out_unmap_io_3;
++	}
+ 
+ 	/* configure irq polarity and type before connecting isr */
+ 	if (pdata->config.irq_polarity == SMSC911X_IRQ_POLARITY_ACTIVE_HIGH)
