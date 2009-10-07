@@ -1,7 +1,7 @@
 require conf/machine/include/tune-cortexa8.inc
 
 # Increase this everytime you change something in the kernel
-MACHINE_KERNEL_PR = "r46" 
+MACHINE_KERNEL_PR = "r47" 
 
 KERNEL_IMAGETYPE = "uImage"
 
@@ -27,4 +27,6 @@ GPPOS             ?= "LINUX_GCC"
 LPMDSPPOWERSOC    ?= "omap3530"
 PLATFORM          ?= "omap3530"
 XDC_PLATFORM      ?= "ti.platforms.evm3530"
+
+DISTRO_SSH_DAEMON = "openssh-sshd"
 
