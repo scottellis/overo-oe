@@ -10,6 +10,8 @@ PE = "1"
 
 SRC_URI = "git://git.denx.de/u-boot-ti.git;protocol=git \
            file://fw_env.config \
+           file://dss2.patch;patch=1 \
+           file://rootfs.patch;patch=1 \
            file://tincan.patch;patch=1 \
            file://smc911x-autodetect.patch;patch=1 \
           "
