@@ -33,8 +33,9 @@ do_configure () {
 	os=${HOST_OS}
 	if [ "x$os" = "xlinux-uclibc" ]; then
 		os=linux
-	fi
-	if [ "x$os" = "xlinux-uclibceabi" ]; then
+	elif [ "x$os" = "xlinux-uclibceabi" ]; then
+		os=linux
+	elif [ "x$os" = "xlinux-gnueabi" ]; then
 		os=linux
 	fi
 	target="$os-${HOST_ARCH}"
