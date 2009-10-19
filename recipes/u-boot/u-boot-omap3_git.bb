@@ -2,10 +2,10 @@ require u-boot.inc
 
 FILESDIR = "${@os.path.dirname(bb.data.getVar('FILE',d,1))}/u-boot-omap3-git/"
 
-SRCREV = "060955e39770b68b3cc0516b3641ca98e58d2d4a"
+SRCREV = "1590f84007e2b50ad346a482fff89195cb04ff4e"
 
 PV = "2009.08+${PR}+git${SRCREV}"
-PR = "r10"
+PR = "r11"
 PE = "1"
 
 SRC_URI = "git://git.denx.de/u-boot-ti.git;protocol=git \
