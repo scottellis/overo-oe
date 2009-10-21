@@ -6,7 +6,7 @@ DESCRIPTION = "A GTK2 based media player"
 HOMEPAGE = "http://www.gnome.org/projects/totem/"
 LICENSE = "GPL"
 
-DEPENDS = " totem-pl-parser gtk+ dbus bluez-libs libglade gconf libxml2 gst-ffmpeg gst-plugins-bad  gst-plugins-base" 
+DEPENDS = " libgdata totem-pl-parser gtk+ dbus bluez-libs libglade gconf libxml2 gst-ffmpeg gst-plugins-bad  gst-plugins-base" 
 RDEPENDS_${PN} += "iso-codes"
 RRECOMMENDS_${PN} += "gst-plugin-playbin \
                       gst-plugin-gconfelements \
@@ -27,7 +27,7 @@ RRECOMMENDS_${PN} += "gst-plugin-playbin \
 		      gst-plugin-ossaudio \
 		      gst-plugin-pulse \
 		      gst-plugin-autodetect \
-		      "
+		      totem-plugin-youtube totem-plugin-thumbnail totem-plugin-dbus totem-plugin-screensaver"
 
 inherit gnome
 
@@ -49,22 +49,25 @@ do_configure_prepend() {
 	sed -i -e s:help::g ${S}/Makefile.am
 }
 
-PACKAGES += "totem-plugin-bemused totem-plugin-gromit totem-plugin-lirc totem-plugin-media-player-keys totem-plugin-mythtv totem-plugin-ontop totem-plugin-properties totem-plugin-screensaver totem-plugin-skipto totem-plugin-thumbnail totem-plugin-youtube totem-browser-plugin-dbg totem-browser-plugin"
+PACKAGES_DYNAMIC += " totem-plugin-* "
 
-FILES_totem-plugin-bemused += "${libdir}/totem/plugins/bemused/*"
-FILES_totem-plugin-gromit += "${libdir}/totem/plugins/gromit/*"
-FILES_totem-plugin-lirc += "${libdir}/totem/plugins/lirc/*"
-FILES_totem-plugin-media-player-keys += "${libdir}/totem/plugins/media-player-keys/*"
-FILES_totem-plugin-mythtv += "${libdir}/totem/plugins/mythtv/*"
-FILES_totem-plugin-ontop += "${libdir}/totem/plugins/ontop/*"
-FILES_totem-plugin-properties += "${libdir}/totem/plugins/properties/*"
-FILES_totem-plugin-screensaver += "${libdir}/totem/plugins/screensaver/*"
-FILES_totem-plugin-skipto += "${libdir}/totem/plugins/skipto/*"
-FILES_totem-plugin-thumbnail += "${libdir}/totem/plugins/thumbnail/*"
-FILES_totem-plugin-youtube += "${libdir}/totem/plugins/youtube/*"
+python populate_packages_prepend () {
+	totem_libdir = bb.data.expand('${libdir}/totem/plugins/', d)
 
-FILES_${PN} = "${bindir}/* ${sysconfdir} ${libdir}/lib*.so.* ${libexecdir} ${datadir}/icons ${datadir}/totem ${datadir}/applications"
+	do_split_packages(d, totem_libdir, '^(.*)', 'totem-plugin-%s', 'totem plugin for %s', allow_dirs=True, extra_depends='')
+}
+
+FILES_${PN} = "${bindir}/* ${sysconfdir} ${libdir}/lib*.so.* ${libexecdir} ${datadir}/icons ${datadir}/totem ${datadir}/applications \
+"
+
+PACKAGES =+ "totem-nautilus-extension totem-browser-plugin-dbg totem-browser-plugin"
+
 FILES_${PN}-dbg += "${libdir}/totem/plugins/*/.debug"
 FILES_${PN}-dev += "${libdir}/totem/plugins/*/*a"
 FILES_totem-browser-plugin-dbg += "${libdir}/mozilla/plugins/.debug"
 FILES_totem-browser-plugin += "${libdir}/mozilla/plugins/"
+
+FILES_totem-nautilus-extension += "${libdir}/nautilus/extensions-2.0/*.so"
+
+
+

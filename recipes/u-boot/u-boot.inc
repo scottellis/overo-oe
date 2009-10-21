@@ -16,13 +16,15 @@ UBOOT_MACHINE ?= "${MACHINE}_config"
 UBOOT_IMAGE ?= "u-boot-${MACHINE}-${PV}-${PR}.bin"
 UBOOT_SYMLINK ?= "u-boot-${MACHINE}.bin"
 
+INSANE_SKIP_${PN} = True
+
 do_compile () {
 	unset LDFLAGS
 	unset CFLAGS
 	unset CPPFLAGS
 	oe_runmake ${UBOOT_MACHINE}
 	oe_runmake all
-	oe_runmake env
+	oe_runmake tools env
 }
 
 do_install () {
