@@ -3,9 +3,7 @@ LICENSE = "GPL"
 
 DEPENDS = "packagekit libsexy gconf policykit policykit-gnome libunique gnome-menus"
 
-PR = "r1"
-
-PR = "r1"
+PR = "r2"
 
 inherit gnome
 
