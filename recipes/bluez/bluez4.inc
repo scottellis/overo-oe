@@ -26,6 +26,11 @@ SRC_URI_append_overo = "\
   file://bluetooth.init \
 "
 
+SRC_URI_append_omap3 = "\
+  file://bluetooth.default \
+  file://bluetooth.init \
+"
+
 S = "${WORKDIR}/bluez-${PV}"
 
 inherit autotools_stage update-rc.d
@@ -60,6 +65,11 @@ do_install_append() {
 }
 
 do_install_append_overo() {
+	install -m 0644 ${WORKDIR}/bluetooth.default ${D}${sysconfdir}/default/bluetooth
+	install -m 0755 ${WORKDIR}/bluetooth.init    ${D}${sysconfdir}/init.d/bluetooth
+}
+
+do_install_append_omap3() {
 	install -m 0644 ${WORKDIR}/bluetooth.default ${D}${sysconfdir}/default/bluetooth
 	install -m 0755 ${WORKDIR}/bluetooth.init    ${D}${sysconfdir}/init.d/bluetooth
 }
