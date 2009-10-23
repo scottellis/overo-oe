@@ -61,6 +61,8 @@ export INFODIR = "${infodir}"
 CKERMIT_ADDITIONAL = ""
 CKERMIT_ADDITIONAL_linux-uclibc = "-DNOARROWKEYS"
 
+TARGET_CC_ARCH += "${LDFLAGS}"
+
 do_compile () {
 	# The original makefile doesn't differentiate between CC and CC_FOR_BUILD,
 	# so we build wart manually. Note that you need a ckwart.o with the proper
