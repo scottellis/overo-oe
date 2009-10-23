@@ -27,6 +27,7 @@ APPS = " \
   midori \
   nautilus \
   numptyphysics \
+  libgles-omap3-demos \
   pidgin \
   swfdec \
   swfdec-mozilla \
@@ -115,9 +116,4 @@ IMAGE_INSTALL += " \
   ${SPLASH} \
   ${XSERVER_BASE} \
  "
-
-IMAGE_INSTALL_append_beagleboard = " \
-  libgles-omap3-demos \
-#  task-gstreamer-ti \ 
-"
 
