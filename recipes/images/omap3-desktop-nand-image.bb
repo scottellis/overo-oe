@@ -18,6 +18,7 @@ APPS = " \
   gnome-mplayer \
   gnumeric \
   gpe-soundbite \
+  libgles-omap3-demos \
   pidgin \
   vnc \
   x11vnc \
@@ -98,9 +99,4 @@ IMAGE_INSTALL += " \
   ${SPLASH} \
   ${XSERVER_BASE} \
  "
-
-IMAGE_INSTALL_append_beagleboard = " \
-  libgles-omap3-demos \
-#  task-gstreamer-ti \ 
-"
 
