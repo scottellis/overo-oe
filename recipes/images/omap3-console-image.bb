@@ -24,12 +24,14 @@ FIRMWARE_INSTALL = " \
   zd1211-firmware \
  "
 
-GLES_INSTALL = ""
-GLES_INSTALL_append_beagleboard  = " libgles-omap3"
+GLES_INSTALL = " \
+  libgles-omap3 \
+ "
 
 TOOLS_INSTALL = " \
   bash \
   bzip2 \
+  ckermit \
   devmem2 \
   dhcp-client \
   dosfstools \
