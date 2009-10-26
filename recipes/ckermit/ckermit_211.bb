@@ -7,7 +7,7 @@ LICENSE = "Kermit"
 HOMEPAGE = "http://www.columbia.edu/kermit/"
 SECTION = "console/network"
 SRC_URI = "ftp://kermit.columbia.edu/kermit/archives/cku${PV}.tar.gz"
-PR = "r1"
+PR = "r2"
 
 #
 # From http://www.columbia.edu/kermit/ck80.html#license
