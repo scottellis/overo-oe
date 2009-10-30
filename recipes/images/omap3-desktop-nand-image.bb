@@ -10,7 +10,7 @@ SPLASH ?= "psplash"
 #SPLASH ?= "exquisite exquisite-themes exquisite-theme-angstrom"
 
 APPS = " \
-  abiword \
+  abiword-meta \
   claws-mail \
   evince \
   firefox \
@@ -18,7 +18,7 @@ APPS = " \
   gnome-mplayer \
   gnumeric \
   gpe-soundbite \
-  libgles-omap3-demos \
+#  libgles-omap3-demos \
   pidgin \
   vnc \
   x11vnc \
@@ -64,7 +64,7 @@ PRINT = " \
  "
 
 SETTINGS = " \
-  connman-gnome \
+  network-manager-applet \
   gnome-bluetooth \
   gpe-conf \
   gpe-package \
