@@ -3,7 +3,7 @@ LICENSE = "GPLv2"
 
 inherit autotools gettext
 
-SRC_URI = "http://ca.geocities.com/jefftranter@rogers.com/eject-${PV}.tar.gz"
+SRC_URI = "ftp://ftp.eenet.ee/pub/gentoo/distfiles/eject-${PV}.tar.gz"
 
 S = "${WORKDIR}/${PN}"
 
