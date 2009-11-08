@@ -131,6 +131,7 @@ SRC_URI_append = " \
            file://musb/0027-musb-otg-timer-cleanup.patch;patch=1 \
            file://musb/0028-musb-make-initial-HNP-roleswitch-work-v2.patch;patch=1 \
            file://musb/0029-musb-support-disconnect-after-HNP-roleswitch.patch;patch=1 \
+           file://musb/0030-musb-fifo.patch;patch=1 \
            file://isp/v4l/0001-V4L2-Add-COLORFX-user-control.patch;patch=1 \
            file://isp/v4l/0002-V4L-Int-if-v4l2_int_device_try_attach_all-requires.patch;patch=1 \
            file://isp/v4l/0003-V4L-Int-if-Dummy-slave.patch;patch=1 \
@@ -166,6 +167,8 @@ SRC_URI_append = " \
            file://arch-has-holes.diff;patch=1 \
            file://cache/l1cache-shift.patch;patch=1 \
            file://cache/copy-page-tweak.patch;patch=1 \
+           file://2.6.29_relocation_1.patch;patch=1 \
+           file://2.6.29_relocation_2.patch;patch=1 \
 "
 
 
