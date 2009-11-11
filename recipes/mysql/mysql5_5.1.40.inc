@@ -3,9 +3,7 @@ HOMEPAGE = "http://www.mysql.com/"
 SECTION = "libs"
 LICENSE = "GPL"
 DEPENDS = "ncurses"
-PR = "r1"
-
-DEFAULT_PREFERENCE = "-1"
+PR = "r2"
 
 SRC_URI = "http://downloads.mysql.com/archives/mysql-5.1/mysql-${PV}.tar.gz \
            file://configure.in.patch;patch=1 \
@@ -80,7 +78,7 @@ pkg_postrm_mysql5-server () {
 }
 
 PACKAGES = "${PN}-dbg ${PN} \
-libmysqlclient_r libmysqlclient_r-dev libmysqlclient_r-dbg \
+libmysqlclient-r libmysqlclient-r-dev libmysqlclient-r-dbg \
 libmysqlclient libmysqlclient-dev libmysqlclient-dbg \
 ${PN}-client ${PN}-server ${PN}-leftovers"
 CONFFILES_${PN}-server += "${sysconfdir}/my.cnf"
@@ -99,9 +97,9 @@ ${bindir}/mysql_config"
 FILES_libmysqlclient-dbg = "${libdir}/plugin/.debug/ \
 /usr/mysql-test/lib/My/SafeProcess/.debug/my_safe_process"
 
-FILES_libmysqlclient_r = "${libdir}/libmysqlclient_r.so.*"
-FILES_libmysqlclient_r-dev = "${libdir}/libmysqlclient_r.*"
-FILES_libmysqlclient_r-dbg = "${libdir}/plugin/.debuglibmysqlclient_r.so.*"
+FILES_libmysqlclient-r = "${libdir}/libmysqlclient_r.so.*"
+FILES_libmysqlclient-r-dev = "${libdir}/libmysqlclient_r.*"
+FILES_libmysqlclient-r-dbg = "${libdir}/plugin/.debuglibmysqlclient_r.so.*"
 
 FILES_${PN}-client = "\
 ${bindir}/myisam_ftdump \
