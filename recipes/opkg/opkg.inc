@@ -24,3 +24,6 @@ do_install_prepend() {
   install -m 0755 ${WORKDIR}/configure ${D}${sysconfdir}/rcS.d/S98configure
 }
 
+do_stage() {
+	autotools_stage_all
+}
