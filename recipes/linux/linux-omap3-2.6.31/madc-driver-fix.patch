@@ -1,0 +1,36 @@
+diff --git a/drivers/mfd/twl4030-madc.c b/drivers/drivers/mfd/twl4030-madc.c
+index d3e0a7f..75835d0 100644
+--- a/drivers/mfd/twl4030-madc.c
++++ b/drivers/mfd/twl4030-madc.c
+@@ -454,6 +454,16 @@ static int __init twl4030_madc_probe(struct platform_device *pdev)
+ 	twl4030_madc_set_power(madc, 1);
+ 	twl4030_madc_set_current_generator(madc, 0, 1);
+ 
++	/* Enable ADCIN3 through 6 */
++	ret = twl4030_i2c_read_u8(TWL4030_MODULE_USB,
++				  &regval, TWL4030_USB_CARKIT_ANA_CTRL);
++
++	regval |= TWL4030_USB_SEL_MADC_MCPC;
++
++	ret = twl4030_i2c_write_u8(TWL4030_MODULE_USB,
++				regval, TWL4030_USB_CARKIT_ANA_CTRL);
++
++
+ 	ret = twl4030_i2c_read_u8(TWL4030_MODULE_MAIN_CHARGE,
+ 				  &regval, TWL4030_BCI_BCICTL1);
+ 
+diff --git a/include/linux/i2c/twl4030-madc.h b/include/linux/i2c/twl4030-madc.h
+index 24523b5..341a665 100644
+--- a/include/linux/i2c/twl4030-madc.h
++++ b/include/linux/i2c/twl4030-madc.h
+@@ -111,6 +111,10 @@ enum sample_type {
+ #define	TWL4030_BCI_TYPEN		(1<<4)
+ #define	TWL4030_BCI_ITHEN		(1<<3)
+ 
++/* USB related - XXX To be moved elsewhere */
++#define TWL4030_USB_CARKIT_ANA_CTRL		0xBB
++#define TWL4030_USB_SEL_MADC_MCPC		(1<<3)
++
+ #define TWL4030_MADC_IOC_MAGIC '`'
+ #define TWL4030_MADC_IOCX_ADC_RAW_READ		_IO(TWL4030_MADC_IOC_MAGIC, 0)
+
