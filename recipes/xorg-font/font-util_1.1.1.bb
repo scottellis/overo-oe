@@ -1,10 +1,10 @@
-Qurequire xorg-font-common.inc
+require xorg-font-common.inc
 
 PACKAGE_ARCH = "${BASE_PACKAGE_ARCH}"
 
 DESCRIPTION = "X font utils."
 
-DEPENDS = "encodings"
+DEPENDS = "encodings util-macros"
 RDEPENDS = "mkfontdir mkfontscale encodings"
 
 PE = "1"
