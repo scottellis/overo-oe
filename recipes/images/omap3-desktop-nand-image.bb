@@ -29,6 +29,8 @@ APPS = " \
 
 E_CONFIG = " \
   e-wm-config-angstrom \
+  e-wm-config-angstrom-touchscreen \
+  e-wm-config-angstrom-widescreen \
   e-wm-config-illume \
   e-wm-config-standard \
   e-wm-config-netbook \
@@ -44,8 +46,9 @@ E_MODULES = " \
 
 E17 = " \
   e-wm \
-  entrance \
+  e-wm-menu \
   e-wm-sysactions \
+  entrance \
   ${E_CONFIG} \
   ${E_MODULES} \
  "
@@ -64,7 +67,7 @@ PRINT = " \
  "
 
 SETTINGS = " \
-  network-manager-applet \
+  networkmanager network-manager-applet \
   gnome-bluetooth \
   gpe-conf \
   gpe-package \
