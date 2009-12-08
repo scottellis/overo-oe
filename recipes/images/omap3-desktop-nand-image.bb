@@ -14,6 +14,7 @@ APPS = " \
   claws-mail \
   evince \
   firefox \
+  gecko-mediaplayer-firefox-hack \
   gnome-games \
   gnome-mplayer \
   gnumeric \
