@@ -11,7 +11,7 @@ HOMEPAGE = "http://www.hentges.net/misc/openzaurus/index.shtml"
 ######################################################################################
 
 PV = "0.0.1"
-PR = "r2"
+PR = "r3"
 
 PACKAGE_ARCH = "all"
 
@@ -27,6 +27,8 @@ FILES_${PN} = "${sysconfdir}/mplayer"
 
 do_install() {
 	install -d "${D}${sysconfdir}/mplayer"
-
 	install -m 0644 ${WORKDIR}/mplayer.conf "${D}${sysconfdir}/mplayer"
+
+	install -d "${D}/usr/etc/mplayer"
+	install -m 0644 ${WORKDIR}/mplayer.conf "${D}/usr/etc/mplayer"
 }
