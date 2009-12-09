@@ -2,7 +2,7 @@ HOMEPAGE = "http://www.x.org"
 SECTION = "x11/fonts"
 LICENSE = "MIT-X"
 
-PR = "1"
+PR = "r2"
 
 SRC_URI = "file://misc"
 
@@ -10,9 +10,12 @@ do_install() {
 	install -d ${D}/${datadir}/fonts/X11/misc
 	install -m 0644 ${WORKDIR}/misc/* ${D}/${datadir}/fonts/X11/misc/
 	install -d ${D}/${libdir}/X11
-	ln -sf ${datadir}/fonts/X11/ ${D}/${libdir}/X11/fonts -s
-
 }
+
+pkg_postinst_${PN}_append() {
+	ln -sf ${datadir}/fonts/X11/ ${D}/${libdir}/X11/fonts
+}
+
 
 PACKAGE_ARCH = "all"
 FILES_${PN} = "${libdir}/X11/ ${datadir}/fonts/X11/"
