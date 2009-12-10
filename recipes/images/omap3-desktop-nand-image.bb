@@ -2,24 +2,21 @@
 
 require omap3-console-image.bb
 
-IMAGE_LINGUAS = "de-de fr-fr en-gb en-us pt-br es-es"
+IMAGE_LINGUAS = "de-de fr-fr en-gb en-us es-es"
 
 ANGSTROM_EXTRA_INSTALL ?= ""
 
 SPLASH ?= "psplash"
-#SPLASH ?= "exquisite exquisite-themes exquisite-theme-angstrom"
 
 APPS = " \
   abiword-meta \
   claws-mail \
   evince \
-  firefox \
-  gecko-mediaplayer-firefox-hack \
   gnome-games \
   gnome-mplayer \
   gnumeric \
   gpe-soundbite \
-#  libgles-omap3-demos \
+  midori \
   pidgin \
   vnc \
   x11vnc \
@@ -32,16 +29,9 @@ E_CONFIG = " \
   e-wm-config-angstrom \
   e-wm-config-angstrom-touchscreen \
   e-wm-config-angstrom-widescreen \
-  e-wm-config-illume \
-  e-wm-config-standard \
-  e-wm-config-netbook \
-  e-wm-config-default \
-  e-wm-config-minimalist \
-  e-wm-config-scaleable \
  "
 
 E_MODULES = " \
-  news \
   places \
  "
 
