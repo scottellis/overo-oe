@@ -2,7 +2,7 @@
 
 require omap3-console-image.bb
 
-IMAGE_LINGUAS = "de-de fr-fr en-gb en-us es-es"
+IMAGE_LINGUAS = "en-us"
 
 ANGSTROM_EXTRA_INSTALL ?= ""
 
@@ -21,7 +21,6 @@ APPS = " \
   vnc \
   x11vnc \
   angstrom-x11vnc-xinit \
-  xmms \
   xterm \
  "
 
@@ -50,12 +49,6 @@ FONTS = " \
   ttf-dejavu-serif \
   ttf-dejavu-sans-mono \
  "  
-
-PRINT = " \
-  cups \
-  gnome-cups-manager \
-  gtk-printbackend-cups \
- "
 
 SETTINGS = " \
   networkmanager network-manager-applet \
@@ -88,7 +81,6 @@ IMAGE_INSTALL += " \
   ${APPS} \
   ${E17} \
   ${FONTS} \
-  ${PRINT} \
   ${SETTINGS} \
   ${SPLASH} \
   ${XSERVER_BASE} \
