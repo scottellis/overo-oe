@@ -84,7 +84,7 @@ PRINT = " \
  "
 
 SETTINGS = " \
-  networkmanager network-manager-applet \
+  networkmanager network-manager-applet networkmanager-openvpn \
   gnome-bluetooth \
   gpe-conf \
   gpe-package \
