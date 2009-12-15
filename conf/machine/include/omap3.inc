@@ -1,4 +1,4 @@
-SOC_FAMILY = "omap3"
+SOC_FAMILY = "omap3-soc"
 
 require conf/machine/include/tune-cortexa8.inc
 
