@@ -5,8 +5,8 @@ require ti-paths.inc
 # compile time dependencies
 DEPENDS = "ti-framework-components ti-xdais-native ti-xdctools-native ti-cgt6x-native"
 
-DEPENDS_append_dm6446 	= " ti-dspbios-native ti-linuxutils ti-dsplink-module"
-DEPENDS_append_omap3   	= " ti-dspbios-native ti-linuxutils ti-dsplink-module"
+DEPENDS_append_dm6446    = " ti-dspbios-native ti-linuxutils ti-dsplink-module"
+DEPENDS_append_omap3-soc = " ti-dspbios-native ti-linuxutils ti-dsplink-module"
 
 # tconf from xdctools dislikes '.' in pwd :/
 PR = "r7"
@@ -18,9 +18,9 @@ SRC_URI = "http://install.source.dir.local/codec_engine_2_24_01.tar.gz "
 S = "${WORKDIR}/codec_engine_2_24_01"
 
 # Define Device variable
-DEVICES_dm6446 	?= "DM6446"
-DEVICES_omap3   ?= "OMAP3530"
-DEVICES_dm355   ?= "DM355"
+DEVICES_dm6446 	  ?= "DM6446"
+DEVICES_omap3-soc ?= "OMAP3530"
+DEVICES_dm355     ?= "DM355"
 
 #define PROGRAM variables
 PROGRAMS        ?= "APP_CLIENT DSP_SERVER"

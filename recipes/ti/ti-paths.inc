@@ -16,8 +16,8 @@ export CROSS_COMPILE = "${CROSS_DIR}/bin/${TARGET_PREFIX}"
 
 # This tells codec engine which targets to build
 DEVICES ?= "DM6446"
-DEVICES_omap3 = "OMAP3530"
-DEVICES_dm6446 = "DM6446"
+DEVICES_omap3-soc = "OMAP3530"
+DEVICES_dm6446    = "DM6446"
 
 DSPLINKPLATFORM ?= "DAVINCI"
 DSPLINKPLATFORM_dm6446 = "DAVINCI"

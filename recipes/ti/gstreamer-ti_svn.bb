@@ -6,7 +6,7 @@ SRCREV = "459"
 PV = "svnr${SRCREV}"
 PR = "r37"
 
-GST_TI_RC_SCRIPT_omap3 = "gstreamer-ti-omap3530-rc.sh"
+GST_TI_RC_SCRIPT_omap3-soc = "gstreamer-ti-omap3530-rc.sh"
 GST_TI_RC_SCRIPT_dm6446="gstreamer-ti-dm6446-rc.sh"
 GST_TI_RC_SCRIPT_dm355="gstreamer-ti-dm355-rc.sh"
 
@@ -16,7 +16,7 @@ SRC_URI = "svn://gforge.ti.com/svn/gstreamer_ti/trunk;module=gstreamer_ti;proto=
            file://${GST_TI_RC_SCRIPT} \
 "
 
-SRC_URI_append_omap3 = " \
+SRC_URI_append_omap3-soc = " \
            file://gstreamer-ti-add-omapfb.patch;patch=1 \
 "
 
