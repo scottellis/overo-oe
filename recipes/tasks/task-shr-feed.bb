@@ -1,5 +1,5 @@
 DESCRIPTION = "SHR Feed"
-PR = "r28"
+PR = "r32"
 PV = "1.0"
 LICENSE = "GPL"
 
@@ -7,6 +7,10 @@ inherit task
 
 RDEPENDS_${PN} += "\
 		babiloo-efl \
+		claws-mail \
+		claws-plugin-mailmbox \
+#		claws-plugin-gtkhtml2-viewer \
+		claws-plugin-rssyl \
 		di \
 		dictator \
 		dosbox \
@@ -23,15 +27,19 @@ RDEPENDS_${PN} += "\
 		gpe-timesheet \
 		gpe-contacts \
 		gtkmm \
+		guitartune \
 		mc \
 		mplayer \
 		navit \
 		omview \
+		orrery \
 		python-elementary \
 		pythm \
 		python-wifi \
+		omoney \
 		openmoko-agpsui \
 		openvpn \
+		pyphonelog \
 #		shr-config \
 		shr-today \
                 shr-theme-neo \
@@ -44,10 +52,9 @@ RDEPENDS_${PN} += "\
 		shr-splash-theme-dontpanic \
 		shr-splash-theme-handy \
 		vagalume \
+		wireshark \
 		x11vnc \
 
-		omoney \
-		pyphonelog \
 		pingus \
 		openmoocow \
 		python-pygame \
@@ -56,6 +63,7 @@ RDEPENDS_${PN} += "\
 		edje-viewer \
 #		obexpush \
 #		obexftp \
+		obex-data-server \
 		mtpaint \
 		telepathy-python \
 		intone-video \
@@ -100,10 +108,6 @@ RDEPENDS_${PN} += "\
 #		bluez-hcidump \
 		kbdd \
 		kexec-tools \
-		claws-mail \
-		claws-plugin-mailmbox \
-#		claws-plugin-gtkhtml2-viewer \
-		claws-plugin-rssyl \
 		mc \
 		iotop \
 		xprop \
@@ -140,7 +144,6 @@ RDEPENDS_${PN} += "\
 #		asterisk \
 		git \
 		ruby \
-		orrery \
 		synergy \
 		irssi \
 		zhone \
@@ -257,4 +260,6 @@ RDEPENDS_${PN} += "\
 		mokoeightball \
 		babiloo-efl \
 		make \
+		dnsmasq \
+		libsyncml \
 "

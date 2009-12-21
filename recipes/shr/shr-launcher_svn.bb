@@ -8,14 +8,9 @@ DEPENDS = "elementary eina edbus"
 PV = "0.0.1+svnr${SRCPV}"
 PR = "r4"
 
-SRC_URI = "svn://shr-launcher.googlecode.com/svn/trunk;module=.;proto=http"
+SRC_URI = "svn://shr-launcher.googlecode.com/svn;module=trunk;proto=http"
 
-do_configure_prepend() {
-  rm -f ${S}/config.log
-  rm -f ${S}/config.status
-}
-
-S = "${WORKDIR}"
+S = "${WORKDIR}/trunk"
 
 inherit autotools
 

@@ -10,13 +10,8 @@ inherit autotools
 PV = "0.0.1+svnr${SRCPV}"
 PR = "r1"
 
-SRC_URI = "svn://e-tasks.googlecode.com/svn/trunk;module=.;proto=http"
-S = "${WORKDIR}"
-
-do_configure_prepend() {
-  rm -f ${S}/config.log
-  rm -f ${S}/config.status
-}
+SRC_URI = "svn://e-tasks.googlecode.com/svn;module=trunk;proto=http"
+S = "${WORKDIR}/trunk"
 
 do_install_append() {
         install -d "${D}/${datadir}/pixmaps"
