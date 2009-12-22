@@ -43,7 +43,7 @@ do_sort() {
 archdir=$arch
 
 case "$arch" in
-	"arm-oabi")
+	"armv4")
 			machines="h3600 h3800 collie simpad htcwallaby" ;;
 	"armv4t")
 			machines="micro2440 ep93xx h6300 om-gta01 om-gta02 fic-gta01 fic-gta02" ;;
@@ -58,7 +58,7 @@ case "$arch" in
 	"armv7")
 			machines="" ;;
 	"armv7a")
-			machines="igep0020 omap3-touchbook beagleboard omap3evm am3517-evm omap3517-evm omap3-pandora omapzoom omapzoom2 overo" ;;
+			machines="cm-t35 igep0020 omap3-touchbook beagleboard omap3evm am3517-evm omap3517-evm omap3-pandora omapzoom omapzoom2 overo" ;;
 	"avr32")
 			machines="atngw100 at32stk1000" ;;
 	"bfin")
@@ -165,7 +165,7 @@ for i in `find . -name  "*.ipk"| grep _all` ; do mkdir -p ../all/ || true ;mv $i
 mkdir -p ../sdk ; mv *sdk.ipk ../sdk/ || true
  (mkdir -p ../sdk ; cd ../sdk && ipkg-make-index -p Packages -m . >& /dev/null ; touch Packages.sig )
 
-for arch in arm-oabi armv4t armv5teb armv5te armv6-novfp armv6 armv7a armv7 avr32 bfin geode i486 i586 i686 iwmmxt ppc405 ppc603e ppce300c3 ppce500 sparc x86_64 ; do
+for arch in armv4 armv4t armv5teb armv5te armv6-novfp armv6 armv7a armv7 avr32 bfin geode i486 i586 i686 iwmmxt ppc405 ppc603e ppce300c3 ppce500 sparc x86_64 ; do
 	do_sort
 done
 
