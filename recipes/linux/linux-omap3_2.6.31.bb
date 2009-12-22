@@ -40,6 +40,7 @@ SRC_URI_append = " \
            file://tincan.patch;patch=1 \
            file://smsc911x-detect.patch;patch=1 \
            file://tobi-duo.patch;patch=1 \
+           file://modedb-hd720.patch;patch=1 \
            "
 
 do_configure_prepend() {
