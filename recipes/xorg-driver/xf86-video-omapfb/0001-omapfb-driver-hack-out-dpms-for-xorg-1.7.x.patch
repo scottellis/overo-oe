@@ -21,6 +21,15 @@ index a9d5fbc..ef92ce4 100644
  #include <linux/fb.h>
  
  /* TODO: we'd like this to come from kernel headers, but that's not a good
+@@ -499,7 +499,7 @@ OMAPFBScreenInit(int scrnIndex, ScreenPt
+ 
+ 	/* Load the fallback module */
+ 	xf86LoadSubModule(pScrn, "fb");
+-	xf86LoaderReqSymLists(fbSymbols, NULL);
++	//xf86LoaderReqSymLists(fbSymbols, NULL);
+ 
+ 	/* Initialize fallbacks for the screen */
+ 	if (!fbScreenInit(pScreen, ofb->fb, pScrn->virtualX,
 @@ -581,7 +578,7 @@ OMAPFBScreenInit(int scrnIndex, ScreenPtr pScreen, int argc, char **argv)
  	pScreen->SaveScreen = OMAPFBSaveScreen;
  	
@@ -55,3 +64,4 @@ index a9d5fbc..ef92ce4 100644
  		return (pointer)1;
  	} else {
  		if (errmaj) *errmaj = LDR_ONCEONLY;
+
