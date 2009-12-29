@@ -5,7 +5,7 @@ FILESDIR = "${@os.path.dirname(bb.data.getVar('FILE',d,1))}/u-boot-omap3-git/"
 SRCREV = "87d93a1ba2ae23550e1370adb7a3b00af0831165"
 
 PV = "2009.11+${PR}+git${SRCREV}"
-PR = "r2"
+PR = "r3"
 PE = "1"
 
 SRC_URI = "git://git.denx.de/u-boot.git;protocol=git \
