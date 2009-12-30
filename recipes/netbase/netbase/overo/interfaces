@@ -56,7 +56,7 @@ iface lo inet loopback
 #	gateway 192.168.0.200
 
 # Bluetooth networking
-iface bnep0 inet dhcp
+# iface bnep0 inet dhcp
 
 
 
