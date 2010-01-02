@@ -62,12 +62,16 @@ do_install_append() {
 }
 
 do_install_append_overo() {
+	install -d ${D}${sysconfdir}/default/
 	install -m 0644 ${WORKDIR}/bluetooth.default ${D}${sysconfdir}/default/bluetooth
+	install -d ${D}${sysconfdir}/init.d/
 	install -m 0755 ${WORKDIR}/bluetooth.init    ${D}${sysconfdir}/init.d/bluetooth
 }
 
 do_install_append_omap3() {
+	install -d ${D}${sysconfdir}/default/
 	install -m 0644 ${WORKDIR}/bluetooth.default ${D}${sysconfdir}/default/bluetooth
+	install -d ${D}${sysconfdir}/init.d/
 	install -m 0755 ${WORKDIR}/bluetooth.init    ${D}${sysconfdir}/init.d/bluetooth
 }
 
