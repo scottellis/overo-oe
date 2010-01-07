@@ -1,5 +1,5 @@
 require qt4-x11-free.inc
-PR = "${INC_PR}.2"
+PR = "${INC_PR}.3"
 
 QT_GLFLAGS = "-opengl es2 -openvg"
 
@@ -13,5 +13,6 @@ QT_CONFIG_FLAGS += " \
 FILESPATHPKG .= ":qt4-x11-free-${PV}:qt4-x11-free"
 
 DEPENDS += "virtual/egl"
+PROVIDES += "qt4-x11-free"
 
 

@@ -1,15 +1,14 @@
 DEFAULT_PREFERENCE = "-999"
 ARM_INSTRUCTION_SET = "arm"
 
-SRCREV="155514"
+SRCREV = "155631"
 
 require gcc-common.inc
 
-DEPENDS = "mpfr gmp mpc"
+DEPENDS = "mpfr gmp libmpc"
 
-GCC_BASE ?= "4.5"
-PV = "${GCC_BASE}+svnr${SRCREV}"
-PR = "r0"
+BINV = "4.5.0"
+PV = "4.5+svnr${SRCPV}"
 
 FILESPATHPKG .= ":gcc-svn"
 
@@ -35,4 +34,8 @@ rename_srcdir (){
 do_unpack_append() {
         bb.build.exec_func('rename_srcdir', d)
 }
+EXTRA_OECONF_append_linux-uclibc = " --disable-decimal-float "
+EXTRA_OECONF_append_linux-uclibceabi = " --disable-decimal-float "
+EXTRA_OECONF_append_linux-uclibcspe = " --disable-decimal-float "
+EXTRA_OECONF_append_linux-uclibc = " ${@base_contains('TARGET_ARCH', 'powerpc', '--without-long-double-128', '',d)}"
 

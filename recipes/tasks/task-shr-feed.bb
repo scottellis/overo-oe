@@ -1,5 +1,5 @@
 DESCRIPTION = "SHR Feed"
-PR = "r32"
+PR = "r34"
 PV = "1.0"
 LICENSE = "GPL"
 
@@ -80,7 +80,6 @@ RDEPENDS_${PN} += "\
 		sms-sentry \
 		cellhunter \
 		dillo2 \
-		usbmode \
 		pyefl-sudoku \
 		tasks \
 		dates \
@@ -206,7 +205,6 @@ RDEPENDS_${PN} += "\
 		fsousaged \
 		fsodeviced \
 		fsonetworkd \
-		fsotimed \
 		opimd-utils \
 		omgps \
 		shr-launcher \
@@ -242,6 +240,7 @@ RDEPENDS_${PN} += "\
 		bt-gps \
 		advancedcaching \
 		glamo-dri-tests \
+		bonnie++ \
 		reiserfsprogs \
 		blipomoko \
 		imagemagick \
@@ -250,6 +249,7 @@ RDEPENDS_${PN} += "\
 		mpg123 \
 		zile \
 		speex \
+		podpooch \
 		fltkclock \
 		fltkhackdiet \
 		fltkwwpointcal \
@@ -262,4 +262,6 @@ RDEPENDS_${PN} += "\
 		make \
 		dnsmasq \
 		libsyncml \
+		qi \
+		qi-ubi \
 "
