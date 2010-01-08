@@ -38,7 +38,6 @@ E17 = " \
   e-wm \
   e-wm-menu \
   e-wm-sysactions \
-  entrance \
   ${E_CONFIG} \
   ${E_MODULES} \
  "
