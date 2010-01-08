@@ -3,7 +3,7 @@ SOC_FAMILY = "omap3-soc"
 require conf/machine/include/tune-cortexa8.inc
 
 # Increase this everytime you change something in the kernel
-MACHINE_KERNEL_PR = "r50"
+MACHINE_KERNEL_PR = "r51"
 
 KERNEL_IMAGETYPE = "uImage"
 
