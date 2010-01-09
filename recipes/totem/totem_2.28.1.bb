@@ -48,6 +48,7 @@ EXTRA_OECONF=" --disable-schemas-install \
 
 do_configure_prepend() {
 	sed -i -e s:help::g ${S}/Makefile.am
+	sed -i -e s:PYTHON_CFLAGS="-I$PY_PREFIX/include/python$PYTHON_VERSION":PYTHON_CFLAGS="-I${STAGING_INCDIR}/python$PYTHON_VERSION":g ${S}/configure.in
 }
 
 PACKAGES_DYNAMIC += " totem-plugin-* "
