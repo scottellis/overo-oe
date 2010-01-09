@@ -3,7 +3,7 @@ require gawk_${PV}.bb
 
 inherit native
 
-DEPENDS = ""
+DEPENDS = "automake-native"
 PATCHTOOL = "patch"
 
 S = "${WORKDIR}/gawk-${PV}"
