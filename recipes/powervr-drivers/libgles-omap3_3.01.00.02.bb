@@ -1,6 +1,6 @@
 BINLOCATION = "${S}/gfx_rel_es3.x"
 
-DEFAULT_PREFERENCE = "2"
+DEFAULT_PREFERENCE = "-1"
 
 require libgles-omap3.inc
 
