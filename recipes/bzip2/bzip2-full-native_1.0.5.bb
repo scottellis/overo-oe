@@ -1,6 +1,7 @@
 DESCRIPTION = "Very high-quality data compression program"
 SECTION = "console/utils"
 PR = "r1"
+DEPENDS = "libpng-native"
 
 LICENSE = "bzip2"
 FILESPATH =. "${FILE_DIRNAME}/bzip2-${PV}:"
