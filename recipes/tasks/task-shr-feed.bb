@@ -1,5 +1,5 @@
 DESCRIPTION = "SHR Feed"
-PR = "r34"
+PR = "r35"
 PV = "1.0"
 LICENSE = "GPL"
 
@@ -104,7 +104,7 @@ RDEPENDS_${PN} += "\
 		libpurple-protocol-icq \
 		vagalume \
 		ppp \
-#		bluez-hcidump \
+		bluez-hcidump \
 		kbdd \
 		kexec-tools \
 		mc \
@@ -264,4 +264,6 @@ RDEPENDS_${PN} += "\
 		libsyncml \
 		qi \
 		qi-ubi \
+		wpa-gui \
+		gabriel \
 "
