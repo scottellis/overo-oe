@@ -30,5 +30,5 @@ pkg_postrm() {
 CONFFILES_${PN} = "${sysconfdir}/syslog-ng.conf"
 
 INITSCRIPT_NAME = "syslog-ng"
-#INITSCRIPT_PARAMS = "defaults 05"
-INITSCRIPT_PARAMS = "remove"
+INITSCRIPT_PARAMS = "defaults 05"
+#INITSCRIPT_PARAMS = "remove"
