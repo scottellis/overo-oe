@@ -51,6 +51,7 @@ TOOLS_INSTALL = " \
   socat \
   strace \
   sudo \
+  syslog-ng \
   task-proper-tools \
   u-boot-tools-env \
  "
