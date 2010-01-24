@@ -8,6 +8,7 @@ S = "${WORKDIR}/linux-${PV}"
 DEFAULT_PREFERENCE = "-1"
 DEFAULT_PREFERENCE_ion = "1"
 DEFAULT_PREFERENCE_simone = "1"
+DEFAULT_PREFERENCE_eee701 = "1"
 DEFAULT_PREFERENCE_at91sam9g45ek = "1"
 
 DEFAULT_PREFERENCE_akita = "-1"
@@ -16,6 +17,9 @@ DEFAULT_PREFERENCE_collie = "-1"
 DEFAULT_PREFERENCE_poodle = "-1"
 DEFAULT_PREFERENCE_spitz = "-1"
 DEFAULT_PREFERENCE_tosa = "-1"
+DEFAULT_PREFERENCE_ben-nanonote = "-1"
+DEFAULT_PREFERENCE_jornada6xx = "-1"
+DEFAULT_PREFERENCE_jornada7xx = "-1"
 
 SRC_URI = "${KERNELORG_MIRROR}/pub/linux/kernel/v2.6/linux-${PV}.tar.bz2;name=kernel \
            ${KERNELORG_MIRROR}/pub/linux/kernel/v2.6/patch-${PV}.2.bz2;patch=1 \
