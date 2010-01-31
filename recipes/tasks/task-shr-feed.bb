@@ -268,4 +268,7 @@ RDEPENDS_${PN} += "\
 		gabriel \
 		stopwatch \
 		rtmom \
+		ventura \
+		emtooth \
+		podboy \
 "
