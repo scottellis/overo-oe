@@ -13,6 +13,7 @@ SRC_URI += " \
             file://gdm \
             file://gdm.conf \
             file://gdm-pam \
+            file://Default \
            "
 
 EXTRA_OECONF = " --enable-authentication-scheme=shadow \

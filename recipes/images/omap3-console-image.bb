@@ -25,7 +25,7 @@ FIRMWARE_INSTALL = " \
  "
 
 GLES_INSTALL = " \
-#  libgles-omap3 \
+  libgles-omap3 \
  "
 
 TOOLS_INSTALL = " \

@@ -15,6 +15,7 @@ PV = "2.6.32"
 
 SRC_URI = "git://www.sakoman.com/git/linux-omap-2.6.git;branch=omap3-2.6.32;protocol=git \
 	   file://defconfig \
+           file://debug.patch;patch=1 \
           "
 
 SRC_URI_append = " \

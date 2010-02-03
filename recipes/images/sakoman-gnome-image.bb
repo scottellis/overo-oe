@@ -11,30 +11,45 @@ ANGSTROM_EXTRA_INSTALL ?= ""
 
 SPLASH = "psplash-angstrom"
 
+DEPENDS = "gst-plugins-ugly"
+
 APPS = " \
-  abiword \
+  abiword-meta \
   cheese \
   claws-mail \
   epiphany epiphany-extensions \
   swfdec swfdec-gnome swfdec-mozilla \
-  evince \
+  evince evince-nautilus-extension\
+  firefox gecko-mediaplayer-firefox-hack \
   gcalctool \
-  gedit \
+  gedit gedit-plugins \
+  gftp \
   gimp \
-  gnome-games \
+  gnome-games gnome-games-extra-data \
   gnome-mplayer \
   gnumeric \
   gphoto2 \
   gthumb \
+  libgles-omap3-demos \
   pidgin \
   synergy \
   vnc \
-  x11vnc angstrom-x11vnc-xinit \
-  xmms \
+  x11vnc \
   xterm \
  "
 
+DEV = " \
+  geany \
+  gtk+-dev \
+  ldd \
+  libltdl \
+  libtool libtool-dev \
+  pkgconfig \
+  task-native-sdk \
+ "
+
 FONTS = " \
+  encodings \
   font-adobe-75dpi \
   fontconfig fontconfig-utils font-util \
   ttf-arphic-uming \
@@ -55,13 +70,16 @@ GNOME = " \
   gdm \
   gnome-control-center \
   gnome-applets \
+  gnome-backgrounds \
   gnome-bluetooth \
   gnome-desktop \
+#  gnome-disk-utility \
   gnome-doc-utils \
-  gnome-keyring gnome-keyring-pam-plugin \
+  gnome-keyring gnome-keyring-pam-plugin libpam-meta \
   gnome-media \
   gnome-menus \
   gnome-mime-data \
+  gnome-mount \
 #  gnome-packagekit packagekit packagekit-gtkmodule \
   gnome-panel libpanel-applet libgweather-locationdata\
   gnome-power-manager gnome-power-manager-applets \
@@ -88,9 +106,8 @@ GNOME = " \
   gnome-vfs-plugin-tar \
   gvfs \
   metacity \
-  nautilus nautilus-cd-burner desktop-file-utils\
+  nautilus nautilus-actions nautilus-cd-burner desktop-file-utils gamin\
   networkmanager network-manager-applet networkmanager-openvpn \
-  policykit-gnome policykit \
   zenity \
  "
 
@@ -102,6 +119,7 @@ GSTREAMER = " \
   gst-plugins-good-meta \
   gst-plugins-bad-meta \
   gst-plugins-ugly-meta \
+#  task-gstreamer-ti \
 "
 
 UIM = " \
@@ -134,9 +152,24 @@ PRINT = " \
  "
 
 PULSEAUDIO = " \
+  pulseaudio \
   pulseaudio-alsa-wrapper \
   pulseaudio-esd-wrapper \
+  pulseaudio-gconf-helper \
   pulseaudio-module-gconf \
+  pulseaudio-module-alsa-sink \
+  pulseaudio-module-alsa-source \
+  pulseaudio-module-cli \
+  pulseaudio-module-default-device-restore \
+  pulseaudio-module-detect\
+  pulseaudio-module-esound-protocol-unix \
+  pulseaudio-module-simple-protocol-tcp \
+  pulseaudio-module-native-protocol-unix \
+  pulseaudio-module-cli-protocol-unix \
+  pulseaudio-module-rescue-streams\
+  pulseaudio-module-suspend-on-idle \
+  pulseaudio-module-volume-restore \
+  pulseaudio-module-oss \
   libasound-module-ctl-pulse \
   libasound-module-pcm-pulse \
  "
@@ -144,11 +177,22 @@ PULSEAUDIO = " \
 THEMES = " \
   gnome-icon-theme \
   gnome-themes \
+  gnome-theme-crux \
+  gnome-theme-highcontrast \
+  gnome-theme-highcontrastinverse \
+  gnome-theme-highcontrastlargeprint \
+  gnome-theme-highcontrastlargeprintinverse \
+  gnome-theme-largeprint \
+  gnome-theme-mist \
   gtk-engine-clearlooks \
+  gtk-engine-crux-engine \
   gtk-engine-glide \
+  gtk-engine-hcengine \
   gtk-engine-thinice \
   gtk-engine-redmond95 \
   gtk-theme-clearlooks \
+  gtk-theme-crux \
+  gtk-theme-mist \
   gtk-theme-thinice \
   gtk-theme-redmond \
   hicolor-icon-theme \
@@ -181,6 +225,7 @@ XSERVER_BASE = " \
   xinetd \
   xinit \
   xlsfonts \
+  xrandr \
   xrdb \
   xrefresh \
   xset \
@@ -190,6 +235,7 @@ XSERVER_BASE = " \
 IMAGE_INSTALL += " \
   ${ANGSTROM_EXTRA_INSTALL} \
   ${APPS} \
+  ${DEV} \
   ${FONTS} \
   ${GNOME} \
   ${GSTREAMER} \
@@ -201,4 +247,5 @@ IMAGE_INSTALL += " \
   ${SPLASH} \
   ${XSERVER_BASE} \
  "
+
 
