@@ -14,7 +14,7 @@ XSERVER ?= "xserver-xorg \
 
 PR = "r5"
 
-PACKAGES += "task-gnome-apps task-gnome-dev task-gnome-fonts task-gnome task-gnome-gstreamer task-gnome-perl task-gnome-pulseaudio task-gnome-themes task-gnome-totem task-gnome-xserver-base task-gnome-xserver"
+PACKAGES += "task-gnome-apps task-gnome-fonts task-gnome task-gnome-gstreamer task-gnome-perl task-gnome-pulseaudio task-gnome-themes task-gnome-totem task-gnome-xserver-base task-gnome-xserver"
 
 DEPENDS = "gst-plugins-ugly"
 
@@ -24,29 +24,22 @@ RDEPENDS_task-gnome-apps = " \
   claws-mail \
   epiphany epiphany-extensions \
   swfdec swfdec-gnome swfdec-mozilla \
-  evince  evince-nautilus-extension \
+  evince \
   gcalctool \
-  gedit gedit-plugins \
-  gftp \
+  gedit \
   gimp \
-  gnome-games gnome-games-extra-data \
+  gnome-games \
   gnome-mplayer \
   gnumeric \
   gphoto2 \
   gthumb \
-  libgles-omap3-demos \
   pidgin \
   synergy \
   vnc \
-  x11vnc \
+  x11vnc angstrom-x11vnc-xinit \
+  xmms \
   xterm \
   eog \
- "
-
-RDEPENDS_task-gnome-dev = " \
-  geany \
-  pkgconfig \
-  task-native-sdk \
  "
 
 RDEPENDS_task-gnome-fonts = " \
@@ -70,16 +63,13 @@ RDEPENDS_task-gnome = " \
   gdm \
   gnome-control-center \
   gnome-applets \
-  gnome-backgrounds \
   gnome-bluetooth \
   gnome-desktop \
-#  gnome-disk-utility \
   gnome-doc-utils \
   gnome-keyring gnome-keyring-pam-plugin libpam-meta \
   gnome-media \
   gnome-menus \
   gnome-mime-data \
-  gnome-mount \
 #  gnome-packagekit packagekit packagekit-gtkmodule \
   gnome-panel libpanel-applet libgweather-locationdata\
   gnome-power-manager gnome-power-manager-applets \
@@ -106,8 +96,9 @@ RDEPENDS_task-gnome = " \
   gnome-vfs-plugin-tar \
   gvfs \
   metacity \
-  nautilus nautilus-actions nautilus-cd-burner desktop-file-utils gamin\
+  nautilus nautilus-cd-burner desktop-file-utils\
   networkmanager network-manager-applet networkmanager-openvpn \
+  policykit-gnome policykit \
   zenity \
  "
 
@@ -157,22 +148,11 @@ RDEPENDS_task-gnome-themes = " \
   angstrom-gnome-icon-theme-enable \
   gnome-icon-theme \
   gnome-themes \
-  gnome-theme-crux \
-  gnome-theme-highcontrast \
-  gnome-theme-highcontrastinverse \
-  gnome-theme-highcontrastlargeprint \
-  gnome-theme-highcontrastlargeprintinverse \
-  gnome-theme-largeprint \
-  gnome-theme-mist \
   gtk-engine-clearlooks \
-  gtk-engine-crux-engine \
   gtk-engine-glide \
-  gtk-engine-hcengine \
   gtk-engine-thinice \
   gtk-engine-redmond95 \
   gtk-theme-clearlooks \
-  gtk-theme-crux \
-  gtk-theme-mist \
   gtk-theme-thinice \
   gtk-theme-redmond \
   hicolor-icon-theme \
@@ -219,7 +199,6 @@ PACKAGE_ARCH_task-gnome-xserver = "${MACHINE_ARCH}"
 
 RDEPENDS_${PN} = " \
   task-gnome-apps \
-  task-gnome-dev \
   task-gnome-fonts \
   task-gnome \
   task-gnome-gstreamer \

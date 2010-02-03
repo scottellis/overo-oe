@@ -1,9 +1,3 @@
-From: Steve Sakoman <steve@sakoman.com>
-
-beagle: update pinmux
-
-enable mmc2, mcspi4, i2c2, tweak formatting
-
 --- git/board/ti/beagle/beagle.h-orig	2009-09-29 16:39:34.000000000 -0700
 +++ git/board/ti/beagle/beagle.h	2009-09-29 16:40:03.000000000 -0700
 @@ -201,16 +201,16 @@ const omap3_sysinfo sysinfo = {
@@ -64,4 +58,16 @@ enable mmc2, mcspi4, i2c2, tweak formatting
  	MUX_VAL(CP(I2C3_SCL),		(IEN  | PTU | EN  | M0)) /*I2C3_SCL*/\
  	MUX_VAL(CP(I2C3_SDA),		(IEN  | PTU | EN  | M0)) /*I2C3_SDA*/\
  	MUX_VAL(CP(I2C4_SCL),		(IEN  | PTU | EN  | M0)) /*I2C4_SCL*/\
-
+@@ -374,9 +374,9 @@ const omap3_sysinfo sysinfo = {
+ 	MUX_VAL(CP(SDRC_CKE1),		(IDIS | PTU | EN  | M0)) /*sdrc_cke1*/
+ 
+ #define MUX_BEAGLE_C() \
+-	MUX_VAL(CP(MCBSP3_DX),		(IEN | PTD | DIS | M4)) /*GPIO_140*/\
+-	MUX_VAL(CP(MCBSP3_DR),		(IEN | PTD | DIS | M4)) /*GPIO_142*/\
+-	MUX_VAL(CP(MCBSP3_CLKX),	(IEN | PTD | DIS | M4)) /*GPIO_141*/\
++	MUX_VAL(CP(MCBSP3_DX),		(IEN  | PTD | DIS | M4)) /*GPIO_140*/\
++	MUX_VAL(CP(MCBSP3_DR),		(IEN  | PTD | DIS | M4)) /*GPIO_142*/\
++	MUX_VAL(CP(MCBSP3_CLKX),	(IEN  | PTD | DIS | M4)) /*GPIO_141*/\
+ 	MUX_VAL(CP(UART2_CTS),		(IEN  | PTU | EN  | M0)) /*UART2_CTS*/\
+ 	MUX_VAL(CP(UART2_RTS),		(IDIS | PTD | DIS | M0)) /*UART2_RTS*/\
+ 	MUX_VAL(CP(UART2_TX),		(IDIS | PTD | DIS | M0)) /*UART2_TX*/
