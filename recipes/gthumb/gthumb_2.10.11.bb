@@ -1,7 +1,7 @@
 DESCRIPTION = "gThumb is an image viewer and browser for the GNOME Desktop."
 LICENSE = "GPL"
 
-DEPENDS = "gtk+ libexif libgnome libgnomeui libgnomeprintui"
+DEPENDS = "gnome-doc-utils gtk+ libexif libgnome libgnomeui libgnomeprintui"
 
 inherit gnome
 
