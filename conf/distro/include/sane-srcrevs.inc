@@ -245,7 +245,7 @@ SRCREV_pn-openocd ?= "517"
 SRCREV_pn-openocd-native ?= "517"
 SRCREV_pn-opimd-utils ?= "7321c3f1a3cd781f9ed13ea3cac38879429dd420"
 SRCREV_pn-opkg ?= "446"
-SRCREV_pn-opkg-native ?= "519"
+SRCREV_pn-opkg-native ?= "521"
 SRCREV_pn-opkg-sdk ?= "446"
 SRCREV_pn-opkg-utils ?= "4578"
 SRCREV_pn-opkg-utils-native ?= "4595"
@@ -334,7 +334,7 @@ SRCREV_pn-xserver-kdrive-glamo ?= "9b28d998424c77fbc057dd3a022ccbb122793a52"
 # Enlightenment Foundation Libraries
 # Caution: This is not alphabetically, but (roughly) dependency-sorted.
 # Please leave it like that.
-EFL_SRCREV ?= "45902"
+EFL_SRCREV ?= "46073"
 SRCREV_pn-edb-native ?= "${EFL_SRCREV}"
 SRCREV_pn-edb ?= "${EFL_SRCREV}"
 SRCREV_pn-eina-native ?= "${EFL_SRCREV}"
