@@ -5,13 +5,15 @@ DEFAULT_PREFERENCE_omap3-pandora = "-1"
 
 FILESDIR = "${@os.path.dirname(bb.data.getVar('FILE',d,1))}/x-load-git/${MACHINE}"
 
-SRCREV = "319b26586fafb86f919f514bcd175838aaab96b3"
+SRCREV = "5eae9fb96b90370c7e11b757e6de3ac0df4dfd51"
 
-PV = "1.42+${PR}+gitr${SRCREV}"
+PV = "1.43+${PR}+gitr${SRCREV}"
 PR ="r8"
 PE = "1"
 
-SRC_URI = "git://gitorious.org/x-load-omap3/mainline.git;branch=master;protocol=git"
+SRC_URI = " \
+           git://gitorious.org/x-load-omap3/mainline.git;branch=master;protocol=git \
+          "
 
 SRC_URI_append_beagleboard = " \
                               file://name.patch;patch=1 \
