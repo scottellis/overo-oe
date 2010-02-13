@@ -1,5 +1,5 @@
 DESCRIPTION = "SHR Feed"
-PR = "r35"
+PR = "r39"
 PV = "1.0"
 LICENSE = "GPL"
 
@@ -29,9 +29,11 @@ RDEPENDS_${PN} += "\
 		gtkmm \
 		guitartune \
 		mc \
+		mpd \
 		mplayer \
 		navit \
-		omview \
+# omview depends on deprecated (now broken) epsilon
+#		omview \
 		orrery \
 		python-elementary \
 		pythm \
@@ -132,7 +134,6 @@ RDEPENDS_${PN} += "\
 #		gpsdrive \
 		wxwidgets \
 		x11vnc \
-		xf86-video-glamo \
 #		libswt3.4-gtk-java \
 		cacao \
 #		jamvm \
@@ -205,6 +206,8 @@ RDEPENDS_${PN} += "\
 		fsousaged \
 		fsodeviced \
 		fsonetworkd \
+		mdbus \
+		mickeyterm \
 		opimd-utils \
 		omgps \
 		shr-launcher \
@@ -239,7 +242,6 @@ RDEPENDS_${PN} += "\
 		bt-configure \
 		bt-gps \
 		advancedcaching \
-		glamo-dri-tests \
 		bonnie++ \
 		reiserfsprogs \
 		blipomoko \
@@ -275,3 +277,6 @@ RDEPENDS_${PN} += "\
 		emtooth \
 		podboy \
 "
+
+# this is only usefull on gta02 and on other devices it's trying to pull mesa-dri (not respecting DEFAULT_PROVIDER for virtual/libgl)
+RDEPENDS_${PN}_om-gta02 += "glamo-dri-tests"
