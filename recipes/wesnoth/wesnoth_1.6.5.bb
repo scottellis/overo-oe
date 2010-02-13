@@ -3,7 +3,8 @@ HOMEPAGE = "http://www.wesnoth.org/"
 SECTION = "games"
 LICENSE = "GPL"
 
-DEPENDS = "freetype libsdl-image libsdl-mixer libsdl-net libsdl-ttf zlib boost imagemagick-native pango libpng"
+DEPENDS = "freetype libsdl-image libsdl-mixer libsdl-net libsdl-ttf zlib boost pango libpng \
+${@base_ifelse(( int(bb.data.getVar('MACHINE_DISPLAY_WIDTH_PIXELS', d, 1) ) < 800 ) or ( int(bb.data.getVar('MACHINE_DISPLAY_HEIGHT_PIXELS',d,1) )< 480 ),"imagemagick-native","")}"
 PR = "r0"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/wesnoth/${PN}-${PV}.tar.bz2;name=tarball"
@@ -15,7 +16,7 @@ ARM_INSTRUCTION_SET = "arm"
 inherit cmake
 
 EXTRA_OECMAKE = "\
-	-DGUI=tiny \
+	${@base_ifelse( ( ( int(bb.data.getVar('MACHINE_DISPLAY_WIDTH_PIXELS', d, 1) ) < 800 ) or (  int(bb.data.getVar('MACHINE_DISPLAY_HEIGHT_PIXELS',d,1) ) < 480 ) ),"-DGUI=tiny","")} \
 	-DENABLE_EDITOR=ON \
 	-DENABLE_LOW_MEM=ON \
 	-DENABLE_FRIBIDI=OFF \
@@ -26,7 +27,7 @@ EXTRA_OECMAKE = "\
 PACKAGES = "wesnoth-editor wesnoth-doc wesnoth-music wesnoth-sounds \
 	wesnoth-aoi wesnoth-did wesnoth-ei wesnoth-httt wesnoth-l \
 	wesnoth-nr wesnoth-sof wesnoth-sotbe wesnoth-thot wesnoth-trow \
-	wesnoth-tsg wesnoth-tb wesnoth-utbs \
+	wesnoth-tsg wesnoth-tb wesnoth-utbs wesnoth-low\
 	wesnoth-data \
 	wesnoth-all-campaigns \
 	wesnoth-all \
@@ -66,7 +67,7 @@ RDEPENDS_wesnoth-editor = "wesnoth-data"
 RDEPENDS_wesnoth-all-campaigns = "wesnoth \
 	wesnoth-aoi wesnoth-did wesnoth-ei wesnoth-httt wesnoth-l \
 	wesnoth-nr wesnoth-sof wesnoth-sotbe wesnoth-thot wesnoth-trow \
-	wesnoth-tsg wesnoth-tb wesnoth-utbs"
+	wesnoth-tsg wesnoth-tb wesnoth-utbs wesnoth-low"
 
 # Installing wesnoth-all should pull everything in (like in Debian).
 RDEPENDS_wesnoth-all = "wesnoth wesnoth-sounds wesnoth-music"
@@ -98,6 +99,11 @@ FILES_${PN} = "\
 
 FILES_wesnothd = "\
 	${bindir}/wesnothd \
+"
+
+FILES_wesnoth-low ="\
+       ${datadir}/wesnoth/data/campaigns/Legend_of_Wesmere \
+       ${datadir}/wesnoth/translations/*/LC_MESSAGES/wesnoth-aoi.mo \
 "
 
 FILES_wesnoth-editor = "\
