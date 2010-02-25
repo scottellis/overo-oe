@@ -7,6 +7,7 @@ PREFERRED_VERSION_autoconf-native = "2.63"
 PREFERRED_VERSION_libmikmod = "3.2.0-beta2"
 PREFERRED_VERSION_mtd-utils-native = "1.2.0+git"
 PREFERRED_VERSION_strace = "4.5.15"
+PREFERRED_VERSION_mesa-dri     = "7.7.999"
 
 # We need this for jamvm
 PREFERRED_VERSION_classpath = "0.98"
@@ -39,7 +40,7 @@ PREFERRED_VERSION_glib-2.0      = "2.22.4"
 PREFERRED_VERSION_glib-2.0-native = "2.22.4"
 UDEV_GE_141 = "1"
 
-ANGSTROM_QT_VERSION ?= "4.6.0"
+ANGSTROM_QT_VERSION ?= "4.6.2"
 PREFERRED_VERSION_qt4-tools-native = "${ANGSTROM_QT_VERSION}"
 PREFERRED_VERSION_qt4-tools-sdk = "${ANGSTROM_QT_VERSION}"
 PREFERRED_VERSION_qt4-embedded = "${ANGSTROM_QT_VERSION}"
