@@ -28,7 +28,7 @@ APPS = " \
   midori \
   nautilus \
   numptyphysics \
-#  libgles-omap3-demos \
+#  libgles-omap3-x11demos \
   pidgin \
   swfdec \
   swfdec-mozilla \
