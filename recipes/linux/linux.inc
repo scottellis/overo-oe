@@ -2,7 +2,7 @@ DESCRIPTION = "Linux Kernel"
 SECTION = "kernel"
 LICENSE = "GPLv2"
 
-inherit kernel
+inherit kernel siteinfo
 
 BOOT_SPLASH ?= "logo_linux_clut224.ppm"
 
