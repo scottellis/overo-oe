@@ -1,0 +1,34 @@
+Index: tslib-1.0/plugins/Makefile.am
+===================================================================
+--- tslib-1.0.orig/plugins/Makefile.am
++++ tslib-1.0/plugins/Makefile.am
+@@ -10,13 +10,13 @@
+ #
+ 
+ AM_CFLAGS		= $(DEBUGFLAGS) $(LIBFLAGS) $(VIS_CFLAGS)
+-LDADD		= -rpath $(PLUGIN_DIR)
++AM_LDFLAGS		= -rpath $(PLUGIN_DIR)
+ INCLUDES		= -I$(top_srcdir)/src
+   
+ #LTVSN			= -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
+ #			   -release $(LT_RELEASE)
+ LTVSN			= -avoid-version
+-LIBS			=
++LIBS			= $(top_builddir)/src/libts.la
+ pluginexecdir		= $(PLUGIN_DIR)
+   
+ if ENABLE_LINEAR_MODULE
+Index: tslib-1.0/configure.ac
+===================================================================
+--- tslib-1.0.orig/configure.ac
++++ tslib-1.0/configure.ac
+@@ -168,7 +168,7 @@ AC_ARG_WITH(plugindir,
+         AS_HELP_STRING([--with-plugindir=ARG],
+                 [Where to look for plugins (default=${libdir}/ts)]),
+         [PLUGIN_DIR=$withval],
+-        [PLUGIN_DIR='${libdir}/ts/'])
++        [PLUGIN_DIR='${libdir}/ts'])
+ AC_MSG_RESULT($PLUGIN_DIR)
+ AC_SUBST(PLUGIN_DIR)
+ 
+
