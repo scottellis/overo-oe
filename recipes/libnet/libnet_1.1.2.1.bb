@@ -23,6 +23,8 @@ do_configure_prepend() {
 
 do_install_append () {
         oe_runmake -C src 'DESTDIR=${D}${libdir}/' 'libdir=' install-libLIBRARIES
+        oe_runmake -C include 'DESTDIR=${D}${includedir}/' 'includedir=' install-includeHEADERS
+        oe_runmake -C include/libnet 'DESTDIR=${D}${includedir}/' 'includedir=' install-libnetincludeHEADERS
         install -d ${D}${datadir}/man/man3/
         install -d ${D}${bindir}
         install -m 0644 ${S}/doc/man/man3/*.3 ${D}${datadir}/man/man3/
