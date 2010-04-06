@@ -1,5 +1,5 @@
 DESCRIPTION = "SHR Feed"
-PR = "r50"
+PR = "r51"
 PV = "1.0"
 LICENSE = "GPL"
 
@@ -118,6 +118,7 @@ RDEPENDS_${PN} += "\
 		xev \
 		xwininfo \
 		tcpdump \
+		thone \
 		lsof \
 		zsh \
 		gzip \
@@ -224,6 +225,7 @@ RDEPENDS_${PN} += "\
 		illume-keyboard-default-alt \
 		illume-keyboard-dutch \
 		illume-keyboard-dvorak \
+		illume-keyboard-finnish \
 		illume-keyboard-french \
 		illume-keyboard-german \
 		illume-keyboard-hebrew \
