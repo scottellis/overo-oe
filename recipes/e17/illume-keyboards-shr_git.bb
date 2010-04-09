@@ -3,7 +3,7 @@ SECTION = "x11/data"
 SRC_URI = "git://git.shr-project.org/repo/illume-keyboards.git;protocol=http;branch=master"
 S = "${WORKDIR}/git"
 
-SRCREV = "ebbc388b26578f60f3d68ea5631c47a11afa49c0"
+SRCREV = "9bd2c8f060c48eee3ab247838d8ecf2cf7082472"
 PV = "0.0+gitr${SRCREV}"
 PE = "1"
 PR = "r3"
