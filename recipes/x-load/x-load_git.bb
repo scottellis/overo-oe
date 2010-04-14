@@ -19,6 +19,7 @@ SRC_URI = " \
 
 SRC_URI_append_beagleboard = " \
                               file://name.patch;patch=1 \
+                              file://bb8547fcbc54ecc7a75f9ad45a31042a04d8a2ce.patch;patch=1 \
                              "
 
 SRC_URI_append_omap3-touchbook = " \
