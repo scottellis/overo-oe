@@ -39,7 +39,7 @@ SRC_URI = "svn://gforge.ti.com/svn/gstreamer_ti/trunk;module=gstreamer_ti;proto=
            file://${GST_TI_RC_SCRIPT} \
 "
 
-SRC_URI_append_omap3-soc = " \
+SRC_URI_append_omap3 = " \
            file://gstreamer-ti-add-omapfb.patch;patch=1 \
 "
 
