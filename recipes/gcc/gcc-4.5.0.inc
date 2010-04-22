@@ -1,18 +1,16 @@
 DEFAULT_PREFERENCE = "-999"
 ARM_INSTRUCTION_SET = "arm"
 
-SRCREV = "158653"
-
 require gcc-common.inc
+LICENSE = "GPLv3"
 
 DEPENDS = "mpfr gmp libmpc"
 
-BINV = "4.6.0"
-PV = "4.6+svnr${SRCPV}"
+FILESPATHPKG .= ":gcc-$PV"
 
-FILESPATHPKG .= ":gcc-svn"
+INC_PR = "r0"
 
-SRC_URI = "svn://gcc.gnu.org/svn/gcc;module=trunk \
+SRC_URI = "${GNU_MIRROR}/gcc/gcc-${PV}/gcc-${PV}.tar.bz2;name=gcc450tarbz2 \
 	   file://gcc-4.3.1-ARCH_FLAGS_FOR_TARGET.patch;patch=1 \
 	   file://100-uclibc-conf.patch;patch=1 \
            file://gcc-uclibc-locale-ctype_touplow_t.patch;patch=1 \
@@ -28,13 +26,9 @@ EXTRA_OECONF_BASE = " --enable-libssp \
 		      --disable-bootstrap --disable-libgomp \
 		      --disable-libmudflap"
 
-rename_srcdir (){
-	mv ${WORKDIR}/trunk ${WORKDIR}/gcc-${PV}
-}
+SRC_URI[gcc450tarbz2.md5sum] = "ff27b7c4a5d5060c8a8543a44abca31f"
+SRC_URI[gcc450tarbz2.sha256sum] = "8293e9efa68a8ec0fdd0dae9c9bd128a8e742566acd9c8fbcfe79d98ed3756c8"
 
-do_unpack_append() {
-        bb.build.exec_func('rename_srcdir', d)
-}
 EXTRA_OECONF_append_linux-uclibc = " --disable-decimal-float "
 EXTRA_OECONF_append_linux-uclibceabi = " --disable-decimal-float "
 EXTRA_OECONF_append_linux-uclibcspe = " --disable-decimal-float "
