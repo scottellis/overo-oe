@@ -7,6 +7,9 @@ PR = "r2"
 
 inherit xfce46
 
+SRC_URI[archive.md5sum] = "0b715abb929220f136483ccd7303ff62"
+SRC_URI[archive.sha256sum] = "4f5e19187ddf9f812303b77479124562079d25c6263674040aba4395c6b2e41c"
+
 EXTRA_OECONF += " --enable-startup-notification"
 
 do_install() {
@@ -25,6 +28,3 @@ python populate_packages_prepend() {
 }
 
 PACKAGES_DYNAMIC = "${PN}-plugin-*"
-
-SRC_URI[md5sum] = "88352816c84cbea57121b0c478976976"
-SRC_URI[sha256sum] = "1d8ab1354c73935a5d12f0d7d226d26ae1b90fdd235460bdb57fd5651229bc8b"
