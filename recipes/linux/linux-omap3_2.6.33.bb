@@ -9,7 +9,7 @@ require linux.inc
 
 MUSB_MODE ?= "host"
 
-SRCREV = "a0618f97b3a0d8dab745d94f00df5eb3bbd004f0"
+SRCREV = "16aba18c53defb53f747e0519d35af20a21ad0d3"
 
 PV = "2.6.33"
 
