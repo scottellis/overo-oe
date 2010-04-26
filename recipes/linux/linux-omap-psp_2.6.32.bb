@@ -3,7 +3,7 @@ require multi-kernel.inc
 DESCRIPTION = "Linux kernel for OMAP processors"
 KERNEL_IMAGETYPE = "uImage"
 
-COMPATIBLE_MACHINE = "beagleboard|omap3evm|am3517-evm|omap3-touchbook|overo"
+COMPATIBLE_MACHINE = "beagleboard|omap3evm|am3517-evm|dm3730-am3715-evm|omap3-touchbook|overo"
 
 # This is the v2.6.32_OMAPPSP_03.00.00.05 branch
 SRCREV = "7b8926aa626991fa087b00f6bbc1fb6b0e8269b0"
@@ -54,6 +54,7 @@ SRC_URI = "git://arago-project.org/git/people/sriram/ti-psp-omap.git;protocol=gi
            file://0040-ARM-Add-option-to-allow-userspace-access-to-performa.patch;patch=1 \
            file://0041-ARM-Expose-some-PMON-registers-through-sysfs.patch;patch=1 \
            file://0042-musb-allow-host-io-without-gadget-module.patch;patch=1 \
+           file://0043-ARM-OMAP-Change-DSP-rate-table-for-36xx-37xx.patch;patch=1 \
            file://defconfig"
 
 SRC_URI_append_beagleboard = " file://logo_linux_clut224.ppm \

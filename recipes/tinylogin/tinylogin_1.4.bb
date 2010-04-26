@@ -4,8 +4,8 @@ changing passwords, and otherwise maintaining users \
 and groups on an embedded system."
 HOMEPAGE = "http://tinylogin.busybox.net/"
 SECTION = "base"
-LICENSE = "GPL"
-PR = "r6"
+LICENSE = "GPLv2"
+PR = "r7"
 
 #SRC_URI = "http://tinylogin.busybox.net/downloads/tinylogin-${PV}.tar.bz2 \
 SRC_URI = "http://limpens.net/trac/at91-kit-trac/export/4/trunk/sources/tinylogin-${PV}.tar.bz2 \

@@ -58,7 +58,7 @@ case "$arch" in
 	"armv7")
 			machines="" ;;
 	"armv7a")
-			machines="archos5 archos5it palmpre cm-t35 igep0020 omap3-touchbook beagleboard omap3evm am3517-evm omap3517-evm omap3-pandora omapzoom omapzoom2 omapzoom36x overo" ;;
+			machines="archos5 archos5it palmpre cm-t35 igep0020 omap3-touchbook beagleboard omap3evm am3517-evm omap3517-evm dm3730-am3715-evm omap3-pandora omapzoom omapzoom2 omapzoom36x overo" ;;
 	"avr32")
 			machines="atngw100 at32stk1000" ;;
 	"bfin")
@@ -171,7 +171,10 @@ done
 
 if [ "$1" != "--skip-sorted-list" ]; then
     echo "Updating list of sorted packages (takes long)"
-    for i in $(find ../ -name "*.ipk"| grep -v unsorted) ; do basename $i ; done > files-sorted
+    for i in $(find ../ -name "*.ipk"| grep -v unsorted) ; do basename $i ; done > files-sorted-new
+	cat files-sorted files-sorted-new | sort | uniq > files-sorted-tmp
+	mv files-sorted-tmp files-sorted
+	rm files-sorted-*
 fi
 
 ( cd ~/website/repo-updater ; rm -f feed.db* ; php update.php ; rm ../repo/feeds.db* ; cp feeds.db* ../repo )
