@@ -1,5 +1,3 @@
-DEFAULT_PREFERENCE = "-1"
-
 DESCRIPTION = "Linux kernel for OMAP3 processors"
 KERNEL_IMAGETYPE = "uImage"
 
@@ -9,7 +7,7 @@ require linux.inc
 
 MUSB_MODE ?= "host"
 
-SRCREV = "16aba18c53defb53f747e0519d35af20a21ad0d3"
+SRCREV = "248cd24b4fd3376f41fd1b4e3554f4a8c4faa8b9"
 
 PV = "2.6.33"
 
