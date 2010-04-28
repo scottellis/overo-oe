@@ -1,5 +1,5 @@
 LICENSE = "GPL/LGPL"
-DEPENDS = "librsvg libwnck totem-pl-parser libgtop gnome-panel gnome-desktop eds-dbus python-pygtk gnome-python libgnomeprint libgnomeprintui"
+DEPENDS = "python-pycairo librsvg libwnck totem-pl-parser libgtop gnome-panel gnome-desktop eds-dbus python-pygtk gnome-python libgnomeprint libgnomeprintui"
 
 inherit gnome distutils-base
 
