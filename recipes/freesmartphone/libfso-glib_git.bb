@@ -2,17 +2,13 @@ DESCRIPTION = "GLib-based DBus bindings for freesmartphone.org - Vala implementa
 AUTHOR = "Didier 'Ptitjes"
 LICENSE = "LGPL"
 SECTION = "devel"
-DEPENDS = "vala-native vala-dbus-binding-tool-native dbus-glib glib-2.0 fso-specs"
-SRCREV = "f1a0b3fe2ed6e15d83ad4880b4eb7aece00f9d57"
+DEPENDS = "vala-dbus-binding-tool-native dbus-glib glib-2.0 fso-specs"
+SRCREV = "a8ef303b0f700487d4c5f67da555b3d68818ccdc"
 PV = "0.2.2+gitr${SRCPV}"
 PE = "1"
 PR = "r4"
 
-inherit autotools_stage pkgconfig vala
-
-PARALLEL_MAKE = ""
+inherit autotools vala
 
 SRC_URI = "${FREESMARTPHONE_GIT}/libfso-glib.git;protocol=git;branch=master"
 S = "${WORKDIR}/git"
-
-FILES_${PN}-dev += "${datadir}/gir-1.0/*.gir"

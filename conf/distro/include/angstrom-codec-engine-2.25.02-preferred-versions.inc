@@ -1,23 +1,27 @@
 # Codec engine needs a specific set of version of its dependencies, so we specify them here:
 # - using edma-lld 01.11.00.03 (instead of 01.11.00.02) to fix installer issue.
 
-PREFERRED_VERSION_ti-codec-engine = "2_25_01_06"
-PREFERRED_VERSION_ti-codec-engine-examples = "2_25_01_06" 
+# CE 2.25.02.10 is an 'Engineering Build' and is not suitable for production systems. 
+
+PREFERRED_VERSION_ti-codec-engine = "2_25_02_10_eng"
+PREFERRED_VERSION_ti-codec-engine-examples = "2_25_02_10_eng"
 
 PREFERRED_VERSION_ti-biosutils = "1_02_02"
+
+#Check this
 PREFERRED_VERSION_ti-cgt6x = "6_1_9"
-PREFERRED_VERSION_ti-dspbios = "5_41_02_14"
+PREFERRED_VERSION_ti-dspbios = "5_41_00_06"
 PREFERRED_VERSION_ti-dsplink = "1_64"
 PREFERRED_VERSION_ti-dsplink-examples = "1_64"
 PREFERRED_VERSION_ti-dsplink-module = "1_64"
 PREFERRED_VERSION_ti-edma3lld = "01_11_00_03"
 PREFERRED_VERSION_ti-framework-components = "2_25_01_05"
-PREFERRED_VERSION_ti-linuxutils = "2_25_01_06"
+PREFERRED_VERSION_ti-linuxutils = "2_25_02_08"
 PREFERRED_VERSION_ti-local-power-manager = "1_24_01"
 PREFERRED_VERSION_ti-lpm-module = "1_24_01"
 PREFERRED_VERSION_ti-lpm-utils = "1_24_01"
-PREFERRED_VERSION_ti-xdais = "6_25_01_08"
-PREFERRED_VERSION_ti-xdctools = "3_16_01_27"
+PREFERRED_VERSION_ti-xdais = "6_25_02_10_eng"
+PREFERRED_VERSION_ti-xdctools = "3_16_00_18"
 
 PREFERRED_VERSION_ti-codecs-dm355 = "1_13_000"
 PREFERRED_VERSION_ti-codecs-dm355-server = "1_13_000"
