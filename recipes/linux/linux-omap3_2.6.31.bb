@@ -3,7 +3,7 @@ require linux.inc
 DESCRIPTION = "Linux kernel for OMAP3 processors"
 KERNEL_IMAGETYPE = "uImage"
 
-COMPATIBLE_MACHINE = "beagleboard|omap3|omap3evm|overo"
+COMPATIBLE_MACHINE = "beagleboard|omap3-multi|omap3evm|overo"
 
 MUSB_MODE ?= "host"
 

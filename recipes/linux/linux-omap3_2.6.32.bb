@@ -1,7 +1,7 @@
 DESCRIPTION = "Linux kernel for OMAP3 processors"
 KERNEL_IMAGETYPE = "uImage"
 
-COMPATIBLE_MACHINE = "beagleboard|omap3|overo"
+COMPATIBLE_MACHINE = "beagleboard|omap3-multi|overo"
 
 require linux.inc
 
