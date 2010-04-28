@@ -1,3 +1,4 @@
+DEFAULT_PREFERENCE = "-1"
 DESCRIPTION = "Kernel drivers for the PowerVR SGX chipset found in the omap3 SoCs"
 LICENSE = "GPLv2"
 

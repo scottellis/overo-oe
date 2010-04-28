@@ -1,4 +1,4 @@
-
+DEFAULT_PREFERENCE = "-1"
 BINLOCATION = "${S}/gfx_rel_es3.x"
 
 ES2LOCATION = "${S}/gfx_rel_es2.x"
