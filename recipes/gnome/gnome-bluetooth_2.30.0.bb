@@ -15,7 +15,8 @@ RRECOMMENDS_${PN} += "obexd obex-data-server"
 RCONFLICTS_${PN} = "bluez-gnome"
 
 do_configure_prepend() {
-    sed -i -e s:docs::g ${S}/Makefile.am
+	sed -i -e s:docs::g ${S}/Makefile.am
+	sed -i -e 's:(libdir)/gnome-bluetooth/plugins/:(libdir)/gnome-bluetooth/plugins:g' ${S}/lib/plugins/Makefile.am
 	echo "EXTRA_DIST = version.xml" > gnome-doc-utils.make
 	echo "EXTRA_DIST = version.xml" > gtk-doc.make
 }
