@@ -10,6 +10,6 @@ SRC_URI[archive.sha256sum] = "47a559b1c50192b94479ae7dab132ea0008727045d4993501c
 
 PR = "r2"
 
-DEFAULT_PREFERENCE = "-1"
+#DEFAULT_PREFERENCE = "-1"
 
 EXTRA_OECONF += " --disable-gssapi --disable-largefile --enable-debug --disable-relro "
