@@ -24,3 +24,7 @@ do_configure_prepend () {
 do_compile_prepend() {
         oe_runmake dep
 }
+
+do_stage() {
+        :
+}
