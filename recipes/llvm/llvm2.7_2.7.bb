@@ -1,16 +1,11 @@
 require llvm.inc
 
-SRCREV = "83459"
-
-PV = "2.6+svnr${SRCPV}"
-
 PR = "r0"
 
 DEPENDS = "llvm-common llvm2.7-native"
 
 SRC_URI = "\
-  svn://llvm.org/svn/llvm-project/llvm/;proto=http;module=trunk \
-  file://llvm-debugonly-zeroormore.patch;patch=1 \
+  http://llvm.org/releases/${PV}/llvm-${PV}.tgz \
   file://BX_to_BLX.patch;patch=1 \
   "
 
@@ -20,6 +15,7 @@ EXTRA_OECMAKE += "\
         -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
 	"
 
-S = "${WORKDIR}/trunk"
-
 LLVM_RELEASE = "2.7"
+
+SRC_URI[md5sum] = "ac322661f20e7d6c810b1869f886ad9b"
+SRC_URI[sha256sum] = "99664bdc8503a306038166af33f28eb426d99e297575a59d74a1a0dcbddbbca5"
