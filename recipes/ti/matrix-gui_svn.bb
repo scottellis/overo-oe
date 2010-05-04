@@ -4,7 +4,7 @@ LICENSE = "TI"
 SECTION = "multimedia"
 PRIORITY = "optional"
 
-SRCREV = "21"
+SRCREV = "52"
 PV = "1.0"
 PR = "r1+svnr${SRCPV}"
 
@@ -25,7 +25,8 @@ do_install() {
 	install -d ${D}/${datadir}/matrix/html
 	install -m 0644 ${S}/*.html ${D}/${datadir}/matrix/html/
 	install -d ${D}/${datadir}/matrix/images
-	install -m 0644 ${S}/images/*.bmp ${D}/${datadir}/matrix/images/
+	install -m 0644 ${S}/images/*.png ${D}/${datadir}/matrix/images/
+	install -m 0644 ${S}/images/*.png ${D}/${datadir}/matrix/images/
 	install -d ${D}${sysconfdir}/init.d/
 	install -c -m 0755 ${WORKDIR}/init ${D}${sysconfdir}/init.d/matrix-gui
 }
