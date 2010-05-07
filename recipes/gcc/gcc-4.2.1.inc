@@ -1,6 +1,7 @@
 require gcc-common.inc
 
 DEPENDS = "mpfr gmp"
+NATIVEDEPS = "mpfr-native gmp-native"
 
 SRC_URI = "${GNU_MIRROR}/gcc/gcc-${PV}/gcc-${PV}.tar.bz2;name=archive \
 	file://100-uclibc-conf.patch;patch=1 \
@@ -90,6 +91,8 @@ FORTRAN_linux-gnueabi = ",fortran"
 JAVA = ""
 
 EXTRA_OECONF_BASE = "--disable-libssp --disable-bootstrap --disable-libgomp --disable-libmudflap"
+EXTRA_OECONF_INITIAL = "--disable-libmudflap --disable-libgomp --disable-libssp"
+EXTRA_OECONF_INTERMEDIATE = "--disable-libmudflap --disable-libgomp --disable-libssp"
 
 ARM_INSTRUCTION_SET = "arm"
 

@@ -249,10 +249,9 @@ python base_do_unpack() {
 	localdata = bb.data.createCopy(d)
 	bb.data.update_data(localdata)
 
-	src_uri = bb.data.getVar('SRC_URI', localdata)
+	src_uri = bb.data.getVar('SRC_URI', localdata, True)
 	if not src_uri:
 		return
-	src_uri = bb.data.expand(src_uri, localdata)
 	for url in src_uri.split():
 		try:
 			local = bb.data.expand(bb.fetch.localpath(url, localdata), localdata)
@@ -326,7 +325,7 @@ python base_eventhandler() {
 
 addtask configure after do_unpack do_patch
 do_configure[dirs] = "${S} ${B}"
-do_configure[deptask] = "do_populate_staging"
+do_configure[deptask] = "do_populate_sysroot"
 base_do_configure() {
 	:
 }
@@ -340,7 +339,6 @@ base_do_compile() {
 		oenote "nothing to compile"
 	fi
 }
-
 
 addtask install after do_compile
 do_install[dirs] = "${D} ${S} ${B}"
@@ -395,7 +393,7 @@ python () {
     srcuri = bb.data.getVar('SRC_URI', d, 1)
     if "git://" in srcuri:
         depends = bb.data.getVarFlag('do_fetch', 'depends', d) or ""
-        depends = depends + " git-native:do_populate_staging"
+        depends = depends + " git-native:do_populate_sysroot"
         bb.data.setVarFlag('do_fetch', 'depends', depends, d)
 
     # unzip-native should already be staged before unpacking ZIP recipes
@@ -404,7 +402,7 @@ python () {
 
     if ".zip" in src_uri or need_unzip == "1":
         depends = bb.data.getVarFlag('do_unpack', 'depends', d) or ""
-        depends = depends + " unzip-native:do_populate_staging"
+        depends = depends + " unzip-native:do_populate_sysroot"
         bb.data.setVarFlag('do_unpack', 'depends', depends, d)
 
     # 'multimachine' handling

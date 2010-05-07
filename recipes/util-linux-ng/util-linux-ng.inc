@@ -2,9 +2,9 @@ DESCRIPTION = "Util-linux-ng is a suite of essential utilities for any Linux sys
 SECTION = "base"
 LICENSE = "GPL"
 DEPENDS = "udev zlib ncurses virtual/libintl"
-DEPENDS_virtclass-native = "zlib-native ncurses-native lzo-native"
+DEPENDS_virtclass-native = "zlib-native ncurses-native lzo-native gettext-native"
 
-inherit autotools
+inherit autotools gettext
 
 DEFAULT_PREFERENCE = "-1"
 
