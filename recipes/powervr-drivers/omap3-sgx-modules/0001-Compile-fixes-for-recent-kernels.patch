@@ -23,6 +23,13 @@ index 935f78b..4d41829 100755
  #include <linux/console.h>
  #include <linux/fb.h>
  #endif
--- 
-1.6.4.4
-
+--- a/services4/3rdparty/bufferclass_ti/bc_cat.c-orig	2009-10-26 09:26:30.000000000 -0700
++++ a/services4/3rdparty/bufferclass_ti/bc_cat.c	2010-05-05 21:37:28.000000000 -0700
+@@ -28,6 +28,7 @@
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/fs.h>
++#include <linux/slab.h>
+ #include <asm/uaccess.h>
+ #include <asm/io.h>
+ #include <img_defs.h>
