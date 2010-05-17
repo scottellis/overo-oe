@@ -4,7 +4,7 @@ require psplash-ua.inc
 ALTERNATIVE_PRIORITY = "10"
 
 SRC_URI = "svn://svn.o-hand.com/repos/misc/trunk;module=psplash;proto=http \
-          file://${PSPLASH_HAND} \
+          file://${PSPLASH_LOGO} \
           file://${PSPLASH_BAR} \
           file://psplash-default \
           file://splashfuncs \
