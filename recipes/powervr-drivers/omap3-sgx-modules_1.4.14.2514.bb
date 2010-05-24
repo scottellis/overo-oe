@@ -17,6 +17,7 @@ BINFILE := "OMAP35x_Graphics_SDK_setuplinux_${SGXPV}.bin"
 SRC_URI = "http://install.source.dir.local/OMAP35x_Graphics_SDK_setuplinux_${SGXPV}.bin \
            file://0001-Compile-fixes-for-recent-kernels.patch;patch=1 \
 "
+
 S = "${WORKDIR}/OMAP35x_Graphics_SDK_${SGXPV}/GFX_Linux_KM"
 
 inherit module
@@ -34,3 +35,7 @@ do_install() {
 	   ${S}/services4/3rdparty/bufferclass_ti/bufferclass_ti.ko \
 	   ${D}/lib/modules/${KERNEL_VERSION}/kernel/drivers/gpu/pvr
 }
+
+SRC_URI[md5sum] = "7e07019aa76dcdebaa8958df0f89bbe6"
+SRC_URI[sha256sum] = "151d7ce8cbf192a3f0c7e232a5b958cde224309be9ec74ca40031be7d27fa265"
+
