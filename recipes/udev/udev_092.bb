@@ -6,12 +6,12 @@ RPROVIDES_${PN} = "hotplug"
 PR = "r25"
 
 SRC_URI = "${KERNELORG_MIRROR}/pub/linux/utils/kernel/hotplug/udev-${PV}.tar.gz \
-	   file://noasmlinkage.patch;patch=1 \
-	   file://flags.patch;patch=1 \
-	   file://udevsynthesize.patch;patch=1 \
+	   file://noasmlinkage.patch \
+	   file://flags.patch \
+	   file://udevsynthesize.patch \
 	   file://udevsynthesize.sh \
-           file://arm_inotify_fix.patch;patch=1 \
-	   file://mtd-exclude-persistent.patch;patch=1 \
+           file://arm_inotify_fix.patch \
+	   file://mtd-exclude-persistent.patch \
 	   file://mount.blacklist \
 	   "
 
