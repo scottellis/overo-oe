@@ -1,8 +1,6 @@
 require linux.inc
 require linux-openmoko.inc
 
-DESCRIPTION_${PN} = "Linux ${KERNEL_RELEASE} kernel for the Openmoko Neo GSM Smartphones"
-
 KERNEL_RELEASE = "2.6.28"
 KERNEL_VERSION = "${KERNEL_RELEASE}"
 
@@ -13,7 +11,7 @@ PR = "r0"
 
 SRC_URI = "\
   git://git.openmoko.org/git/kernel.git;protocol=git;branch=stable \
-  file://defconfig-oe.patch \
+  file://defconfig-oe.patch;apply=no \
 "
 S = "${WORKDIR}/git"
 

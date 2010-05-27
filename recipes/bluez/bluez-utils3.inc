@@ -14,7 +14,7 @@ SRC_URI = "http://bluez.sourceforge.net/download/bluez-utils-${PV}.tar.gz \
            file://hcid.conf \
            file://bluetooth.default \
            file://bluetooth.init \
-           file://sbc-thumb.patch;patch=1"
+           file://sbc-thumb.patch"
 
 S = "${WORKDIR}/bluez-utils-${PV}"
 

@@ -1,8 +1,6 @@
 require linux.inc
 require linux-openmoko.inc
 
-DESCRIPTION_${PN} = "Linux ${KERNEL_VERSION} kernel for the Openmoko Neo GSM Smartphones"
-
 KERNEL_RELEASE = "2.6.29"
 KERNEL_VERSION = "2.6.29-rc3"
 
@@ -13,8 +11,8 @@ PR = "r8"
 
 SRC_URI = "\
   git://git.openmoko.org/git/kernel.git;protocol=git;branch=andy-tracking \
-  file://fix-install.patch;patch=1 \
-  file://0007-Enable-UBI-UBIFS.patch;patch=1 \
+  file://fix-install.patch \
+  file://0007-Enable-UBI-UBIFS.patch \
 "
 S = "${WORKDIR}/git"
 

@@ -4,14 +4,14 @@ DEFAULT_PREFERENCE = "-1"
 DEPENDS += "gperf-native"
 FILESPATHPKG =. "eglibc-svn:"
 PV = "2.12"
-PR = "${INC_PR}.0"
+PR = "${INC_PR}.1"
 PR_append = "+svnr${SRCPV}"
 SRCREV="10495"
 EGLIBC_BRANCH="eglibc-2_12"
 SRC_URI = "svn://svn.eglibc.org/branches;module=${EGLIBC_BRANCH};proto=svn \
-           file://eglibc-svn-arm-lowlevellock-include-tls.patch;patch=1 \
-           file://IO-acquire-lock-fix.patch;patch=1 \
-           file://shorten-build-commands.patch;patch=1 \
+           file://eglibc-svn-arm-lowlevellock-include-tls.patch \
+           file://IO-acquire-lock-fix.patch \
+           file://shorten-build-commands.patch \
            file://etc/ld.so.conf \
            file://generate-supported.mk"
 S = "${WORKDIR}/${EGLIBC_BRANCH}/libc"
@@ -27,7 +27,7 @@ TARGET_CPPFLAGS = "-I${STAGING_DIR_TARGET}${layout_includedir}"
 
 GLIBC_ADDONS ?= "ports,nptl,libidn"
 
-GLIBC_BROKEN_LOCALES = " _ER _ET so_ET yn_ER sid_ET tr_TR mn_MN gez_ET gez_ER bn_BD te_IN"
+GLIBC_BROKEN_LOCALES = " _ER _ET so_ET yn_ER sid_ET tr_TR mn_MN gez_ET gez_ER bn_BD te_IN es_CR.ISO-8859-1"
 
 #
 # For now, we will skip building of a gcc package if it is a uclibc one

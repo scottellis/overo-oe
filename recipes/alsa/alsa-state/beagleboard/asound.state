@@ -654,4 +654,3 @@ state.omap3beagle {
 		value false
 	}
 }
-
