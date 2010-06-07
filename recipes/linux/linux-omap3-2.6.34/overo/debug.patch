@@ -1,0 +1,217 @@
+diff --git a/arch/arm/mach-omap2/board-omap3beagle.c b/arch/arm/mach-omap2/board-omap3beagle.c
+index e2f6c0a..68d14c8 100644
+--- a/arch/arm/mach-omap2/board-omap3beagle.c
++++ b/arch/arm/mach-omap2/board-omap3beagle.c
+@@ -232,7 +232,7 @@ __init omap3beagle_flash_init(struct flash_partitions partition_info[]){
+ 
+ static int beagle_enable_dvi(struct omap_dss_device *dssdev)
+ {
+-	if (dssdev->reset_gpio != -1)
++	if (gpio_is_valid(dssdev->reset_gpio))
+ 		gpio_set_value(dssdev->reset_gpio, 1);
+ 
+ 	return 0;
+@@ -240,7 +240,7 @@ static int beagle_enable_dvi(struct omap_dss_device *dssdev)
+ 
+ static void beagle_disable_dvi(struct omap_dss_device *dssdev)
+ {
+-	if (dssdev->reset_gpio != -1)
++	if (gpio_is_valid(dssdev->reset_gpio))
+ 		gpio_set_value(dssdev->reset_gpio, 0);
+ }
+ 
+@@ -249,40 +249,15 @@ static struct omap_dss_device beagle_dvi_device = {
+ 	.name = "dvi",
+ 	.driver_name = "generic_panel",
+ 	.phy.dpi.data_lines = 24,
+-	.reset_gpio = 170,
+ 	.platform_enable = beagle_enable_dvi,
+ 	.platform_disable = beagle_disable_dvi,
+ };
+ 
+-static int beagle_panel_enable_tv(struct omap_dss_device *dssdev)
+-{
+-#define ENABLE_VDAC_DEDICATED           0x03
+-#define ENABLE_VDAC_DEV_GRP             0x20
+-
+-	twl_i2c_write_u8(TWL4030_MODULE_PM_RECEIVER,
+-			ENABLE_VDAC_DEDICATED,
+-			TWL4030_VDAC_DEDICATED);
+-	twl_i2c_write_u8(TWL4030_MODULE_PM_RECEIVER,
+-			ENABLE_VDAC_DEV_GRP, TWL4030_VDAC_DEV_GRP);
+-
+-	return 0;
+-}
+-
+-static void beagle_panel_disable_tv(struct omap_dss_device *dssdev)
+-{
+-	twl_i2c_write_u8(TWL4030_MODULE_PM_RECEIVER, 0x00,
+-			TWL4030_VDAC_DEDICATED);
+-	twl_i2c_write_u8(TWL4030_MODULE_PM_RECEIVER, 0x00,
+-			TWL4030_VDAC_DEV_GRP);
+-}
+-
+ static struct omap_dss_device beagle_tv_device = {
+ 	.name = "tv",
+ 	.driver_name = "venc",
+ 	.type = OMAP_DISPLAY_TYPE_VENC,
+ 	.phy.venc.type = OMAP_DSS_VENC_TYPE_SVIDEO,
+-	.platform_enable = beagle_panel_enable_tv,
+-	.platform_disable = beagle_panel_disable_tv,
+ };
+ 
+ static struct omap_dss_device *beagle_dss_devices[] = {
+@@ -304,15 +279,11 @@ static struct platform_device beagle_dss_device = {
+ 	},
+ };
+ 
+-static struct regulator_consumer_supply beagle_vdac_supply = {
+-	.supply		= "vdda_dac",
+-	.dev		= &beagle_dss_device.dev,
+-};
++static struct regulator_consumer_supply beagle_vdac_supply =
++	REGULATOR_SUPPLY("vdda_dac", "omapdss");
+ 
+-static struct regulator_consumer_supply beagle_vdvi_supply = {
+-	.supply		= "vdds_dsi",
+-	.dev		= &beagle_dss_device.dev,
+-};
++static struct regulator_consumer_supply beagle_vdvi_supply =
++	REGULATOR_SUPPLY("vdds_dsi", "omapdss");
+ 
+ static void __init beagle_display_init(void)
+ {
+@@ -377,12 +348,31 @@ static int beagle_twl_gpio_setup(struct device *dev,
+ 	 * power switch and overcurrent detect
+ 	 */
+ 
+-	gpio_request(gpio + 1, "EHCI_nOC");
+-	gpio_direction_input(gpio + 1);
++	if (cpu_is_omap3630()) {
++		beagle_dvi_device.reset_gpio = 129;
++
++		/* Power on DVI, Serial and PWR led */ 
++ 		gpio_request(gpio + 1, "nDVI_PWR_EN");
++		gpio_direction_output(gpio + 1, 0);	
+ 
+-	/* TWL4030_GPIO_MAX + 0 == ledA, EHCI nEN_USB_PWR (out, active low) */
+-	gpio_request(gpio + TWL4030_GPIO_MAX, "nEN_USB_PWR");
+-	gpio_direction_output(gpio + TWL4030_GPIO_MAX, 0);
++		/* Power on camera interface */
++		gpio_request(gpio + 2, "CAM_EN");
++		gpio_direction_output(gpio + 2, 1);
++
++		/* TWL4030_GPIO_MAX + 0 == ledA, EHCI nEN_USB_PWR (out, active low) */
++		gpio_request(gpio + TWL4030_GPIO_MAX, "nEN_USB_PWR");
++		gpio_direction_output(gpio + TWL4030_GPIO_MAX, 0);
++	}
++	else {
++		beagle_dvi_device.reset_gpio = 170,
++
++		gpio_request(gpio + 1, "EHCI_nOC");
++		gpio_direction_input(gpio + 1);
++
++		/* TWL4030_GPIO_MAX + 0 == ledA, EHCI nEN_USB_PWR (out, active low) */
++		gpio_request(gpio + TWL4030_GPIO_MAX, "nEN_USB_PWR");
++		gpio_direction_output(gpio + TWL4030_GPIO_MAX, 0);
++	}
+ 
+ 	/* TWL4030_GPIO_MAX + 1 == ledB, PMU_STAT (out, active low LED) */
+ 	gpio_leds[2].gpio = gpio + TWL4030_GPIO_MAX + 1;
+@@ -635,11 +625,6 @@ static void __init omap3_beagle_init(void)
+ 			ARRAY_SIZE(omap3_beagle_devices));
+ 	omap_serial_init();
+ 
+-	omap_mux_init_gpio(170, OMAP_PIN_INPUT);
+-	gpio_request(170, "DVI_nPD");
+-	/* REVISIT leave DVI powered down until it's needed ... */
+-	gpio_direction_output(170, true);
+-
+ 	usb_musb_init(&musb_board_data);
+ 	usb_ehci_init(&ehci_pdata);
+ 	omap3beagle_flash_init(omap3beagle_flash_partitions);
+diff --git a/arch/arm/mach-omap2/board-overo.c b/arch/arm/mach-omap2/board-overo.c
+index f4a6323..95efc77 100644
+--- a/arch/arm/mach-omap2/board-overo.c
++++ b/arch/arm/mach-omap2/board-overo.c
+@@ -270,35 +270,11 @@ static struct omap_dss_device overo_dvi_device = {
+ 	.platform_disable	= overo_panel_disable_dvi,
+ };
+ 
+-static int overo_panel_enable_tv(struct omap_dss_device *dssdev)
+-{
+-#define ENABLE_VDAC_DEDICATED           0x03
+-#define ENABLE_VDAC_DEV_GRP             0x20
+-
+-	twl_i2c_write_u8(TWL4030_MODULE_PM_RECEIVER,
+-			ENABLE_VDAC_DEDICATED,
+-			TWL4030_VDAC_DEDICATED);
+-	twl_i2c_write_u8(TWL4030_MODULE_PM_RECEIVER,
+-			ENABLE_VDAC_DEV_GRP, TWL4030_VDAC_DEV_GRP);
+-
+-	return 0;
+-}
+-
+-static void overo_panel_disable_tv(struct omap_dss_device *dssdev)
+-{
+-	twl_i2c_write_u8(TWL4030_MODULE_PM_RECEIVER, 0x00,
+-			TWL4030_VDAC_DEDICATED);
+-	twl_i2c_write_u8(TWL4030_MODULE_PM_RECEIVER, 0x00,
+-			TWL4030_VDAC_DEV_GRP);
+-}
+-
+ static struct omap_dss_device overo_tv_device = {
+ 	.name = "tv",
+ 	.driver_name = "venc",
+ 	.type = OMAP_DISPLAY_TYPE_VENC,
+ 	.phy.venc.type = OMAP_DSS_VENC_TYPE_SVIDEO,
+-	.platform_enable = overo_panel_enable_tv,
+-	.platform_disable = overo_panel_disable_tv,
+ };
+ 
+ static int overo_panel_enable_lcd(struct omap_dss_device *dssdev)
+@@ -372,15 +348,11 @@ static struct platform_device overo_dss_device = {
+ 	},
+ };
+ 
+-static struct regulator_consumer_supply overo_vdda_dac_supply = {
+-	.supply		= "vdda_dac",
+-	.dev		= &overo_dss_device.dev,
+-};
++static struct regulator_consumer_supply overo_vdda_dac_supply =
++	REGULATOR_SUPPLY("vdda_dac", "omapdss");
+ 
+-static struct regulator_consumer_supply overo_vdds_dsi_supply = {
+-	.supply		= "vdds_dsi",
+-	.dev		= &overo_dss_device.dev,
+-};
++static struct regulator_consumer_supply overo_vdds_dsi_supply =
++	REGULATOR_SUPPLY("vdds_dsi", "omapdss");
+ 
+ struct flash_partitions {
+ 	struct mtd_partition *parts;
+diff --git a/drivers/mfd/twl4030-madc.c b/drivers/mfd/twl4030-madc.c
+index de6bdcd..4adf880 100644
+--- a/drivers/mfd/twl4030-madc.c
++++ b/drivers/mfd/twl4030-madc.c
+@@ -20,15 +20,16 @@
+  *
+  */
+ 
++#include <linux/delay.h>
++#include <linux/fs.h>
+ #include <linux/init.h>
+ #include <linux/interrupt.h>
+ #include <linux/kernel.h>
+-#include <linux/types.h>
++#include <linux/miscdevice.h>
+ #include <linux/module.h>
+-#include <linux/delay.h>
+-#include <linux/fs.h>
+ #include <linux/platform_device.h>
+-#include <linux/miscdevice.h>
++#include <linux/slab.h>
++#include <linux/types.h>
+ #include <linux/i2c/twl.h>
+ #include <linux/i2c/twl4030-madc.h>
+ 

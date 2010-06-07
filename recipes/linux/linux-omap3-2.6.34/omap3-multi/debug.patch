@@ -1,0 +1,12 @@
+diff --git a/drivers/mmc/core/core.c b/drivers/mmc/core/core.c
+index 3168ebd..991ac70 100644
+--- a/drivers/mmc/core/core.c
++++ b/drivers/mmc/core/core.c
+@@ -1098,6 +1098,7 @@ void mmc_rescan(struct work_struct *work)
+ 	 * First we search for SDIO...
+ 	 */
+ 	err = mmc_send_io_op_cond(host, 0, &ocr);
++	pr_warning("%s: mmc_rescan - card ocr from io_op=0x%08x, err = %d\n", mmc_hostname(host), ocr, err);
+ 	if (!err) {
+ 		if (mmc_attach_sdio(host, ocr))
+ 			mmc_power_off(host);
