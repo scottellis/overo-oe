@@ -2,10 +2,10 @@ DESCRIPTION = "Delayed job execution and batch processing."
 SECTION = "base"
 LICENSE="BSD"
 DEPENDS = "flex-native"
-RCONFLICTS = "atd"
-RREPLACES = "atd"
+RCONFLICTS_${PN} = "atd"
+RREPLACES_${PN} = "atd"
 
-PR = "r2"
+PR = "r3"
 
 SRC_URI = "${DEBIAN_MIRROR}/main/a/at/at_${PV}-11.tar.gz \
 	   file://configure.patch \

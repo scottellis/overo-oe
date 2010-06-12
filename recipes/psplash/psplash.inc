@@ -12,7 +12,7 @@ PSPLASH_BAR ?= "psplash-bar-img.h"
 
 SRCREV = "422"
 PV = "0.0+svnr${SRCPV}"
-PR = "r29"
+PR = "r30"
 
 # You can create your own pslash-poky-img.h by doing
 # ./make-image-header.sh <file>.png POKY
