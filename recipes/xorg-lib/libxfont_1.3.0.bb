@@ -3,7 +3,7 @@ require xorg-lib-common.inc
 DESCRIPTION = "X11 font rasterisation library"
 LICENSE= "BSD-X"
 DEPENDS += "freetype fontcacheproto xtrans fontsproto libfontenc"
-PROVIDES = "xfont"
+BBCLASSEXTEND = "native"
 PR = "r2"
 PE = "1"
 
