@@ -9,7 +9,6 @@ PREFERRED_VERSION_automake-native = "1.11.1"
 PREFERRED_VERSION_libmikmod = "3.2.0-beta2"
 PREFERRED_VERSION_mtd-utils-native = "1.2.0+git"
 PREFERRED_VERSION_strace = "4.5.15"
-PREFERRED_VERSION_mesa-dri     = "7.8.1"
 PREFERRED_VERSION_emacs-x11 = "23.1"
 
 # We need this for jamvm
@@ -48,7 +47,7 @@ PREFERRED_VERSION_glib-2.0-native = "2.24.0"
 UDEV_GE_141 = "1"
 
 PREFERRED_VERSION_postgresql = "8.4.4"
-ANGSTROM_QT_VERSION ?= "4.6.2"
+ANGSTROM_QT_VERSION ?= "4.6.2+4.7.0-beta1"
 PREFERRED_VERSION_qt4-tools-native = "${ANGSTROM_QT_VERSION}"
 PREFERRED_VERSION_qt4-tools-sdk = "${ANGSTROM_QT_VERSION}"
 PREFERRED_VERSION_qt4-embedded = "${ANGSTROM_QT_VERSION}"

@@ -14,7 +14,7 @@ DISTRO_XORG_CONFIG_MANAGER_shr ?= ""
 CONFIG_MANAGER_OPTION += "${@['--disable-config-hal','--enable-config-hal',''][bb.data.getVar('DISTRO_XORG_CONFIG_MANAGER',d) in ['hal']]}"
 CONFIG_MANAGER_OPTION += "${@['--disable-config-udev','--enable-config-udev',''][bb.data.getVar('DISTRO_XORG_CONFIG_MANAGER',d) in ['udev']]}"
 
-DEPENDS = "fontconfig freetype flex-native lbxutil kbproto \ 
+DEPENDS = "fontconfig freetype flex-native liblbxutil kbproto \ 
 xf86driproto drm glproto randrproto renderproto fixesproto damageproto \
 xcmiscproto xextproto xproto xf86miscproto xf86vidmodeproto xf86bigfontproto \
 scrnsaverproto bigreqsproto resourceproto fontsproto inputproto \
@@ -59,7 +59,7 @@ FILES_${PN}-sdl = "${bindir}/Xsdl"
 FILES_${PN}-xprint = "${libdir}/X11/xserver/*/print"
 FILES_${PN}-xvfb = "${bindir}/Xvfb"
 FILES_${PN}-utils = "${bindir}/scanpci ${bindir}/pcitweak ${bindir}/ioport ${bindir}/in[bwl] ${bindir}/out[bwl] ${bindir}/mmap[rw] ${bindir}/gtf ${bindir}/getconfig ${bindir}/getconfig.pl"
-FILES_${PN} = "${bindir} ${libdir}/X11/Options ${libdir}/X11/Cards ${libdir}/X11/getconfig ${libdir}/X11/etc ${libdir}/modules ${libdir}/xorg/modules /etc/X11 ${libdir}/xorg/protocol.txt"
+FILES_${PN} = "${bindir} ${libdir}/X11/Options ${libdir}/X11/Cards ${libdir}/X11/getconfig ${libdir}/X11/etc ${libdir}/modules ${libdir}/xorg/modules /etc/X11 ${libdir}/xorg/protocol.txt ${datadir}/X11/xorg.conf.d"
 FILES_${PN}-doc += "${libdir}/X11/doc /usr/share/X11/xkb/compiled/README.compiled"
 FILES_${PN}-xephyr = "${bindir}/Xephyr"
 

@@ -16,6 +16,7 @@ SRC_URI = "\
 	file://0007-Disable-demos-qtdemos.patch \
 	file://0008-Disable-examples-declarative.patch \
 	file://demos.browser.add.mediaservices.lib.patch \
+	file://add.xmlpatterns.lib.patch \
 	file://g++.conf \
 	file://linux.conf \
            "
@@ -68,5 +69,5 @@ do_install_append() {
 	done
 }
 
-SRC_URI[md5sum] = "128dae41b23bb427b735548c7864703a"
-SRC_URI[sha256sum] = "1107de986e4dda7795d094a2a3b5d85027d780b9b63e9860957cb1d6c56c8929"
+SRC_URI[md5sum] = "1a863712da64dd2c1d08380075b74f39"
+SRC_URI[sha256sum] = "32237307496b255bb95abdcd1754885947008a52c76f32c6843744d330f2b7b5"

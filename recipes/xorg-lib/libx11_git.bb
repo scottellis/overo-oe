@@ -1,30 +1,14 @@
-DEFAULT_PREFERENCE = "-1"
-
-DESCRIPTION = "Xlib/XCB: Xlib with XCB transport"
-SECTION = "x11/libs"
-LICENSE = "XFree86"
-DEPENDS = "libxcb xproto xextproto libxau xtrans libxdmcp xcmiscproto xf86bigfontproto kbproto inputproto bigreqsproto util-macros"
-PROVIDES = "virtual/libx11"
-RPROVIDES_${PN} = "virtual-libx11"
-SRCREV = "c3f3e4a9e531d010312c97e753d6e543e607094d"
+require libx11.inc
 PV = "1.3.3+git"
-PR = "r4"
-
-FILES_${PN} += "${datadir}/X11/XKeysymDB ${datadir}/X11/XErrorDB"
-FILES_${PN}-locale += "${datadir}/X11/locale"
+PR = "${INC_PR}.0"
 
 SRC_URI = "git://anongit.freedesktop.org/git/xorg/lib/libX11;protocol=git"
+SRC_URI += " file://keysymdef_include.patch \
+             file://x11_disable_makekeys.patch \
+             file://dolt-fix.patch \
+"
+
+SRCREV = "c3f3e4a9e531d010312c97e753d6e543e607094d"
 S = "${WORKDIR}/git"
 
-inherit autotools pkgconfig
-
-EXTRA_OECONF="--enable-malloc0returnsnull"
-
-do_compile() {
-	(
-		unset CC LD CXX CCLD
-		oe_runmake -C src/util 'CC=${BUILD_CC}' 'LD=${BUILD_LD}' 'CXX=${BUILD_CXX}' 'CCLD=${BUILD_CCLD}' 'CFLAGS=-D_GNU_SOURCE ${BUILD_CFLAGS}' 'LDFLAGS=${BUILD_LDFLAGS}' 'CXXFLAGS=${BUILD_CXXFLAGS}' 'CPPFLAGS=${BUILD_CPPFLAGS}' makekeys
-	)
-	oe_runmake
-}
-
+DEFAULT_PREFERENCE = "-1"
