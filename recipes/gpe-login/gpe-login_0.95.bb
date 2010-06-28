@@ -24,6 +24,7 @@ SRC_URI_append_spitz = "file://brightness-adjust-keyluanchrc.patch"
 SRC_URI_append_akita = "file://brightness-adjust-keyluanchrc.patch"
 SRC_URI_append_c7x0 = "file://brightness-adjust-keyluanchrc.patch"
 SRC_URI_append_overo = "file://autologin.patch"
+SRC_URI_append_omap3-multi = "file://autologin.patch"
 SRC_URI_append_beagleboard = "file://autologin.patch"
 
 
