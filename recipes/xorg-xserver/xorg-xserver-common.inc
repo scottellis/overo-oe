@@ -2,7 +2,7 @@ HOMEPAGE = "http://www.x.org"
 SECTION = "x11/base"
 LICENSE = "MIT-X"
 
-INC_PR = "r17"
+INC_PR = "r18"
 
 PROVIDES = "virtual/xserver"
 
@@ -24,7 +24,7 @@ libfontenc libxdmcp libxxf86vm libxaw libxmu libxt libxpm libxext libx11 \
 libxkbui libxxf86misc libxi libdmx libxtst libxres virtual/libgl libxcalibrate \
 libxv ${DISTRO_XORG_CONFIG_MANAGER}"
 
-RRECOMMENDS_${PN} = "libpciaccess"
+RRECOMMENDS_${PN} = "libpciaccess libdrm"
 
 XORG_PN = "xorg-server"
 SRC_URI = "${XORG_MIRROR}/individual/xserver/${XORG_PN}-${PV}.tar.bz2;name=archive"
