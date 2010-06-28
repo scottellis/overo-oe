@@ -26,8 +26,6 @@ APPS = " \
 
 E_CONFIG = " \
   e-wm-config-angstrom \
-  e-wm-config-angstrom-touchscreen \
-  e-wm-config-angstrom-widescreen \
  "
 
 E_MODULES = " \
@@ -62,7 +60,7 @@ XSERVER_BASE = " \
   fontconfig-utils \
   gnome-icon-theme angstrom-gnome-icon-theme-enable \
   gnome-themes \
-  gtk-theme-clearlooks \
+  gpe-theme-clearlooks \
   gtk-engine-clearlooks \
   gpe-dm \
   gpe-session-scripts \
