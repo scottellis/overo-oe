@@ -1,5 +1,5 @@
 require busybox.inc
-PR = "${INC_PR}.0"
+PR = "${INC_PR}.1"
 
 DEFAULT_PREFERENCE = "-1"
 
@@ -29,8 +29,8 @@ SRC_URI = "\
   file://mdev.conf \
 "
 
-SRC_URI[tarball.md5sum] = "319486ec65078d07fde26eb620fecde7"
-SRC_URI[tarball.sha256sum] = "6d45ec8e72ca85516c8669f81267e0fbe11881435983e32532a56b44651dd6c5"
+SRC_URI[tarball.md5sum] = "2ba980f720a5bdce4ec05423519acc35"
+SRC_URI[tarball.sha256sum] = "3bf1b1a41294d25335abdd10c65cffdb01c36337ca011f1b38c6ad89590115ba"
 
 EXTRA_OEMAKE += "V=1 ARCH=${TARGET_ARCH} CROSS_COMPILE=${TARGET_PREFIX}"
 
@@ -46,4 +46,15 @@ do_install_append() {
     install -d ${D}${sysconfdir}/mdev
     install -m 0755 ${WORKDIR}/find-touchscreen.sh ${D}${sysconfdir}/mdev/
     install -m 0755 ${WORKDIR}/mdev ${D}${sysconfdir}/init.d/
+
+    if grep "CONFIG_UDHCPD=y" ${WORKDIR}/defconfig; then
+          install -m 0755 ${WORKDIR}/busybox-udhcpd ${D}${sysconfdir}/init.d/
+    fi
+
+    if grep "CONFIG_UDHCPC=y" ${WORKDIR}/defconfig; then
+          install -d ${D}${sysconfdir}/udhcpc.d
+          install -d ${D}${datadir}/udhcpc
+          install -m 0755 ${WORKDIR}/simple.script ${D}${sysconfdir}/udhcpc.d/50default
+          install -m 0755 ${WORKDIR}/default.script ${D}${datadir}/udhcpc/default.script
+    fi
 }
