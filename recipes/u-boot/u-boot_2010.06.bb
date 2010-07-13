@@ -3,6 +3,7 @@ require u-boot.inc
 
 DEFAULT_PREFERENCE = "-1"
 DEFAULT_PREFERENCE_lite5200 = "1"
+DEFAULT_PREFERENCE_tqm8540 = "1"
 
 SRC_URI = "ftp://ftp.denx.de/pub/u-boot/u-boot-${PV}.tar.bz2 "
 
@@ -15,6 +16,6 @@ do_compile () {
        oe_runmake all
 }
 
-SRC_URI[md5sum] = "2bf5ebf497dddc52440b1ea386cc1332"
-SRC_URI[sha256sum] = "902d1b2c15787df55186fae4033685fb0c5a5a12755a08383e97c4a3e255925b"
+SRC_URI[md5sum] = "cd42bc64b6edafa6930ce299a144503e"
+SRC_URI[sha256sum] = "790ccb12d99fc527a8b8d20dfdf491795d30f87aa0902f8cbda196583aa20bc8"
 
