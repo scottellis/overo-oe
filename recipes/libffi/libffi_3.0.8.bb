@@ -7,7 +7,7 @@ PRIORITY = "optional"
 
 inherit autotools gettext pkgconfig
 
-PR = "r0"
+PR = "r1"
 
 S = "${WORKDIR}/${P}"
 
@@ -17,7 +17,7 @@ PACKAGES = "${PN}-dbg ${PN} ${PN}-dev ${PN}-doc"
 
 FILES_${PN} = "${libdir}/libffi.so.*"
 
-FILES_${PN}-dev = "${includedir}/${TARGET_SYS}/ffi* \
+FILES_${PN}-dev = "${libdir}/libffi-3.0.8/include/ffi* \
 		   ${libdir}/libffi.a \
 		   ${libdir}/libffi.la \
 		   ${libdir}/libffi.so \
@@ -53,33 +53,6 @@ EXTRA_OECONF_FPU = "${@get_gcc_fpu_setting(bb, d)}"
 #Somehow gcc doesn't set __SOFTFP__ when passing -mfloatabi=softp :(
 TARGET_CC_ARCH_append_armv6 = " -D__SOFTFP__"
 TARGET_CC_ARCH_append_armv7a = " -D__SOFTFP__"
-
-do_compile_append() {
-	sed -i -e"s|\\${libdir}/${P}/include|\\${includedir}/${TARGET_SYS}/|" libffi.pc
-}
-
-do_install_append() {
-	install_libffi_headers
-}
-
-# Separate function which can be disabled in the -native recipe.
-install_libffi_headers() {
-	# follow Debian and move this to $includedir/${TARGET_SYS}
-	install -d ${D}${includedir}/${TARGET_SYS}
-	mv ${D}${libdir}/${P}/include/ffitarget.h ${D}${includedir}/${TARGET_SYS}
-	mv ${D}${libdir}/${P}/include/ffi.h ${D}${includedir}/${TARGET_SYS}
-}
-
-ffi_include = "ffi.h ffitarget.h"
-
-do_stage () {
-	oe_libinstall -so -C .libs libffi ${STAGING_LIBDIR}
-
-	mkdir -p ${STAGING_INCDIR}/
-	for i in ${ffi_include}; do
-		install -m 0644 include/$i ${STAGING_INCDIR}/
-	done
-}
 
 SRC_URI[md5sum] = "188a4f79fdac2310044b44b7d3918ef9"
 SRC_URI[sha256sum] = "2c7c5b88a68fb362262889ba25ef25dc27864b7bbf03547a8a36b8d567569406"
