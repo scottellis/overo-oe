@@ -6,6 +6,7 @@ SRC_URI = "\
 	http://icedtea.classpath.org/download/source/icedtea6-${PV}.tar.gz;name=iced \
 	http://download.java.net/openjdk/jdk6/promoted/b17/openjdk-6-src-b17-14_oct_2009.tar.gz;subdir=openjdk-src-dir;name=ojdk \
 	file://disable-library-checks.patch \
+	file://icedtea-fix-jar-path.patch \
 	file://build-hacks-native.patch \
 	file://icedtea-sane-x86-arch-name.patch \
         file://icedtea-javac-in.patch \
@@ -23,6 +24,7 @@ ICEDTEA_PATCHES = "\
 	file://icedtea-hotspot-make-arch-sane-for-x86.patch;apply=no \
 	file://icedtea-jdk-sane-x86-arch.patch;apply=no \
 	file://icedtea-unbreak-float.patch;apply=no \
+        file://icedtea-oe-path.patch;apply=no \
 	"
 
 export DISTRIBUTION_PATCHES = "\
@@ -32,4 +34,5 @@ export DISTRIBUTION_PATCHES = "\
 	patches/icedtea-hotspot-make-arch-sane-for-x86.patch \
 	patches/icedtea-jdk-sane-x86-arch.patch \
 	patches/icedtea-unbreak-float.patch \
+        patches/icedtea-oe-path.patch \
 	"
