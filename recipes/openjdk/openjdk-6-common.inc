@@ -10,7 +10,7 @@ ICEDTEA = "NEEDS TO BE SET"
 S = "${WORKDIR}/${ICEDTEA}"
 B = "${S}/build"
 
-INC_PR = "r7"
+INC_PR = "r8"
 
 SRC_URI = "\
   ${ICEDTEA_URI} \
@@ -344,6 +344,17 @@ do_stage() {
           :
 }
 
+# Notes about the ideas behind packaging:
+# 1) User should install openjdk-6-jre. This is a provider of 'java2-runtime'.
+# 2) This lets package mgmt install: openjdk-6-java
+# -> openjdk-6-vm-shark|openjdk-6-vm-zero|openjdk-6-vm-cacao -> openjdk-6-common
+#
+# With opkg the zero VM is chosen which is good b/c that is the best known (= compatible)
+# runtime. Installing other runtimes side-by-side is possible. Through jvm.cfg the following
+# order of precedence is enforced: zero, shark, cacao. User can chose a different runtime
+# by adding '-shark' or '-cacao' to the Java command (or by deinstalling an otherwise preferred
+# runtime)
+# 3) All other packages, including -jdk, are optional and not needed for normal Java apps.
 PACKAGES = " \
             ${JDK_PN}-jre \
             ${JDK_PN}-dbg \
@@ -422,8 +433,12 @@ RPROVIDES_${JDK_PN}-vm-shark = "java2-vm"
 RPROVIDES_${JDK_PN}-vm-zero = "java2-vm"
 RPROVIDES_${JDK_PN}-vm-cacao = "java2-vm"
 
-RPROVIDES_${JDK_PN}-java = "java2-runtime"
 RDEPENDS_${JDK_PN}-java = "java2-vm"
+
+# For some reason shark and cacao do not automatically depends on -common.
+# So we add that manually.
+RDEPENDS_${JDK_PN}-vm-shark = "${JDK_PN}-common"
+RDEPENDS_${JDK_PN}-vm-cacao = "${JDK_PN}-common"
 
 # There is a symlink to a .so but this one is valid.
 INSANE_SKIP_${JDK_PN}-vm-shark = "1"
@@ -431,13 +446,14 @@ INSANE_SKIP_${JDK_PN}-vm-zero = "1"
 INSANE_SKIP_${JDK_PN}-vm-cacao = "1"
 INSANE_SKIP_${JDK_PN}-common = "1"
 
-
 FILES_${JDK_PN}-jdk = " \
                        ${JDK_HOME}/bin \
                        ${JDK_HOME}/lib \
                        ${JDK_HOME}/include \
                       "
-RDEPENDS_${JDK_PN}-jre = "java2-runtime"
+RDEPENDS_${JDK_PN}-jre = "${JDK_PN}-java"
+RPROVIDES_${JDK_PN}-jre = "java2-runtime"
+
 RDEPENDS_${JDK_PN}-jdk = "${JDK_PN}-jre"
 
 FILES_${JDK_PN}-doc = "${JDK_HOME}/man"
@@ -458,11 +474,11 @@ pkg_prerm_${JDK_PN}-vm-cacao () {
 	sed -i -e "s|^\-cacao.*|\-cacao ERROR|"  ${JDK_HOME}/jre/lib/arm/jvm.cfg
 }
 
-pkg_postinst_${JDK_PN}-java () {
+pkg_postinst_${JDK_PN}-jre () {
 	update-alternatives --install ${bindir}/java java ${JDK_HOME}/jre/bin/java 15
 }
 
-pkg_prerm_${JDK_PN}-java () {
+pkg_prerm_${JDK_PN}-jre () {
 	update-alternatives --remove java ${JDK_HOME}/jre/bin/java
 }
 
