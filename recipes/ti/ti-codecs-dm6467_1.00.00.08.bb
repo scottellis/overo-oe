@@ -5,12 +5,12 @@ LICENSE = "TI"
 
 # TODO :: Move to common .inc (omap3 and omapl ready)
 
-PV = "1_00_00_03"
+PV = "1_00_00_08"
 
-SRC_URI[dm6467codecsbin.md5sum] = "c15085bd613a1df4f3634cc3ed0e04a5"
-SRC_URI[dm6467codecsbin.sha256sum] = "d10e221e53ca4420d72e13496ceabce9b2d0be8c08a5d622bee691ccfa98b8bd"
+SRC_URI[dm6467codecsbin.md5sum] = "41b039978b18fc5214d31b477b7558c9"
+SRC_URI[dm6467codecsbin.sha256sum] = "84c000d01ca6d8fd3389f44fb0daa47522995306f5546dc656afd8b1efc8ba79"
 
-PR = "r4"
+PR = "r1"
 
 require ti-paths.inc
 require ti-staging.inc
@@ -18,11 +18,11 @@ require ti-eula-unpack.inc
 
 PROVIDES += "ti-codecs-dm6467-server"
 
-S = "${WORKDIR}/dvsdk/dvsdk_3_10_00_11/cs2dm6467_1_00_00_03"
+S = "${WORKDIR}/dvsdk/dvsdk_3_10_00_16/cs2dm6467_1_00_00_08"
 
-SRC_URI = "http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/dvsdk/DVSDK_3_10/3_10_00_11/exports/cs2dm6467_1_00_00_03_Setup.bin;name=dm6467codecsbin"
+SRC_URI = "http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/dvsdk/DVSDK_3_10/3_10_00_16/exports/cs2dm6467_1_00_00_08_Setup.bin;name=dm6467codecsbin"
 
-BINFILE = "cs2dm6467_1_00_00_03_Setup.bin"
+BINFILE = "cs2dm6467_1_00_00_08_Setup.bin"
 TI_BIN_UNPK_CMDS = "Y: qY:workdir:Y"
 
 DEPENDS = "ti-cgt6x ti-xdctools ti-dspbios ti-codec-engine ti-linuxutils"
