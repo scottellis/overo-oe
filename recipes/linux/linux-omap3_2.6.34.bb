@@ -1,5 +1,3 @@
-DEFAULT_PREFERENCE = "-1"
-
 DESCRIPTION = "Linux kernel for OMAP3 processors"
 KERNEL_IMAGETYPE = "uImage"
 
