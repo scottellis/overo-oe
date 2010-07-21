@@ -4,11 +4,12 @@ configure (or, respectively, deconfigure) network interfaces, based on \
 the file /etc/network/interfaces."
 LICENSE = "GPL"
 SECTION = "base"
-PR = "r2"
+PR = "r3"
 
 
 SRC_URI = "${DEBIAN_MIRROR}/main/i/ifupdown/ifupdown_${PV}.tar.gz;name=ifupdown \
            file://busybox.patch \
+           file://dhclient.patch \
            file://zeroconf.patch \
            file://init "
 
