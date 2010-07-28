@@ -83,6 +83,7 @@ sourceipk_do_create_srcipk() {
         echo "Section: ${SECTION}" >> $control_file
         echo "Priority: Optional" >> $control_file
         echo "Maintainer: ${MAINTAINER}" >> $control_file
+        echo "License: ${LICENSE}" >> $control_file
         echo "Architecture: ${SRCIPK_PACKAGE_ARCH}" >> $control_file
         srcuri="${SRC_URI}"
         if [ "$srcuri" == "" ]
@@ -113,7 +114,7 @@ sourceipk_do_create_srcipk() {
         mkdir -p ${DEPLOY_DIR_IPK}/${SRCIPK_PACKAGE_ARCH}
         pkg_file=${DEPLOY_DIR_IPK}/${SRCIPK_PACKAGE_ARCH}/${PN}-src_${PV}-${PR}_${SRCIPK_PACKAGE_ARCH}.ipk
         rm -f $pkg_file
-        tar -C $srcipk_dir -czf $pkg_file .
+        ( cd $srcipk_dir && ar -crf $pkg_file ./debian-binary ./data.tar.gz ./control.tar.gz )
 
         # Remove the temporary directory
         rm -rf $tmp_dir
