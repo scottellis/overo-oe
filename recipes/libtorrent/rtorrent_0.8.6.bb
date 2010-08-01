@@ -7,8 +7,9 @@ DEPENDS = "libtorrent curl ncurses gnutls libgpg-error"
 SRC_URI = "http://libtorrent.rakshasa.no/downloads/rtorrent-${PV}.tar.gz \
            file://autoconf-cross-fix.patch"
 
+PR = "r0"
+
 inherit autotools
 
-
-SRC_URI[md5sum] = "6216be7ce5e3ead9dc115eaeea863694"
-SRC_URI[sha256sum] = "597cefac4535d7f3b752253e5997b3c851c261b26b966a39beb032dcf1d5baa7"
+SRC_URI[md5sum] = "b804c45c01c40312926bcea6b55bb084"
+SRC_URI[sha256sum] = "8c96c68e1524162abd1fc4b612d0c3d924fccc25159c0b3f208e69281f0b32db"
