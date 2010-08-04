@@ -25,7 +25,7 @@ BAD_RECOMMENDATIONS ?= ""
 IPKG_VARIANT ?= "opkg"
 
 RDEPENDS_append = " ${@base_conditional("ONLINE_PACKAGE_MANAGEMENT", "none", "", "${IPKG_VARIANT} opkg-collateral", d)}"
-PACKAGE_INSTALL_append = " ${@base_conditional("ONLINE_PACKAGE_MANAGEMENT", "none", "", "${IPKG_VARIANT} opkg-collateral", d)}"
+PACKAGE_INSTALL_PKGMGR = " ${@base_conditional("ONLINE_PACKAGE_MANAGEMENT", "none", "", "${IPKG_VARIANT} opkg-collateral", d)}"
 
 fakeroot rootfs_ipk_do_rootfs () {
 	set -x
@@ -44,7 +44,6 @@ fakeroot rootfs_ipk_do_rootfs () {
 		echo "Status: deinstall ok not-installed" >> $STATUS
 		echo >> $STATUS
 	done
-
 	opkg-cl ${IPKG_ARGS} update
 
 	# Uclibc builds don't provide this stuff...
@@ -59,6 +58,12 @@ fakeroot rootfs_ipk_do_rootfs () {
 	if [ ! -z "${PACKAGE_INSTALL}" ]; then
 		opkg-cl ${IPKG_ARGS} install ${PACKAGE_INSTALL}
 	fi
+	if [ ! -z "${PACKAGE_INSTALL_ATTEMPTONLY}" ]; then
+		for i in ${PACKAGE_INSTALL_ATTEMPTONLY}; do
+			opkg-cl ${IPKG_ARGS} install $i 2>&1 || true
+		done > ${T}/log.do_rootfs-attemptonly.${PID}
+	fi
+	opkg-cl ${IPKG_ARGS} install ${PACKAGE_INSTALL_PKGMGR}
 
 	export D=${IMAGE_ROOTFS}
 	export OFFLINE_ROOT=${IMAGE_ROOTFS}
