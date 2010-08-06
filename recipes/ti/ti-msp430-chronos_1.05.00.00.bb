@@ -34,8 +34,8 @@ do_install() {
     cp -pPrf "${S}"/"Control Center"/* ${D}/${installdir}/ti-msp430-chronos-apps
 
     # Remove dos formatting
-    dos2unix "${D}/${installdir}/ti-msp430-chronos-apps/Chronos Data Logger"/*
-    dos2unix "${D}/${installdir}/ti-msp430-chronos-apps/Chronos Control Center"/*
+    fromdos "${D}/${installdir}/ti-msp430-chronos-apps/Chronos Data Logger"/*
+    fromdos "${D}/${installdir}/ti-msp430-chronos-apps/Chronos Control Center"/*
 
     # Should probably also remove hardcoded script reference to tcl8.5
 }
