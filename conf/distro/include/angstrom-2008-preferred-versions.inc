@@ -1,4 +1,4 @@
-ANGSTROM_QT_VERSION ?= "4.6.2"
+ANGSTROM_QT_VERSION ?= "4.6.3"
 CE_VERSION ?= "2.25.01"
 
 require conf/distro/include/angstrom-codec-engine-${CE_VERSION}-preferred-versions.inc
@@ -20,6 +20,7 @@ PREFERRED_VERSION_gtk+		= "2.20.1"
 PREFERRED_VERSION_gtk+-native	= "2.20.1"
 PREFERRED_VERSION_gtkmm		= "2.20.0"
 PREFERRED_VERSION_hal		= "0.5.14"
+PREFERRED_VERSION_jpeg		= "6b"
 PREFERRED_VERSION_libgemwidget	= "1.0"
 PREFERRED_VERSION_libgpephone	= "0.4"
 PREFERRED_VERSION_libsdl-x11	= "1.2.14"
@@ -56,8 +57,6 @@ PREFERRED_VERSION_samba		= "3.3.9"
 PREFERRED_VERSION_tiff 		= "3.9.2+4.0.0beta5"
 
 PREFERRED_VERSION_udev 		= "151"
-PREFERRED_VERSION_udev_spitz	= "141"
-PREFERRED_VERSION_udev_akita	= "141"
 PREFERRED_VERSION_udev_libc-uclibc = "141"
 UDEV_GE_141 = "1"
 

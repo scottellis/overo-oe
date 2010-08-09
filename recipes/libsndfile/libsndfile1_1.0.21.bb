@@ -14,7 +14,7 @@ DEPENDS = "libsamplerate0"
 
 S = "${WORKDIR}/libsndfile-${PV}"
 
-inherit autotools_stage  lib_package pkgconfig
+inherit autotools  lib_package pkgconfig
 
 do_configure_prepend_arm() {
 	ac_cv_sizeof_off_t=8

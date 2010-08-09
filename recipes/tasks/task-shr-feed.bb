@@ -1,9 +1,11 @@
 DESCRIPTION = "SHR Feed"
-PR = "r61"
+PR = "r63"
 PV = "1.0"
 LICENSE = "GPL"
 
 inherit task
+
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 RDEPENDS_${PN} += "\
 		babiloo-efl \
@@ -293,6 +295,7 @@ RDEPENDS_${PN} += "\
 		spojegui \
 		dbus-daemon-proxy \
 		unixbench \
+		maxima \
 "
 
 # this is only usefull on gta02 and on other devices it's trying to pull mesa-dri (not respecting DEFAULT_PROVIDER for virtual/libgl)

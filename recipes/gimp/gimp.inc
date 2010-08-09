@@ -26,15 +26,6 @@ do_configure_append() {
         find ${S} -name Makefile | xargs sed -i s:'file-wmf$(EXEEXT)':'':g
 }
 
-do_install_append() {
-	install -d install -d ${D}${datadir}/pixmaps
-	install -m 0755 ${S}/desktop/48x48/gimp.png ${D}${datadir}/pixmaps/
-}
-
-do_stage() {
-        autotools_stage_all
-}
-
 python populate_packages_prepend () {
 	cv_libdir = bb.data.expand('${libdir}', d)
 	do_split_packages(d, cv_libdir, '^lib(.*)\.so\.*', 'lib%s', 'GIMP %s library', extra_depends='', allow_links=True)

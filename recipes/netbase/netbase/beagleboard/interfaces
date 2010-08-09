@@ -58,5 +58,3 @@ iface lo inet loopback
 # Bluetooth networking
 #iface bnep0 inet dhcp
 
-
-

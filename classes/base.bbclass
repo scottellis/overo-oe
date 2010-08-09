@@ -348,7 +348,7 @@ base_do_configure() {
 addtask compile after do_configure
 do_compile[dirs] = "${S} ${B}"
 base_do_compile() {
-	if [ -e Makefile -o -e makefile ]; then
+	if [ -e Makefile -o -e makefile -o -e GNUmakefile ]; then
 		oe_runmake || die "make failed"
 	else
 		oenote "nothing to compile"
@@ -389,7 +389,9 @@ python () {
             import re
             this_machine = bb.data.getVar('MACHINE', d, 1)
             if this_machine and not re.match(need_machine, this_machine):
-                raise bb.parse.SkipPackage("incompatible with machine %s" % this_machine)
+                this_soc_family = bb.data.getVar('SOC_FAMILY', d, 1)
+                if this_soc_family and not re.match(need_machine, this_soc_family):
+                    raise bb.parse.SkipPackage("incompatible with machine %s" % this_machine)
 
         need_target = bb.data.getVar('COMPATIBLE_TARGET_SYS', d, 1)
         if need_target:
