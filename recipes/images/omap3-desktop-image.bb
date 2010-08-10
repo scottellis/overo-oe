@@ -85,7 +85,7 @@ SETTINGS = " \
   networkmanager network-manager-applet networkmanager-openvpn \
   gnome-bluetooth \
   gpe-conf \
-  gpe-package \
+#  gpe-package \
  "
 
 XSERVER_BASE = " \
