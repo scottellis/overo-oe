@@ -5,7 +5,7 @@ COMPATIBLE_MACHINE = "beagleboard|omap3-multi|overo"
 
 require linux.inc
 
-MUSB_MODE ?= "host"
+MUSB_MODE ?= "peripheral"
 
 SRCREV = "8c58a467d1b0b2525f415cb66beb9ef4d50b9c50"
 
