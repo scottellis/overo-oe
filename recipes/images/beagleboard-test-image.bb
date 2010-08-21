@@ -20,12 +20,17 @@ IMAGE_INSTALL += " \
   nano \
   cpuburn-neon \
   kernel-module-mt9t112 \
+  kernel-module-g-ether \
   u-boot-mkimage \
   sox \
   devmem2 \
+  ti-dsplink-examples \
 "
 
 export IMAGE_BASENAME = "beagleboard-test-image"
 
 EXTRA_IMAGEDEPENDS += "x-load u-boot virtual/kernel"
-IMAGE_FSTYPES += "ext2.gz"
+IMAGE_FSTYPES += "ext2.gz cpio.gz.u-boot"
+IMAGE_ROOTFS_SIZE_ext2 = "131072"
+EXTRA_IMAGECMD_ext2.gz += "-i 8192"
+
