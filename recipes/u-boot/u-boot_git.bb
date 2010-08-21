@@ -1,5 +1,5 @@
 require u-boot.inc
-PR ="r62"
+PR ="r64"
 
 FILESPATHPKG =. "u-boot-git:"
 
@@ -10,7 +10,7 @@ SRCREV_spitz = "9bf86baaa3b35b25baa2d664e2f7f6cafad689ee"
 SRCREV_c7x0 = "9bf86baaa3b35b25baa2d664e2f7f6cafad689ee"
 SRCREV_afeb9260 = "6b8edfde22acc574b5532e9f086e6a7287a9bc78"
 SRCREV_afeb9260-180 = "6b8edfde22acc574b5532e9f086e6a7287a9bc78"
-SRCREV_palmpre = "6b8edfde22acc574b5532e9f086e6a7287a9bc78"
+SRCREV_palmpre = "668a6b45915d10d75357f5b93f569bbf49ea2b06"
 SRCREV_cm-t35 = "3c014f1586d5bfe30dca7549396915c83f31cd30"
 SRCREV_mpc8641-hpcn = "f20393c5e787b3776c179d20f82a86bda124d651"
 SRCREV_p2020ds = "f20393c5e787b3776c179d20f82a86bda124d651"
@@ -71,6 +71,7 @@ SRC_URI_beagleboard = "git://www.denx.de/git/u-boot.git;protocol=git \
                        file://0044-Beagleboard-Adjust-boot.patch \
                        file://0045-BeagleBoard-Enable-pullups-on-i2c2.patch \
                        file://0046-BeagleBoard-Add-camera-to-default-bootargs.patch \
+		       file://0001-BeagleBoard-move-ramdisk-parameters.patch \
                        file://fw_env.config \
 "
 SRCREV_beagleboard = "ca6e1c136ddb720c3bb2cc043b99f7f06bc46c55"
@@ -177,7 +178,8 @@ SRCREV_omapzoom = "d691b424f1f5bf7eea3a4131dfc578d272e8f335"
 PV_omapzoom = "2009.01+${PR}+gitr${SRCREV}"
 
 SRC_URI_omapzoom2 = "git://dev.omapzoom.org/pub/scm/bootloader/u-boot.git;branch=master;protocol=git \
-                     file://0001-OMAP3-set-L1NEON-bit-in-aux-control-register.patch"
+                     file://0001-OMAP3-set-L1NEON-bit-in-aux-control-register.patch \
+                     file://inline-fix.patch"
 SRCREV_omapzoom2 = "78e778e0ea884306841c6499851a1e35177d81d0"
 PV_omapzoom2 = "1.1.4+${PR}+gitr${SRCREV}"
 PE_omapzoom2 = "1"
