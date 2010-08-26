@@ -4,11 +4,9 @@ DEFAULT_PREFERENCE_omap3-pandora = "-1"
 
 FILESDIR = "${@os.path.dirname(bb.data.getVar('FILE',d,1))}/x-load-git/${MACHINE}"
 
-SRCREV = "319b26586fafb86f919f514bcd175838aaab96b3"
-SRCREV_beagleboard = "1c9276af4d6a5b7014a7630a1abeddf3b3177563"
+SRCREV = "bbe9544b8e15a4a0ef1a3aa12ae4ceb51dcef6d8"
 
-PV = "1.42+${PR}+gitr${SRCREV}"
-PV_beagleboard = "1.44+${PR}+gitr${SRCREV}"
+PV = "1.44ss+${PR}+gitr${SRCREV}"
 PR ="r15"
 PE = "1"
 
@@ -18,8 +16,6 @@ SRC_URI = " \
 
 SRC_URI_append_beagleboard = " \
                               file://name.patch \
-                              file://bb8547fcbc54ecc7a75f9ad45a31042a04d8a2ce.patch \
-                              file://xm-mem.patch \
                              "
 
 SRC_URI_append_omap3-touchbook = " \
