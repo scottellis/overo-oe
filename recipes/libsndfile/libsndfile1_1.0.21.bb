@@ -3,14 +3,12 @@ HOMEPAGE = "http://www.mega-nerd.com/libsndfile"
 AUTHOR = "Erik de Castro Lopo"
 SECTION = "libs/multimedia"
 LICENSE = "LGPL"
-DEPENDS = "sqlite3"
+DEPENDS = "sqlite3 libsamplerate0"
 PR = "r1"
 
 SRC_URI = "http://www.mega-nerd.com/libsndfile/files/libsndfile-${PV}.tar.gz;name=libsndfile1021targz"
 SRC_URI[libsndfile1021targz.md5sum] = "880a40ec636ab2185b97f8927299b292"
 SRC_URI[libsndfile1021targz.sha256sum] = "7e9083a2551ff347276d82cdb61f2b4f9cd137c0b76433800e991583ded8ea67"
-
-DEPENDS = "libsamplerate0"
 
 S = "${WORKDIR}/libsndfile-${PV}"
 
