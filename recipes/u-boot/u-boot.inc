@@ -17,11 +17,14 @@ UBOOT_BINARY ?= "u-boot.bin"
 UBOOT_IMAGE ?= "u-boot-${MACHINE}-${PV}-${PR}.bin"
 UBOOT_SYMLINK ?= "u-boot-${MACHINE}.bin"
 
+do_configure () {
+	oe_runmake ${UBOOT_MACHINE}
+}
+
 do_compile () {
 	unset LDFLAGS
 	unset CFLAGS
 	unset CPPFLAGS
-	oe_runmake ${UBOOT_MACHINE}
 	oe_runmake all
 	oe_runmake tools env
 }
@@ -30,15 +33,6 @@ do_install () {
 	install -d ${D}/boot
 	install ${S}/${UBOOT_BINARY} ${D}/boot/${UBOOT_IMAGE}
 	ln -sf ${UBOOT_IMAGE} ${D}/boot/${UBOOT_BINARY}
-
-	if [ -e ${WORKDIR}/fw_env.config ] ; then
-		install -d ${D}$base_sbindir}
-		install -d ${D}${sysconfdir}
-		install -m 644 ${WORKDIR}/fw_env.config ${D}${sysconfdir}/fw_env.config
-		install -m 755 ${S}/tools/env/fw_printenv ${D}${base_sbindir}/fw_printenv
-		install -m 755 ${S}/tools/env/fw_printenv ${D}${base_sbindir}/fw_setenv
-	fi
-
 }
 
 FILES_${PN} = "/boot"
@@ -62,27 +56,4 @@ do_deploy () {
 }
 do_deploy[dirs] = "${S}"
 addtask deploy before do_build after do_compile
-
-do_stage() {
-	install -d ${STAGING_BINDIR_NATIVE}
-	install -m 755 tools/mkimage ${STAGING_BINDIR_NATIVE}/
-}
-
-do_install() {
-	install -d ${D}${sbindir}
-	install -m 0755 ${S}/tools/env/fw_printenv ${D}${sbindir}
-	ln -s /usr/sbin/fw_printenv ${D}${sbindir}/fw_setenv
-	install -d ${D}${sysconfdir}
-	install -m 0644 ${S}/tools/env/fw_env.config ${D}${sysconfdir}
-}
-
-PACKAGES = "u-boot-tools-env"
-FILES_u-boot-tools-env = "${sbindir}/fw_printenv"
-FILES_u-boot-tools-env += "${sbindir}/fw_setenv"
-FILES_u-boot-tools-env += "${sysconfdir}/fw_env.config"
-INSANE_SKIP_u-boot-tools-env = True
-
-PACKAGES += "u-boot-tools-env-dbg"
-FILES_u-boot-tools-env-dbg = "${sbindir}/.debug/fw_printenv"
-
 

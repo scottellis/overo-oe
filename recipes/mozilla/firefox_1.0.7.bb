@@ -1,3 +1,5 @@
+DEFAULT_PREFERENCE = "-1"
+
 PR = "r2"
 
 SRC_URI = "ftp://ftp.mozilla.org/pub/mozilla.org/firefox/releases/${PV}/source/firefox-${PV}-source.tar.bz2 \

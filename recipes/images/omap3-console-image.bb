@@ -54,6 +54,7 @@ TOOLS_INSTALL = " \
   sudo \
   syslog-ng \
   task-proper-tools \
+  u-boot-utils \
  "
 
 IMAGE_INSTALL += " \
