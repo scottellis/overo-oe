@@ -1,0 +1,12 @@
+diff --git git/arch/arm/plat-omap/mcbsp.c-orig git/arch/arm/plat-omap/mcbsp.c
+index e1d0440..1c2a147 100644
+--- git/arch/arm/plat-omap/mcbsp.c-orig
++++ git/arch/arm/plat-omap/mcbsp.c
+@@ -14,6 +14,7 @@
+ 
+ #include <linux/module.h>
+ #include <linux/init.h>
++#define DEBUG
+ #include <linux/device.h>
+ #include <linux/platform_device.h>
+ #include <linux/wait.h>
