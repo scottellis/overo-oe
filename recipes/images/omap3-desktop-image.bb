@@ -16,8 +16,8 @@ APPS = " \
   evince \
 #  ekiga \
   empathy \
-#  firefox \
-#  gecko-mediaplayer-firefox-hack \
+  firefox \
+  gecko-mediaplayer-firefox-hack \
   gimp \
   gnome-games \
   gnome-mplayer \
