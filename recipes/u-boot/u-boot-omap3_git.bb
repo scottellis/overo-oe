@@ -2,7 +2,7 @@ require u-boot.inc
 
 FILESDIR = "${@os.path.dirname(bb.data.getVar('FILE',d,1))}/u-boot-omap3-git/"
 
-SRCREV = "65b6948a2c7eb9675228aab2c108f106e73f268c"
+SRCREV = "381ea7010f4d5e2d4b1299fa44b3c7a4914040aa"
 
 PV = "2010.6+${PR}+git${SRCREV}"
 PR = "r0"
