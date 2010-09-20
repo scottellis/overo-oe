@@ -20,7 +20,6 @@ SRC_URI = "git://www.sakoman.com/git/linux-omap-2.6.git;branch=omap3-2.6.34;prot
 SRC_URI_append = " \
             file://no-lcd-gpio.patch;apply=yes \
             file://plat-omap-mcbsp-debug.patch;apply=yes \
-            file://plat-omap-mcbsp-config-msg.patch;apply=yes \
            "
 
 do_configure_prepend() {
