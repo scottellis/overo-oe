@@ -3,6 +3,7 @@ LICENSE = "LGPL"
 SECTION = "libs"
 PRIORITY = "optional"
 DEPENDS = "virtual/libx11 libsm"
+PR = "r2"
 
 inherit autotools pkgconfig
 

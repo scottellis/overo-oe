@@ -1,15 +1,17 @@
 require eglibc.inc
 
 DEPENDS += "gperf-native"
-SRCREV = "11305"
+SRCREV = "11461"
 DEFAULT_PREFERENCE = "-1"
 FILESPATHPKG =. "eglibc-svn:"
 PV = "2.12+svnr${SRCPV}"
-PR = "${INC_PR}.0"
+PR = "${INC_PR}.1"
 EGLIBC_BRANCH="trunk"
 SRC_URI = "svn://svn.eglibc.org;module=${EGLIBC_BRANCH} \
            file://eglibc-svn-arm-lowlevellock-include-tls.patch \
-	   file://IO-acquire-lock-fix.patch \
+           file://IO-acquire-lock-fix.patch \
+           file://sh4_set_fpscr_2.12.patch \
+           file://sh4_local-fpscr_values.patch \
            file://etc/ld.so.conf \
            file://generate-supported.mk"
 S = "${WORKDIR}/${EGLIBC_BRANCH}/libc"
@@ -46,7 +48,7 @@ python __anonymous () {
 EXTRA_OECONF = "--enable-kernel=${OLDEST_KERNEL} \
                 --without-cvs --disable-profile --disable-debug --without-gd \
                 --enable-clocale=gnu \
-                --enable-add-ons=${GLIBC_ADDONS},ports \
+                --enable-add-ons=${GLIBC_ADDONS} \
                 --with-headers=${STAGING_INCDIR} \
                 --without-selinux \
                 ${GLIBC_EXTRA_OECONF}"
