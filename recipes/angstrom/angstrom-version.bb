@@ -13,6 +13,8 @@ export METADATA_REVISION
 export METADATA_BRANCH
 export TARGET_SYS
 
+PARALLEL_MAKE = ""
+
 do_install() {
 	install -d ${D}${sysconfdir}
 	echo "Angstrom ${DISTRO_VERSION}" > ${D}${sysconfdir}/angstrom-version

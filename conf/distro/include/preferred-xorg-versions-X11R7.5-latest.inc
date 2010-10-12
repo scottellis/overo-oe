@@ -108,7 +108,7 @@ PREFERRED_VERSION_libxxf86misc ?= "1.0.2"
 PREFERRED_VERSION_liblbxutil ?= "1.1.0"
 PREFERRED_VERSION_liboldx ?= "1.0.1"
 PREFERRED_VERSION_libxkbui ?= "1.0.2"
-PREFERRED_VERSION_pixman ?= "0.16.2"
+PREFERRED_VERSION_pixman ?= "0.18.4"
 #proto
 PREFERRED_VERSION_evieext ?= "1.1.0"
 PREFERRED_VERSION_fontcacheproto ?= "0.1.3"
@@ -121,6 +121,6 @@ PREFERRED_VERSION_xproxymanagementprotocol ?= "1.0.3"
 #util
 PREFERRED_VERSION_gccmakedep ?= "1.0.2"
 PREFERRED_VERSION_imake ?= "1.0.2"
-PREFERRED_VERSION_lndir ?= "1.0.1"
+PREFERRED_VERSION_lndir ?= "1.0.2"
 PREFERRED_VERSION_xorg-cf-files ?= "1.0.3"
 #xserver
