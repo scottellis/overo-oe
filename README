@@ -1,4 +1,8 @@
-This is the OpenEmbedded packages metadata repository.
+This is my base minimal branch for building a quick booting Gumstix
+Overo image. 
 
-See http://openembedded.org
+It involves a customized kernel config and some dependency changes
+for a few recipes, eliminating stuff I never use.
+
+This branch is a playground and not always stable.
 
