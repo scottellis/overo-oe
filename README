@@ -1,4 +1,9 @@
-This is the OpenEmbedded packages metadata repository.
+This branch is for the Fluid Imaging (http://www.fluidimaging.com) 
+and Battelle (http://www.battelle.org) joint venture to produce a 
+submersible, autonomous FlowCAM.
 
-See http://openembedded.org
+This branch exists mostly to keep a known good and stable environment
+for the Gumstix Overo code used in the project. 
+
+It is based on my minimal branch with a custom image recipe.
 
