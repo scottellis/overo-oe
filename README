@@ -1,4 +1,5 @@
-This is the OpenEmbedded packages metadata repository.
+This branch is for the ads127x ADC driver project.
 
-See http://openembedded.org
+The branch is based on my minimal branch with patches to the
+in-tree McBSP driver code needed for the ads127x driver.
 
