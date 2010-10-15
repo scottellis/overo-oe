@@ -2,6 +2,10 @@
 # For working on the mcbsp/ads127x device driver 
 
 ANGSTROM_EXTRA_INSTALL ?= "\
+            kernel-module-libertas \
+            kernel-module-libertas-sdio \
+            libertas-sd-firmware \
+            wireless-tools \
             devmem2 \
             openssh-ssh \
             openssh-sftp \
