@@ -5,39 +5,34 @@
 # for use in ${PV}, extracted from the ${S} git checkout, assuming it is one.
 # This is most useful in concert with srctree.bbclass.
 
+def git_drop_tag_prefix(version):
+    import re
+    if re.match("v\d", version):
+        return version[1:]
+    else:
+        return version
 
-GITVER = "${@get_git_pv('${S}', d)}"
+GIT_TAGADJUST = "git_drop_tag_prefix(version)"
+GITVER = "${@get_git_pv('${S}', d, tagadjust=lambda version:${GIT_TAGADJUST})}"
 
 def get_git_pv(path, d, tagadjust=None):
-    from subprocess import Popen, PIPE
     import os
     from bb import error
     from bb.parse import mark_dependency
+    import oe.process
 
     gitdir = os.path.abspath(os.path.join(d.getVar("S", True), ".git"))
-    env = { "GIT_DIR": gitdir }
-
-    def popen(cmd, **kwargs):
-        kwargs["stderr"] = PIPE
-        kwargs["stdout"] = PIPE
-        kwargs["env"] = env
+    def git(cmd):
         try:
-            pipe = Popen(cmd, **kwargs)
-        except OSError, e:
-            #error("Execution of %s failed: %s" % (cmd, e))
-            return
-
-        (stdout, stderr) = pipe.communicate(None)
-        if pipe.returncode != 0:
-            #error("Execution of %s failed: %s" % (cmd, stderr))
-            return
-        return stdout.rstrip()
+            return oe_run(d, ["git"] + cmd, cwd=gitdir).rstrip()
+        except oe.process.CmdError, exc:
+            bb.fatal(str(exc))
 
     # Force the recipe to be reparsed so the version gets bumped
     # if the active branch is switched, or if the branch changes.
     mark_dependency(d, os.path.join(gitdir, "HEAD"))
 
-    ref = popen(["git", "symbolic-ref", "HEAD"])
+    ref = git(["symbolic-ref", "HEAD"])
     if ref:
         reffile = os.path.join(gitdir, ref)
         if os.path.exists(reffile):
@@ -54,9 +49,9 @@ def get_git_pv(path, d, tagadjust=None):
     if os.path.exists(tagdir):
         mark_dependency(d, tagdir)
 
-    ver = popen(["git", "describe", "--tags"], cwd=path)
+    ver = git(["describe", "--tags"])
     if not ver:
-        ver = popen(["git", "rev-parse", "--short", "HEAD"], cwd=path)
+        ver = git(["rev-parse", "--short", "HEAD"])
         if ver:
             return "0.0-%s" % ver
         else:

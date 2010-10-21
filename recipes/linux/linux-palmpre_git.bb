@@ -11,9 +11,9 @@ file://defconfig \
 
 S = "${WORKDIR}/git/"
 
-SRCREV = "96eba42952e860f652e66a72569319dfd35756dc"
+SRCREV = "33239e4074f4716a674b450a443b64add201bf39"
 KV = "2.6.24"
-PR="r2"
+PR="r3"
 PV = "${KV}+gitr${SRCPV}"
 
 # linux.inc overrides LOCAVERSION but we like to stay with the one used originally

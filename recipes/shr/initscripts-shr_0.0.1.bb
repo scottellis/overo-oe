@@ -5,7 +5,7 @@ DEPENDS = ""
 RDEPENDS_${PN} = "procps"
 LICENSE = "GPL"
 PV = "0.0.1"
-PR = "r17"
+PR = "r21"
 
 RCONFLICTS_${PN} = "initscripts"
 
@@ -31,7 +31,8 @@ SRC_URI = "file://alignment.sh \
 	   file://umountfs \
 	   file://umountnfs.sh \
 	   "
-SRC_URI_append_palmpre = " file://usb-gadget.sh"
+
+SRC_URI_append_palmpre = " file://mountdevtmpfs.sh"
 
 inherit base
 
@@ -76,8 +77,8 @@ do_install () {
 	install -m 0755	${WORKDIR}/umountnfs.sh		${D}${sysconfdir}/init.d
 
 	if [ "${MACHINE}" == "palmpre" ]; then
-		install -m 0755 ${WORKDIR}/usb-gadget.sh ${D}${sysconfdir}/init.d
-		ln -sf ../init.d/usb-gadget.sh ${D}${sysconfdir}/rcS.d/S00usb-gadget.sh
+		install -m 0755 ${WORKDIR}/mountdevtmpfs.sh ${D}${sysconfdir}/init.d
+		ln -sf ../init.d/mountdevtmpfs.sh ${D}${sysconfdir}/rcS.d/S03mountdevtmpfs.sh
 	fi
 
 #
