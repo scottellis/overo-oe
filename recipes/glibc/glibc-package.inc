@@ -44,7 +44,7 @@ def get_glibc_fpu_setting(bb, d):
 EXTRA_OECONF += "${@get_glibc_fpu_setting(bb, d)}"
 EXTRA_OEMAKE += "rootsbindir=${base_sbindir}"
 
-OVERRIDES_append = ":${TARGET_ARCH}-${TARGET_OS}"
+OVERRIDES_prepend = "${TARGET_ARCH}-${TARGET_OS}:"
 
 do_install() {
 	oe_runmake install_root=${D} install
@@ -60,6 +60,7 @@ do_install() {
 		mv ${WORKDIR}/SUPPORTED.tmp ${WORKDIR}/SUPPORTED
 	done
 	rm -f ${D}{sysconfdir}/rpc
+	rm -rf ${D}${datadir}/zoneinfo
 	install -d ${D}${sysconfdir}/init.d
 	install -m 0644 ${S}/nscd/nscd.conf ${D}${sysconfdir}/
 	install ${S}/nscd/nscd.init ${D}${sysconfdir}/init.d/nscd

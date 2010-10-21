@@ -1,13 +1,17 @@
 DESCRIPTION = "Perl is a popular scripting language."
 HOMEPAGE = "http://www.perl.org/"
 SECTION = "libs"
-LICENSE = "Artistic|GPL"
+LICENSE = "Artistic|GPLv1"
 DEPENDS = "virtual/db-native gdbm-native"
-PR = "r4"
+PR = "r5"
 NATIVE_INSTALL_WORKS = "1"
 
 # Not tested enough
 DEFAULT_PREFERENCE = "-1"
+
+# 5.10.1 has this module built-in
+PROVIDES += "libmodule-build-perl-native"
+RPROVIDES_${PN} += "libmodule-build-perl-native"
 
 FILESDIR = "${@os.path.dirname(bb.data.getVar('FILE',d,1))}/perl-${PV}"
 

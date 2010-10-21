@@ -48,6 +48,8 @@ def package_qa_get_machine_dict():
                         "m68k":       (    4,     0,    0,          False,         True),
                         "mips":       (    8,     0,    0,          False,         True),
                         "mipsel":     (    8,     0,    0,          True,          True),
+                        "mips64":     (    8,     0,    0,          False,         False),
+                        "mips64el":   (    8,     0,    0,          True,          False),
                         "nios2":      (  113,     0,    0,          True,          True),
                         "powerpc":    (   20,     0,    0,          False,         True),
                         "s390":       (   22,     0,    0,          False,         True),
@@ -65,6 +67,8 @@ def package_qa_get_machine_dict():
                         "x86_64":     (   62,     0,    0,          True,          False),
                         "mips":       (    8,     0,    0,          False,         True),
                         "mipsel":     (    8,     0,    0,          True,          True),
+                        "mips64":     (    8,     0,    0,          False,         False),
+                        "mips64el":   (    8,     0,    0,          True,          False),
                         "nios2":      (  113,     0,    0,          True,          True),
                         "powerpc":    (   20,     0,    0,          False,         True),
                         "sh4":        (   42,     0,    0,          True,          True),
@@ -338,7 +342,7 @@ def package_qa_check_staged(path,d):
             if file.endswith(".la"):
                 file_content = open(path).read()
                 # Don't check installed status for native/cross packages
-                if not iscrossnative:
+                if not iscrossnative and bb.data.getVar('LIBTOOL_HAS_SYSROOT', d, True) is "no":
                     if installed in file_content:
                         error_msg = "%s failed sanity test (installed) in path %s" % (file,root)
                         sane = package_qa_handle_error(5, error_msg, "staging", path, d)
@@ -462,6 +466,8 @@ python do_qa_configure() {
     configs = []
     bb.debug(1, "Checking sanity of the config.log file")
     for root, dirs, files in os.walk(bb.data.getVar('WORKDIR', d, True)):
+        if ".pc" in root:
+            continue
         statement = "grep 'CROSS COMPILE Badness:' %s > /dev/null" % \
                     os.path.join(root,"config.log")
         if "config.log" in files:

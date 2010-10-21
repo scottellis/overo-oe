@@ -62,7 +62,8 @@ export STRIP = "${HOST_PREFIX}strip"
 base_prefix = "${STAGING_DIR_NATIVE}"
 prefix = "${STAGING_DIR_NATIVE}${prefix_native}"
 exec_prefix = "${STAGING_DIR_NATIVE}${prefix_native}"
-
+libdir = ${base_prefix}${libdir_native}
+base_libdir = ${base_prefix}${base_libdir_native}
 # Since we actually install these into situ there is no staging prefix
 STAGING_DIR_HOST = ""
 STAGING_DIR_TARGET = ""
@@ -93,7 +94,7 @@ DEPENDS_virtclass-native ?= "${ORIG_DEPENDS}"
 
 def native_virtclass_add_override(d):
     if "native" in (bb.data.getVar('BBCLASSEXTEND', d, True) or ""):
-        bb.data.setVar("OVERRIDES", bb.data.getVar("OVERRIDES", d, False) + ":virtclass-native", d)
+        bb.data.setVar("OVERRIDES", "virtclass-native:" + bb.data.getVar("OVERRIDES", d, False), d)
 
 OVERRIDES .= "${@native_virtclass_add_override(d)}"
 

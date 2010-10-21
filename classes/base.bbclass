@@ -10,7 +10,7 @@ inherit utils
 inherit utility-tasks
 inherit metadata_scm
 
-OE_IMPORTS += "oe.path oe.utils sys os time"
+OE_IMPORTS += "oe.path oe.utils oe.packagegroup sys os time"
 
 python oe_import () {
     if isinstance(e, bb.event.ConfigParsed):
@@ -202,10 +202,14 @@ do_unpack[dirs] = "${WORKDIR}"
 python base_do_unpack() {
     from glob import glob
 
-    srcurldata = bb.fetch.init(d.getVar("SRC_URI", True).split(), d, True)
+    src_uri = d.getVar("SRC_URI", True)
+    if not src_uri:
+        return
+    srcurldata = bb.fetch.init(src_uri.split(), d, True)
     filespath = d.getVar("FILESPATH", True).split(":")
 
-    for url, urldata in srcurldata.iteritems():
+    for url in src_uri.split():
+        urldata = srcurldata[url]
         if urldata.type == "file" and "*" in urldata.path:
             # The fetch code doesn't know how to handle globs, so
             # we need to handle the local bits ourselves
@@ -366,6 +370,11 @@ python () {
     if "git://" in srcuri:
         depends = bb.data.getVarFlag('do_fetch', 'depends', d) or ""
         depends = depends + " git-native:do_populate_sysroot"
+        bb.data.setVarFlag('do_fetch', 'depends', depends, d)
+
+    if "hg://" in srcuri:
+        depends = bb.data.getVarFlag('do_fetch', 'depends', d) or ""
+        depends = depends + " mercurial-native:do_populate_sysroot"
         bb.data.setVarFlag('do_fetch', 'depends', depends, d)
 
     # unzip-native should already be staged before unpacking ZIP recipes

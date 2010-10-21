@@ -1,5 +1,5 @@
 ANGSTROM_QT_VERSION ?= "4.6.3"
-CE_VERSION ?= "2.25.01"
+CE_VERSION ?= "latest"
 
 require conf/distro/include/angstrom-codec-engine-${CE_VERSION}-preferred-versions.inc
 
@@ -35,8 +35,8 @@ PREFERRED_VERSION_mythplugins   = "0.22"
 PREFERRED_VERSION_myththemes    = "0.22"
 PREFERRED_VERSION_mythtv        = "0.22"
 PREFERRED_VERSION_mplayer       = "0.0+1.0rc3+svnr30165"
-PREFERRED_VERSION_network-manager-applet = "0.8"
-PREFERRED_VERSION_networkmanager = "0.8"
+PREFERRED_VERSION_network-manager-applet = "0.8.1"
+PREFERRED_VERSION_networkmanager = "0.8.1"
 PREFERRED_VERSION_openssl = "1.0.0a"
 PREFERRED_VERSION_openssl-native = "1.0.0a"
 PREFERRED_VERSION_pango 	= "1.24.4"
@@ -54,7 +54,7 @@ PREFERRED_VERSION_qt4-x11-free = "${ANGSTROM_QT_VERSION}"
 PREFERRED_VERSION_qt4-x11-free-gles = "${ANGSTROM_QT_VERSION}"
 
 PREFERRED_VERSION_samba		= "3.3.9"
-PREFERRED_VERSION_tiff 		= "3.9.2+4.0.0beta5"
+PREFERRED_VERSION_tiff 		= "3.9.4+4.0.0beta6"
 
 PREFERRED_VERSION_udev 		= "151"
 PREFERRED_VERSION_udev_libc-uclibc = "141"
