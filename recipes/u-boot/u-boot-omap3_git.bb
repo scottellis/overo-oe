@@ -10,6 +10,7 @@ PR = "r0"
 SRC_URI = "git://www.sakoman.com/git/u-boot.git;branch=omap3-v2009.11.1;protocol=git \
            file://fw_env.config \
            file://mcbsp3-mux.patch;apply=yes \
+           file://ads127x-control-mux.patch;apply=yes \
           "
 
 S = "${WORKDIR}/git"
