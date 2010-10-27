@@ -5,9 +5,10 @@ FILESDIR = "${@os.path.dirname(bb.data.getVar('FILE',d,1))}/u-boot-omap3-git/"
 SRCREV = "1e4e5ef0469050f014aee1204dae8a9ab6053e49"
 
 PV = "2010.9+${PR}+git${SRCREV}"
-PR = "r0"
+PR = "r1"
 
 SRC_URI = "git://git.denx.de/u-boot.git;branch=master;protocol=git \
+	   file://expansion.patch \
           "
 
 S = "${WORKDIR}/git"
