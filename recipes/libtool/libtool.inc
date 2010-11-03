@@ -3,10 +3,10 @@ This is GNU libtool, a generic library support script.  Libtool hides \
 the complexity of generating special library types (such as shared \
 libraries) behind a consistent interface."
 HOMEPAGE = "http://www.gnu.org/software/libtool/libtool.html"
-LICENSE = "GPL"
+LICENSE = "GPLv2+"
 SECTION = "devel"
 
-INC_PR = "r26"
+INC_PR = "r27"
 
 FILESPATHPKG=. "libtool-${PV}:"
 
@@ -17,6 +17,7 @@ FILESPATHPKG=. "libtool-${PV}:"
 SRC_URI = "${GNU_MIRROR}/libtool/libtool-${PV}.tar.gz \
            file://trailingslash.patch \
 	   file://prefix-manpage-fix.patch \
+	   file://rename-with-sysroot.patch \
 	   file://resolve-sysroot.patch \
 	   file://use-sysroot-in-libpath.patch \
           "

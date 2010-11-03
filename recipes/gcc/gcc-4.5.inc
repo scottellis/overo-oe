@@ -8,9 +8,9 @@ DEPENDS = "mpfr gmp libmpc libelf"
 NATIVEDEPS = "mpfr-native gmp-native libmpc-native"
 
 
-INC_PR = "r13"
+INC_PR = "r17"
 
-SRCREV = "164562"
+SRCREV = "165931"
 PV = "4.5"
 # BINV should be incremented after updating to a revision
 # after a minor gcc release (e.g. 4.5.1 or 4.5.2) has been made
@@ -75,7 +75,7 @@ SRC_URI = "svn://gcc.gnu.org/svn/gcc/branches;module=${BRANCH} \
 	   file://linaro/gcc-4.5-linaro-r99347.patch \
 	   file://linaro/gcc-4.5-linaro-r99348.patch \
 	   file://linaro/gcc-4.5-linaro-r99349.patch \
-	   file://linaro/gcc-4.5-linaro-r99350.patch \
+#	   file://linaro/gcc-4.5-linaro-r99350.patch \
 	   file://linaro/gcc-4.5-linaro-r99351.patch \
 	   file://linaro/gcc-4.5-linaro-r99352.patch \
 	   file://linaro/gcc-4.5-linaro-r99353.patch \
@@ -87,7 +87,6 @@ SRC_URI = "svn://gcc.gnu.org/svn/gcc/branches;module=${BRANCH} \
 	   file://linaro/gcc-4.5-linaro-r99359.patch \
 	   file://linaro/gcc-4.5-linaro-r99360.patch \
 	   file://linaro/gcc-4.5-linaro-r99361.patch \
-	   file://linaro/gcc-4.5-linaro-r99362.patch \
 	   file://linaro/gcc-4.5-linaro-r99363.patch \
 	   file://linaro/gcc-4.5-linaro-r99364.patch \
 	   file://linaro/gcc-4.5-linaro-r99365.patch \
@@ -117,6 +116,20 @@ SRC_URI = "svn://gcc.gnu.org/svn/gcc/branches;module=${BRANCH} \
 	   file://linaro/gcc-4.5-linaro-r99396.patch \
 	   file://linaro/gcc-4.5-linaro-r99397.patch \
 	   file://linaro/gcc-4.5-linaro-r99398.patch \
+	   file://linaro/gcc-4.5-linaro-r99402.patch \
+	   file://linaro/gcc-4.5-linaro-r99403.patch \
+	   file://linaro/gcc-4.5-linaro-r99404.patch \
+	   file://linaro/gcc-4.5-linaro-r99405.patch \
+	   file://linaro/gcc-4.5-linaro-r99406.patch \
+	   file://linaro/gcc-4.5-linaro-r99407.patch \
+	   file://linaro/gcc-4.5-linaro-r99408.patch \
+	   file://linaro/gcc-4.5-linaro-r99409.patch \
+	   file://linaro/gcc-4.5-linaro-r99410.patch \
+	   file://linaro/gcc-4.5-linaro-r99411.patch \
+	   file://linaro/gcc-4.5-linaro-r99412.patch \
+	   file://linaro/gcc-4.5-linaro-r99413.patch \
+	   file://linaro/gcc-4.5-linaro-r99414.patch \
+	   file://linaro/gcc-4.5-linaro-r99415.patch \
 	   file://gcc-vmovl-PR45805.patch \
 	   file://gcc-scalar-widening-pr45847.patch \
 	   file://gcc-linaro-fix-lp-653316.patch \

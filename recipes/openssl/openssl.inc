@@ -27,6 +27,10 @@ FILES_libcrypto = "${libdir}/libcrypto.so.*"
 FILES_libssl = "${libdir}/libssl.so.*"
 FILES_${PN}-misc = "${libdir}/ssl/misc ${libdir}/ssl/openssl.cnf"
 
+do_configure_prepend_darwin () {
+	sed -i -e '/version-script=openssl\.ld/d' Configure
+}
+
 do_configure () {
 	cd util
 	perl perlpath.pl ${bindir}
@@ -81,6 +85,9 @@ do_configure () {
 		;;
 	linux-sparc)
 		target=linux-sparcv8
+		;;
+	darwin-i386)
+		target=darwin-i386-cc
 		;;
 	esac
 	# inject machine-specific flags
