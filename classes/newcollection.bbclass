@@ -40,6 +40,7 @@ def __newcollection_get_recipedeps(d):
 
 def __newcollection_get_fileuris(d):
     from urlparse import urlparse, urlunparse
+    from glob import glob
     from os.path import isabs, join, exists
 
     files = []
@@ -50,9 +51,8 @@ def __newcollection_get_fileuris(d):
 
         (scheme, netloc, path, params, query, frag) = o
 
-        if not path:
-            path = netloc
-            netloc = ""
+        if netloc:
+            path = netloc + path
 
         try:
             spath = path.split(";")
@@ -61,10 +61,16 @@ def __newcollection_get_fileuris(d):
         except ValueError:
             params = {}
 
-        for fp in d.getVar("FILESPATH", 1).split(":"):
+        globbing = "*" in path
+        filespath = reversed(d.getVar("FILESPATH", True).split(":"))
+        for fp in filespath:
             newpath = join(fp, path)
-            if exists(newpath):
-                files.append(newpath)
+            if globbing:
+                globbed = filter(lambda f: exists(f), glob(newpath))
+                files.extend(globbed)
+            else:
+                if exists(newpath):
+                    files.append(newpath)
 
     return files
 
@@ -78,14 +84,7 @@ def __newcollection_populate_file(src, dest, d):
     if not exists(src):
         return
 
-    try:
-        makedirs(dirname(dest))
-    except OSError, e:
-        if e.errno != EEXIST:
-            bb.error("Unable to create %s:\n%s" % dirname(dest))
-            bb.error(str(e))
-            return
-
+    bb.mkdirhier(dirname(dest))
     try:
         if isdir(src):
             copytree(src, dest, True)
@@ -107,16 +106,25 @@ python do_newcollection() {
     from bb.build import FuncFailed
     from urlparse import urlparse, urlunparse
 
-    files = [__newcollection_get_recipe(d)]
-    files += __newcollection_get_recipedeps(d)
-    files += __newcollection_get_fileuris(d)
+    files = set([__newcollection_get_recipe(d)])
+    files |= set(__newcollection_get_recipedeps(d))
+    files |= set(__newcollection_get_fileuris(d))
+
+    # filter out files that aren't in any overlays
     collectionsinfo = d.getVar("COLLECTIONSINFO",1) or ""
-    collections = list(chain(*(glob(normpath(collection['path'])) for collection in collectionsinfo.itervalues())))
+    if collectionsinfo:
+        collections = list(chain(*(glob(normpath(collection['path']))
+                                for collection in collectionsinfo.itervalues())))
+    else:
+        topdir = d.getVar("TOPDIR", True)
+        collections = d.getVar("BBPATH", True).split(":")
+        if topdir in collections:
+            collections.remove(topdir)
+
     if not collections:
         return
 
-    # filter out files that aren't in collections
-    files = filter(lambda f: len(filter(lambda c: f.startswith(c), collections)) != 0, files)
+    files = filter(lambda f: any(f.startswith(c) for c in collections), files)
     if not files:
         return
 
@@ -133,21 +141,16 @@ python do_newcollection() {
         else:
                 existing += glob(normpath(path))
 
-    recipe = filter(lambda f: f.endswith(".bb"), files)
-    if not recipe:
-        debug(1, "Recipe already populated, skipping.")
-        return
-
-    for file in files:
+    for file in set(files):
         for col in collections:
             if file.startswith(col + sep):
                 basefile = file[len(col)+1:]
+
         if not basefile:
             continue
 
-        for e in existing:
-            if exists(join(e, basefile)):
-                break
+        if any(exists(join(e, basefile)) for e in existing):
+            debug(1, "%s already in existing collections, skipping." % basefile)
         else:
             __newcollection_populate_file(file, join(destcol, basefile), d)
 }
