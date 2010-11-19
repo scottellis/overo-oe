@@ -8,7 +8,7 @@ SRCREV = "e4b7fb63fe7fe6efbca1adee758cc966161b3b5d"
 
 PV = "1.44ss+${PR}+gitr${SRCREV}"
 PV_beagleboard = "1.44+${PR}+gitr${SRCREV}"
-PR ="r16"
+PR ="r17"
 PE = "1"
 
 SRC_URI = " \
@@ -17,6 +17,9 @@ SRC_URI = " \
 
 SRC_URI_append_beagleboard = " \
                               file://name.patch \
+                              file://bb8547fcbc54ecc7a75f9ad45a31042a04d8a2ce.patch \
+                              file://xm-mem.patch \
+                              file://0001-Fix-reading-FAT32-root-dirs-that-span-1-cluster.patch \
                              "
 
 SRC_URI_append_omap3-touchbook = " \
