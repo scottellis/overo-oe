@@ -1,5 +1,4 @@
 DEPENDS = "zlib openssl"
-DEPENDS += "${@base_contains('DISTRO_FEATURES', 'pam', 'libpam', '', d)}"
 
 RCONFLICTS_${PN} = "dropbear"
 RCONFLICTS_${PN}-sshd = "dropbear"
@@ -28,11 +27,10 @@ CFLAGS_append = " -D__FILE_OFFSET_BITS=64"
 LDFLAGS_prepend = "-L${S} -L${S}/openbsd-compat "
 EXTRA_OECONF = "--disable-suid-ssh --with-ssl=${STAGING_LIBDIR}/ssl \
 	        --with-rand-helper=no \
-		${@base_contains('DISTRO_FEATURES', 'pam', '--with-pam', '--without-pam', d)} \
+		--without-pam \
 	        --without-zlib-version-check \
 		--with-privsep-path=/var/run/sshd \
-		--sysconfdir=${sysconfdir}/ssh \
-		--with-xauth=/usr/bin/xauth"
+		--sysconfdir=${sysconfdir}/ssh"
 
 # this is a workaround for uclibc becasue including stdio.h
 # pulls in pthreads.h and causes conflicts in function prototypes
