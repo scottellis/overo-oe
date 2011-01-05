@@ -3,16 +3,6 @@
 #
 inherit cpan-base
 
-EXTRA_CPANFLAGS ?= ""
-
-# Env var which tells perl if it should use host (no) or target (yes) settings
-export PERLCONFIGTARGET = "${@is_target(d)}"
-
-# Env var which tells perl where the perl include files are
-export PERL_INC = "${STAGING_LIBDIR}/perl/${@get_perl_version(d)}/CORE"
-export PERL_LIB = "${STAGING_DATADIR}/perl/${@get_perl_version(d)}"
-export PERL_ARCHLIB = "${STAGING_LIBDIR}/perl/${@get_perl_version(d)}"
-
 NATIVE_INSTALL_WORKS = "1"
 
 cpan_do_configure () {
@@ -23,6 +13,10 @@ cpan_do_configure () {
 			-e "s:\(SITEARCHEXP = \).*:\1${sitearchexp}:" \
 			-e "s:\(INSTALLVENDORLIB = \).*:\1${D}${datadir}/perl5:" \
 			-e "s:\(INSTALLVENDORARCH = \).*:\1${D}${libdir}/perl5:" \
+			-e "s:\(INSTALLVENDORMAN1DIR = \).*:\1${D}${man1dir}:" \
+			-e "s:\(INSTALLVENDORMAN3DIR = \).*:\1${D}${man3dir}:" \
+			-e "s:\(INSTALLVENDORBIN = \).*:\1${D}${bindir}:" \
+			-e "s:\(INSTALLVENDORSCRIPT = \).*:\1${D}${bindir}:" \
 			-e "s:\(LDDLFLAGS.*\)${STAGING_LIBDIR_NATIVE}:\1${STAGING_LIBDIR}:" \
 			Makefile
 	fi

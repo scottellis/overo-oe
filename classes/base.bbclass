@@ -10,11 +10,13 @@ inherit utils
 inherit utility-tasks
 inherit metadata_scm
 
-OE_IMPORTS += "oe.path oe.utils oe.packagegroup sys os time"
+OE_IMPORTS += "oe.path oe.utils oe.packagegroup oe.types sys os time"
+OE_IMPORTS[type] = "list"
 
 python oe_import () {
     if isinstance(e, bb.event.ConfigParsed):
         import os, sys
+
         bbpath = e.data.getVar("BBPATH", True).split(":")
         sys.path[0:0] = [os.path.join(dir, "lib") for dir in bbpath]
 
@@ -86,6 +88,7 @@ DEPENDS_virtclass-nativesdk_prepend="${@base_deps(d)} "
 
 
 SCENEFUNCS += "base_scenefunction"
+SCENEFUNCS[type] = "list"
 
 python base_scenefunction () {
 	stamp = bb.data.getVar('STAMP', d, 1) + ".needclean"
@@ -94,8 +97,8 @@ python base_scenefunction () {
 }
 
 python base_do_setscene () {
-        for f in (bb.data.getVar('SCENEFUNCS', d, 1) or '').split():
-                bb.build.exec_func(f, d)
+	for func in oe.types.value('SCENEFUNCS', d):
+		bb.build.exec_func(func, d)
 	if not os.path.exists(bb.data.getVar('STAMP', d, 1) + ".do_setscene"):
 		bb.build.make_stamp("do_setscene", d)
 }
@@ -110,12 +113,11 @@ python base_do_fetch() {
 	localdata = bb.data.createCopy(d)
 	bb.data.update_data(localdata)
 
-	src_uri = bb.data.getVar('SRC_URI', localdata, 1)
+	src_uri = oe.types.value('SRC_URI', localdata)
 	if not src_uri:
 		return 1
-
 	try:
-		bb.fetch.init(src_uri.split(),d)
+		bb.fetch.init(src_uri, d)
 	except bb.fetch.NoMethodError:
 		(type, value, traceback) = sys.exc_info()
 		raise bb.build.FuncFailed("No method: %s" % value)
@@ -144,7 +146,7 @@ python base_do_fetch() {
 
 	# Check each URI
 	first_uri = True
-	for url in src_uri.split():
+	for url in src_uri:
 		localpath = bb.data.expand(bb.fetch.localpath(url, localdata), localdata)
 		(type,host,path,_,_,params) = bb.decodeurl(url)
 		uri = "%s://%s%s" % (type,host,path)
@@ -202,13 +204,13 @@ do_unpack[dirs] = "${WORKDIR}"
 python base_do_unpack() {
     from glob import glob
 
-    src_uri = d.getVar("SRC_URI", True)
+    src_uri = oe.types.value("SRC_URI", d)
     if not src_uri:
         return
-    srcurldata = bb.fetch.init(src_uri.split(), d, True)
-    filespath = d.getVar("FILESPATH", True).split(":")
+    srcurldata = bb.fetch.init(src_uri, d, True)
+    filespath = oe.types.value("FILESPATH", d)
 
-    for url in src_uri.split():
+    for url in src_uri:
         urldata = srcurldata[url]
         if urldata.type == "file" and "*" in urldata.path:
             # The fetch code doesn't know how to handle globs, so
@@ -232,25 +234,48 @@ python base_do_unpack() {
             oe_unpack(d, local, urldata)
 }
 
+python old_bitbake_messages () {
+    version = [int(c) for c in bb.__version__.split('.')]
+    if version >= [1, 9, 0]:
+        return
+
+    from bb.event import BuildBase, DepBase
+    from bb.build import TaskBase
+
+    name = bb.event.getName(e)
+    if isinstance(e, TaskBase):
+        pf = bb.data.getVar('PF', e.data, True)
+        msg = 'package %s: task %s: %s' % (pf, e.task, name[4:].lower())
+    elif isinstance(e, BuildBase):
+        msg = 'build %s: %s' % (e.name, name[5:].lower())
+    elif isinstance(e, DepBase):
+        msg = 'package %s: dependency %s %s' % (e.pkg, e.dep, name[:-3].lower())
+    else:
+        return
+
+    bb.note(msg)
+}
+addhandler old_bitbake_messages
+
 python build_summary() {
-	from bb import note, error, data
-	from bb.event import getName
+    from bb import note, error, data
+    from bb.event import getName
 
-	if isinstance(e, bb.event.BuildStarted):
-		bb.data.setVar( 'BB_VERSION', bb.__version__, e.data )
-		statusvars = bb.data.getVar("BUILDCFG_VARS", e.data, 1).split()
-		statuslines = ["%-17s = \"%s\"" % (i, bb.data.getVar(i, e.data, 1) or '') for i in statusvars]
-		statusmsg = "\n%s\n%s\n" % (bb.data.getVar("BUILDCFG_HEADER", e.data, 1), "\n".join(statuslines))
-		print statusmsg
+    if isinstance(e, bb.event.BuildStarted):
+        bb.data.setVar( 'BB_VERSION', bb.__version__, e.data )
+        statusvars = bb.data.getVar("BUILDCFG_VARS", e.data, 1).split()
+        statuslines = ["%-17s = \"%s\"" % (i, bb.data.getVar(i, e.data, 1) or '') for i in statusvars]
+        statusmsg = "\n%s\n%s\n" % (bb.data.getVar("BUILDCFG_HEADER", e.data, 1), "\n".join(statuslines))
+        bb.plain(statusmsg)
 
-		needed_vars = bb.data.getVar("BUILDCFG_NEEDEDVARS", e.data, 1).split()
-		pesteruser = []
-		for v in needed_vars:
-			val = bb.data.getVar(v, e.data, 1)
-			if not val or val == 'INVALID':
-				pesteruser.append(v)
-		if pesteruser:
-			bb.fatal('The following variable(s) were not set: %s\nPlease set them directly, or choose a MACHINE or DISTRO that sets them.' % ', '.join(pesteruser))
+        needed_vars = oe.types.value("BUILDCFG_NEEDEDVARS", e.data)
+        pesteruser = []
+        for v in needed_vars:
+            val = bb.data.getVar(v, e.data, 1)
+            if not val or val == 'INVALID':
+                pesteruser.append(v)
+        if pesteruser:
+            bb.fatal('The following variable(s) were not set: %s\nPlease set them directly, or choose a MACHINE or DISTRO that sets them.' % ', '.join(pesteruser))
 }
 addhandler build_summary
 
@@ -287,6 +312,9 @@ base_do_package() {
 addtask build
 do_build = ""
 do_build[func] = "1"
+do_build() {
+       :
+}
 
 def set_multimach_arch(d):
     # 'multimachine' handling
@@ -305,8 +333,7 @@ def set_multimach_arch(d):
 
     multiarch = pkg_arch
 
-    packages = bb.data.getVar('PACKAGES', d, 1).split()
-    for pkg in packages:
+    for pkg in oe.types.value('PACKAGES', d):
         pkgarch = bb.data.getVar("PACKAGE_ARCH_%s" % pkg, d, 1)
 
         # We could look for != PACKAGE_ARCH here but how to choose

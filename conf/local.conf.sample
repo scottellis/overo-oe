@@ -118,7 +118,7 @@ PREFERRED_PROVIDERS += " virtual/${TARGET_PREFIX}g++:gcc-cross"
 # INHERIT = "package_tar"
 
 # Add the required image file system types below. Valid are 
-# jffs2, tar(.gz|bz2), cpio(.gz), cramfs, ext2(.gz), ext3(.gz)
+# jffs2, tar(.gz|bz2), cpio(.gz), cramfs, ext2(.gz), ext3(.gz), ext4(.gz|.bz2),
 # squashfs, squashfs-lzma
 IMAGE_FSTYPES = "jffs2 tar"
 
@@ -175,10 +175,6 @@ IMAGE_FSTYPES = "jffs2 tar"
 
 # Uncomment this if you want BitBake to emit the log if a build fails.
 BBINCLUDELOGS = "yes"
-
-# Specifies a location to search for pre-generated tarballs when fetching
-# a cvs:// URI. Outcomment this, if you always want to pull directly from CVS.
-#CVS_TARBALL_STASH = ""
 
 # Uncomment this if you want to install shared libraries directly under their SONAME,
 # rather than installing as the full version and symlinking to the SONAME.

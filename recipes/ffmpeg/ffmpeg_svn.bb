@@ -1,8 +1,5 @@
 require ffmpeg.inc
 
-# The license depends on the configure option selected in this recipe 'non-free' is disabled and 'gpl' is enabled
-LICENSE = "GPLv2+"
-
 DEPENDS += "virtual/libsdl schroedinger libgsm libvpx"
 
 # When bumping SRCREV make sure you bump PR here and in dependant recipes (gst-ffmpeg, gnash, omxil, etc) to account for SOVERSION changes
@@ -59,6 +56,6 @@ do_configure() {
         mkdir -p ${B}
         cd ${B}
         ${S}/configure ${EXTRA_OECONF}
-		sed -i -e s:Os:O4:g ${B}/config.h
+        sed -i -e s:Os:O4:g ${B}/config.h
 }
 

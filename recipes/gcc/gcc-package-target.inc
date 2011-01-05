@@ -127,6 +127,12 @@ do_install () {
 	else
 		mv ${D}${libdir}/libgcc_s.so.* ${D}${base_libdir} || true
 	fi
+	rm -f ${D}${libdir}/libgcc_s.so || true
+	rm -f ${D}${base_libdir}/libgcc_s.so || true
+	echo "/* GNU ld script
+   Use the shared library, but some functions are only in
+   the static library.  */
+GROUP ( libgcc_s.so.1 libgcc.a )" > ${D}${libdir}/libgcc_s.so
 
 	# We don't need libtool libraries
 	rm -f ${D}${libdir}/libg2c.la &>/dev/null || true

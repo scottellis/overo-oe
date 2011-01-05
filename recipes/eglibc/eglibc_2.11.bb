@@ -6,7 +6,7 @@ FILESPATHPKG =. "eglibc-svn:"
 PV = "2.11"
 PR = "${INC_PR}.8"
 PR_append = "+svnr${SRCPV}"
-SRCREV="11983"
+SRCREV="12231"
 EGLIBC_BRANCH="eglibc-2_11"
 SRC_URI = "svn://svn.eglibc.org/branches;module=${EGLIBC_BRANCH};proto=svn \
            file://eglibc-svn-arm-lowlevellock-include-tls.patch \
@@ -14,7 +14,6 @@ SRC_URI = "svn://svn.eglibc.org/branches;module=${EGLIBC_BRANCH};proto=svn \
            file://shorten-build-commands.patch \
            file://sh4_set_fpscr.patch \
            file://sh4_local-fpscr_values.patch \
-           file://eglibc-make-382.patch \
            file://etc/ld.so.conf \
            file://generate-supported.mk"
 S = "${WORKDIR}/${EGLIBC_BRANCH}/libc"
@@ -52,19 +51,6 @@ EXTRA_OECONF = "--enable-kernel=${OLDEST_KERNEL} \
                 --without-selinux \
                 ${GLIBC_EXTRA_OECONF}"
 
-EXTRA_OECONF += "${@get_eglibc_fpu_setting(bb, d)}"
-
-do_unpack_append() {
-	bb.build.exec_func('do_move_ports', d)
-}
-
-do_move_ports() {
-        if test -d ${WORKDIR}/${EGLIBC_BRANCH}/ports ; then
-	    rm -rf ${S}/ports
-	    mv ${WORKDIR}/${EGLIBC_BRANCH}/ports ${S}/
-	fi
-}
-
 do_configure () {
 # override this function to avoid the autoconf/automake/aclocal/autoheader
 # calls for now
@@ -96,4 +82,4 @@ do_compile () {
 	)
 }
 
-require eglibc-package.bbclass
+require eglibc-package.inc

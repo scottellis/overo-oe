@@ -1,5 +1,5 @@
 require u-boot.inc
-PR ="r67"
+PR ="r68"
 
 FILESPATHPKG =. "u-boot-git:"
 
@@ -17,6 +17,7 @@ SRCREV_mpc8641-hpcn = "f20393c5e787b3776c179d20f82a86bda124d651"
 SRCREV_p1020rdb = "f20393c5e787b3776c179d20f82a86bda124d651"
 SRCREV_p2020ds = "f20393c5e787b3776c179d20f82a86bda124d651"
 SRCREV_bug20 = "169a4c804dbaf11facb041b1333d394c6ceb8d68"
+SRCREV_nokia900 = "bd2313078114c4b44c4a5ce149af43bcb7fc8854"
 SRC_URI_append_afeb9260 = " file://AFEB9260-network-fix.patch"
 SRC_URI_append_afeb9260-180 = " file://AFEB9260-network-fix.patch"
 SRC_URI_append_cm-t35 = "file://cm-t35/cm-t35.patch"
@@ -162,6 +163,13 @@ SRC_URI_dm37x-evm = "git://arago-project.org/git/projects/u-boot-omap3.git;proto
 "
 SRCREV_dm37x-evm = "c0a8fb217fdca7888d89f9a3dee74a4cec865620"
 PV_dm37x-evm = "2009.11+${PR}+gitr${SRCREV}"
+
+# ~ TI PSP v2009.11_OMAPPSP_03.00.01.06 (+ couple of commits)
+SRC_URI_am3517-crane = "git://arago-project.org/git/projects/u-boot-omap3.git;protocol=git \
+                        file://0001-Added-Support-for-AM3517-05-based-CraneBoard.patch \
+"
+SRCREV_am3517-crane = "c0a8fb217fdca7888d89f9a3dee74a4cec865620"
+PV_am3517-crane = "2009.11+${PR}+gitr${SRCREV}"
 
 # ~ TI PSP v2009.11_OMAPPSP_03.00.01.06 (+ couple of commits)
 SRC_URI_am37x-evm = "git://arago-project.org/git/projects/u-boot-omap3.git;protocol=git \
@@ -348,3 +356,21 @@ if [ -d "${XILINX_BSP_PATH}" ]; then
     install ${S}/u-boot ${XILINX_BSP_PATH}
 fi
 }
+
+PV_nokia900 = "2010.06+gitr${SRCPV}"
+SRC_URI_nokia900 = "git://www.denx.de/git/u-boot.git;protocol=git \
+                    file://0001-ARM-Avoid-compiler-optimization-for-usages-of-readb-.patch \
+                    file://0001-Reduce-delays-in-omap-i2c-driver.patch \
+                    file://0002-Make-bootm-optionally-use-pre-existing-atags-for-Lin.patch \
+                    file://0003-Store-existing-atags-at-startup-if-chainloading.patch \
+                    file://0004-Nokia-RX-51-aka-N900-support.patch \
+                    file://0001-nokia-rx51-fix-declaration-fails-when-building-with-.patch \
+                    file://0005-fix-loading-file-from-ext2-partition-on-OMAP3-evm.patch \
+                    file://0006-omap3_mmc.c-fix-formating.patch \
+                    file://0007-Only-delay-boot-if-keyboard-open.patch \
+"
+SRC_URI_nokia900_append_shr = " \
+                    file://0001-configs-nokia_rx51.h-start-shr-as-default-and-change.patch \
+"
+
+UBOOT_MACHINE_nokia900 = "nokia_rx51_config"

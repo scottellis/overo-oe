@@ -1,7 +1,7 @@
 DESCRIPTION = "PostgreSQL is a powerful, open source relational database system."
 HOMEPAGE = "http://www.postgresql.com"
 LICENSE = "BSD"
-DEPENDS = "zlib readline"
+DEPENDS = "zlib readline tzcode-native"
 
 ARM_INSTRUCTION_SET = "arm"
 
@@ -18,15 +18,6 @@ inherit autotools pkgconfig
 
 do_compile_append() {
          cp /usr/sbin/zic ${S}/src/timezone/
-}
-
-do_stage() {
-         autotools_stage_includes
-         
-         oe_libinstall -a -so -C src/interfaces/libpq libpq ${STAGING_LIBDIR}
-         oe_libinstall -a -so -C src/interfaces/ecpg/ecpglib libecpg ${STAGING_LIBDIR}
-         oe_libinstall -a -so -C src/interfaces/ecpg/compatlib libecpg_compat ${STAGING_LIBDIR}
-         oe_libinstall -a -so -C src/interfaces/ecpg/pgtypeslib libpgtypes ${STAGING_LIBDIR}
 }
 
 PACKAGES =+ "${PN}-client ${PN}-server-dev ${PN}-timezone \

@@ -1,7 +1,7 @@
 require eglibc.inc
 
 DEPENDS += "gperf-native"
-SRCREV = "11981"
+SRCREV = "12322"
 DEFAULT_PREFERENCE = "-1"
 FILESPATHPKG =. "eglibc-svn:"
 PV = "2.12+svnr${SRCPV}"
@@ -50,19 +50,6 @@ EXTRA_OECONF = "--enable-kernel=${OLDEST_KERNEL} \
                 --without-selinux \
                 ${GLIBC_EXTRA_OECONF}"
 
-EXTRA_OECONF += "${@get_eglibc_fpu_setting(bb, d)}"
-
-do_unpack_append() {
-	bb.build.exec_func('do_move_ports', d)
-}
-
-do_move_ports() {
-        if test -d ${WORKDIR}/${EGLIBC_BRANCH}/ports ; then
-	    rm -rf ${S}/ports
-	    mv ${WORKDIR}/${EGLIBC_BRANCH}/ports ${S}/
-	fi
-}
-
 do_configure () {
 # override this function to avoid the autoconf/automake/aclocal/autoheader
 # calls for now
@@ -94,4 +81,4 @@ do_compile () {
 	)
 }
 
-require eglibc-package.bbclass
+require eglibc-package.inc
