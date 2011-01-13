@@ -8,7 +8,6 @@ DEPENDS = "icu libxslt sqlite3 gperf-native bison-native flex-native jpeg \
 # https://bugs.webkit.org/show_bug.cgi?id=50762
 SRCREV = "73534"
 PV = "1.3.4+svnr${SRCPV}"
-PR = "r1"
 
 SRCREV_FORMAT = "webcore-rwebkit"
 
