@@ -247,7 +247,7 @@ python packagestage_scenefunc () {
         #
         # Copy the stamp files into the main stamps directoy
         #
-        cmd = bb.data.expand("cp -dpR ${WORKDIR}/tstage/stamps/* ${TMPDIR}/stamps/", d)
+        cmd = bb.data.expand("cp -PpR ${WORKDIR}/tstage/stamps/* ${TMPDIR}/stamps/", d)
         try:
             ret = oe_run(d, cmd)
         except RuntimeError:
@@ -370,7 +370,7 @@ staging_packager () {
 
 	# Protect against empty SRC_URI
 	srcuri="${SRC_URI}"
-	if [ "$srcuri" == "" ]; then
+	if [ "$srcuri" = "" ]; then
 		srcuri="OpenEmbedded"
 	fi
 	echo "Source: $srcuri"               >> ${PSTAGE_TMPDIR_STAGE}/CONTROL/control
@@ -424,6 +424,8 @@ python staging_package_libtoolhack () {
 }
 
 python do_package_stage () {
+    import oe.packagedata
+
     if bb.data.getVar("PSTAGING_ACTIVE", d, 1) != "1":
         return
 
@@ -452,7 +454,7 @@ python do_package_stage () {
             pr = bb.data.getVar('PR_%s' % pkg, d, 1)
             if not pr:
                 pr = bb.data.getVar('PR', d, 1)
-            if not packaged(pkg, d):
+            if not oe.packagedata.packaged(pkg, d):
                 continue
             if bb.data.inherits_class('package_ipk', d):
                 srcname = bb.data.expand(pkgname + "_${PKGV}-" + pr + "${DISTRO_PR}" + "_" + arch + ".ipk", d)
@@ -493,7 +495,7 @@ python do_package_stage () {
     bb.mkdirhier(destdir)
     # We need to include the package_stage stamp in the staging package so create one
     bb.build.make_stamp("do_package_stage", d)
-    oe_run(d, "cp -dpR %s.do_* %s/" % (stampfn, destdir))
+    oe_run(d, "cp -PpR %s.do_* %s/" % (stampfn, destdir))
 
     pstage_set_pkgmanager(d)
     bb.build.exec_func("staging_helper", d)

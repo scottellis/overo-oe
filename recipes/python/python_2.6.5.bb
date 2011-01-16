@@ -3,10 +3,11 @@ DEPENDS = "python-native db gdbm openssl readline sqlite3 tcl zlib\
            ${@base_contains('DISTRO_FEATURES', 'tk', 'tk', '', d)}"
 DEPENDS_sharprom = "python-native db readline zlib gdbm openssl"
 # set to .0 on every increase of INC_PR
-PR = "${INC_PR}.0"
+PR = "${INC_PR}.2"
 
 SRC_URI = "\
   http://www.python.org/ftp/python/${PV}/Python-${PV}.tar.bz2 \
+  file://00-fix-parallel-make.patch \
   file://00-fix-bindir-libdir-for-cross.patch \
   file://01-use-proper-tools-for-cross-build.patch \
   file://02-remove-test-for-cross.patch \
@@ -81,6 +82,12 @@ do_install() {
 
 	# remove hardcoded ccache, see http://bugs.openembedded.net/show_bug.cgi?id=4144
 	sed -i -e s,ccache,'$(CCACHE)', ${D}/${libdir}/python${PYTHON_MAJMIN}/config/Makefile
+}
+
+do_install_append() {
+	# remove unecessary files from python-distutils' packages
+	rm ${D}/${libdir}/python${PYTHON_MAJMIN}/config/libpython2.6.a
+	rm ${D}/${libdir}/python${PYTHON_MAJMIN}/distutils/command/win*
 }
 
 require python-${PYTHON_MAJMIN}-manifest.inc

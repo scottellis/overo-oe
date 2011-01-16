@@ -19,6 +19,7 @@ SRC_URI = "svn://svn.mplayerhq.hu/mplayer;module=trunk \
        file://demux_mkv-V_VP8__webm_doctype.diff;striplevel=0 \
        file://configure-libvpx_test.diff \
        file://silence.patch \
+       file://vofw-swscale.diff \
 "
 
 SRCREV = "30165"
@@ -44,7 +45,7 @@ RCONFLICTS_${PN} = "mplayer-atty"
 RREPLACES_${PN} = "mplayer-atty"
 
 PV = "0.0+1.0rc3+svnr${SRCPV}"
-PR = "r26"
+PR = "r27"
 DEFAULT_PREFERENCE = "-1"
 DEFAULT_PREFERENCE_angstrom = "1"
 DEFAULT_PREFERENCE_shr = "1"

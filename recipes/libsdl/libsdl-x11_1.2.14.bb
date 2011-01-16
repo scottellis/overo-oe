@@ -8,11 +8,10 @@ LICENSE = "LGPL"
 DEPENDS = "alsa-lib virtual/libgl virtual/libx11 libxext tslib"
 DEPENDS_avr32 = "alsa-lib virtual/libx11 libxext tslib"
 PROVIDES = "virtual/libsdl"
-PR = "r5"
+PR = "r7"
 
 SRC_URI = " \
   http://www.libsdl.org/release/SDL-${PV}.tar.gz \
-  file://libtool-update.patch \
   file://sdl_bug_894_fix.patch \
   file://sdl.m4 \
 "
@@ -30,7 +29,7 @@ EXTRA_OECONF = " \
   --disable-video-xbios --disable-video-gem --disable-video-dummy \
   --enable-video-opengl --enable-input-events --enable-pthreads \
   --disable-video-picogui --disable-video-qtopia --enable-dlopen \
-  --enable-input-tslib --disable-video-ps3 \
+  --enable-input-tslib --disable-video-ps3 --disable-rpath \
 "
 
 do_configure() { 

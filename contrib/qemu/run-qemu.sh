@@ -3,8 +3,10 @@
 # This script helps in launching QEMU to emulate OE based target systems
 # It accepts 2 arguments
 # First argument is the target architectures
-# second argument is empty if you want to do a complete init or
-# 'single' if booting into /bin/sh
+# Second argument is empty if your distribution does not encode the libc
+# into the deploy subdirectory structure.
+# Third argument is empty if you wish to boot the system up fully or
+# 'single' if you wish to use /bin/sh as init.
 # It assumes that bridge is setup on the eth0 device on the host systems
 
 # on debian-like systems
@@ -54,12 +56,13 @@
 #		from dhcp server. Note that this option is not entertained if networking
 #		is disabled
 
-supported_archs="{arm mips mipsel ppc sh4 x86}"
+supported_archs="{arm mips mips64 mipsel mips64el ppc sh4 x86}"
 if [ $# -lt 2 ]; then
     echo -en "
-    Usage: `basename $0` <arch> <libc>
+    Usage: `basename $0` <arch> <libc> [single|empty]
     where <arch> is one $supported_archs
-    libc is uclibc glibc or eglibc
+    libc is uclibc glibc or eglibc (used in the deploy directory)
+    single may be passed to use /bin/sh as init or omitted.
     Example: `basename $0` arm eglibc
 "
     exit 0
@@ -145,13 +148,37 @@ case $arch in
 	kernel="bzImage"
 	image="minimalist-image"
 	;;
+    mips64)
+	address="192.168.1.107"
+	macaddr="00:16:3e:00:00:07"
+	gdbport="1238"
+	machine="malta"
+	mem="256"
+	consoleopt="console=ttyS0"
+	rootdisk="hda"
+	qemuopts="-nographic"
+	kernel="vmlinux"
+	image="minimalist-image"
+	;;
+    mips64el)
+	address="192.168.1.108"
+	macaddr="00:16:3e:00:00:08"
+	gdbport="1239"
+	machine="malta"
+	mem="256"
+	consoleopt="console=ttyS0"
+	rootdisk="hda"
+	qemuopts="-nographic"
+	kernel="vmlinux"
+	image="minimalist-image"
+	;;
     *)
 	echo "Specify one architectures out of $supported_archs to emulate."
 	exit 1
 	;;
     esac
 
-nfsserver="192.168.1.1"		# address of NFS server
+nfsserver="192.168.1.64"	# address of NFS server
 gateway="192.168.1.254"		# default gateway
 netmask="255.255.255.0"		# subnet mask
 hostname="qemu$arch"		# hostname for guest server
@@ -200,7 +227,7 @@ else
 	netopt="-net none"
 fi
 
-if [ "x$3" == "xsingle" ]; then
+if [ "x$3" = "xsingle" ]; then
     init="init=/bin/sh"
 else
     init=""

@@ -1,8 +1,7 @@
 DESCRIPTION = "LZMA is a general compression method. LZMA provides high compression ratio and very fast decompression."
 HOMEPAGE = "http://www.7-zip.org/"
 LICENSE = "LGPL"
-DEPENDS = "zlib"
-INC_PR = "r4"
+INC_PR = "r5"
 
 SRC_URI = "http://downloads.sourceforge.net/sevenzip/lzma${@bb.data.getVar('PV',d,1).replace('.','')}.tar.bz2 \
            file://001-large_files.patch \
@@ -18,12 +17,14 @@ CFLAGS += "-c -I${S}"
 
 do_unpack_append() {
         # Replace MS-DOS line-endings with Unix style line-endings
-        os.system("find ${S} -type f -print0 | xargs -0 sed 's/\r$//' -i")
+        oe.process.run("find . -type f -print0 | xargs -0 sed 's/\r$//' -i",
+                       cwd=d.getVar("S", True))
 }
 
 do_patch_append() {
         # Hack to ensure we use our environment values
-        os.system("find ${S} -type f -name makefile.gcc -print0 | xargs -0 sed 's/^CXX =/CXX ?=/;s/^CXX_C =/CXX_C ?=/;s/CXX_C/CC/' -i")
+        oe.process.run("find . -type f -name makefile.gcc -print0 | xargs -0 sed 's/^CXX =/CXX ?=/;s/^CXX_C =/CXX_C ?=/;s/CXX_C/CC/' -i",
+                       cwd=d.getVar("S", True))
 }
 
 do_compile() {

@@ -12,7 +12,7 @@ import time
 VERSION = "2.6.4"
 
 __author__ = "Michael 'Mickey' Lauer <mlauer@vanille-media.de>"
-__version__ = "20100711"
+__version__ = "20100908"
 
 class MakefileMaker:
 
@@ -123,7 +123,7 @@ class MakefileMaker:
         line = 'RDEPENDS_python-modules="'
 
         for name, data in self.packages.iteritems():
-            if name != 'python-core-dbg':
+            if name not in ['python-core-dbg', 'python-dev']:
                 line += "%s " % name
 
         self.out( "%s \"" % line )
@@ -159,12 +159,12 @@ if __name__ == "__main__":
     "warnings.* site.* stat.* " +
     "UserDict.* UserList.* UserString.* " +
     "lib-dynload/binascii.so lib-dynload/_struct.so lib-dynload/time.so " +
-    "lib-dynload/xreadlines.so types.* ${bindir}/python*" )
+    "lib-dynload/xreadlines.so types.* platform.* ${bindir}/python*" )
 
     m.addPackage( "python-core-dbg", "Python core module debug information", "python-core",
     "config/.debug lib-dynload/.debug ${bindir}/.debug ${libdir}/.debug" )
 
-    m.addPackage( "python-devel", "Python Development Package", "python-core",
+    m.addPackage( "python-dev", "Python Development Package", "python-core",
     "${includedir} ${libdir}/libpython2.6.so config" ) # package
 
     m.addPackage( "python-idle", "Python Integrated Development Environment", "python-core python-tkinter",

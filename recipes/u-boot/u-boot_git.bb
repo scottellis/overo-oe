@@ -1,5 +1,5 @@
 require u-boot.inc
-PR ="r64"
+PR ="r67"
 
 FILESPATHPKG =. "u-boot-git:"
 
@@ -181,8 +181,10 @@ PV_omapzoom = "2009.01+${PR}+gitr${SRCREV}"
 
 SRC_URI_omapzoom2 = "git://dev.omapzoom.org/pub/scm/bootloader/u-boot.git;branch=master;protocol=git \
                      file://0001-OMAP3-set-L1NEON-bit-in-aux-control-register.patch \
-                     file://inline-fix.patch"
-SRCREV_omapzoom2 = "78e778e0ea884306841c6499851a1e35177d81d0"
+                     file://fix-default-boot.patch \
+                    "
+
+SRCREV_omapzoom2 = "fbe4cef852de5a39412234b4acd47a830d0282a2"
 PV_omapzoom2 = "1.1.4+${PR}+gitr${SRCREV}"
 PE_omapzoom2 = "1"
 
@@ -195,8 +197,12 @@ do_compile_omapzoom2 () {
         oe_runmake tools
 }
 
-SRC_URI_omapzoom36x = "git://dev.omapzoom.org/pub/scm/bootloader/u-boot.git;branch=master;protocol=git"
-SRCREV_omapzoom36x = "ab45d2a787a9674bed30542139175d8e090e0749"
+SRC_URI_omapzoom36x = "git://dev.omapzoom.org/pub/scm/bootloader/u-boot.git;branch=master;protocol=git \
+                       file://0001-OMAP3-set-L1NEON-bit-in-aux-control-register.patch \
+                       file://fix-default-boot.patch \
+                      "
+
+SRCREV_omapzoom36x = "fbe4cef852de5a39412234b4acd47a830d0282a2"
 PV_omapzoom36x = "1.1.4+${PR}+gitr${SRCREV}"
 PE_omapzoom36x = "1"
 
@@ -241,19 +247,20 @@ SRC_URI_dm6467t-evm  = "git://arago-project.org/git/projects/u-boot-dm646x.git;p
 SRCREV_dm6467t-evm   = "98b31e3aae3e3fb772f8d06c18ccdd6265aa0d38"
 PV_dm6467t-evm       = "2009.08+${PR}+gitr${SRCREV}"
 
-# OMAPL1 da380-omapl137/da850-omapl138-evm - PSP 3.20.0.11
+# OMAPL1 omapl137/omapl138 - PSP 3.20.0.11
 
-SRC_URI_da830-omapl137-evm = "git://arago-project.org/git/projects/u-boot-omapl1.git;protocol=git"
-SRCREV_da830-omapl137-evm  = "5f16b8551b125f16cd8d58f278cb25b94272fd9f"
-PV_da830-omapl137-evm      = "2009.11+${PR}+gitr${SRCREV}"
+SRC_URI_omapl137 = "git://arago-project.org/git/projects/u-boot-omapl1.git;protocol=git"
+SRCREV_omapl137  = "5f16b8551b125f16cd8d58f278cb25b94272fd9f"
+PV_omapl137      = "2009.11+${PR}+gitr${SRCREV}"
 
-SRC_URI_da850-omapl138-evm = "git://arago-project.org/git/projects/u-boot-omapl1.git;protocol=git"
-SRCREV_da850-omapl138-evm  = "5f16b8551b125f16cd8d58f278cb25b94272fd9f"
-PV_da850-omapl138-evm      = "2009.11+${PR}+gitr${SRCREV}"
+SRC_URI_omapl138 = "git://arago-project.org/git/projects/u-boot-omapl1.git;protocol=git"
+SRCREV_omapl138  = "5f16b8551b125f16cd8d58f278cb25b94272fd9f"
+PV_omapl138      = "2009.11+${PR}+gitr${SRCREV}"
 
 # hawkboard - master branch (hawk still .07beta)
 
 SRC_URI_hawkboard          = "git://arago-project.org/git/people/sekhar/u-boot-omapl1.git;protocol=git;branch=master"
+SRC_URI_hawkboard         += "file://dont-inline-weak-symbols.patch"
 SRCREV_hawkboard           = "0d291f2f255e6d66a78b3dc2445362a96ae39a57"
 PV_hawkboard               = "2009.08+gitr${SRCREV}"
 
@@ -289,8 +296,8 @@ SRC_URI_append_c7x0 = "file://pdaXrom-u-boot.patch \
                        file://uboot-eabi-fix-HACK2.patch \
                        file://corgi-standard-partitioning.patch \
                        "
-SRC_URI_sheevaplug = "git://git.denx.de/u-boot-marvell.git;protocol=git;branch=testing"
-SRCREV_sheevaplug = "119b9942da2e450d4e525fc004208dd7f7d062e0"
+SRC_URI_sheevaplug = "git://git.denx.de/u-boot-marvell.git;protocol=git;branch=master"
+SRCREV_sheevaplug = "749c971873dbba301bd138c95d31223a25b32150"
 
 SRC_URI_xilinx-ml507 = "git://git.xilinx.com/u-boot-xlnx.git;protocol=git"
 SRCREV_xilinx-ml507 = "26e999650cf77c16f33c580abaadab2532f5e8b2"

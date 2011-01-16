@@ -92,7 +92,7 @@ sourceipk_do_create_srcipk() {
         echo "License: ${LICENSE}" >> $control_file
         echo "Architecture: ${SRCIPK_PACKAGE_ARCH}" >> $control_file
         srcuri="${SRC_URI}"
-        if [ "$srcuri" == "" ]
+        if [ "$srcuri" = "" ]
         then
             srcuri="OpenEmbedded"
         fi
@@ -105,7 +105,7 @@ sourceipk_do_create_srcipk() {
 
         # Copy sources for packaging
         mkdir -p $tmp_dir/${SRCIPK_INSTALL_DIR}
-        cp -rLf ${S}/* $tmp_dir/${SRCIPK_INSTALL_DIR}/
+        cp -RLf ${S}/* $tmp_dir/${SRCIPK_INSTALL_DIR}/
 
         if [ ${SRCIPK_INCLUDE_EXTRAFILES} != "0" ]
         then

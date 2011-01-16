@@ -10,7 +10,7 @@ inherit utils
 inherit utility-tasks
 inherit metadata_scm
 
-OE_IMPORTS += "oe.path oe.utils sys os time"
+OE_IMPORTS += "oe.path oe.utils oe.packagegroup sys os time"
 
 python oe_import () {
     if isinstance(e, bb.event.ConfigParsed):
@@ -202,10 +202,14 @@ do_unpack[dirs] = "${WORKDIR}"
 python base_do_unpack() {
     from glob import glob
 
-    srcurldata = bb.fetch.init(d.getVar("SRC_URI", True).split(), d, True)
+    src_uri = d.getVar("SRC_URI", True)
+    if not src_uri:
+        return
+    srcurldata = bb.fetch.init(src_uri.split(), d, True)
     filespath = d.getVar("FILESPATH", True).split(":")
 
-    for url, urldata in srcurldata.iteritems():
+    for url in src_uri.split():
+        urldata = srcurldata[url]
         if urldata.type == "file" and "*" in urldata.path:
             # The fetch code doesn't know how to handle globs, so
             # we need to handle the local bits ourselves
@@ -228,27 +232,11 @@ python base_do_unpack() {
             oe_unpack(d, local, urldata)
 }
 
-addhandler base_eventhandler
-python base_eventhandler() {
+python build_summary() {
 	from bb import note, error, data
 	from bb.event import getName
 
-
-	name = getName(e)
-	if name == "TaskCompleted":
-		msg = "package %s: task %s is complete." % (data.getVar("PF", e.data, 1), e.task)
-	elif name == "UnsatisfiedDep":
-		msg = "package %s: dependency %s %s" % (e.pkg, e.dep, name[:-3].lower())
-	else:
-		return
-
-	# Only need to output when using 1.8 or lower, the UI code handles it
-	# otherwise
-	if (int(bb.__version__.split(".")[0]) <= 1 and int(bb.__version__.split(".")[1]) <= 8):
-		if msg:
-			note(msg)
-
-	if name.startswith("BuildStarted"):
+	if isinstance(e, bb.event.BuildStarted):
 		bb.data.setVar( 'BB_VERSION', bb.__version__, e.data )
 		statusvars = bb.data.getVar("BUILDCFG_VARS", e.data, 1).split()
 		statuslines = ["%-17s = \"%s\"" % (i, bb.data.getVar(i, e.data, 1) or '') for i in statusvars]
@@ -263,28 +251,8 @@ python base_eventhandler() {
 				pesteruser.append(v)
 		if pesteruser:
 			bb.fatal('The following variable(s) were not set: %s\nPlease set them directly, or choose a MACHINE or DISTRO that sets them.' % ', '.join(pesteruser))
-
-	#
-	# Handle removing stamps for 'rebuild' task
-	#
-	if name.startswith("StampUpdate"):
-		for (fn, task) in e.targets:
-			#print "%s %s" % (task, fn)
-			if task == "do_rebuild":
-				dir = "%s.*" % e.stampPrefix[fn]
-				bb.note("Removing stamps: " + dir)
-				os.system('rm -f '+ dir)
-				os.system('touch ' + e.stampPrefix[fn] + '.needclean')
-
-	if not data in e.__dict__:
-		return
-
-	log = data.getVar("EVENTLOG", e.data, 1)
-	if log:
-		logfile = file(log, "a")
-		logfile.write("%s\n" % msg)
-		logfile.close()
 }
+addhandler build_summary
 
 addtask configure after do_unpack do_patch
 do_configure[dirs] = "${S} ${B}"
@@ -319,6 +287,36 @@ base_do_package() {
 addtask build
 do_build = ""
 do_build[func] = "1"
+
+def set_multimach_arch(d):
+    # 'multimachine' handling
+    mach_arch = bb.data.getVar('MACHINE_ARCH', d, 1)
+    pkg_arch = bb.data.getVar('PACKAGE_ARCH', d, 1)
+
+    #
+    # We always try to scan SRC_URI for urls with machine overrides
+    # unless the package sets SRC_URI_OVERRIDES_PACKAGE_ARCH=0
+    #
+    override = bb.data.getVar('SRC_URI_OVERRIDES_PACKAGE_ARCH', d, 1)
+    if override != '0' and is_machine_specific(d):
+        bb.data.setVar('PACKAGE_ARCH', "${MACHINE_ARCH}", d)
+        bb.data.setVar('MULTIMACH_ARCH', mach_arch, d)
+        return
+
+    multiarch = pkg_arch
+
+    packages = bb.data.getVar('PACKAGES', d, 1).split()
+    for pkg in packages:
+        pkgarch = bb.data.getVar("PACKAGE_ARCH_%s" % pkg, d, 1)
+
+        # We could look for != PACKAGE_ARCH here but how to choose
+        # if multiple differences are present?
+        # Look through PACKAGE_ARCHS for the priority order?
+        if pkgarch and pkgarch == mach_arch:
+            multiarch = mach_arch
+            break
+
+    bb.data.setVar('MULTIMACH_ARCH', multiarch, d)
 
 python () {
     import exceptions
@@ -368,6 +366,11 @@ python () {
         depends = depends + " git-native:do_populate_sysroot"
         bb.data.setVarFlag('do_fetch', 'depends', depends, d)
 
+    if "hg://" in srcuri:
+        depends = bb.data.getVarFlag('do_fetch', 'depends', d) or ""
+        depends = depends + " mercurial-native:do_populate_sysroot"
+        bb.data.setVarFlag('do_fetch', 'depends', depends, d)
+
     # unzip-native should already be staged before unpacking ZIP recipes
     need_unzip = bb.data.getVar('NEED_UNZIP_FOR_UNPACK', d, 1)
     src_uri = bb.data.getVar('SRC_URI', d, 1)
@@ -375,6 +378,11 @@ python () {
     if ".zip" in src_uri or need_unzip == "1":
         depends = bb.data.getVarFlag('do_unpack', 'depends', d) or ""
         depends = depends + " unzip-native:do_populate_sysroot"
+        bb.data.setVarFlag('do_unpack', 'depends', depends, d)
+
+    if ".lz" in src_uri:
+        depends = bb.data.getVarFlag('do_unpack', 'depends', d) or ""
+        depends = depends + " lzip-native:do_populate_sysroot"
         bb.data.setVarFlag('do_unpack', 'depends', depends, d)
 
     # 'multimachine' handling
@@ -385,30 +393,7 @@ python () {
         # Already machine specific - nothing further to do
         return
 
-    #
-    # We always try to scan SRC_URI for urls with machine overrides
-    # unless the package sets SRC_URI_OVERRIDES_PACKAGE_ARCH=0
-    #
-    override = bb.data.getVar('SRC_URI_OVERRIDES_PACKAGE_ARCH', d, 1)
-    if override != '0' and is_machine_specific(d):
-        bb.data.setVar('PACKAGE_ARCH', "${MACHINE_ARCH}", d)
-        bb.data.setVar('MULTIMACH_ARCH', mach_arch, d)
-        return
-
-    multiarch = pkg_arch
-
-    packages = bb.data.getVar('PACKAGES', d, 1).split()
-    for pkg in packages:
-        pkgarch = bb.data.getVar("PACKAGE_ARCH_%s" % pkg, d, 1)
-
-        # We could look for != PACKAGE_ARCH here but how to choose
-        # if multiple differences are present?
-        # Look through PACKAGE_ARCHS for the priority order?
-        if pkgarch and pkgarch == mach_arch:
-            multiarch = mach_arch
-            break
-
-    bb.data.setVar('MULTIMACH_ARCH', multiarch, d)
+    set_multimach_arch(d)
 }
 
 EXPORT_FUNCTIONS do_setscene do_fetch do_unpack do_configure do_compile do_install do_package

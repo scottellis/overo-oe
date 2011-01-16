@@ -3,9 +3,9 @@ SECTION = "e/utils"
 DEPENDS = "eet"
 LICENSE = "MIT BSD"
 RDEPENDS_${PN} = "shr-e-gadgets"
-SRCREV = "4bc1a7e7a59ede2a750ee7d02729fa9c535641d9"
+SRCREV = "ac32cc259883be1602e51f8496c96bc381513b38"
 PV = "1.2+gitr${SRCPV}"
-PR = "r5"
+PR = "r6"
 
 inherit e
 

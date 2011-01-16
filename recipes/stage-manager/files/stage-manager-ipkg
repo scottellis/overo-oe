@@ -109,7 +109,13 @@ Valid destinations are directories or one of the dest names from $IPKG_CONF:" >&
 	IPKG_DIR_PREFIX=usr/lib/ipkg
 	IPKG_LISTS_DIR=$IPKG_OFFLINE_ROOT/$IPKG_DIR_PREFIX/lists
 	IPKG_PENDING_DIR=$IPKG_OFFLINE_ROOT/$IPKG_DIR_PREFIX/pending
-	IPKG_TMP=`mktemp -d`
+
+	# test for bsd mktemp and pass -t <prefix> when needed
+	if (mktemp -V) ; then
+		IPKG_TMP=`mktemp -d`
+	else
+		IPKG_TMP=`mktemp -d -t ipkg`
+	fi
 
 	if [ ! -d "$IPKG_TMP" ]; then
 		echo "Error, could not create a temp directory"
@@ -425,7 +431,7 @@ ipkg_status_matching() {
 ipkg_status_installed_sd() {
 	local sd="$1"
 	local pkg="$2"
-	ipkg_status_sd $sd $pkg Status | grep -q "Status: install ok installed"
+	ipkg_status_sd $sd $pkg Status | grep -q "Status: install user installed"
 }
 
 ipkg_status_installed_all() {

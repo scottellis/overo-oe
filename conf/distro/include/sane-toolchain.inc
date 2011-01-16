@@ -5,21 +5,24 @@
 #############################################################################
 
 # Base line versions, good for most things
-PREFERRED_GCC_VERSION                ?= "4.4.4"
-PREFERRED_BINUTILS                   ?= "2.20.1"
+PREFERRED_GCC_VERSION                ?= "4.5"
+PREFERRED_BINUTILS_VERSION           ?= "2.20.1"
+PREFERRED_UCLIBC_VERSION             ?= "git"
+PREFERRED_EGLIBC_VERSION             ?= "2.12"
+PREFERRED_GLIBC_VERSION              ?= "2.10.1"
 
 # Prefer glibc 2.6 and uclibc 0.9.30, these have had the most testing.
-PREFERRED_VERSION_glibc             ?= "2.10.1"
-PREFERRED_VERSION_glibc-initial     ?= "2.10.1"
-PREFERRED_VERSION_eglibc             ?= "2.11"
-PREFERRED_VERSION_eglibc-initial     ?= "2.11"
-PREFERRED_UCLIBC_VERSION            ?= "0.9.31"
+PREFERRED_VERSION_glibc              ?= "${PREFERRED_GLIBC_VERSION}"
+PREFERRED_VERSION_glibc-initial      ?= "${PREFERRED_GLIBC_VERSION}"
+PREFERRED_VERSION_eglibc             ?= "${PREFERRED_EGLIBC_VERSION}"
+PREFERRED_VERSION_eglibc-initial     ?= "${PREFERRED_EGLIBC_VERSION}"
 
 # Some systems need a special gcc version
 PREFERRED_GCC_VERSION_486sx          ?= "4.3.2"
 PREFERRED_GCC_VERSION_avr32          ?= "4.2.2"
 PREFERRED_GCC_VERSION_bfin           ?= "4.1.2"
-PREFERRED_GCC_VERSION_xilinx-ml403   ?= "4.1.1"
+PREFERRED_GCC_VERSION_sh3            ?= "4.4.4"
+PREFERRED_GCC_VERSION_sh4            ?= "4.4.4"
 PREFERRED_GCC_VERSION_xilinx-ml403   ?= "4.1.1"
 
 # This is unrelated to the kernel version, but glibc and some userspaceapps require a recent version to build against
@@ -29,9 +32,9 @@ PREFERRED_VERSION_linux-libc-headers ?= "2.6.31"
 #KERNEL_CCSUFFIX_armv7a= "-4.2.1+csl-arm-2007q3-53"
 
 # Binutils
-PREFERRED_VERSION_binutils           ?= "${PREFERRED_BINUTILS}"
-PREFERRED_VERSION_binutils-cross     ?= "${PREFERRED_BINUTILS}"
-PREFERRED_VERSION_binutils-cross-sdk ?= "${PREFERRED_BINUTILS}"
+PREFERRED_VERSION_binutils           ?= "${PREFERRED_BINUTILS_VERSION}"
+PREFERRED_VERSION_binutils-cross     ?= "${PREFERRED_BINUTILS_VERSION}"
+PREFERRED_VERSION_binutils-cross-sdk ?= "${PREFERRED_BINUTILS_VERSION}"
 
 # Avr32 only has patches for binutils 2.17 in OE
 PREFERRED_VERSION_binutils_avr32 =           "2.17"
