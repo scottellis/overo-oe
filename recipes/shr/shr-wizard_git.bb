@@ -4,9 +4,9 @@ LICENSE = "GPL"
 DEPENDS = "e-wm"
 RDEPENDS_${PN} = "python-elementary shr-settings python-phoneutils e-wm python-dbus python-edbus"
 SECTION = "x11/application"
-SRCREV = "b04c841861b0f293e1a9536592fd154efc662554"
+SRCREV = "18690ac56e303f3e0fe48e684da2e57d3ed68201"
 PV = "0.0.0+gitr${SRCPV}"
-PR = "r7"
+PR = "r8"
 
 inherit autotools
 

@@ -28,23 +28,8 @@ export WINDRES_FOR_TARGET = "${TOOLCHAIN_PATH}/${TARGET_SYS}/bin/windres"
 #
 export ARCH_FLAGS_FOR_TARGET = "--sysroot=${STAGING_DIR_TARGET}"
 
-do_configure () {
-	export CC_FOR_BUILD="${BUILD_CC}"
-	export CXX_FOR_BUILD="${BUILD_CXX}"
-	export CFLAGS_FOR_BUILD="${BUILD_CFLAGS}"
-	export CPPFLAGS_FOR_BUILD="${BUILD_CPPFLAGS}"
-	export CXXFLAGS_FOR_BUILD="${BUILD_CXXFLAGS}"
-	export LDFLAGS_FOR_BUILD="${BUILD_LDFLAGS}"
-	(cd ${S} && gnu-configize) || die "failure running gnu-configize"
-	oe_runconf
-}
-
 do_compile () {
 	export CC="${BUILD_CC}"
-	export AR_FOR_TARGET="${TARGET_SYS}-ar"
-	export RANLIB_FOR_TARGET="${TARGET_SYS}-ranlib"
-	export LD_FOR_TARGET="${TARGET_SYS}-ld"
-	export NM_FOR_TARGET="${TARGET_SYS}-nm"
 	export CC_FOR_TARGET="${CCACHE} ${TARGET_SYS}-gcc ${TARGET_CC_ARCH}"
 	base_do_compile
 }

@@ -14,6 +14,7 @@ FILES_libssp = "${target_libdir}/libssp.so.*"
 FILES_libgfortran = "${target_libdir}/libgfortran.so.*"
 
 FILES_libgcc = "${target_base_libdir}/libgcc_s.so.1"
+FILES_libgcc-dev = "${target_libdir}/libgcc_s.so"
 
 FILES_libstdc++ = "${target_libdir}/libstdc++.so.*"
 
@@ -26,6 +27,13 @@ do_install () {
 		if [ -d ${D}${prefix}/$d/ ]; then
 			mv -f ${D}${prefix}/$d/libgcc* ${D}${target_base_libdir} || true
 			mv -f ${D}${prefix}/$d/* ${D}${target_libdir} || true
+		fi
+	done
+	# since we are moving the .la files to target sysroot we need to make sure that
+	# libdir points to right place within the target sysroot
+	for la in ${D}${target_libdir}/libstdc++.la ${D}${target_libdir}/libsupc++.la; do
+		if [ -f $la ]; then
+			sed -i -e "s:^libdir=.*:libdir='${target_libdir}':g;" $la
 		fi
 	done
 

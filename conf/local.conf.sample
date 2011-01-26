@@ -30,6 +30,10 @@ BBFILES := "${@bb.fatal('Edit your conf/local.conf: BBFILES')}"
 # This is a regulary expression, so be sure to get your parenthesis balanced.
 BBMASK = ""
 
+# Comment this if your host distribution does not provide the
+# help2man tool.
+ASSUME_PROVIDED += "help2man-native"
+
 # Uncomment this if your host distribution has recent enough Linux
 # Kernel header files.  Utilities we use to generate certain types of
 # target filesystems need somewhat recent header files.
@@ -119,7 +123,7 @@ PREFERRED_PROVIDERS += " virtual/${TARGET_PREFIX}g++:gcc-cross"
 IMAGE_FSTYPES = "jffs2 tar"
 
 # Uncomment this if you want to keep the temporary rootfs
-# diretory, this can be useful during development.
+# directory, this can be useful during development.
 # (Note that this rootfs is NOT usuable as NFS export.)
 # IMAGE_KEEPROOTFS = "1"
 

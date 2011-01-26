@@ -2,7 +2,7 @@ DESCRIPTION = "freesmartphone.org API GLib wrapper (auto-generated)"
 SECTION = "devel"
 LICENSE = "LGPL-3"
 DEPENDS = "dbus-glib"
-SRCREV = "4795324ec64025c07f86c72c440d270df2fb8443"
+SRCREV = "2a7752cd0934ed833d924008bc7e6d6b573c9727"
 PV = "0.2+gitr${SRCPV}"
 PR = "r0"
 

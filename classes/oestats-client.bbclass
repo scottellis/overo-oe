@@ -77,7 +77,7 @@ def oestats_start(server, builder, d):
 			'metadata_branch': bb.data.getVar('METADATA_BRANCH', d, True),
 			'metadata_revision': bb.data.getVar('METADATA_REVISION', d, True),
 			'machine': bb.data.getVar('MACHINE', d, True),
-			'distro': bb.data.getVar('DISTRO', d, True),
+			'distro': bb.data.getVar('USERDISTRO', d, True),
 		})
 		if re.match("^\d+$", data): id=data
 	except:
@@ -181,11 +181,12 @@ python oestats_eventhandler () {
 		return
 
 	server = bb.data.getVar('OESTATS_SERVER', e.data, True)
-	if not server.startswith('http://') and not server.startswith('https://'):
-		server = "http://%s" %(server)
 	builder = bb.data.getVar('OESTATS_BUILDER', e.data, True)
 	if not server or not builder:
 		return
+
+	if not server.startswith('http://') and not server.startswith('https://'):
+		server = "http://%s" %(server)
 
 	if getName(e) == 'BuildStarted':
 		oestats_start(server, builder, e.data)

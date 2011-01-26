@@ -27,6 +27,10 @@ FILES_libcrypto = "${libdir}/libcrypto.so.*"
 FILES_libssl = "${libdir}/libssl.so.*"
 FILES_${PN}-misc = "${libdir}/ssl/misc ${libdir}/ssl/openssl.cnf"
 
+do_configure_prepend_darwin () {
+	sed -i -e '/version-script=openssl\.ld/d' Configure
+}
+
 do_configure () {
 	cd util
 	perl perlpath.pl ${bindir}
@@ -39,6 +43,10 @@ do_configure () {
 	elif [ "x$os" = "xlinux-uclibceabi" ]; then
 		os=linux
 	elif [ "x$os" = "xlinux-gnueabi" ]; then
+		os=linux
+	elif [ "x$os" = "xlinux-uclibcspe" ]; then
+		os=linux
+	elif [ "x$os" = "xlinux-gnuspe" ]; then
 		os=linux
 	fi
 	target="$os-${HOST_ARCH}"
@@ -73,23 +81,26 @@ do_configure () {
 	linux-powerpc)
 		target=linux-ppc
 		;;
-	linux-gnuspe-powerpc)
-		target=linux-ppc
-		;;
 	linux-supersparc)
 		target=linux-sparcv8
 		;;
 	linux-sparc)
 		target=linux-sparcv8
 		;;
+	darwin-i386)
+		target=darwin-i386-cc
+		;;
 	esac
 	# inject machine-specific flags
 	sed -i -e "s|^\(\"$target\",\s*\"[^:]\+\):\([^:]\+\)|\1:${CFLAG}|g" Configure
         useprefix=${prefix}
-        if [ "x$useprefix" == "x" ]; then
+        if [ "x$useprefix" = "x" ]; then
                 useprefix=/
         fi        
 	perl ./Configure shared --prefix=$useprefix --openssldir=${libdir}/ssl $target
+
+	eval "${@base_contains('DISTRO_FEATURES', 'largefile', '', 'sed -i -e "/_FILE_OFFSET_BITS/,/#endif/d" ${S}/crypto/bio/bss_file.c', d)}"
+	eval "${@base_contains('DISTRO_FEATURES', 'ipv6', '', 'sed -i -e "/AF_INET6/,/break/d" ${S}/crypto/bio/bss_dgram.c', d)}"
 }
 
 do_compile () {
@@ -111,5 +122,5 @@ do_install () {
 	oe_libinstall -so libssl ${D}${libdir}
 
 	install -d ${D}${includedir}
-	cp --dereference -R include/openssl ${D}${includedir}
+	cp -L -R include/openssl ${D}${includedir}
 }

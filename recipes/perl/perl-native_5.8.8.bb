@@ -1,9 +1,9 @@
 DESCRIPTION = "Perl is a popular scripting language."
 HOMEPAGE = "http://www.perl.org/"
 SECTION = "libs"
-LICENSE = "Artistic|GPL"
+LICENSE = "Artistic|GPLv1+"
 DEPENDS = "virtual/db-native gdbm-native"
-PR = "r20"
+PR = "r21"
 NATIVE_INSTALL_WORKS = "1"
 
 FILESDIR = "${@os.path.dirname(bb.data.getVar('FILE',d,1))}/perl-${PV}"
@@ -94,6 +94,11 @@ do_install() {
         # Make sure CPAN is configured
         sed -e "s,@SYSROOTBASE@,${base_prefix}," ${WORKDIR}/CPAN-Config.pm > \
                  ${D}${libdir}/perl/${PV}/CPAN/Config.pm
+
+	# Make sure we use /usr/bin/env perl
+	for PERLSCRIPT in `grep -rIl ${bindir}/perl ${D}${bindir}`; do
+		sed -i -e 's|^#!${bindir}/perl|#!/usr/bin/env perl|' $PERLSCRIPT
+	done
 }
 
 do_install_append_nylon() {

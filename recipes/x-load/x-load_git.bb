@@ -4,10 +4,11 @@ DEFAULT_PREFERENCE_omap3-pandora = "-1"
 
 FILESDIR = "${@os.path.dirname(bb.data.getVar('FILE',d,1))}/x-load-git/${MACHINE}"
 
-SRCREV = "a164723f6f8b8b1d47ed368ef78ec52008db0d44"
+SRCREV = "e4b7fb63fe7fe6efbca1adee758cc966161b3b5d"
 
 PV = "1.44ss+${PR}+gitr${SRCREV}"
-PR ="r15"
+PV_beagleboard = "1.44+${PR}+gitr${SRCREV}"
+PR ="r17"
 PE = "1"
 
 SRC_URI = " \
@@ -16,6 +17,9 @@ SRC_URI = " \
 
 SRC_URI_append_beagleboard = " \
                               file://name.patch \
+                              file://bb8547fcbc54ecc7a75f9ad45a31042a04d8a2ce.patch \
+                              file://xm-mem.patch \
+                              file://0001-Fix-reading-FAT32-root-dirs-that-span-1-cluster.patch \
                              "
 
 SRC_URI_append_omap3-touchbook = " \
@@ -53,6 +57,11 @@ SRCREV_omapzoom36x = "251d92815500143aefdbe3b3558a0ce6daeaebdc"
 
 SRC_URI[uboot.md5sum] = "e68b30714d22ce2f926d2dd19f94a2be"
 SRC_URI[uboot.sha256sum] = "e7e5c87d939cc4c1f14d17ea0814b0bed97021c7afca3ef9053c896c2b5bdd6f"
+
+SRC_URI_igep0020 = "git://git.igep.es/pub/scm/x-loader.git;protocol=git \
+                    file://remove-final-ldflags.patch"
+SRCREV_igep0020 = "213d95fcadc54424c796259928d7c15c5a2945a0"
+PV_igep0020 = "1.43+${PR}+gitr${SRCREV}"
 
 S = "${WORKDIR}/git"
 

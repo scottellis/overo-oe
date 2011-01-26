@@ -8,9 +8,9 @@ def autotools_deps(d):
 	pn = bb.data.getVar('PN', d, 1)
 	deps = ''
 
-	if pn in ['autoconf-native', 'automake-native']:
+	if pn in ['autoconf-native', 'automake-native', 'help2man-native']:
 		return deps
-	deps += 'autoconf-native automake-native '
+	deps += 'autoconf-native automake-native help2man-native '
 
 	if not pn in ['libtool', 'libtool-native', 'libtool-cross']:
 		deps += 'libtool-native '
@@ -57,6 +57,14 @@ def autotools_set_crosscompiling(d):
 		return " cross_compiling=yes"
 	return ""
 
+def append_libtool_sysroot(d):
+	if bb.data.getVar('LIBTOOL_HAS_SYSROOT', d, 1) == "yes":
+		if bb.data.getVar('BUILD_SYS', d, 1) == bb.data.getVar('HOST_SYS', d, 1):
+			return '--with-libtool-sysroot'
+		else:
+			return '--with-libtool-sysroot=${STAGING_DIR_HOST}'
+	return ''
+
 # EXTRA_OECONF_append = "${@autotools_set_crosscompiling(d)}"
 
 CONFIGUREOPTS = " --build=${BUILD_SYS} \
@@ -75,11 +83,14 @@ CONFIGUREOPTS = " --build=${BUILD_SYS} \
 		  --includedir=${includedir} \
 		  --oldincludedir=${oldincludedir} \
 		  --infodir=${infodir} \
-		  --mandir=${mandir}"
+		  --mandir=${mandir} \
+		  ${@append_libtool_sysroot(d)} \
+		"
 
 oe_runconf () {
 	if [ -x ${S}/configure ] ; then
-		${S}/configure ${CONFIGUREOPTS} ${EXTRA_OECONF} "$@"
+		${S}/configure \
+		${CONFIGUREOPTS} ${EXTRA_OECONF} "$@"
 	else
 		oefatal "no configure script found"
 	fi
@@ -170,8 +181,7 @@ autotools_do_install() {
 	oe_runmake 'DESTDIR=${D}' install
 }
 
-PACKAGE_PREPROCESS_FUNCS += "autotools_prepackage_lamangler"
-
+PACKAGE_PREPROCESS_FUNCS += "${@['autotools_prepackage_lamangler',''][bb.data.getVar('LIBTOOL_HAS_SYSROOT', d, 1) == "yes"]}"
 autotools_prepackage_lamangler () {
         for i in `find ${PKGD} -name "*.la"` ; do \
             sed -i -e 's:${STAGING_LIBDIR}:${libdir}:g;' \

@@ -27,7 +27,7 @@ CFLAGS_append = " -D__FILE_OFFSET_BITS=64"
 LDFLAGS_prepend = "-L${S} -L${S}/openbsd-compat "
 EXTRA_OECONF = "--disable-suid-ssh --with-ssl=${STAGING_LIBDIR}/ssl \
 	        --with-rand-helper=no \
-		--without-pam \
+                --without-pam \
 	        --without-zlib-version-check \
 		--with-privsep-path=/var/run/sshd \
 		--sysconfdir=${sysconfdir}/ssh"

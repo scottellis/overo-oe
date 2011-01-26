@@ -8,8 +8,10 @@ EVAS_CPU_TWEAKS = ""
 EXTRA_OECONF = "\
 		--x-includes=${STAGING_INCDIR}/X11  \
 		--x-libraries=${STAGING_LIBDIR} \
-        --enable-evas-magic-debug \
-        \
+		--enable-evas-magic-debug \
+		--enable-pthreads \
+		--enable-async-events \
+		--enable-async-preload \
 		--enable-fb					\
 		--disable-directfb			\
 		--disable-sdl				\
@@ -25,7 +27,7 @@ EXTRA_OECONF = "\
 		--disable-glitz-x11			\
 		--enable-image-loader-eet	\
 		--disable-image-loader-edb	\
-		--disable-image-loader-gif	\
+		--enable-image-loader-gif	\
 		--enable-image-loader-png	\
 		--enable-image-loader-jpeg	\
 		--enable-image-loader-tiff	\

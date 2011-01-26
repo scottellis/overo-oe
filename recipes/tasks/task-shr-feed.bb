@@ -1,5 +1,5 @@
 DESCRIPTION = "SHR Feed"
-PR = "r76"
+PR = "r85"
 PV = "1.0"
 LICENSE = "GPL"
 
@@ -50,6 +50,7 @@ RDEPENDS_${PN} += "\
 		openmoko-agpsui \
 		openvpn \
 		pyphonelog \
+		ffphonelog \
 #		shr-config \
 		shr-today \
 		shr-theme-neo \
@@ -64,6 +65,7 @@ RDEPENDS_${PN} += "\
 		shr-splash-theme-handy \
 		shr-splash-theme-tux \
 		shr-splash-theme-logo \
+		shr-splash-theme-openmoko \
 		vagalume \
 		wireshark \
 		x11vnc \
@@ -77,7 +79,6 @@ RDEPENDS_${PN} += "\
 		mtpaint \
 		telepathy-python \
 		intone-video \
-		ipkg-link \
 		ipkg-utils \
 		mysql \
 		fltk-chess \
@@ -101,6 +102,7 @@ RDEPENDS_${PN} += "\
 		vim \
 		vpnc \
 		emacs-x11 \
+		mg \
 		mcabber \
 		gdb \
 		oh-puzzles \
@@ -158,7 +160,6 @@ RDEPENDS_${PN} += "\
 		synergy \
 		irssi \
 		zhone \
-		paroli \
 		cu \
 		net-tools \
 		iproute2 \
@@ -171,10 +172,6 @@ RDEPENDS_${PN} += "\
 		wmiconfig \
 		netkit-telnet \
 		bind-utils \
-		bubble-keyboard \
-		intuition \
-		gridpad \
-#		essential-dialer \
 		font-adobe-100dpi \
 		font-adobe-75dpi \
 		font-adobe-utopia-100dpi \
@@ -278,8 +275,6 @@ RDEPENDS_${PN} += "\
 		make \
 		dnsmasq \
 		libsyncml \
-		qi \
-		qi-ubi \
 		wpa-gui \
 		iliwi \
 		gabriel \
@@ -305,11 +300,19 @@ RDEPENDS_${PN} += "\
 		wesnoth \
 		mokosuite2 \
 		mokowm-imf-ecore \
+		mokojeweled \
 		atrack \
 		minneo \
 		gnuplot \
 		galculator \
 		xterm \
+		ca-certificates \
+		inkspill \
+		dns2tcp \
+		efm-nav \
+		efm-path \
+		efm-pathbar \
+		setxkbmap \
 "
 
 # this is only usefull on gta02 and on other devices it's trying to pull mesa-dri (not respecting DEFAULT_PROVIDER for virtual/libgl)

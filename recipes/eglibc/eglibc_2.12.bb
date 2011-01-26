@@ -4,9 +4,9 @@ DEFAULT_PREFERENCE = "-1"
 DEPENDS += "gperf-native"
 FILESPATHPKG =. "eglibc-svn:"
 PV = "2.12"
-PR = "${INC_PR}.4"
+PR = "${INC_PR}.7"
 PR_append = "+svnr${SRCPV}"
-SRCREV="11306"
+SRCREV="11982"
 EGLIBC_BRANCH="eglibc-2_12"
 SRC_URI = "svn://svn.eglibc.org/branches;module=${EGLIBC_BRANCH};proto=svn \
            file://eglibc-svn-arm-lowlevellock-include-tls.patch \
@@ -14,14 +14,13 @@ SRC_URI = "svn://svn.eglibc.org/branches;module=${EGLIBC_BRANCH};proto=svn \
            file://shorten-build-commands.patch \
            file://sh4_set_fpscr_2.12.patch \
            file://sh4_local-fpscr_values.patch \
+           file://eglibc-dont-cache-slibdir.patch \
+           file://armv4-eabi-compile-fix.patch \
+           file://eglibc-make-382.patch \
            file://etc/ld.so.conf \
            file://generate-supported.mk"
 S = "${WORKDIR}/${EGLIBC_BRANCH}/libc"
 B = "${WORKDIR}/build-${TARGET_SYS}"
-
-PACKAGES_DYNAMIC = "libc6*"
-RPROVIDES_${PN}-dev = "libc6-dev virtual-libc-dev"
-PROVIDES_${PN}-dbg = "glibc-dbg"
 
 # the -isystem in bitbake.conf screws up glibc do_stage
 BUILD_CPPFLAGS = "-I${STAGING_INCDIR_NATIVE}"
@@ -89,7 +88,8 @@ rpcsvc = "bootparam_prot.x nlm_prot.x rstat.x \
 do_compile () {
 	# -Wl,-rpath-link <staging>/lib in LDFLAGS can cause breakage if another glibc is in staging
 	unset LDFLAGS
-	base_do_compile
+	oe_runmake libdir='${libdir}' slibdir='${base_libdir}' \
+        localedir='${libdir}/locale'
 	(
 		cd ${S}/sunrpc/rpcsvc
 		for r in ${rpcsvc}; do
