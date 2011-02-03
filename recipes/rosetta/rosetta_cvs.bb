@@ -6,7 +6,7 @@ DEPENDS = "gtk+ libgpewidget virtual/libx11 libxrandr libxft libxtst libxext lib
 DESCRIPTION = "Multistroke / full word handwriting recognition for X"
 LICENSE = "GPL"
 
-SRC_URI = "http://74.3.164.55/rosetta.tar.gz \
+SRC_URI = "http://cumulus.gumstix.org/sources/rosetta.tar.gz \
 	file://rosetta-makefile.patch"
 S = "${WORKDIR}/rosetta"
 PR = "r4"
