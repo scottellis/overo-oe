@@ -10,6 +10,7 @@ PR = "r1"
 SRC_URI = "git://git.denx.de/u-boot.git;branch=master;protocol=git \
 	   file://expansion.patch \
            file://enable-pwm10.patch \
+           file://sub-default-env.patch \
           "
 
 S = "${WORKDIR}/git"
