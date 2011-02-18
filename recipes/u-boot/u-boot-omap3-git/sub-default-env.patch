@@ -1,8 +1,8 @@
 diff --git git/include/configs/omap3_overo.h-orig git/include/configs/omap3_overo.h
-index 051e74d..18f3ef0 100644
+index 051e74d..14f49c7 100644
 --- git/include/configs/omap3_overo.h-orig
 +++ git/include/configs/omap3_overo.h
-@@ -150,33 +150,23 @@
+@@ -150,33 +150,22 @@
  							/* partition */
  
  /* Environment information */
@@ -31,7 +31,7 @@ index 051e74d..18f3ef0 100644
  		"root=${mmcroot} " \
  		"rootfstype=${mmcrootfstype}\0" \
  	"nandargs=setenv bootargs console=${console} " \
- 		"mpurate=${mpurate} " \
+-		"mpurate=${mpurate} " \
 -		"vram=${vram} " \
 -		"omapfb.mode=dvi:${dvimode} " \
 -		"omapfb.debug=y " \
@@ -39,3 +39,20 @@ index 051e74d..18f3ef0 100644
  		"root=${nandroot} " \
  		"rootfstype=${nandrootfstype}\0" \
  	"loadbootscript=fatload mmc 0 ${loadaddr} boot.scr\0" \
+@@ -193,13 +182,9 @@
+ 
+ #define CONFIG_BOOTCOMMAND \
+ 	"if mmc init; then " \
+-		"if run loadbootscript; then " \
+-			"run bootscript; " \
+-		"else " \
+-			"if run loaduimage; then " \
+-				"run mmcboot; " \
+-			"else run nandboot; " \
+-			"fi; " \
++		"if run loaduimage; then " \
++			"run mmcboot; " \
++		"else run nandboot; " \
+ 		"fi; " \
+ 	"else run nandboot; fi"
+ 
