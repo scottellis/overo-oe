@@ -62,13 +62,10 @@ def is_machine_specific(d):
             return True
 
 def oe_popen_env(d):
-    env = d.getVar("__oe_popen_env", False)
-    if env is None:
-        env = {}
-        for v in d.keys():
-            if d.getVarFlag(v, "export"):
-                env[v] = d.getVar(v, True) or ""
-        d.setVar("__oe_popen_env", env)
+    env = {}
+    for v in d.keys():
+        if d.getVarFlag(v, "export"):
+            env[v] = d.getVar(v, True) or ""
     return env
 
 def oe_run(d, cmd, **kwargs):
@@ -423,7 +420,21 @@ def check_app_exists(app, d):
 	return bool(which(path, app))
 
 def explode_deps(s):
-	return bb.utils.explode_deps(s)
+	r = []
+	l = s.split()
+	flag = False
+	for i in l:
+		if i[0] == '(':
+			flag = True
+			j = []
+		if flag:
+			j.append(i)
+			if i.endswith(')'):
+				flag = False
+				r[-1] += ' ' + ' '.join(j)
+		else:
+			r.append(i)
+	return r
 
 def base_set_filespath(path, d):
 	bb.note("base_set_filespath usage is deprecated, %s should be fixed" % d.getVar("P", 1))

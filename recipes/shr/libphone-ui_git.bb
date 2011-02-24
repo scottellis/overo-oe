@@ -2,7 +2,7 @@ DESCRIPTION = "A generic framework for phone ui"
 HOMEPAGE = "http://shr-project.org/"
 LICENSE = "GPL"
 SECTION = "libs"
-SRCREV = "24782b2c95c4c955db31ae5fcb4e2ed9ceebb0a7"
+SRCREV = "4ad47c4db9ad766ad2b38ffc3bd181a85575fd75"
 PV = "0.0.1+gitr${SRCPV}"
 PR = "r0"
 
@@ -10,7 +10,7 @@ DEPENDS="glib-2.0 libshr-glib libfso-glib libfsoframework libphone-utils alsa-li
 
 inherit pkgconfig autotools autotools
 
-SRC_URI = "git://git.shr-project.org/repo/libphone-ui.git;protocol=http;branch=gdbus"
+SRC_URI = "git://git.shr-project.org/repo/libphone-ui.git;protocol=http;branch=master"
 
 S="${WORKDIR}/git"
 

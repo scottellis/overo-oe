@@ -1,11 +1,9 @@
 DESCRIPTION = "Azy is a library meant for implementing rpc clients and servers in a simple manner."
-DEPENDS = "pkgconfig zlib openssl eina gnutls ecore libxml2 re2c-native azy-native"
-DEPENDS_virtclass-native = "pkgconfig-native zlib-native openssl-native eina-native gnutls-native ecore-native libxml2-native re2c-native"
+DEPENDS = "pkgconfig zlib openssl eina gnutls ecore libxml2 re2c-native mysql5 azy-native"
+DEPENDS_virtclass-native = "pkgconfig-native zlib-native openssl-native eina-native gnutls-native ecore-native libxml2-native re2c-native mysql5-native"
 LICENSE = "LGPLv2.1+"
 PV = "1.0.0+svnr${SRCPV}"
-# current EFL_SRCREV doesn't support external re2c
-SRCREV = "55665"
-#SRCREV = "${EFL_SRCREV}"
+SRCREV = "${EFL_SRCREV}"
 
 # to provide native lemon binary
 BBCLASSEXTEND = "native"
@@ -26,4 +24,6 @@ do_install_append_virtclass-native() {
 
 inherit efl
 
-SRC_URI = "svn://svn.enlightenment.org/svn/e/trunk/PROTO;module=azy;proto=http;scmdata=keep"
+SRC_URI = "${E_SVN}/trunk/PROTO;module=${SRCNAME};proto=http;scmdata=keep"
+S = "${WORKDIR}/${SRCNAME}"
+

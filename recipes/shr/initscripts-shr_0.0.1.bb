@@ -5,7 +5,7 @@ DEPENDS = ""
 RDEPENDS_${PN} = "procps"
 LICENSE = "GPL"
 PV = "0.0.1"
-PR = "r21"
+PR = "r24"
 
 RCONFLICTS_${PN} = "initscripts"
 
@@ -32,7 +32,7 @@ SRC_URI = "file://alignment.sh \
 	   file://umountnfs.sh \
 	   "
 
-SRC_URI_append_palmpre = " file://mountdevtmpfs.sh"
+SRC_URI_append_nokia900 = " file://nokia-n900-cmt-gpio.sh"
 
 inherit base
 
@@ -76,9 +76,9 @@ do_install () {
 	install -m 0755	${WORKDIR}/umountfs		${D}${sysconfdir}/init.d
 	install -m 0755	${WORKDIR}/umountnfs.sh		${D}${sysconfdir}/init.d
 
-	if [ "${MACHINE}" = "palmpre" ]; then
-		install -m 0755 ${WORKDIR}/mountdevtmpfs.sh ${D}${sysconfdir}/init.d
-		ln -sf ../init.d/mountdevtmpfs.sh ${D}${sysconfdir}/rcS.d/S03mountdevtmpfs.sh
+	if [ "${MACHINE}" = "nokia900" ]; then
+		install -m 0755 ${WORKDIR}/nokia-n900-cmt-gpio.sh ${D}${sysconfdir}/init.d
+		ln -sf ../init.d/nokia-n900-cmt-gpio.sh ${D}${sysconfdir}/rcS.d/S40nokia-n900-cmt-gpio.sh
 	fi
 
 #

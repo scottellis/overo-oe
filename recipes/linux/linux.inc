@@ -47,6 +47,7 @@ KERNEL_DEVICETREE_mpc8323e-rdb = "arch/${ARCH}/boot/dts/mpc832x_rdb.dts"
 KERNEL_DEVICETREE_mpc8544ds = "arch/${ARCH}/boot/dts/mpc8544ds.dts"
 KERNEL_DEVICETREE_mpc8641-hpcn = "arch/${ARCH}/boot/dts/mpc8641_hpcn.dts"
 KERNEL_DEVICETREE_p1020rdb = "arch/${ARCH}/boot/dts/p1020rdb.dts"
+KERNEL_DEVICETREE_p2020rdb = "arch/${ARCH}/boot/dts/p2020rdb.dts"
 KERNEL_DEVICETREE_p2020ds = "arch/${ARCH}/boot/dts/p2020ds.dts"
 KERNEL_DEVICETREE_sequoia = "arch/${ARCH}/boot/dts/sequoia.dts"
 KERNEL_DEVICETREE_tqm8540 = "arch/${ARCH}/boot/dts/tqm8540.dts"
@@ -62,11 +63,15 @@ python __anonymous () {
     import bb
     
     devicetree = bb.data.getVar('KERNEL_DEVICETREE', d, 1) or ''
+    machine = bb.data.getVar('MACHINE', d, 1)
     if devicetree:
     	depends = bb.data.getVar("DEPENDS", d, 1)
     	bb.data.setVar("DEPENDS", "%s dtc-native" % depends, d)
     	packages = bb.data.getVar("PACKAGES", d, 1)
     	bb.data.setVar("PACKAGES", "%s kernel-devicetree" % packages, d)
+    if 'nokia900' in machine:
+        depends = bb.data.getVar("DEPENDS", d, 1)
+        bb.data.setVar("DEPENDS", "%s lzma-native" % depends, d)
 }
 
 do_configure_prepend() {
@@ -77,7 +82,9 @@ do_configure_prepend() {
         # see https://patchwork.kernel.org/patch/11166/
         # committed in 2.6.29 (commit d15bd1067b1fcb2b7250d22bc0c7c7fea0b759f7)
 
-        sed -i -e 's/getline/parseline/g' ${S}/scripts/unifdef.c
+        if [ -e ${S}/scripts/unifdef.c ]; then
+                sed -i -e 's/getline/parseline/g' ${S}/scripts/unifdef.c
+        fi
 
 
         echo "" > ${S}/.config

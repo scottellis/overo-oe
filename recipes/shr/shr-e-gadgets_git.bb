@@ -5,14 +5,16 @@ DEPENDS = "e-wm"
 RDEPENDS_${PN} = "e-wm"
 SECTION = "x11/application"
 
-SRCREV = "64e4f00291097d43ee974ee9d09317d349035a3b"
+SRCREV = "0638e17d76861ca1e4f89a2d955fab03fa143634"
 PV = "0.0.0+gitr${SRCPV}"
-PR = "r8"
+PR = "r10"
 
 inherit autotools
 
 SRC_URI = "git://git.shr-project.org/repo/shr-e-gadgets.git;protocol=http;branch=master"
 S = "${WORKDIR}/git"
+
+EXTRA_OECONF = "--with-edje-cc=${STAGING_BINDIR_NATIVE}/edje_cc"
 
 FILES_${PN} += "\
 	${datadir}/shr_elm_softkey \

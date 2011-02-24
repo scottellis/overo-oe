@@ -7,11 +7,13 @@ COMPATIBLE_MACHINE = "omapl138"
 
 SRC_URI = "svn://gforge.ti.com/svn/pru_sw/;module=trunk;proto=https;user=anonymous;pswd=''"
 
-SRCREV = "20"
+SRCREV = "24"
 S = "${WORKDIR}/trunk/app_loader"
 
+TARGET_CC_ARCH += "${LDFLAGS}"
+
 do_compile () {
-        make -C ${S}/interface
+        oe_runmake -C ${S}/interface
 }
 
 do_install () {

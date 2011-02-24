@@ -3,7 +3,7 @@ DESCRIPTION = "udev is a daemon which dynamically creates and removes device nod
 the hotplug package and requires a kernel not older than 2.6.12."
 LICENSE = "GPLv2+"
 
-PR = "r8"
+PR = "r12"
 
 # Untested
 #DEFAULT_PREFERENCE = "-1"
@@ -41,6 +41,7 @@ SRC_URI_append_bug = " \
        file://30-BUG.rules \
        file://10-mx31.rules \
        file://bmi_eventpipe.sh "
+PACKAGE_ARCH_bug = "bug"
 
 SRC_URI_append_nokia900 = " \
        file://10-cmt_speech.rules \
@@ -49,8 +50,8 @@ SRC_URI_append_nokia900 = " \
        file://udev-rules-nokia-n900-snd.rules \
        file://nokia-n900-mac-hack.sh \
 "
+PACKAGE_ARCH_nokia900 = "nokia900"
 
-PACKAGE_ARCH_bug = "bug"
 
 inherit update-rc.d autotools
 
@@ -102,6 +103,10 @@ RDEPENDS_udev_append_poodle = " udev-compat"
 do_unpack_append_poodle() {
 	bb.build.exec_func('do_apply_compat_wrapper', d)
 }
+RDEPENDS_udev_append_palmpre = " udev-compat"
+do_unpack_append_palmpre() {
+	bb.build.exec_func('do_apply_compat_wrapper', d)
+}
 
 # Modify init script on platforms that need to boot old kernels:
 do_apply_compat_wrapper() {
@@ -136,6 +141,7 @@ do_install () {
 
 	touch ${D}${sysconfdir}/udev/saved.uname
 	touch ${D}${sysconfdir}/udev/saved.cmdline
+	touch ${D}${sysconfdir}/udev/saved.devices
 	touch ${D}${sysconfdir}/udev/saved.atags
 
 	install -d ${D}${sysconfdir}/udev/scripts/

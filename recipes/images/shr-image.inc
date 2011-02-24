@@ -3,7 +3,7 @@
 #------------------------------------------------------
 
 PV = "2.0"
-PR = "r15"
+PR = "r17"
 
 DEPENDS += "task-shr-minimal"
 IMAGE_LOGIN_MANAGER = "shadow"

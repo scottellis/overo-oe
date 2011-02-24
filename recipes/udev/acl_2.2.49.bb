@@ -1,8 +1,6 @@
 DESCRIPTION = "Commands for Manipulating POSIX Access Control Lists"
 LICENSE = "GPLv2"
-
-PR = "r3"
-
+PR = "r5"
 DEPENDS = "attr"
 
 SRC_URI = "http://mirror.its.uidaho.edu/pub/savannah/acl/acl-${PV}.src.tar.gz \
@@ -18,6 +16,10 @@ EXTRA_OECONF = " --enable-gettext=yes \
                 ac_cv_path_MSGMERGE=${STAGING_BINDIR_NATIVE}/msgmerge "
 
 do_configure_append() {
+    # Fix RPATH issues.
+    sed -i ${S}/config.status -e s,^\\\(hardcode_into_libs=\\\).*$,\\1\'no\',
+    ${S}/config.status
+
     # gettext hack
     echo "#define _(str) str" >> ${S}/include/config.h
 }

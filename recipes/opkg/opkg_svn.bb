@@ -2,6 +2,7 @@ require opkg.inc
 
 PR = "${INC_PR}"
 
+SRC_URI_append_slugos = " file://opkg_use_vfork_gunzip.patch"
 
 PROVIDES =+ "virtual/update-alternatives"
 RPROVIDES_${PN} = "update-alternatives"
@@ -21,3 +22,5 @@ pkg_postrm_${PN} () {
 }
 
 require update-alternatives-merge.inc
+
+EXTRA_OECONF_append_visstrim_m10 = " --with-opkglockfile=/var/lock/opkg.lock"

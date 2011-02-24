@@ -3,7 +3,7 @@ HOMEPAGE = "http://www.eglibc.org/home"
 SECTION = "libs"
 PRIORITY = "required"
 LICENSE = "LGPL"
-INC_PR = "r19"
+INC_PR = "r21"
 # nptl needs unwind support in gcc, which can't be built without glibc.
 DEPENDS = "virtual/${TARGET_PREFIX}gcc-intermediate linux-libc-headers"
 #this leads to circular deps, so lets not add it yet
@@ -17,6 +17,7 @@ RPROVIDES_${PN}-dev = "libc6-dev virtual-libc-dev"
 PROVIDES_${PN}-dbg = "glibc-dbg"
 
 inherit autotools
+require eglibc-options.inc
 
 LEAD_SONAME = "libc.so"
 
@@ -41,3 +42,11 @@ do_move_ports() {
 	    mv ${WORKDIR}/${EGLIBC_BRANCH}/ports ${S}/
 	fi
 }
+OE_FEATURES := "${@features_to_eglibc_settings(d)}"
+do_configure_prepend() {
+	echo '${OE_FEATURES}' > ${B}/option-groups.config
+}
+
+# Work around issues with pstage package install order and intermediate steps
+# in the toolchain build.
+do_setscene[deptask] = "do_setscene"

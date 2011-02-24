@@ -6,7 +6,7 @@ DEPENDS = "libmokosuite libfreesmartphone-glib glib-2.0 dbus-glib elementary val
 SECTION = "misc/utils"
 
 PV = "1.0.99+gitr${SRCPV}"
-SRCREV = "a7140f6aba2de7d7ec69349c89b647c391dcc832"
+SRCREV = "59dbe3efd5dd4a485dac0155f4c74afac8541f2b"
 
 SRC_URI = "git://gitorious.org/mokosuite2/mokopanel.git;protocol=git"
 S = "${WORKDIR}/git"

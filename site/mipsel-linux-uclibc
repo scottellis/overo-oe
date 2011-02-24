@@ -6,10 +6,6 @@ ac_cv_func_posix_getpwuid_r=${ac_cv_func_posix_getpwuid_r=yes}
 # tslib, others
 ac_cv_func_malloc_0_nonnull=${ac_cv_func_malloc_0_nonnull=yes}
 
-# mysql
-ac_cv_sys_restartable_syscalls=${ac_cv_sys_restartable_syscalls=yes}
-ac_cv_conv_longlong_to_float=${ac_cv_conv_longlong_to_float=yes}
-
 # bash
 ac_cv_c_long_double=${ac_cv_c_long_double=no}
 bash_cv_func_sigsetjmp=${bash_cv_func_sigsetjmp=present}
@@ -119,6 +115,3 @@ samba_cv_LINUX_LFS_SUPPORT=${samba_cv_LINUX_LFS_SUPPORT=yes}
 
 # vim
 ac_cv_sizeof_int=${ac_cv_sizeof_int=4}
-
-# rp-pppoe
-rpppoe_cv_pack_bitfields=${rpppoe_cv_pack_bitfields=rev}

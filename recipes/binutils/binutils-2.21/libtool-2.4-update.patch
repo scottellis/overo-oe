@@ -41,7 +41,7 @@ Index: binutils-2.21/libtool.m4
  AC_SUBST(LIBTOOL)dnl
  
  _LT_SETUP
-@@ -166,10 +169,13 @@ _LT_DECL([], [exeext], [0], [Executable
+@@ -166,10 +169,13 @@ _LT_DECL([], [exeext], [0], [Executable 
  dnl
  m4_require([_LT_FILEUTILS_DEFAULTS])dnl
  m4_require([_LT_CHECK_SHELL_FEATURES])dnl
@@ -550,7 +550,7 @@ Index: binutils-2.21/libtool.m4
    const char *name;
    void       *address;
  }
-@@ -3501,15 +3741,15 @@ static const void *lt_preloaded_setup()
+@@ -3501,15 +3741,15 @@ static const void *lt_preloaded_setup() 
  _LT_EOF
  	  # Now try linking the two files.
  	  mv conftest.$ac_objext conftstm.$ac_objext
@@ -1000,7 +1000,7 @@ Index: binutils-2.21/libtool.m4
  if test -n "$CXX" && ( test "X$CXX" != "Xno" &&
      ( (test "X$CXX" = "Xg++" && `g++ -v >/dev/null 2>&1` ) ||
      (test "X$CXX" != "Xg++"))) ; then
-@@ -5480,6 +5811,7 @@ if test "$_lt_caught_CXX_error" != yes;
+@@ -5480,6 +5811,7 @@ if test "$_lt_caught_CXX_error" != yes; 
  
    # Allow CC to be a program name with arguments.
    lt_save_CC=$CC
@@ -1008,7 +1008,7 @@ Index: binutils-2.21/libtool.m4
    lt_save_LD=$LD
    lt_save_GCC=$GCC
    GCC=$GXX
-@@ -5497,6 +5829,7 @@ if test "$_lt_caught_CXX_error" != yes;
+@@ -5497,6 +5829,7 @@ if test "$_lt_caught_CXX_error" != yes; 
    fi
    test -z "${LDCXX+set}" || LD=$LDCXX
    CC=${CXX-"c++"}
@@ -1016,7 +1016,7 @@ Index: binutils-2.21/libtool.m4
    compiler=$CC
    _LT_TAGVAR(compiler, $1)=$CC
    _LT_CC_BASENAME([$compiler])
-@@ -5518,8 +5851,8 @@ if test "$_lt_caught_CXX_error" != yes;
+@@ -5518,8 +5851,8 @@ if test "$_lt_caught_CXX_error" != yes; 
        # Check if GNU C++ uses GNU ld as the underlying linker, since the
        # archiving commands below assume that GNU ld is being used.
        if test "$with_gnu_ld" = yes; then
@@ -1027,7 +1027,7 @@ Index: binutils-2.21/libtool.m4
  
          _LT_TAGVAR(hardcode_libdir_flag_spec, $1)='${wl}-rpath ${wl}$libdir'
          _LT_TAGVAR(export_dynamic_flag_spec, $1)='${wl}--export-dynamic'
-@@ -5660,7 +5993,7 @@ if test "$_lt_caught_CXX_error" != yes;
+@@ -5660,7 +5993,7 @@ if test "$_lt_caught_CXX_error" != yes; 
            _LT_TAGVAR(allow_undefined_flag, $1)='-berok'
            # Determine the default libpath from the value encoded in an empty
            # executable.
@@ -1036,7 +1036,7 @@ Index: binutils-2.21/libtool.m4
            _LT_TAGVAR(hardcode_libdir_flag_spec, $1)='${wl}-blibpath:$libdir:'"$aix_libpath"
  
            _LT_TAGVAR(archive_expsym_cmds, $1)='$CC -o $output_objdir/$soname $libobjs $deplibs '"\${wl}$no_entry_flag"' $compiler_flags `if test "x${allow_undefined_flag}" != "x"; then func_echo_all "${wl}${allow_undefined_flag}"; else :; fi` '"\${wl}$exp_sym_flag:\$export_symbols $shared_flag"
-@@ -5672,7 +6005,7 @@ if test "$_lt_caught_CXX_error" != yes;
+@@ -5672,7 +6005,7 @@ if test "$_lt_caught_CXX_error" != yes; 
            else
  	    # Determine the default libpath from the value encoded in an
  	    # empty executable.
@@ -1045,7 +1045,7 @@ Index: binutils-2.21/libtool.m4
  	    _LT_TAGVAR(hardcode_libdir_flag_spec, $1)='${wl}-blibpath:$libdir:'"$aix_libpath"
  	    # Warning - without using the other run time loading flags,
  	    # -berok will link without error, but may produce a broken library.
-@@ -5714,29 +6047,75 @@ if test "$_lt_caught_CXX_error" != yes;
+@@ -5714,29 +6047,75 @@ if test "$_lt_caught_CXX_error" != yes; 
          ;;
  
        cygwin* | mingw* | pw32* | cegcc*)
@@ -1144,7 +1144,7 @@ Index: binutils-2.21/libtool.m4
        darwin* | rhapsody*)
          _LT_DARWIN_LINKER_FEATURES($1)
  	;;
-@@ -5811,7 +6190,7 @@ if test "$_lt_caught_CXX_error" != yes;
+@@ -5811,7 +6190,7 @@ if test "$_lt_caught_CXX_error" != yes; 
              ;;
            *)
              if test "$GXX" = yes; then
@@ -1153,7 +1153,7 @@ Index: binutils-2.21/libtool.m4
              else
                # FIXME: insert proper C++ library support
                _LT_TAGVAR(ld_shlibs, $1)=no
-@@ -5882,10 +6261,10 @@ if test "$_lt_caught_CXX_error" != yes;
+@@ -5882,10 +6261,10 @@ if test "$_lt_caught_CXX_error" != yes; 
  	            _LT_TAGVAR(archive_cmds, $1)='$CC -shared -nostdlib -fPIC ${wl}+h ${wl}$soname -o $lib $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags'
  	            ;;
  	          ia64*)
@@ -1166,7 +1166,7 @@ Index: binutils-2.21/libtool.m4
  	            ;;
  	        esac
  	      fi
-@@ -5926,9 +6305,9 @@ if test "$_lt_caught_CXX_error" != yes;
+@@ -5926,9 +6305,9 @@ if test "$_lt_caught_CXX_error" != yes; 
            *)
  	    if test "$GXX" = yes; then
  	      if test "$with_gnu_ld" = no; then
@@ -1178,7 +1178,7 @@ Index: binutils-2.21/libtool.m4
  	      fi
  	    fi
  	    _LT_TAGVAR(link_all_deplibs, $1)=yes
-@@ -5998,20 +6377,20 @@ if test "$_lt_caught_CXX_error" != yes;
+@@ -5998,20 +6377,20 @@ if test "$_lt_caught_CXX_error" != yes; 
  	      _LT_TAGVAR(prelink_cmds, $1)='tpldir=Template.dir~
  		rm -rf $tpldir~
  		$CC --prelink_objects --instantiation_dir $tpldir $objs $libobjs $compile_deplibs~
@@ -1203,7 +1203,7 @@ Index: binutils-2.21/libtool.m4
  	      ;;
  	    *) # Version 6 and above use weak symbols
  	      _LT_TAGVAR(archive_cmds, $1)='$CC -shared $pic_flag $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags ${wl}-soname ${wl}$soname -o $lib'
-@@ -6206,7 +6585,7 @@ if test "$_lt_caught_CXX_error" != yes;
+@@ -6206,7 +6585,7 @@ if test "$_lt_caught_CXX_error" != yes; 
  	          _LT_TAGVAR(archive_cmds, $1)='$CC -shared -nostdlib ${allow_undefined_flag} $predep_objects $libobjs $deplibs $postdep_objects $compiler_flags ${wl}-soname ${wl}$soname `test -n "$verstring" && func_echo_all "${wl}-set_version ${wl}$verstring"` ${wl}-update_registry ${wl}${output_objdir}/so_locations -o $lib'
  		  ;;
  	        *)
@@ -1212,7 +1212,7 @@ Index: binutils-2.21/libtool.m4
  		  ;;
  	      esac
  
-@@ -6252,7 +6631,7 @@ if test "$_lt_caught_CXX_error" != yes;
+@@ -6252,7 +6631,7 @@ if test "$_lt_caught_CXX_error" != yes; 
  
        solaris*)
          case $cc_basename in
@@ -1221,7 +1221,7 @@ Index: binutils-2.21/libtool.m4
  	    # Sun C++ 4.2, 5.x and Centerline C++
              _LT_TAGVAR(archive_cmds_need_lc,$1)=yes
  	    _LT_TAGVAR(no_undefined_flag, $1)=' -zdefs'
-@@ -6293,9 +6672,9 @@ if test "$_lt_caught_CXX_error" != yes;
+@@ -6293,9 +6672,9 @@ if test "$_lt_caught_CXX_error" != yes; 
  	    if test "$GXX" = yes && test "$with_gnu_ld" = no; then
  	      _LT_TAGVAR(no_undefined_flag, $1)=' ${wl}-z ${wl}defs'
  	      if $CC --version | $GREP -v '^2\.7' > /dev/null; then
@@ -1233,7 +1233,7 @@ Index: binutils-2.21/libtool.m4
  
  	        # Commands to make compiler produce verbose output that lists
  	        # what "hidden" libraries, object files and flags are used when
-@@ -6424,6 +6803,7 @@ if test "$_lt_caught_CXX_error" != yes;
+@@ -6424,6 +6803,7 @@ if test "$_lt_caught_CXX_error" != yes; 
    fi # test -n "$compiler"
  
    CC=$lt_save_CC
@@ -1441,7 +1441,7 @@ Index: binutils-2.21/libtool.m4
  ])# _LT_LANG_RC_CONFIG
  
  
-@@ -7094,6 +7529,15 @@ _LT_DECL([], [OBJDUMP], [1], [An object
+@@ -7094,6 +7529,15 @@ _LT_DECL([], [OBJDUMP], [1], [An object 
  AC_SUBST([OBJDUMP])
  ])
  
@@ -3843,7 +3843,7 @@ Index: binutils-2.21/ltmain.sh
  lt_${my_prefix}_LTX_preloaded_symbols[] =
  {\
    { \"$my_originator\", (void *) 0 },"
-@@ -2736,7 +3493,7 @@ static const void *lt_preloaded_setup()
+@@ -2736,7 +3493,7 @@ static const void *lt_preloaded_setup() 
  	for arg in $LTCFLAGS; do
  	  case $arg in
  	  -pie | -fpie | -fPIE) ;;
@@ -4372,7 +4372,7 @@ Index: binutils-2.21/ltmain.sh
  */
  EOF
  	    cat <<"EOF"
-@@ -3462,22 +4272,13 @@ int setenv (const char *, const char *,
+@@ -3462,22 +4272,13 @@ int setenv (const char *, const char *, 
    if (stale) { free ((void *) stale); stale = 0; } \
  } while (0)
  
@@ -6082,7 +6082,7 @@ Index: binutils-2.21/ltmain.sh
  	esac
        done
        deplibs="$new_libs"
-@@ -7101,10 +8032,12 @@ EOF
+@@ -7101,9 +8032,13 @@ EOF
  	  hardcode_libdirs=
  	  dep_rpath=
  	  rpath="$finalize_rpath"
@@ -6090,13 +6090,14 @@ Index: binutils-2.21/ltmain.sh
 +	  test "$opt_mode" != relink && rpath="$compile_rpath$rpath"
  	  for libdir in $rpath; do
  	    if test -n "$hardcode_libdir_flag_spec"; then
++		  func_replace_sysroot "$libdir"
++		  libdir=$func_replace_sysroot_result
++		  func_stripname '=' '' "$libdir"
++		  libdir=$func_stripname_result
  	      if test -n "$hardcode_libdir_separator"; then
-+		func_replace_sysroot "$libdir"
-+		libdir=$func_replace_sysroot_result
  		if test -z "$hardcode_libdirs"; then
  		  hardcode_libdirs="$libdir"
- 		else
-@@ -7113,18 +8046,18 @@ EOF
+@@ -7113,18 +8048,18 @@ EOF
  		  *"$hardcode_libdir_separator$libdir$hardcode_libdir_separator"*)
  		    ;;
  		  *)
@@ -6119,7 +6120,7 @@ Index: binutils-2.21/ltmain.sh
  	      esac
  	    fi
  	  done
-@@ -7133,40 +8066,38 @@ EOF
+@@ -7133,40 +8068,38 @@ EOF
  	     test -n "$hardcode_libdirs"; then
  	    libdir="$hardcode_libdirs"
  	    if test -n "$hardcode_libdir_flag_spec_ld"; then
@@ -6169,7 +6170,7 @@ Index: binutils-2.21/ltmain.sh
  	else
  	  soname="$realname"
  	fi
-@@ -7178,7 +8109,7 @@ EOF
+@@ -7178,7 +8111,7 @@ EOF
  	linknames=
  	for link
  	do
@@ -6178,7 +6179,7 @@ Index: binutils-2.21/ltmain.sh
  	done
  
  	# Use standard objects if they are pic
-@@ -7189,7 +8120,7 @@ EOF
+@@ -7189,7 +8122,7 @@ EOF
  	if test -n "$export_symbols" && test -n "$include_expsyms"; then
  	  $opt_dry_run || cp "$export_symbols" "$output_objdir/$libname.uexp"
  	  export_symbols="$output_objdir/$libname.uexp"
@@ -6187,7 +6188,7 @@ Index: binutils-2.21/ltmain.sh
  	fi
  
  	orig_export_symbols=
-@@ -7220,13 +8151,45 @@ EOF
+@@ -7220,13 +8153,45 @@ EOF
  	    $opt_dry_run || $RM $export_symbols
  	    cmds=$export_symbols_cmds
  	    save_ifs="$IFS"; IFS='~'
@@ -6238,7 +6239,7 @@ Index: binutils-2.21/ltmain.sh
  		skipped_export=false
  	      else
  		# The command line is too long to execute in one step.
-@@ -7248,7 +8211,7 @@ EOF
+@@ -7248,7 +8213,7 @@ EOF
  	if test -n "$export_symbols" && test -n "$include_expsyms"; then
  	  tmp_export_symbols="$export_symbols"
  	  test -n "$orig_export_symbols" && tmp_export_symbols="$orig_export_symbols"
@@ -6247,7 +6248,7 @@ Index: binutils-2.21/ltmain.sh
  	fi
  
  	if test "X$skipped_export" != "X:" && test -n "$orig_export_symbols"; then
-@@ -7260,7 +8223,7 @@ EOF
+@@ -7260,7 +8225,7 @@ EOF
  	  # global variables. join(1) would be nice here, but unfortunately
  	  # isn't a blessed tool.
  	  $opt_dry_run || $SED -e '/[ ,]DATA/!d;s,\(.*\)\([ \,].*\),s|^\1$|\1\2|,' < $export_symbols > $output_objdir/$libname.filter
@@ -6256,7 +6257,7 @@ Index: binutils-2.21/ltmain.sh
  	  export_symbols=$output_objdir/$libname.def
  	  $opt_dry_run || $SED -f $output_objdir/$libname.filter < $orig_export_symbols > $export_symbols
  	fi
-@@ -7270,7 +8233,7 @@ EOF
+@@ -7270,7 +8235,7 @@ EOF
  	  case " $convenience " in
  	  *" $test_deplib "*) ;;
  	  *)
@@ -6265,7 +6266,7 @@ Index: binutils-2.21/ltmain.sh
  	    ;;
  	  esac
  	done
-@@ -7286,43 +8249,43 @@ EOF
+@@ -7286,43 +8251,43 @@ EOF
  	  fi
  	  if test -n "$whole_archive_flag_spec"; then
  	    save_libobjs=$libobjs
@@ -6320,7 +6321,7 @@ Index: binutils-2.21/ltmain.sh
  	    cmds=$archive_cmds
  	  fi
  	fi
-@@ -7366,10 +8329,13 @@ EOF
+@@ -7366,10 +8331,13 @@ EOF
  	    echo 'INPUT (' > $output
  	    for obj in $save_libobjs
  	    do
@@ -6336,7 +6337,7 @@ Index: binutils-2.21/ltmain.sh
  	  elif test -n "$save_libobjs" && test "X$skipped_export" != "X:" && test "X$file_list_spec" != X; then
  	    output=${output_objdir}/${output_la}.lnk
  	    func_verbose "creating linker input file list: $output"
-@@ -7383,15 +8349,17 @@ EOF
+@@ -7383,15 +8351,17 @@ EOF
  	    fi
  	    for obj
  	    do
@@ -6358,7 +6359,7 @@ Index: binutils-2.21/ltmain.sh
  	      func_len " $test_cmds"
  	      len0=$func_len_result
  	      len=$len0
-@@ -7411,12 +8379,12 @@ EOF
+@@ -7411,12 +8381,12 @@ EOF
  		  if test "$k" -eq 1 ; then
  		    # The first file doesn't have a previous command to add.
  		    reload_objs=$objlist
@@ -6373,7 +6374,7 @@ Index: binutils-2.21/ltmain.sh
  		  fi
  		  last_robj=$output_objdir/$output_la-${k}.$objext
  		  func_arith $k + 1
-@@ -7433,11 +8401,11 @@ EOF
+@@ -7433,11 +8403,11 @@ EOF
  	      # files will link in the last one created.
  	      test -z "$concat_cmds" || concat_cmds=$concat_cmds~
  	      reload_objs="$objlist $last_robj"
@@ -6388,7 +6389,7 @@ Index: binutils-2.21/ltmain.sh
  
  	    else
  	      output=
-@@ -7450,9 +8418,9 @@ EOF
+@@ -7450,9 +8420,9 @@ EOF
  	      libobjs=$output
  	      # Append the command to create the export file.
  	      test -z "$concat_cmds" || concat_cmds=$concat_cmds~
@@ -6400,7 +6401,7 @@ Index: binutils-2.21/ltmain.sh
  	      fi
  	    fi
  
-@@ -7471,7 +8439,7 @@ EOF
+@@ -7471,7 +8441,7 @@ EOF
  		lt_exit=$?
  
  		# Restore the uninstalled library and exit
@@ -6409,7 +6410,7 @@ Index: binutils-2.21/ltmain.sh
  		  ( cd "$output_objdir" && \
  		    $RM "${realname}T" && \
  		    $MV "${realname}U" "$realname" )
-@@ -7492,7 +8460,7 @@ EOF
+@@ -7492,7 +8462,7 @@ EOF
  	    if test -n "$export_symbols" && test -n "$include_expsyms"; then
  	      tmp_export_symbols="$export_symbols"
  	      test -n "$orig_export_symbols" && tmp_export_symbols="$orig_export_symbols"
@@ -6418,7 +6419,7 @@ Index: binutils-2.21/ltmain.sh
  	    fi
  
  	    if test -n "$orig_export_symbols"; then
-@@ -7504,7 +8472,7 @@ EOF
+@@ -7504,7 +8474,7 @@ EOF
  	      # global variables. join(1) would be nice here, but unfortunately
  	      # isn't a blessed tool.
  	      $opt_dry_run || $SED -e '/[ ,]DATA/!d;s,\(.*\)\([ \,].*\),s|^\1$|\1\2|,' < $export_symbols > $output_objdir/$libname.filter
@@ -6427,7 +6428,7 @@ Index: binutils-2.21/ltmain.sh
  	      export_symbols=$output_objdir/$libname.def
  	      $opt_dry_run || $SED -f $output_objdir/$libname.filter < $orig_export_symbols > $export_symbols
  	    fi
-@@ -7515,7 +8483,7 @@ EOF
+@@ -7515,7 +8485,7 @@ EOF
  	  output=$save_output
  
  	  if test -n "$convenience" && test -n "$whole_archive_flag_spec"; then
@@ -6436,7 +6437,7 @@ Index: binutils-2.21/ltmain.sh
  	    test "X$libobjs" = "X " && libobjs=
  	  fi
  	  # Expand the library linking commands again to reset the
-@@ -7539,23 +8507,23 @@ EOF
+@@ -7539,23 +8509,23 @@ EOF
  
  	if test -n "$delfiles"; then
  	  # Append the command to remove temporary files to $cmds.
@@ -6464,7 +6465,7 @@ Index: binutils-2.21/ltmain.sh
  	  $opt_silent || {
  	    func_quote_for_expand "$cmd"
  	    eval "func_echo $func_quote_for_expand_result"
-@@ -7564,7 +8532,7 @@ EOF
+@@ -7564,7 +8534,7 @@ EOF
  	    lt_exit=$?
  
  	    # Restore the uninstalled library and exit
@@ -6473,7 +6474,7 @@ Index: binutils-2.21/ltmain.sh
  	      ( cd "$output_objdir" && \
  	        $RM "${realname}T" && \
  		$MV "${realname}U" "$realname" )
-@@ -7576,8 +8544,8 @@ EOF
+@@ -7576,8 +8546,8 @@ EOF
  	IFS="$save_ifs"
  
  	# Restore the uninstalled library and exit
@@ -6484,7 +6485,7 @@ Index: binutils-2.21/ltmain.sh
  
  	  if test -n "$convenience"; then
  	    if test -z "$whole_archive_flag_spec"; then
-@@ -7656,17 +8624,20 @@ EOF
+@@ -7656,17 +8626,20 @@ EOF
  
        if test -n "$convenience"; then
  	if test -n "$whole_archive_flag_spec"; then
@@ -6507,7 +6508,7 @@ Index: binutils-2.21/ltmain.sh
        # Create the old-style object.
        reload_objs="$objs$old_deplibs "`$ECHO "$libobjs" | $SP2NL | $SED "/\.${libext}$/d; /\.lib$/d; $lo2o" | $NL2SP`" $reload_conv_objs" ### testsuite: skip nested quoting test
  
-@@ -7690,7 +8661,7 @@ EOF
+@@ -7690,7 +8663,7 @@ EOF
  	# Create an invalid libtool object if no PIC, so that we don't
  	# accidentally link it into a program.
  	# $show "echo timestamp > $libobj"
@@ -6516,7 +6517,7 @@ Index: binutils-2.21/ltmain.sh
  	exit $EXIT_SUCCESS
        fi
  
-@@ -7740,8 +8711,8 @@ EOF
+@@ -7740,8 +8713,8 @@ EOF
  	if test "$tagname" = CXX ; then
  	  case ${MACOSX_DEPLOYMENT_TARGET-10.0} in
  	    10.[0123])
@@ -6527,7 +6528,7 @@ Index: binutils-2.21/ltmain.sh
  	    ;;
  	  esac
  	fi
-@@ -7761,7 +8732,7 @@ EOF
+@@ -7761,7 +8734,7 @@ EOF
  	*)
  	  case " $compile_deplibs " in
  	  *" -L$path/$objdir "*)
@@ -6536,7 +6537,7 @@ Index: binutils-2.21/ltmain.sh
  	  esac
  	  ;;
  	esac
-@@ -7771,17 +8742,17 @@ EOF
+@@ -7771,17 +8744,17 @@ EOF
  	-L*)
  	  case " $new_libs " in
  	  *" $deplib "*) ;;
@@ -6558,7 +6559,7 @@ Index: binutils-2.21/ltmain.sh
  
        if test -n "$rpath$xrpath"; then
  	# If the user specified any rpath flags, then add them.
-@@ -7789,7 +8760,7 @@ EOF
+@@ -7789,7 +8762,7 @@ EOF
  	  # This is the magic to use -rpath.
  	  case "$finalize_rpath " in
  	  *" $libdir "*) ;;
@@ -6567,7 +6568,18 @@ Index: binutils-2.21/ltmain.sh
  	  esac
  	done
        fi
-@@ -7808,18 +8779,18 @@ EOF
+@@ -7799,6 +8772,10 @@ EOF
+       hardcode_libdirs=
+       for libdir in $compile_rpath $finalize_rpath; do
+ 	if test -n "$hardcode_libdir_flag_spec"; then
++	  func_replace_sysroot "$libdir"
++	  libdir=$func_replace_sysroot_result
++	  func_stripname '=' '' "$libdir"
++	  libdir=$func_stripname_result
+ 	  if test -n "$hardcode_libdir_separator"; then
+ 	    if test -z "$hardcode_libdirs"; then
+ 	      hardcode_libdirs="$libdir"
+@@ -7808,18 +8785,18 @@ EOF
  	      *"$hardcode_libdir_separator$libdir$hardcode_libdir_separator"*)
  		;;
  	      *)
@@ -6590,7 +6602,7 @@ Index: binutils-2.21/ltmain.sh
  	  esac
  	fi
  	case $host in
-@@ -7828,12 +8799,12 @@ EOF
+@@ -7828,12 +8805,12 @@ EOF
  	  case :$dllsearchpath: in
  	  *":$libdir:"*) ;;
  	  ::) dllsearchpath=$libdir;;
@@ -6605,7 +6617,7 @@ Index: binutils-2.21/ltmain.sh
  	  esac
  	  ;;
  	esac
-@@ -7842,7 +8813,7 @@ EOF
+@@ -7842,7 +8819,7 @@ EOF
        if test -n "$hardcode_libdir_separator" &&
  	 test -n "$hardcode_libdirs"; then
  	libdir="$hardcode_libdirs"
@@ -6614,7 +6626,7 @@ Index: binutils-2.21/ltmain.sh
        fi
        compile_rpath="$rpath"
  
-@@ -7859,18 +8830,18 @@ EOF
+@@ -7859,18 +8836,18 @@ EOF
  	      *"$hardcode_libdir_separator$libdir$hardcode_libdir_separator"*)
  		;;
  	      *)
@@ -6637,7 +6649,7 @@ Index: binutils-2.21/ltmain.sh
  	  esac
  	fi
        done
-@@ -7878,7 +8849,7 @@ EOF
+@@ -7878,7 +8855,7 @@ EOF
        if test -n "$hardcode_libdir_separator" &&
  	 test -n "$hardcode_libdirs"; then
  	libdir="$hardcode_libdirs"
@@ -6646,7 +6658,7 @@ Index: binutils-2.21/ltmain.sh
        fi
        finalize_rpath="$rpath"
  
-@@ -7921,6 +8892,12 @@ EOF
+@@ -7921,6 +8898,12 @@ EOF
  	exit_status=0
  	func_show_eval "$link_command" 'exit_status=$?'
  
@@ -6659,7 +6671,7 @@ Index: binutils-2.21/ltmain.sh
  	# Delete the generated files.
  	if test -f "$output_objdir/${outputname}S.${objext}"; then
  	  func_show_eval '$RM "$output_objdir/${outputname}S.${objext}"'
-@@ -7943,7 +8920,7 @@ EOF
+@@ -7943,7 +8926,7 @@ EOF
  	  # We should set the runpath_var.
  	  rpath=
  	  for dir in $perm_rpath; do
@@ -6668,7 +6680,7 @@ Index: binutils-2.21/ltmain.sh
  	  done
  	  compile_var="$runpath_var=\"$rpath\$$runpath_var\" "
  	fi
-@@ -7951,7 +8928,7 @@ EOF
+@@ -7951,7 +8934,7 @@ EOF
  	  # We should set the runpath_var.
  	  rpath=
  	  for dir in $finalize_perm_rpath; do
@@ -6677,7 +6689,7 @@ Index: binutils-2.21/ltmain.sh
  	  done
  	  finalize_var="$runpath_var=\"$rpath\$$runpath_var\" "
  	fi
-@@ -7966,6 +8943,13 @@ EOF
+@@ -7966,6 +8949,13 @@ EOF
  	$opt_dry_run || $RM $output
  	# Link the executable and exit
  	func_show_eval "$link_command" 'exit $?'
@@ -6691,7 +6703,7 @@ Index: binutils-2.21/ltmain.sh
  	exit $EXIT_SUCCESS
        fi
  
-@@ -7999,6 +8983,12 @@ EOF
+@@ -7999,6 +8989,12 @@ EOF
  
        func_show_eval "$link_command" 'exit $?'
  
@@ -6704,7 +6716,7 @@ Index: binutils-2.21/ltmain.sh
        # Now create the wrapper script.
        func_verbose "creating $output"
  
-@@ -8096,7 +9086,7 @@ EOF
+@@ -8096,7 +9092,7 @@ EOF
  	else
  	  oldobjs="$old_deplibs $non_pic_objects"
  	  if test "$preload" = yes && test -f "$symfileobj"; then
@@ -6713,7 +6725,7 @@ Index: binutils-2.21/ltmain.sh
  	  fi
  	fi
  	addlibs="$old_convenience"
-@@ -8104,10 +9094,10 @@ EOF
+@@ -8104,10 +9100,10 @@ EOF
  
        if test -n "$addlibs"; then
  	gentop="$output_objdir/${outputname}x"
@@ -6726,7 +6738,7 @@ Index: binutils-2.21/ltmain.sh
        fi
  
        # Do each command in the archive commands.
-@@ -8118,10 +9108,10 @@ EOF
+@@ -8118,10 +9114,10 @@ EOF
  	# Add any objects from preloaded convenience libraries
  	if test -n "$dlprefiles"; then
  	  gentop="$output_objdir/${outputname}x"
@@ -6739,7 +6751,7 @@ Index: binutils-2.21/ltmain.sh
  	fi
  
  	# POSIX demands no paths to be encoded in archives.  We have
-@@ -8139,7 +9129,7 @@ EOF
+@@ -8139,7 +9135,7 @@ EOF
  	else
  	  echo "copying selected object files to avoid basename conflicts..."
  	  gentop="$output_objdir/${outputname}x"
@@ -6748,7 +6760,7 @@ Index: binutils-2.21/ltmain.sh
  	  func_mkdir_p "$gentop"
  	  save_oldobjs=$oldobjs
  	  oldobjs=
-@@ -8163,18 +9153,28 @@ EOF
+@@ -8163,18 +9159,28 @@ EOF
  		esac
  	      done
  	      func_show_eval "ln $obj $gentop/$newobj || cp $obj $gentop/$newobj"
@@ -6780,7 +6792,7 @@ Index: binutils-2.21/ltmain.sh
  	else
  	  # the command line is too long to link in one step, link in parts
  	  func_verbose "using piecewise archive linking..."
-@@ -8189,7 +9189,7 @@ EOF
+@@ -8189,7 +9195,7 @@ EOF
  	  do
  	    last_oldobj=$obj
  	  done
@@ -6789,7 +6801,7 @@ Index: binutils-2.21/ltmain.sh
  	  func_len " $test_cmds"
  	  len0=$func_len_result
  	  len=$len0
-@@ -8208,7 +9208,7 @@ EOF
+@@ -8208,7 +9214,7 @@ EOF
  		RANLIB=$save_RANLIB
  	      fi
  	      test -z "$concat_cmds" || concat_cmds=$concat_cmds~
@@ -6798,7 +6810,7 @@ Index: binutils-2.21/ltmain.sh
  	      objlist=
  	      len=$len0
  	    fi
-@@ -8216,9 +9216,9 @@ EOF
+@@ -8216,9 +9222,9 @@ EOF
  	  RANLIB=$save_RANLIB
  	  oldobjs=$objlist
  	  if test "X$oldobjs" = "X" ; then
@@ -6810,7 +6822,7 @@ Index: binutils-2.21/ltmain.sh
  	  fi
  	fi
        fi
-@@ -8268,12 +9268,23 @@ EOF
+@@ -8268,12 +9274,23 @@ EOF
  	      *.la)
  		func_basename "$deplib"
  		name="$func_basename_result"
@@ -6837,7 +6849,7 @@ Index: binutils-2.21/ltmain.sh
  	      esac
  	    done
  	    dependency_libs="$newdependency_libs"
-@@ -8284,12 +9295,14 @@ EOF
+@@ -8284,12 +9301,14 @@ EOF
  	      *.la)
  	        func_basename "$lib"
  		name="$func_basename_result"
@@ -6855,7 +6867,7 @@ Index: binutils-2.21/ltmain.sh
  	      esac
  	    done
  	    dlfiles="$newdlfiles"
-@@ -8303,10 +9316,11 @@ EOF
+@@ -8303,10 +9322,11 @@ EOF
  		# the library:
  		func_basename "$lib"
  		name="$func_basename_result"
@@ -6869,7 +6881,7 @@ Index: binutils-2.21/ltmain.sh
  		;;
  	      esac
  	    done
-@@ -8318,7 +9332,7 @@ EOF
+@@ -8318,7 +9338,7 @@ EOF
  		[\\/]* | [A-Za-z]:[\\/]*) abs="$lib" ;;
  		*) abs=`pwd`"/$lib" ;;
  	      esac
@@ -6878,7 +6890,7 @@ Index: binutils-2.21/ltmain.sh
  	    done
  	    dlfiles="$newdlfiles"
  	    newdlprefiles=
-@@ -8327,7 +9341,7 @@ EOF
+@@ -8327,7 +9347,7 @@ EOF
  		[\\/]* | [A-Za-z]:[\\/]*) abs="$lib" ;;
  		*) abs=`pwd`"/$lib" ;;
  	      esac
@@ -6887,7 +6899,7 @@ Index: binutils-2.21/ltmain.sh
  	    done
  	    dlprefiles="$newdlprefiles"
  	  fi
-@@ -8412,7 +9426,7 @@ relink_command=\"$relink_command\""
+@@ -8412,7 +9432,7 @@ relink_command=\"$relink_command\""
      exit $EXIT_SUCCESS
  }
  
@@ -6896,7 +6908,7 @@ Index: binutils-2.21/ltmain.sh
      func_mode_link ${1+"$@"}
  
  
-@@ -8432,9 +9446,9 @@ func_mode_uninstall ()
+@@ -8432,9 +9452,9 @@ func_mode_uninstall ()
      for arg
      do
        case $arg in
@@ -6909,7 +6921,7 @@ Index: binutils-2.21/ltmain.sh
        esac
      done
  
-@@ -8443,24 +9457,23 @@ func_mode_uninstall ()
+@@ -8443,24 +9463,23 @@ func_mode_uninstall ()
  
      rmdirs=
  
@@ -6941,7 +6953,7 @@ Index: binutils-2.21/ltmain.sh
  	esac
        fi
  
-@@ -8486,18 +9499,17 @@ func_mode_uninstall ()
+@@ -8486,18 +9505,17 @@ func_mode_uninstall ()
  
  	  # Delete the libtool libraries and symlinks.
  	  for n in $library_names; do
@@ -6966,7 +6978,7 @@ Index: binutils-2.21/ltmain.sh
  	    ;;
  	  uninstall)
  	    if test -n "$library_names"; then
-@@ -8525,19 +9537,19 @@ func_mode_uninstall ()
+@@ -8525,19 +9543,19 @@ func_mode_uninstall ()
  	  # Add PIC object to the list of files to remove.
  	  if test -n "$pic_object" &&
  	     test "$pic_object" != none; then
@@ -6989,7 +7001,7 @@ Index: binutils-2.21/ltmain.sh
  	  noexename=$name
  	  case $file in
  	  *.exe)
-@@ -8547,7 +9559,7 @@ func_mode_uninstall ()
+@@ -8547,7 +9565,7 @@ func_mode_uninstall ()
  	    noexename=$func_stripname_result
  	    # $file with .exe has already been added to rmfiles,
  	    # add $file without .exe
@@ -6998,7 +7010,7 @@ Index: binutils-2.21/ltmain.sh
  	    ;;
  	  esac
  	  # Do a test to see if this is a libtool program.
-@@ -8556,7 +9568,7 @@ func_mode_uninstall ()
+@@ -8556,7 +9574,7 @@ func_mode_uninstall ()
  	      func_ltwrapper_scriptname "$file"
  	      relink_command=
  	      func_source $func_ltwrapper_scriptname_result
@@ -7007,7 +7019,7 @@ Index: binutils-2.21/ltmain.sh
  	    else
  	      relink_command=
  	      func_source $dir/$noexename
-@@ -8564,12 +9576,12 @@ func_mode_uninstall ()
+@@ -8564,12 +9582,12 @@ func_mode_uninstall ()
  
  	    # note $name still contains .exe if it was in $file originally
  	    # as does the version of $file that was added into $rmfiles
@@ -7023,7 +7035,7 @@ Index: binutils-2.21/ltmain.sh
  	    fi
  	  fi
  	fi
-@@ -8577,7 +9589,6 @@ func_mode_uninstall ()
+@@ -8577,7 +9595,6 @@ func_mode_uninstall ()
        esac
        func_show_eval "$RM $rmfiles" 'exit_status=1'
      done
@@ -7031,7 +7043,7 @@ Index: binutils-2.21/ltmain.sh
  
      # Try to remove the ${objdir}s in the directories where we deleted files
      for dir in $rmdirs; do
-@@ -8589,16 +9600,16 @@ func_mode_uninstall ()
+@@ -8589,16 +9606,16 @@ func_mode_uninstall ()
      exit $exit_status
  }
  
@@ -7669,7 +7681,7 @@ Index: binutils-2.21/bfd/configure
    const char *name;
    void       *address;
  }
-@@ -7067,8 +7398,8 @@ static const void *lt_preloaded_setup()
+@@ -7067,8 +7398,8 @@ static const void *lt_preloaded_setup() 
  _LT_EOF
  	  # Now try linking the two files.
  	  mv conftest.$ac_objext conftstm.$ac_objext
@@ -8478,6 +8490,15 @@ Index: binutils-2.21/bfd/configure
  int main ()
  {
    void *self = dlopen (0, LT_DLGLOBAL|LT_DLLAZY_OR_NOW);
+@@ -14897,7 +15552,7 @@ SHARED_LDFLAGS=
+ if test "$enable_shared" = "yes"; then
+   x=`sed -n -e 's/^[ 	]*PICFLAG[ 	]*=[ 	]*//p' < ../libiberty/Makefile | sed -n '$p'`
+   if test -n "$x"; then
+-    SHARED_LIBADD="-L`pwd`/../libiberty/pic -liberty"
++    SHARED_LIBADD="`pwd`/../libiberty/pic/libiberty.a"
+   fi
+ 
+ # More hacks to build DLLs on Windows.
 @@ -16473,13 +17128,20 @@ exeext='`$ECHO "$exeext" | $SED "$delay_
  lt_unset='`$ECHO "$lt_unset" | $SED "$delay_single_quote_subst"`'
  lt_SP2NL='`$ECHO "$lt_SP2NL" | $SED "$delay_single_quote_subst"`'
@@ -9589,7 +9610,7 @@ Index: binutils-2.21/opcodes/configure
    const char *name;
    void       *address;
  }
-@@ -6796,8 +7127,8 @@ static const void *lt_preloaded_setup()
+@@ -6796,8 +7127,8 @@ static const void *lt_preloaded_setup() 
  _LT_EOF
  	  # Now try linking the two files.
  	  mv conftest.$ac_objext conftstm.$ac_objext
@@ -10398,6 +10419,15 @@ Index: binutils-2.21/opcodes/configure
  int main ()
  {
    void *self = dlopen (0, LT_DLGLOBAL|LT_DLLAZY_OR_NOW);
+@@ -12328,7 +12983,7 @@ if test "$enable_shared" = "yes"; then
+ # since libbfd may not pull in the entirety of libiberty.
+   x=`sed -n -e 's/^[ 	]*PICFLAG[ 	]*=[ 	]*//p' < ../libiberty/Makefile | sed -n '$p'`
+   if test -n "$x"; then
+-    SHARED_LIBADD="-L`pwd`/../libiberty/pic -liberty"
++    SHARED_LIBADD="`pwd`/../libiberty/pic/libiberty.a"
+   fi
+ 
+   case "${host}" in
 @@ -13289,13 +13944,20 @@ exeext='`$ECHO "$exeext" | $SED "$delay_
  lt_unset='`$ECHO "$lt_unset" | $SED "$delay_single_quote_subst"`'
  lt_SP2NL='`$ECHO "$lt_SP2NL" | $SED "$delay_single_quote_subst"`'
@@ -11511,7 +11541,7 @@ Index: binutils-2.21/binutils/configure
    const char *name;
    void       *address;
  }
-@@ -6830,8 +7161,8 @@ static const void *lt_preloaded_setup()
+@@ -6830,8 +7161,8 @@ static const void *lt_preloaded_setup() 
  _LT_EOF
  	  # Now try linking the two files.
  	  mv conftest.$ac_objext conftstm.$ac_objext
@@ -13430,7 +13460,7 @@ Index: binutils-2.21/gas/configure
    const char *name;
    void       *address;
  }
-@@ -6819,8 +7150,8 @@ static const void *lt_preloaded_setup()
+@@ -6819,8 +7150,8 @@ static const void *lt_preloaded_setup() 
  _LT_EOF
  	  # Now try linking the two files.
  	  mv conftest.$ac_objext conftstm.$ac_objext
@@ -15361,7 +15391,7 @@ Index: binutils-2.21/gprof/configure
    const char *name;
    void       *address;
  }
-@@ -6754,8 +7080,8 @@ static const void *lt_preloaded_setup()
+@@ -6754,8 +7080,8 @@ static const void *lt_preloaded_setup() 
  _LT_EOF
  	  # Now try linking the two files.
  	  mv conftest.$ac_objext conftstm.$ac_objext
@@ -17280,7 +17310,7 @@ Index: binutils-2.21/ld/configure
    const char *name;
    void       *address;
  }
-@@ -7246,8 +7577,8 @@ static const void *lt_preloaded_setup()
+@@ -7246,8 +7577,8 @@ static const void *lt_preloaded_setup() 
  _LT_EOF
  	  # Now try linking the two files.
  	  mv conftest.$ac_objext conftstm.$ac_objext
@@ -18673,3 +18703,29 @@ Index: binutils-2.21/ld/configure
      (rm -f "$ofile" && cp "$cfgfile" "$ofile" && rm -f "$cfgfile")
    chmod +x "$ofile"
  
+Index: binutils-2.21/bfd/configure.in
+===================================================================
+--- binutils-2.21.orig/bfd/configure.in
++++ binutils-2.21/bfd/configure.in
+@@ -532,7 +532,7 @@ changequote(,)dnl
+   x=`sed -n -e 's/^[ 	]*PICFLAG[ 	]*=[ 	]*//p' < ../libiberty/Makefile | sed -n '$p'`
+ changequote([,])dnl
+   if test -n "$x"; then
+-    SHARED_LIBADD="-L`pwd`/../libiberty/pic -liberty"
++    SHARED_LIBADD="`pwd`/../libiberty/pic/libiberty.a"
+   fi
+ 
+ # More hacks to build DLLs on Windows.
+Index: binutils-2.21/opcodes/configure.in
+===================================================================
+--- binutils-2.21.orig/opcodes/configure.in
++++ binutils-2.21/opcodes/configure.in
+@@ -134,7 +134,7 @@ changequote(,)dnl
+   x=`sed -n -e 's/^[ 	]*PICFLAG[ 	]*=[ 	]*//p' < ../libiberty/Makefile | sed -n '$p'`
+ changequote([,])dnl
+   if test -n "$x"; then
+-    SHARED_LIBADD="-L`pwd`/../libiberty/pic -liberty"
++    SHARED_LIBADD="`pwd`/../libiberty/pic/libiberty.a"
+   fi
+ 
+   case "${host}" in

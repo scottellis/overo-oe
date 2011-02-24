@@ -1,5 +1,5 @@
 require u-boot.inc
-PR ="r68"
+PR = "r72"
 
 FILESPATHPKG =. "u-boot-git:"
 
@@ -15,6 +15,7 @@ SRCREV_cm-t35 = "3c014f1586d5bfe30dca7549396915c83f31cd30"
 SRCREV_mpc8544ds = "f20393c5e787b3776c179d20f82a86bda124d651"
 SRCREV_mpc8641-hpcn = "f20393c5e787b3776c179d20f82a86bda124d651"
 SRCREV_p1020rdb = "f20393c5e787b3776c179d20f82a86bda124d651"
+SRCREV_p2020rdb = "f20393c5e787b3776c179d20f82a86bda124d651"
 SRCREV_p2020ds = "f20393c5e787b3776c179d20f82a86bda124d651"
 SRCREV_bug20 = "169a4c804dbaf11facb041b1333d394c6ceb8d68"
 SRCREV_nokia900 = "bd2313078114c4b44c4a5ce149af43bcb7fc8854"
@@ -25,7 +26,7 @@ SRC_URI_append_bug20 = "file://bug-uboot.patch"
 SRC_URI_append_bug20 += "file://bug-video-setting.patch"
 
 SRC_URI_beagleboard = "git://www.denx.de/git/u-boot.git;protocol=git \
-                       file://0001-OMAP3-enable-i2c-bus-switching-for-Beagle-and-Overo.patch \
+                       file://0001-Enable-I2C-bus-switching.patch \
                        file://0002-OMAP3-add-board-revision-detection-for-Overo.patch \
                        file://0003-OMAP3-update-Beagle-revision-detection-to-recognize-.patch \
                        file://0004-OMAP3-Set-VAUX2-to-1.8V-for-EHCI-PHY-on-Beagle-Rev-C.patch \
@@ -64,17 +65,18 @@ SRC_URI_beagleboard = "git://www.denx.de/git/u-boot.git;protocol=git \
                        file://0037-OMAP3-beagle-pass-expansionboard-name-in-bootargs.patch \
                        file://0038-Added-configurations-for-xM-Rev-A-board.patch \
                        file://0039-OMAP3-beagle-setenv-beaglerev-for-AxBx-Cx-xMA-for-be.patch \
-                       file://0001-OMAP-mmc-add-support-for-second-and-third-mmc-chan.patch \
-                       file://0001-OMAP3-Beagle-enable-support-for-second-and-third-m.patch \
-                       file://0038-BeagleBoard-Added-LED-driver.patch \
-                       file://0039-Add-led-command.patch \
-                       file://0041-BeagleBoard-Enabled-LEDs.patch \
-                       file://0042-BeagleBoard-New-command-for-status-of-USER-button.patch \
-                       file://0043-BeagleBoard-Add-CONFIG_SYS_MEMTEST_SCRATCH.patch \
-                       file://0044-Beagleboard-Adjust-boot.patch \
-                       file://0045-BeagleBoard-Enable-pullups-on-i2c2.patch \
-                       file://0046-BeagleBoard-Add-camera-to-default-bootargs.patch \
-		       file://0001-BeagleBoard-move-ramdisk-parameters.patch \
+                       file://0040-OMAP-mmc-add-support-for-second-and-third-mmc-channe.patch \
+                       file://0041-OMAP3-Beagle-enable-support-for-second-and-third-mmc.patch \
+                       file://0042-BeagleBoard-Added-LED-driver.patch \
+                       file://0043-Add-led-command.patch \
+                       file://0044-BeagleBoard-Enabled-LEDs.patch \
+                       file://0045-BeagleBoard-Added-userbutton-command.patch \
+                       file://0046-BeagleBoard-Add-CONFIG_SYS_MEMTEST_SCRATCH.patch \
+                       file://0047-BeagleBoard-Adjust-boot-command-on-USER-button.patch \
+                       file://0048-BeagleBoard-Enable-pullups-on-i2c2.patch \
+                       file://0049-BeagleBoard-Add-camera-to-default-bootargs.patch \
+                       file://0050-BeagleBoard-move-ramdisk-parameters.patch \
+                       file://0051-add-support-for-beagleboardtoys-expansionboards.patch \
                        file://fw_env.config \
 "
 SRCREV_beagleboard = "ca6e1c136ddb720c3bb2cc043b99f7f06bc46c55"
@@ -109,7 +111,7 @@ do_compile_calamari () {
         oe_runmake MPC8536DS_SPIFLASH_config
         oe_runmake all
         mv u-boot.bin u-boot-spiflash.bin
-        oe_runmake tools env
+	oe_runmake tools env HOSTCC="${CC}"
 }
 
 do_deploy_calamari () {
@@ -167,7 +169,11 @@ PV_dm37x-evm = "2009.11+${PR}+gitr${SRCREV}"
 # ~ TI PSP v2009.11_OMAPPSP_03.00.01.06 (+ couple of commits)
 SRC_URI_am3517-crane = "git://arago-project.org/git/projects/u-boot-omap3.git;protocol=git \
                         file://0001-Added-Support-for-AM3517-05-based-CraneBoard.patch \
+                        file://0001-OMAP2-3-I2C-Add-support-for-second-and-third-bus.patch \
+                        file://0002-ARMV7-Restructure-OMAP-i2c-driver-to-allow-code-shar.patch \
+                        file://0003-craneboard-add-expansionboard-support.patch \
 "
+
 SRCREV_am3517-crane = "c0a8fb217fdca7888d89f9a3dee74a4cec865620"
 PV_am3517-crane = "2009.11+${PR}+gitr${SRCREV}"
 
@@ -197,6 +203,7 @@ PV_omapzoom2 = "1.1.4+${PR}+gitr${SRCREV}"
 PE_omapzoom2 = "1"
 
 do_compile_omapzoom2 () {
+	sed -i -e "s|OPTFLAGS=.*|OPTFLAGS=|" config.mk
         unset LDFLAGS
         unset CFLAGS
         unset CPPFLAGS
@@ -215,6 +222,7 @@ PV_omapzoom36x = "1.1.4+${PR}+gitr${SRCREV}"
 PE_omapzoom36x = "1"
 
 do_compile_omapzoom36x () {
+	sed -i -e "s|OPTFLAGS=.*|OPTFLAGS=|" config.mk
         unset LDFLAGS
         unset CFLAGS
         unset CPPFLAGS
@@ -223,12 +231,10 @@ do_compile_omapzoom36x () {
         oe_runmake tools
 }
 
-SRC_URI_overo = "git://gitorious.org/u-boot-omap3/mainline.git;branch=omap3-dev;protocol=git \
-                 file://fw-env.patch \
-                 file://dss2.patch \
+SRC_URI_overo = "git://www.sakoman.com/git/u-boot.git;branch=omap4-exp;protocol=git \
 "
-SRCREV_overo = "2dea1db2a3b7c12ed70bbf8ee50755089c5e5170"
-PV_overo = "2009.03+${PR}+gitr${SRCREV}"
+SRCREV_overo = "261733408a27d14590cf3ec6b596461808050e32"
+PV_overo = "2010.12+${PR}+gitr${SRCREV}"
 
 # DaVinci dm355-evm/dm365-evm/dm6446-evm/dm6467-evm/dm6467t-evm - PSP 3.1.0/3.2.0 (build 35)
 
@@ -286,6 +292,7 @@ SRCREV_sequoa = "cf3b41e0c1111dbb865b6e34e9f3c3d3145a6093"
 SRC_URI_sequoia = "git://www.denx.de/git/u-boot.git;protocol=git;tag=cf3b41e0c1111dbb865b6e34e9f3c3d3145a6093 "
 
 SRC_URI_mini2440 = "git://repo.or.cz/u-boot-openmoko/mini2440.git;protocol=git;branch=dev-mini2440-stable"
+SRC_URI_mini2440 += "file://dont-inline-weak-symbols-mini2440.patch"
 SRCREV_mini2440 = "3516c35fb777ca959e5cadf2156a792ca10e1cff"
 
 SRC_URI_micro2440 = "git://repo.or.cz/u-boot-openmoko/mini2440.git;protocol=git;branch=dev-mini2440-stable"

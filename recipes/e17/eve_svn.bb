@@ -7,6 +7,8 @@ SRCREV = "${EFL_SRCREV}"
 PR = "r2"
 
 inherit e
+SRC_URI = "${E_SVN}/trunk;module=${SRCNAME};proto=http;scmdata=keep"
+S = "${WORKDIR}/${SRCNAME}"
 
 SRC_URI += "file://eve-theme-for-smaller-screens.patch"
 

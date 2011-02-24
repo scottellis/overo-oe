@@ -1,33 +1,45 @@
 # this script can be used for testing purposes.
 # see also http://wiki.openembedded.net/index.php/TestingScript
 
-# you can define your machine/distro/recipe below (remove the #) 
-# or you can pick them up from the environment
-#MACHINE="beagleboard"
-#DISTRO="minimal"
-#TARGET_RECIPE="console-image"
+# you can set your machine/distro/recipe/branch in the environment
+# or use these defaults
+[ -n "${MACHINE}" ] || MACHINE="beagleboard"
+[ -n "${DISTRO}" ] || DISTRO="minimal"
+[ -n "${TARGET_RECIPE}" ] || TARGET_RECIPE="console-image"
+[ -n "${TESTING_BRANCH}" ] || TESTING_BRANCH="testing-next"
 
 # test if we have an openembedded dir, clone it if it does not exist
 if [ ! -d openembedded ]
 then
     (git clone git://git.openembedded.org/openembedded)
-    (cd openembedded; git checkout -b testing-next origin/testing-next)
+else
+    # fetch latest objects and refs
+    (cd openembedded; git fetch)
 fi
 
+# create local testing branch if it does not exist yet
+(cd openembedded; git branch --set-upstream ${TESTING_BRANCH} origin/${TESTING_BRANCH})
+
 # switch to the testing branch
-(cd openembedded; git checkout testing-next)
+(cd openembedded; git checkout ${TESTING_BRANCH})
+
+[ -n "${DEFAULT_BB_MIN_VERSION}" ] || DEFAULT_BB_MIN_VERSION="1.10.2"
+[ -n "${OE_SANITY}" ] || OE_SANITY="openembedded/conf/sanity.conf"
+# get the current Bitbake minimum version from sanity.conf
+[ -n "${BB_MIN_VERSION}" ] || BB_MIN_VERSION=`grep BB_MIN_VERSION $OE_SANITY 2>nul| sed -e 's|.*\"\(.*\)\"|\1|'`
+[ -n "${BB_MIN_VERSION}" ] || BB_MIN_VERSION=$DEFAULT_BB_MIN_VERSION
 
 # test if bitbake exist; if not; fetch it and untar it
-if [ ! -d bitbake-1.10.1 ]
+if [ ! -d bitbake-${BB_MIN_VERSION} ]
 then
-    (wget http://download.berlios.de/bitbake/bitbake-1.10.1.tar.gz; tar xf bitbake-1.10.1.tar.gz; rm bitbake-1.10.0.tar.gz) 
+    (wget http://download.berlios.de/bitbake/bitbake-${BB_MIN_VERSION}.tar.gz; tar xf bitbake-${BB_MIN_VERSION}.tar.gz; rm bitbake-${BB_MIN_VERSION}.tar.gz) 
 fi
 
 # TOPDIR is where we are now
 TOPDIR=`pwd`
 
 # add bitbake to the path
-export PATH=${TOPDIR}/bitbake-1.10.1/bin:$PATH
+export PATH=${TOPDIR}/bitbake-${BB_MIN_VERSION}/bin:$PATH
 
 # create a local.conf by using a here document
 cat > ${TOPDIR}/openembedded/conf/local.conf << EOF
@@ -42,9 +54,6 @@ DL_DIR = "${TOPDIR}/downloads"
 TMPDIR = "${TOPDIR}/tmp"
 BBFILES = "${TOPDIR}/openembedded/recipes/*/*.bb"
 ENABLE_BINARY_LOCALE_GENERATION = "0"
-
-# Which files do we want to parse:
-BBMASK = ""
 
 # ccache always overfill $HOME....
 CCACHE=""
@@ -63,7 +72,7 @@ OE_STRICT_CHECKSUMS = "1"
 
 # if you want to report build results (recommended) you need to edit OESTATS_BUILDER and add your name or nick in it, then uncomment the next 3 lines.
 #INHERIT += "oestats-client"
-#OESTATS_SERVER = "tinderbox.openembedded.net"
+#OESTATS_SERVER = "tinderbox.openembedded.org"
 #OESTATS_BUILDER = "your nick goes here"
 
 EOF
@@ -80,7 +89,7 @@ export BBPATH=${TOPDIR}/openembedded
 rm -rf ${TOPDIR}/tmp
 
 # add an echo about the vars so we can see what has been done in a log file
-echo $MACHINE $DISTRO $TARGET_RECIPE
+echo ${MACHINE} ${DISTRO} ${TARGET_RECIPE} ${TESTING_BRANCH} `(cd openembedded;git --no-pager log --max-count=1 --pretty=format:%H)`
 
 # and do the actual work.
 bitbake ${TARGET_RECIPE}

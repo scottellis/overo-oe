@@ -6,7 +6,7 @@
 DESCRIPTION = "Task packages for the SlugOS distribution"
 HOMEPAGE = "http://www.nslu2-linux.org"
 LICENSE = "MIT"
-PR = "r28"
+PR = "r30"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 COMPATIBLE_MACHINE = "(nslu2|ixp4xx|sheevaplug|qemuarm)"
 ALLOW_EMPTY = "1"
@@ -23,11 +23,6 @@ SLUGOS_STANDARD_RDEPENDS = ""
 SLUGOS_STANDARD_RRECOMMENDS = ""
 SLUGOS_MACHINE_RDEPENDS = ""
 SLUGOS_MACHINE_RRECOMMENDS = ""
-
-# The full cpio (non-busybox) is required for turnup and sysconfig.
-##SLUGOS_STANDARD_RRECOMMENDS += "\
-##cpio \
-##"
 
 # These lines add support for formatting ext2 and ext3 file systems
 # on a hard disk attached to the NSLU2.  ext3 is the standard Linux
@@ -85,6 +80,12 @@ kernel-module-uhci-hcd \
 #"
 ## End - MJW
 
+# Add stuff for developer convenience (may be removed for release)
+SLUGOS_STANDARD_RRECOMMENDS += "\
+kexec \
+kernel-module-ext4 \
+"
+
 # Add the machine-specific RRECOMMENDS_${PN} stuff -- kernel modules required for
 # network support.
 SLUGOS_MACHINE_RRECOMMENDS_nslu2 = "\
@@ -132,7 +133,7 @@ RDEPENDS_${PN} += "\
 	kernel \
 	base-files base-passwd netbase \
         busybox initscripts-slugos slugos-init \
-        update-modules udev \
+        update-modules ${IMAGE_DEV_MANAGER}  \
 	module-init-tools modutils-initscripts \
 	libgcc \
 	beep \
