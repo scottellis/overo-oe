@@ -3,7 +3,7 @@ HOMEPAGE = "http://www.eglibc.org/home"
 SECTION = "libs"
 PRIORITY = "required"
 LICENSE = "LGPL"
-INC_PR = "r16"
+INC_PR = "r19"
 # nptl needs unwind support in gcc, which can't be built without glibc.
 DEPENDS = "virtual/${TARGET_PREFIX}gcc-intermediate linux-libc-headers"
 #this leads to circular deps, so lets not add it yet
@@ -12,6 +12,10 @@ DEPENDS = "virtual/${TARGET_PREFIX}gcc-intermediate linux-libc-headers"
 #RDEPENDS_${PN} += "${@['','libgcc']['nptl' in '${GLIBC_ADDONS}']}"
 PROVIDES = "virtual/libc virtual/${TARGET_PREFIX}libc-for-gcc"
 PROVIDES += "virtual/libintl virtual/libiconv"
+PACKAGES_DYNAMIC = "libc6*"
+RPROVIDES_${PN}-dev = "libc6-dev virtual-libc-dev"
+PROVIDES_${PN}-dbg = "glibc-dbg"
+
 inherit autotools
 
 LEAD_SONAME = "libc.so"
@@ -25,4 +29,15 @@ ARM_INSTRUCTION_SET = "arm"
 EXTRA_OEMAKE := "PARALLELMFLAGS="${PARALLEL_MAKE}""
 PARALLEL_MAKE = ""
 
-PACKAGES_DYNAMIC = "libc6*"
+GLIBC_EXTRA_OECONF += "${@get_libc_fpu_setting(bb, d)}"
+
+do_unpack_append() {
+	bb.build.exec_func('do_move_ports', d)
+}
+
+do_move_ports() {
+        if test -d ${WORKDIR}/${EGLIBC_BRANCH}/ports ; then
+	    rm -rf ${S}/ports
+	    mv ${WORKDIR}/${EGLIBC_BRANCH}/ports ${S}/
+	fi
+}

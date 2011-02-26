@@ -8,9 +8,9 @@ DEPENDS = "mpfr gmp libmpc libelf"
 NATIVEDEPS = "mpfr-native gmp-native libmpc-native"
 
 
-INC_PR = "r19"
+INC_PR = "r28"
 
-SRCREV = "166342"
+SRCREV = "167948"
 PV = "4.5"
 # BINV should be incremented after updating to a revision
 # after a minor gcc release (e.g. 4.5.1 or 4.5.2) has been made
@@ -18,7 +18,7 @@ PV = "4.5"
 # 4.5.1 then the value below will be 2 which will mean 4.5.2
 # which will be next minor release and so on.
 
-BINV = "${PV}.2"
+BINV = "${PV}.3"
 BRANCH = "gcc-4_5-branch"
 PR_append = "+svnr${SRCPV}"
 
@@ -131,9 +131,32 @@ SRC_URI = "svn://gcc.gnu.org/svn/gcc/branches;module=${BRANCH} \
 	   file://linaro/gcc-4.5-linaro-r99413.patch \
 	   file://linaro/gcc-4.5-linaro-r99414.patch \
 	   file://linaro/gcc-4.5-linaro-r99415.patch \
-	   file://gcc-vmovl-PR45805.patch \
+	   file://linaro/gcc-4.5-linaro-r99416.patch \
+	   file://linaro/gcc-4.5-linaro-r99417.patch \
+	   file://linaro/gcc-4.5-linaro-r99418.patch \
+	   file://linaro/gcc-4.5-linaro-r99419.patch \
+	   file://linaro/gcc-4.5-linaro-r99420.patch \
+	   file://linaro/gcc-4.5-linaro-r99421.patch \
+	   file://linaro/gcc-4.5-linaro-r99423.patch \
+	   file://linaro/gcc-4.5-linaro-r99424.patch \
+	   file://linaro/gcc-4.5-linaro-r99425.patch \
+	   file://linaro/gcc-4.5-linaro-r99426.patch \
+	   file://linaro/gcc-4.5-linaro-r99429.patch \
+	   file://linaro/gcc-4.5-linaro-r99432.patch \
+	   file://linaro/gcc-4.5-linaro-r99433.patch \
+	   file://linaro/gcc-4.5-linaro-r99434.patch \
+	   file://linaro/gcc-4.5-linaro-r99435.patch \
+	   file://linaro/gcc-4.5-linaro-r99436.patch \
+	   file://linaro/gcc-4.5-linaro-r99437.patch \
+	   file://linaro/gcc-4.5-linaro-r99439.patch \
+	   file://linaro/gcc-4.5-linaro-r99440.patch \
+	   file://linaro/gcc-4.5-linaro-r99441.patch \
+	   file://linaro/gcc-4.5-linaro-r99442.patch \
+	   file://linaro/gcc-4.5-linaro-r99443.patch \
+	   file://linaro/gcc-4.5-linaro-r99444.patch \
 	   file://gcc-scalar-widening-pr45847.patch \
-	   file://gcc-linaro-fix-lp-653316.patch \
+	   file://gcc-arm-qihi-split-PR46883.patch \
+	   file://gcc-arm-volatile-bitfield-fix.patch \
 	  "
 
 SRC_URI_append_mips64 = " file://mips64-nomultilib.patch "
@@ -142,13 +165,8 @@ SRC_URI_append_mips64el = " file://mips64-nomultilib.patch "
 # Language Overrides
 FORTRAN = ""
 JAVA = ""
-rename_srcdir (){
-        mv ${WORKDIR}/${BRANCH} ${WORKDIR}/gcc-${PV}
-}
 
-do_unpack_append() {
-        bb.build.exec_func('rename_srcdir', d)
-}
+S = "${WORKDIR}/${BRANCH}"
 
 EXTRA_OECONF_BASE = " --enable-lto \
 		      --enable-libssp \

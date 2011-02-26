@@ -5,4 +5,3 @@ It involves a customized kernel config and some dependency changes
 for a few recipes, eliminating stuff I never use.
 
 This branch is a playground and not always stable.
-

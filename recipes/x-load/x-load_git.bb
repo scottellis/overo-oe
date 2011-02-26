@@ -2,30 +2,34 @@ require x-load.inc
 
 DEFAULT_PREFERENCE_omap3-pandora = "-1"
 
-FILESDIR = "${@os.path.dirname(bb.data.getVar('FILE',d,1))}/x-load-git/${MACHINE}"
+FILESPATHPKG_prepend = "x-load-git:x-load-git/${MACHINE}"
 
-SRCREV = "e4b7fb63fe7fe6efbca1adee758cc966161b3b5d"
-
-PV = "1.44ss+${PR}+gitr${SRCREV}"
-PV_beagleboard = "1.44+${PR}+gitr${SRCREV}"
-PR ="r17"
+PV = "1.44+${PR}+gitr${SRCREV}"
+PR ="r19"
 PE = "1"
 
-SRC_URI = " \
-           git://gitorious.org/x-load-omap3/mainline.git;branch=master;protocol=git \
+SRCREV = "6f3a26101303051e0f91b6213735b68ce804e94e"
+SRC_URI = "git://gitorious.org/x-loader/x-loader.git;branch=master;protocol=git \
+           file://0001-OMAP4-clocks-Enable-only-required-clks.patch \
+           file://0002-OMAP4-Select-DPLL-PER-Clock-as-source-for-SGX-FCLK.patch \
+           file://0003-MUX-Configure-SYS_NIRQ2-pin-in-safe-mode.patch \
+           file://0004-OMAP4-clocks-Disable-slimbus-and-pad_clks.patch \
+           file://0005-omap4-Make-1GHz-as-default-MPU-clock.patch \
           "
 
-SRC_URI_append_beagleboard = " \
-                              file://name.patch \
-                              file://bb8547fcbc54ecc7a75f9ad45a31042a04d8a2ce.patch \
-                              file://xm-mem.patch \
-                              file://0001-Fix-reading-FAT32-root-dirs-that-span-1-cluster.patch \
-                             "
+XLOAD_MACHINE_beagleboard = "omap3530beagle_config"
 
-SRC_URI_append_omap3-touchbook = " \
+SRC_URI_omap3-touchbook = "   git://gitorious.org/x-load-omap3/mainline.git;branch=master;protocol=git \\
                               file://name.patch \
                               file://screen-off.patch \
                              "
+
+# TI PSP v1.46_OMAPPSP_03.00.01.06 (Tag is one commit different)
+SRC_URI_am3517-crane = "git://arago-project.org/git/projects/x-load-omap3.git;protocol=git \
+                        file://0001-Added-support-for-AM3517-CraneBoard.patch \
+"
+SRCREV_am3517-crane = "fc6d5be15c703d21aef0ae0b8c02177721f0445f"
+PV_am3517-crane = "1.46+${PR}+gitr${SRCREV}"
 
 # TI PSP v1.46_OMAPPSP_03.00.01.06 (Tag is one commit different)
 SRC_URI_omap3evm = "git://arago-project.org/git/projects/x-load-omap3.git;protocol=git"

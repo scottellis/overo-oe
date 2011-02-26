@@ -55,6 +55,7 @@ KERNEL_DEVICETREE_xilinx-ml507 = "arch/${ARCH}/boot/dts/virtex440-ml507.dts"
 KERNEL_DEVICETREE_FLAGS = "-R 8 -S 0x3000"
 
 CORTEXA8FIXUP ?= "yes"
+LOCALVERSION ?= ""
 
 python __anonymous () {
 
@@ -136,7 +137,7 @@ do_configure_prepend() {
             -e '/CONFIG_LOCALVERSION_AUTO/d' \
 	    < '${WORKDIR}/defconfig' >>'${S}/.config'
 
-        echo 'CONFIG_LOCALVERSION=""' >>${S}/.config
+        echo 'CONFIG_LOCALVERSION="${LOCALVERSION}"' >>${S}/.config
         echo '# CONFIG_LOCALVERSION_AUTO is not set' >>${S}/.config
 
         #
