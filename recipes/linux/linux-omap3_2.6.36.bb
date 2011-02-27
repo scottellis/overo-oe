@@ -12,9 +12,11 @@ SRCREV = "587b76771e60ab7afd18709a8b9441c2175fc39c"
 SRC_URI = "git://www.sakoman.com/git/linux-omap-2.6.git;branch=omap-2.6.36;protocol=git \
 	   file://defconfig \
            file://${BOOT_SPLASH} \
+           file://spidev-default-speed.patch \
+           file://no-toggle-gpio-144-145.patch \
            "
 
-MUSB_MODE ?= "host"
+MUSB_MODE ?= "peripheral"
 
 do_configure_prepend() {
 
