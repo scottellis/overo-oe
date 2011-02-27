@@ -8,9 +8,7 @@
 ANGSTROM_EXTRA_INSTALL ?= "\
             kernel-module-g-ether \
             kernel-module-g-serial \
-            kernel-module-omap2-mcspi \
             kernel-module-cdc-subset \
-            kernel-module-cdc-acm \
             devmem2 \
             openssh-ssh \
             openssh-sftp \
