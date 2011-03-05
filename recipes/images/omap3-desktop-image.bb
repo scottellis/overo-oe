@@ -2,7 +2,7 @@
 
 require omap3-console-image.bb
 
-IMAGE_LINGUAS = "de-de fr-fr en-gb en-us pt-br es-es"
+IMAGE_LINGUAS = "en-us"
 
 ANGSTROM_EXTRA_INSTALL ?= ""
 
@@ -12,27 +12,27 @@ SPLASH ?= "psplash"
 APPS = " \
   abiword-meta \
   cheese \
-  claws-mail \
+#  claws-mail \
   evince \
 #  ekiga \
-  empathy \
-  firefox \
-  gecko-mediaplayer-firefox-hack \
-  gimp \
-  gnome-games \
+#  empathy \
+#  firefox \
+#  gecko-mediaplayer-firefox-hack \
+#  gimp \
+#  gnome-games \
   gnome-mplayer \
-  gnumeric \
+#  gnumeric \
   gpe-scap \
-  gpe-soundbite \
-  jaaa \
+#  gpe-soundbite \
+#  jaaa \
   midori \
   nautilus \
   numptyphysics \
 #  libgles-omap3-x11demos \
   pidgin \
-  swfdec \
-  swfdec-mozilla \
-  synergy \
+#  swfdec \
+#  swfdec-mozilla \
+#  synergy \
   vnc \
   x11vnc \
   angstrom-x11vnc-xinit \
