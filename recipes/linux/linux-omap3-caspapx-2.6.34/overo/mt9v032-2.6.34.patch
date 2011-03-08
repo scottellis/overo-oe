@@ -117,7 +117,7 @@ index 95efc77..df1ed29 100644
  			ARRAY_SIZE(overo_i2c_boardinfo));
  	/* i2c2 pins are used for gpio */
 -	omap_register_i2c_bus(3, 400, NULL, 0);
-+	omap_register_i2c_bus(3, 400, mt9v032_i2c_board_info, 
++	omap_register_i2c_bus(3, 100, mt9v032_i2c_board_info, 
 +			ARRAY_SIZE(mt9v032_i2c_board_info));
  	return 0;
  }
