@@ -1,0 +1,115 @@
+diff --git git/drivers/media/video/mt9v032.c git/drivers/media/video/mt9v032.c
+index ba5cb87..a2dab8b 100644
+--- git/drivers/media/video/mt9v032.c
++++ git/drivers/media/video/mt9v032.c
+@@ -121,24 +121,6 @@ static int mt9v032_num_formats;
+  */
+ static const struct v4l2_queryctrl mt9v032_controls [] = {
+ 	{
+-		.id			= V4L2_CID_VFLIP,
+-		.type			= V4L2_CTRL_TYPE_BOOLEAN,
+-		.name			= "Flip Vertically",
+-		.minimum		= 0,
+-		.maximum		= 1,
+-		.step			= 1,
+-		.default_value	= 0,
+-		.flags			= 0,
+-	},{
+-		.id			= V4L2_CID_HFLIP,
+-		.type			= V4L2_CTRL_TYPE_BOOLEAN,
+-		.name			= "Flip Horizontally",
+-		.minimum		= 0,
+-		.maximum		= 1,
+-		.step			= 1,
+-		.default_value	= 0,
+-		.flags			= 0,
+-	},{
+ 		.id			= V4L2_CID_EXPOSURE,
+ 		.type			= V4L2_CTRL_TYPE_INTEGER,
+ 		.name			= "Exposure",
+@@ -147,7 +129,18 @@ static const struct v4l2_queryctrl mt9v032_controls [] = {
+ 		.step			= 1,
+ 		.default_value	= 480,
+ 		.flags			= V4L2_CTRL_FLAG_SLIDER,
+-	},{
++	},
++	{
++		.id			= V4L2_CID_AUTOGAIN,
++		.type			= V4L2_CTRL_TYPE_BOOLEAN,
++		.name			= "Automatic Gain",
++		.minimum		= 0,
++		.maximum		= 1,
++		.step			= 1,
++		.default_value	= 1,
++		.flags			= 0,
++	},
++	{
+ 		.id			= V4L2_CID_GAIN,
+ 		.type			= V4L2_CTRL_TYPE_INTEGER,
+ 		.name			= "Analog Gain",
+@@ -156,19 +149,31 @@ static const struct v4l2_queryctrl mt9v032_controls [] = {
+ 		.step			= 1,
+ 		.default_value	= 16,
+ 		.flags			= V4L2_CTRL_FLAG_SLIDER,
+-	},{
+-		.id			= V4L2_CID_EXPOSURE_AUTO,
++	},
++	{
++		.id			= V4L2_CID_HFLIP,
+ 		.type			= V4L2_CTRL_TYPE_BOOLEAN,
+-		.name			= "Automatic Exposure",
++		.name			= "Flip Horizontally",
+ 		.minimum		= 0,
+ 		.maximum		= 1,
+ 		.step			= 1,
+-		.default_value	= 1,
++		.default_value	= 0,
+ 		.flags			= 0,
+-	},{
+-		.id			= V4L2_CID_AUTOGAIN,
++	},	
++	{
++		.id			= V4L2_CID_VFLIP,
+ 		.type			= V4L2_CTRL_TYPE_BOOLEAN,
+-		.name			= "Automatic Gain",
++		.name			= "Flip Vertically",
++		.minimum		= 0,
++		.maximum		= 1,
++		.step			= 1,
++		.default_value	= 0,
++		.flags			= 0,
++	},
++	{
++		.id			= V4L2_CID_EXPOSURE_AUTO,
++		.type			= V4L2_CTRL_TYPE_BOOLEAN,
++		.name			= "Automatic Exposure",
+ 		.minimum		= 0,
+ 		.maximum		= 1,
+ 		.step			= 1,
+@@ -370,10 +375,22 @@ static int ioctl_queryctrl(struct v4l2_int_device *s, struct v4l2_queryctrl *vc)
+ {
+ 	int i;
+ 
+-	for (i = 0; i < ARRAY_SIZE(mt9v032_controls); i++) {
+-		if (vc->id == mt9v032_controls[i].id) {
+-			*vc = mt9v032_controls[i];
+-			return 0;
++	if (vc->id & V4L2_CTRL_FLAG_NEXT_CTRL) {
++		vc->id &= ~V4L2_CTRL_FLAG_NEXT_CTRL;
++		
++		for (i = 0; i < ARRAY_SIZE(mt9v032_controls); i++) {
++			if (mt9v032_controls[i].id > vc->id) {
++				*vc = mt9v032_controls[i];
++				return 0;
++			}
++		}	 
++	}
++	else {
++		for (i = 0; i < ARRAY_SIZE(mt9v032_controls); i++) {
++			if (vc->id == mt9v032_controls[i].id) {
++				*vc = mt9v032_controls[i];
++				return 0;
++			}
+ 		}
+ 	}
+ 
