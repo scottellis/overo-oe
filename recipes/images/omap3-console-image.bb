@@ -20,8 +20,6 @@ BASE_INSTALL = " \
 FIRMWARE_INSTALL = " \
 #  linux-firmware \
   libertas-sd-firmware \
-  rt73-firmware \
-  zd1211-firmware \
  "
 
 GLES_INSTALL = " \
@@ -31,27 +29,22 @@ GLES_INSTALL = " \
 TOOLS_INSTALL = " \
   bash \
   bzip2 \
-  ckermit \
   devmem2 \
   dhcp-client \
   dosfstools \
   fbgrab \
   fbset \
   fbset-modes \
-  i2c-tools \
   ksymoops \
   mkfs-jffs2 \
   mtd-utils \
-  nano \
   ntp ntpdate \
   openssh-misc \
   openssh-scp \
   openssh-ssh \
   omap3-writeprom \
   procps \
-  socat \
   strace \
-  sudo \
   syslog-ng \
   task-proper-tools \
   u-boot-utils \
