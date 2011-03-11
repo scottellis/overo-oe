@@ -1,3 +1,5 @@
+DEFAULT_PREFERENCE = "-1"
+
 require linux.inc
 
 DESCRIPTION = "Linux kernel for OMAP processors"
