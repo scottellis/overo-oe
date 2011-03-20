@@ -135,7 +135,7 @@ SRC_URI = "git://arago-project.org/git/projects/linux-omap3.git;protocol=http;br
            file://cam/0075-omap3beagle-Add-camera-bootarg.patch \
            file://0001-BeagleBoard-Adjust-USER-button-pin-for-xM.patch \
            file://porches.patch \
-           file://mt9p031-4.patch \
+           file://mt9p031-6.patch \
            file://defconfig"
 
 SRC_URI_append_beagleboard = " file://logo_linux_clut224.ppm \
