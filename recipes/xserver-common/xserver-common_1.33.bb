@@ -22,7 +22,8 @@ SRC_URI_append = " file://loop.patch;striplevel=3 \
                    file://89xdgautostart.sh \
                    file://Xserver-virtex.patch"
 
-SRC_URI_append_angstrom = " file://xtscal-fix.patch "
+SRC_URI_append_angstrom = " file://xtscal-fix.patch \
+                            file://89xTs_Calibrate.restart_gpe.patch"
 RDEPENDS_${PN}_append_angstrom = " tslib-calibrate "
 RDEPENDS_${PN}_append_shr = " xinput-calibrator "
 

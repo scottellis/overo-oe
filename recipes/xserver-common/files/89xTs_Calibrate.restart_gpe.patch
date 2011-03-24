@@ -1,0 +1,15 @@
+diff --git a/89xTs_Calibrate b/89xTs_Calibrate1
+index 9bf1ec6..92d4029 100644
+--- a/X11/Xinit.d/89xTs_Calibrate
++++ b/X11/Xinit.d/89xTs_Calibrate
+@@ -6,7 +6,9 @@ fi
+ 
+ if [ ! -f /etc/pointercal ] && [ ! -z $TSLIB_TSDEVICE ] && [ -e $TSLIB_TSDEVICE ]; then
+     /usr/bin/run-calibrate.sh
+-    
++    /etc/init.d/gpe-dm stop
++    /etc/init.d/gpe-dm start
++
+     if [ -x /etc/init.d/zaurusd ]; then
+     	/etc/init.d/zaurusd stop
+ 	/etc/init.d/zaurusd start
