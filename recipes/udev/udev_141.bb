@@ -4,10 +4,11 @@ the hotplug package and requires a kernel not older than 2.6.12."
 
 # Untested
 DEFAULT_PREFERENCE = "-1"
+DEFAULT_PREFERENCE_nios2 = "1"
 
 require udev.inc
 
-PR = "${INC_PR}.3"
+PR = "${INC_PR}.6"
 
 SRC_URI += "file://mount.blacklist \
 	    file://run.rules \
@@ -73,6 +74,7 @@ do_install () {
 
 	touch ${D}${sysconfdir}/udev/saved.uname
 	touch ${D}${sysconfdir}/udev/saved.cmdline
+	touch ${D}${sysconfdir}/udev/saved.devices
 	touch ${D}${sysconfdir}/udev/saved.atags
 
 	install -d ${D}${sysconfdir}/udev/scripts/

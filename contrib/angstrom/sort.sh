@@ -75,11 +75,13 @@ case "$arch" in
 	"armv5teb")
 			machines="fsg3be ixp4xxbe nslu2be" ;;
 	"armv6")
-			machines="bug iphone mx31ads mx31moboard mini6410 nokia800 omap2420h4 omap2430sdp smartq5 smartqv7 smdk6410" ;;
+			machines="bug iphone mx31ads mx31moboard mini6410 nokia800 omap2420h4 omap2430sdp pcm043 smartq5 smartqv7 smdk6410" ;;
 	"armv6-novfp")
 			machines="htcblackstone htcdiamond htcdream htckaiser htcnike htcpolaris htcraphael htctitan htcvogue" ;;
 	"armv7a")
 			machines="am3517-evm am3517-crane archos5 archos5it beagleboard bug20 cm-t35 dm37x-evm am37x-evm am389x-evm babbage c6a816x-evm efikamx htcleo igep0020 nokia900 omap3517-evm omap3evm omap3-pandora omap3-touchbook omap4430-sdp omapzoom omapzoom2 omapzoom36x overo palmpre omap4430-panda usrp-embedded usrp-e1xx" ;;
+	"armv7a-vfp")
+			machines="ac100" ;;
 	"avr32")
 			machines="at32stk1000 atngw100" ;;
 	"bfin")
@@ -98,7 +100,7 @@ case "$arch" in
 	"mips")
 			machines="qemumips" ;;
 	"mipsel")
-			machines="ben-nanonote db1200 lsmipsel mtx-1 mtx-2 qemumipsel rb500 stb225 wgt634u wl500g wrt54 xxs1500" ;;
+			machines="ben-nanonote db1200 lsmipsel mtx-1 mtx-2 qemumipsel rb500 stb225 wgt634u wl500g wrt54" ;;
 	"powerpc")
 			machines="gamecube p2020ds" ;;
 	"ppc405")
@@ -162,7 +164,7 @@ for i in ../* ; do
   if [ -d $i ]; then
       cd $i
       echo -n "building index for $i:" |sed s:\.\./::
-      ${ipkg_tools_path}/ipkg-make-index -m -p Packages -l Packages.filelist  -L ../locales  . >& /tmp/index-log
+      ${ipkg_tools_path}/opkg-make-index -m -p Packages -l Packages.filelist  -L ../locales  . >& /tmp/index-log
       echo " DONE"
   fi
 done
@@ -173,7 +175,7 @@ echo -n "building index for locales:"
 for i in ../* ; do
   if [ -d $i ]; then
    echo -n " $i" |sed s:\.\./::
-   ${ipkg_tools_path}/ipkg-make-index -m -p Packages -l Packages.filelist . >& /dev/null;
+   ${ipkg_tools_path}/opkg-make-index -m -p Packages -l Packages.filelist . >& /dev/null;
    cd $i
   fi
  done
@@ -187,7 +189,7 @@ for i in ./* ; do
   if [ -d $i ]; then
      cd $i
      echo -n "building index for machine $i:"
-     ${ipkg_tools_path}/ipkg-make-index -m -p Packages -l Packages.filelist . >& /dev/null
+     ${ipkg_tools_path}/opkg-make-index -m -p Packages -l Packages.filelist . >& /dev/null
      echo " DONE"
      cd ../
   fi
@@ -198,12 +200,12 @@ cd ${BPWD}
 
 echo "Processing 'all' feed"
 for i in `find . -name  "*.ipk"| grep _all` ; do mkdir -p ../all/ || true ;mv $i ../all/ ; done
- (mkdir -p ../all ; cd ../all && ${ipkg_tools_path}/ipkg-make-index -p Packages -m . >& /dev/null ; touch Packages.sig )
+ (mkdir -p ../all ; cd ../all && ${ipkg_tools_path}/opkg-make-index -p Packages -m . >& /dev/null ; touch Packages.sig )
 
 mkdir -p ../sdk ; mv *sdk.ipk ../sdk/ || true
- (mkdir -p ../sdk ; cd ../sdk && ${ipkg_tools_path}/ipkg-make-index -p Packages -m . >& /dev/null ; touch Packages.sig )
+ (mkdir -p ../sdk ; cd ../sdk && ${ipkg_tools_path}/opkg-make-index -p Packages -m . >& /dev/null ; touch Packages.sig )
 
-for arch in 486sx armv4t armv4 armv5teb armv5te armv6-novfp armv6 armv7a avr32 bfin geode i486 i586 i686 iwmmxt mips mipsel powerpc ppc405 ppc440e ppc603e ppce300c2 ppce300c3 ppce500v2 ppce500 ppce600 sh4 sparc x86_64 x86; do
+for arch in 486sx armv4t armv4 armv5teb armv5te armv6-novfp armv6 armv7a-vfp armv7a avr32 bfin geode i486 i586 i686 iwmmxt mips mipsel powerpc ppc405 ppc440e ppc603e ppce300c2 ppce300c3 ppce500v2 ppce500 ppce600 sh4 sparc x86_64 x86; do
 	do_sort
 done
 

@@ -5,7 +5,7 @@
 DESCRIPTION = "Packages that are compatible with the SlugOS firmware"
 HOMEPAGE = "http://www.nslu2-linux.org"
 LICENSE = "MIT"
-PR = "r70"
+PR = "r76"
 CONFLICTS = "db3"
 
 COMPATIBLE_MACHINE = "nslu2|ixp4xx"
@@ -21,6 +21,7 @@ ALLOW_EMPTY = "1"
 SLUGOS_PACKAGES = "\
 	alsa-lib \
 	alsa-utils \
+	apex-env \
 	apr \
 	asterisk \
 	asterisk-core-sounds-en-alaw \
@@ -92,14 +93,16 @@ SLUGOS_PACKAGES = "\
 	gnu-config \
 	gphoto2 \
 	grep \
+	groff \
 	gtk-doc \
 	gzip \
 	hdparm \
 	hostap-daemon \
 	ifupdown \
+	inetutils \
 	iozone3 \
 	iperf \
-	ipkg-utils \
+	opkg-utils \
 	iptables \
 	joe \
 	jpeg \
@@ -127,10 +130,13 @@ SLUGOS_PACKAGES = "\
 	logrotate \
 	lrzsz \
 	lsof \
+	lvm2 \
 	m4 \
 	madplay \
 	mailx \
 	make \
+	man \
+	man-pages \
 	masqmail \
 	mdadm \
 	mediatomb \
@@ -206,7 +212,6 @@ SLUGOS_PACKAGES = "\
 	util-linux-ng \
 	vim \
 	vlan \
-	vsftpd \
 	w3cam \
 	wakelan \
 	watchdog \
@@ -247,17 +252,12 @@ SLUGOS_X11_PACKAGES = "\
 
 # Packages that are broken but need to be fixed!
 #
-# - apex-env: gcc4.4
-# - inetutils: gcc 4.4
-# - lvm2: gcc 4.4 (suspected)
-# - madwifi-ng: gcc 4.4 (and possibly other problems)
+# - madwifi-ng: needs newer version for updated IXP4XX kernel
+# - vsftpd: broken in general, needs libcap added to recipe
 # 
 SLUGOS_BROKEN_BUT_NEED_FIXING_PACKAGES = "\
-	apex-env \
-	groff man man-pages \
-	inetutils \
-	lvm2 \
 	madwifi-ng \
+	vsftpd \
 	"
 
 # Packages currently broken on all platforms
@@ -300,6 +300,7 @@ DEPENDS = "\
 	slugos-image \
 	slugos-native \
 	task-proper-tools \
+	task-sdk-native \
 	${SLUGOS_PACKAGES} \
 	${SLUGOS_EXTRA_PACKAGES} \
 	package-index \

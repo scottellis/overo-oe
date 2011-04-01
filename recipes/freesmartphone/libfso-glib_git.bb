@@ -3,10 +3,10 @@ AUTHOR = "Didier 'Ptitjes"
 LICENSE = "LGPL"
 SECTION = "devel"
 DEPENDS = "vala-dbus-binding-tool-native glib-2.0 fso-specs"
-SRCREV = "c58f310d8cf2cb51a7d9f72ee80e3c82389cfbd6"
-PV = "2010.12.13.1+gitr${SRCPV}"
+SRCREV = "d563de6a89ef68224e293c292b7ef3b283ea5a19"
+PV = "2011.01.13.1+gitr${SRCPV}"
 PE = "1"
-PR = "r0"
+PR = "r1"
 
 inherit autotools vala
 

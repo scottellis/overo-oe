@@ -10,7 +10,7 @@ inherit utils
 inherit utility-tasks
 inherit metadata_scm
 
-OE_IMPORTS += "oe.path oe.utils oe.packagegroup oe.types sys os time"
+OE_IMPORTS += "oe.path oe.utils oe.packagegroup oe.data sys os time"
 OE_IMPORTS[type] = "list"
 
 python oe_import () {
@@ -57,34 +57,23 @@ oe_runmake() {
 }
 
 def base_deps(d):
-	#
-	# Ideally this will check a flag so we will operate properly in
-	# the case where host == build == target, for now we don't work in
-	# that case though.
-	#
-	deps = "coreutils-native"
-	if bb.data.getVar('PN', d, True) in ("shasum-native", "stagemanager-native",
-	                                     "coreutils-native"):
-		deps = ""
-
 	# INHIBIT_DEFAULT_DEPS doesn't apply to the patch command.  Whether or  not
 	# we need that built is the responsibility of the patch function / class, not
 	# the application.
 	if not bb.data.getVar('INHIBIT_DEFAULT_DEPS', d):
 		if (bb.data.getVar('HOST_SYS', d, 1) !=
-	     	    bb.data.getVar('BUILD_SYS', d, 1)):
-			deps += " virtual/${TARGET_PREFIX}gcc virtual/libc "
+		    bb.data.getVar('BUILD_SYS', d, 1)):
+			return "virtual/${TARGET_PREFIX}gcc virtual/libc"
 		elif bb.data.inherits_class('native', d) and \
 				bb.data.getVar('PN', d, True) not in \
 				("linux-libc-headers-native", "quilt-native",
-				 "unifdef-native", "shasum-native",
-				 "stagemanager-native", "coreutils-native"):
-			deps += " linux-libc-headers-native"
-	return deps
+				 "unifdef-native", "shasum-native"):
+			return "linux-libc-headers-native"
+	return ""
 
-DEPENDS_prepend="${@base_deps(d)} "
-DEPENDS_virtclass-native_prepend="${@base_deps(d)} "
-DEPENDS_virtclass-nativesdk_prepend="${@base_deps(d)} "
+DEPENDS_prepend = "${@base_deps(d)} "
+DEPENDS_virtclass-native_prepend = "${@base_deps(d)} "
+DEPENDS_virtclass-nativesdk_prepend = "${@base_deps(d)} "
 
 
 SCENEFUNCS += "base_scenefunction"
@@ -93,11 +82,11 @@ SCENEFUNCS[type] = "list"
 python base_scenefunction () {
 	stamp = bb.data.getVar('STAMP', d, 1) + ".needclean"
 	if os.path.exists(stamp):
-	        bb.build.exec_func("do_clean", d)
+		bb.build.exec_func("do_clean", d)
 }
 
 python base_do_setscene () {
-	for func in oe.types.value('SCENEFUNCS', d):
+	for func in oe.data.typed_value('SCENEFUNCS', d):
 		bb.build.exec_func(func, d)
 	if not os.path.exists(bb.data.getVar('STAMP', d, 1) + ".do_setscene"):
 		bb.build.make_stamp("do_setscene", d)
@@ -113,7 +102,7 @@ python base_do_fetch() {
 	localdata = bb.data.createCopy(d)
 	bb.data.update_data(localdata)
 
-	src_uri = oe.types.value('SRC_URI', localdata)
+	src_uri = oe.data.typed_value('SRC_URI', localdata)
 	if not src_uri:
 		return 1
 	try:
@@ -190,12 +179,11 @@ def oe_unpack(d, local, urldata):
         bb.mkdirhier(destdir)
     else:
         destdir = workdir
-    dos = urldata.parm.get("dos")
 
     bb.note("Unpacking %s to %s/" % (base_path_out(local, d),
                                      base_path_out(destdir, d)))
     try:
-        unpack_file(local, destdir, env={"PATH": d.getVar("PATH", True)}, dos=dos)
+        unpack_file(local, destdir, urldata.parm, env={"PATH": d.getVar("PATH", True)})
     except UnpackError, exc:
         bb.fatal(str(exc))
 
@@ -204,11 +192,11 @@ do_unpack[dirs] = "${WORKDIR}"
 python base_do_unpack() {
     from glob import glob
 
-    src_uri = oe.types.value("SRC_URI", d)
+    src_uri = oe.data.typed_value("SRC_URI", d)
     if not src_uri:
         return
     srcurldata = bb.fetch.init(src_uri, d, True)
-    filespath = oe.types.value("FILESPATH", d)
+    filespath = oe.data.typed_value("FILESPATH", d)
 
     for url in src_uri:
         urldata = srcurldata[url]
@@ -266,9 +254,16 @@ python build_summary() {
         statusvars = bb.data.getVar("BUILDCFG_VARS", e.data, 1).split()
         statuslines = ["%-17s = \"%s\"" % (i, bb.data.getVar(i, e.data, 1) or '') for i in statusvars]
         statusmsg = "\n%s\n%s\n" % (bb.data.getVar("BUILDCFG_HEADER", e.data, 1), "\n".join(statuslines))
-        bb.plain(statusmsg)
 
-        needed_vars = oe.types.value("BUILDCFG_NEEDEDVARS", e.data)
+        # bitbake 1.8.x has a broken bb.plain and that stops the BB_MIN_VERSION
+        # check from happening.
+        version = [int(c) for c in bb.__version__.split('.')]
+        if version >= [1, 9, 0]:
+            bb.plain(statusmsg)
+        else:
+            print statusmsg
+
+        needed_vars = oe.data.typed_value("BUILDCFG_NEEDEDVARS", e.data)
         pesteruser = []
         for v in needed_vars:
             val = bb.data.getVar(v, e.data, 1)
@@ -333,7 +328,7 @@ def set_multimach_arch(d):
 
     multiarch = pkg_arch
 
-    for pkg in oe.types.value('PACKAGES', d):
+    for pkg in oe.data.typed_value('PACKAGES', d):
         pkgarch = bb.data.getVar("PACKAGE_ARCH_%s" % pkg, d, 1)
 
         # We could look for != PACKAGE_ARCH here but how to choose

@@ -31,13 +31,13 @@
 # CREATE_SRCIPK_pn-<package name> = "1" in your local.conf
 #
 #TODO: 
-# Need to figure out how to use ipkg-build in this class.
+# Need to figure out how to use opkg-build in this class.
 # I tried adding it as a dependency for the do_create_srcipk
 # task using:
-#   do_create_srcipk[depends] += "ipkg-utils-native:do_populate_sysroot"
+#   do_create_srcipk[depends] += "opkg-utils-native:do_populate_sysroot"
 # But then there is a circular dependency between sourcipk.bbclass and
-# ipkg-utils-native.  Until I can figure out how to resolve this
-# circular dependency I am extracting the needed pieces from ipkg-build
+# opkg-utils-native.  Until I can figure out how to resolve this
+# circular dependency I am extracting the needed pieces from opkg-build
 # into this class and building the source ipk myself.
 
 
@@ -144,7 +144,18 @@ EXPORT_FUNCTIONS do_create_srcipk
 
 do_create_srcipk[deptask] = "do_patch"
 
-addtask create_srcipk after do_patch before do_configure
+# Add a blank compileconfigs task.  This allows the sourceipk to schedule
+# its copy of the sources for kernels using the multi-kernel functionality
+# before the compileconfigs task.  Failure to do this results in a race
+# condition where in the best case the sources packaged may contain binary
+# builds and in the worst case binary files being cleaned cause an error
+# in the copy command for the sourceipk.
+do_compileconfigs() {
+    :
+}
+addtask compileconfigs after do_patch before do_configure
+
+addtask create_srcipk after do_patch before do_compileconfigs
 
 #Add source packages to list of packages OE knows about
 PACKAGES_DYNAMIC += "${PN}-src"

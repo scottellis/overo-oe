@@ -1,12 +1,13 @@
 require avahi.inc
 
-PR = "r1"
+PR = "${INC_PR}.0"
 
 DEPENDS += "intltool-native"
 
 PACKAGES =+ "libavahi-gobject"
 
-SRC_URI += "file://disable-ipv6.patch"
+SRC_URI += "file://disable-ipv6.patch \
+            file://fix-CVE-2011-1002.patch"
 
 noipv6 = "${@base_contains('DISTRO_FEATURES', 'ipv6', '', '-DDISABLE_IPV6', d)}"
 EXTRA_OEMAKE_append = " 'CFLAGS=${CFLAGS} ${noipv6}'"

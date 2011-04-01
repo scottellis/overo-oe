@@ -8,9 +8,9 @@ DEPENDS = "mpfr gmp libmpc libelf"
 NATIVEDEPS = "mpfr-native gmp-native libmpc-native"
 
 
-INC_PR = "r28"
+INC_PR = "r33"
 
-SRCREV = "167948"
+SRCREV = "170443"
 PV = "4.5"
 # BINV should be incremented after updating to a revision
 # after a minor gcc release (e.g. 4.5.1 or 4.5.2) has been made
@@ -29,9 +29,10 @@ SRC_URI = "svn://gcc.gnu.org/svn/gcc/branches;module=${BRANCH} \
 	   file://cache-amnesia.patch \
 	   file://gcc-flags-for-build.patch \
 	   file://libstdc++-emit-__cxa_end_cleanup-in-text.patch \
-	   file://arm-bswapsi2.patch \
 	   file://Makefile.in.patch \
 	   file://gcc-armv4-pass-fix-v4bx-to-ld.patch \
+	   file://sh4-multilib.patch \
+	   file://arm-lib1funcs.as-fix-mismatch-between-conditions-of-an-IT-block.patch \
 	   file://linaro/gcc-4.5-linaro-r99297.patch \
 	   file://linaro/gcc-4.5-linaro-r99298.patch \
 	   file://linaro/gcc-4.5-linaro-r99299.patch \
@@ -129,7 +130,6 @@ SRC_URI = "svn://gcc.gnu.org/svn/gcc/branches;module=${BRANCH} \
 	   file://linaro/gcc-4.5-linaro-r99411.patch \
 	   file://linaro/gcc-4.5-linaro-r99412.patch \
 	   file://linaro/gcc-4.5-linaro-r99413.patch \
-	   file://linaro/gcc-4.5-linaro-r99414.patch \
 	   file://linaro/gcc-4.5-linaro-r99415.patch \
 	   file://linaro/gcc-4.5-linaro-r99416.patch \
 	   file://linaro/gcc-4.5-linaro-r99417.patch \
@@ -154,8 +154,22 @@ SRC_URI = "svn://gcc.gnu.org/svn/gcc/branches;module=${BRANCH} \
 	   file://linaro/gcc-4.5-linaro-r99442.patch \
 	   file://linaro/gcc-4.5-linaro-r99443.patch \
 	   file://linaro/gcc-4.5-linaro-r99444.patch \
+	   file://linaro/gcc-4.5-linaro-r99449.patch \
+	   file://linaro/gcc-4.5-linaro-r99450.patch \
+	   file://linaro/gcc-4.5-linaro-r99451.patch \
+	   file://linaro/gcc-4.5-linaro-r99452.patch \
+	   file://linaro/gcc-4.5-linaro-r99453.patch \
+	   file://linaro/gcc-4.5-linaro-r99454.patch \
+	   file://linaro/gcc-4.5-linaro-r99455.patch \
+	   file://linaro/gcc-4.5-linaro-r99464.patch \
+	   file://linaro/gcc-4.5-linaro-r99465.patch \
+	   file://linaro/gcc-4.5-linaro-r99466.patch \
+	   file://linaro/gcc-4.5-linaro-r99468.patch \
+	   file://linaro/gcc-4.5-linaro-r99473.patch \
+#	   file://linaro/gcc-4.5-linaro-r99474.patch \
+	   file://linaro/gcc-4.5-linaro-r99475.patch \
+	   file://tune-xscale-infinite-loop-PR45177.patch \
 	   file://gcc-scalar-widening-pr45847.patch \
-	   file://gcc-arm-qihi-split-PR46883.patch \
 	   file://gcc-arm-volatile-bitfield-fix.patch \
 	  "
 
@@ -176,9 +190,7 @@ EXTRA_OECONF_BASE = " --enable-lto \
 EXTRA_OECONF_INITIAL = "--disable-libmudflap --disable-libgomp --disable-libssp --enable-decimal-float=no"
 EXTRA_OECONF_INTERMEDIATE = "--disable-libmudflap --disable-libgomp --disable-libssp"
 
-EXTRA_OECONF_append_linux-uclibc = " --disable-decimal-float "
-EXTRA_OECONF_append_linux-uclibceabi = " --disable-decimal-float "
-EXTRA_OECONF_append_linux-uclibcspe = " --disable-decimal-float "
+EXTRA_OECONF_append_libc-uclibc = " --disable-decimal-float "
 
 EXTRA_OECONF_append_mips64 = " --with-arch-64=mips64 --with-tune-64=mips64"
 EXTRA_OECONF_append_mips64el = " --with-arch-64=mips64 --with-tune-64=mips64"

@@ -1,13 +1,12 @@
 DESCRIPTION = "Modular settings application for SHR based on python-elementary"
 HOMEPAGE = "http://shr-project.org"
-SHR_RELEASE ?= "shr"
-LICENSE ?= "GPL"
+LICENSE = "GPL"
 RDEPENDS_${PN} = "python-elementary python-dbus python-codecs python-shell python-pyrtc python python-core python-edbus dbus-x11 frameworkd python-phoneutils python-pexpect"
 SECTION = "x11/application"
-SRCREV = "e94cb974d08a242c8def89aca43da00124080368"
+SRCREV = "dd0961518e5ef39f74248b3355470626e721aaa9"
 PE = "1"
 PV = "0.1.1+gitr${SRCPV}"
-PR = "r12"
+PR = "r13"
 
 inherit setuptools
 

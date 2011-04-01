@@ -6,6 +6,10 @@
 #
 # INHERIT += "packaged-staging"
 #
+# To use the prebuilt pstage packages, save them away..
+# $ rsync --delete -a tmp/pstage/ /there/oe/build/pstage_mirror
+# .. and use it as mirror in your conf/local.conf:
+# PSTAGE_MIRROR = "file:///there/oe/build/pstage_mirror"
 
 
 #
@@ -23,7 +27,6 @@ PSTAGE_SCAN_CMD ?= "find ${PSTAGE_TMPDIR_STAGE} \( -name "*.la" -o -name "*-conf
 
 PSTAGE_NATIVEDEPENDS = "\
     shasum-native \
-    stagemanager-native \
     "
 
 BB_STAMP_WHITELIST = "${PSTAGE_NATIVEDEPENDS}"
@@ -75,10 +78,6 @@ python __anonymous() {
     # Add task dependencies if we're active, otherwise mark packaged staging
     # as inactive.
     if pstage_allowed:
-        deps = bb.data.getVarFlag('do_setscene', 'depends', d) or ""
-        deps += " stagemanager-native:do_populate_sysroot"
-        bb.data.setVarFlag('do_setscene', 'depends', deps, d)
-
         policy = bb.data.getVar("BB_STAMP_POLICY", d, True)
         if policy == "whitelist" or policy == "full":
            deps = bb.data.getVarFlag('do_setscene', 'recrdeptask', d) or ""
@@ -92,9 +91,9 @@ python __anonymous() {
 
 PSTAGE_MACHCONFIG   = "${PSTAGE_WORKDIR}/opkg.conf"
 
-PSTAGE_PKGMANAGER = "stage-manager-ipkg"
+PSTAGE_PKGMANAGER = "stage-manager-opkg"
 
-PSTAGE_BUILD_CMD        = "stage-manager-ipkg-build -o 0 -g 0"
+PSTAGE_BUILD_CMD        = "stage-manager-opkg-build -o 0 -g 0"
 PSTAGE_INSTALL_CMD      = "${PSTAGE_PKGMANAGER} -f ${PSTAGE_MACHCONFIG} -force-depends -o ${TMPDIR} install"
 PSTAGE_UPDATE_CMD       = "${PSTAGE_PKGMANAGER} -f ${PSTAGE_MACHCONFIG} -o ${TMPDIR} update"
 PSTAGE_REMOVE_CMD       = "${PSTAGE_PKGMANAGER} -f ${PSTAGE_MACHCONFIG} -force-depends -o ${TMPDIR} remove"
@@ -190,17 +189,21 @@ def staging_fetch(stagepkg, d):
         pd = d.createCopy()
         dldir = bb.data.expand("${PSTAGE_DIR}/${PSTAGE_PKGPATH}", pd)
         mirror = bb.data.expand("${PSTAGE_MIRROR}/${PSTAGE_PKGPATH}/", pd)
-        srcuri = mirror + os.path.basename(stagepkg)
+        bn = os.path.basename(stagepkg)
+        srcuri = mirror + bn
         bb.data.setVar('DL_DIR', dldir, pd)
         bb.data.setVar('SRC_URI', srcuri, pd)
 
         # Try a fetch from the pstage mirror, if it fails just return and
         # we will build the package
+        bb.debug(1, "Attempting to fetch staging package %s" % (bn))
         try:
             bb.fetch.init([srcuri], pd)
             bb.fetch.go(pd, [srcuri])
-        except:
-            return
+        except Exception, ex:
+	    bb.debug(1, "Failed to fetch staging package %s: %s" % (bn, ex))
+        else:
+	    bb.debug(1, "Fetched staging package %s" % bn)
 
 PSTAGE_TASKS_COVERED = "fetch unpack munge patch configure qa_configure rig_locales compile sizecheck install deploy package populate_sysroot package_write_deb package_write_ipk package_write package_stage qa_staging"
 
@@ -229,12 +232,12 @@ python packagestage_scenefunc () {
         #
         # Install the staging package somewhere temporarily so we can extract the stamp files
         #
-        bb.mkdirhier(bb.data.expand("${WORKDIR}/tstage/${libdir_native}/opkg/info/ ", d))
+        bb.mkdirhier(bb.data.expand("${WORKDIR}/tstage/${libdir_native}/opkg/info/", d))
         cmd = bb.data.expand("${PSTAGE_PKGMANAGER} -f ${PSTAGE_MACHCONFIG} -force-depends -o ${WORKDIR}/tstage install", d)
         try:
             oe_run(d, "%s %s" % (cmd, stagepkg))
-        except RuntimeError:
-            bb.fatal("Couldn't install the staging package to a temp directory")
+        except RuntimeError, exc:
+            bb.fatal("Couldn't install the staging package to a temp directory: %s" % exc)
 
         #
         # Grab the staging lock now so that we don't have other threads try and
@@ -250,9 +253,9 @@ python packagestage_scenefunc () {
         cmd = bb.data.expand("cp -PpR ${WORKDIR}/tstage/stamps/* ${TMPDIR}/stamps/", d)
         try:
             ret = oe_run(d, cmd)
-        except RuntimeError:
+        except RuntimeError, exc:
             bb.utils.unlockfile(lf)
-            bb.fatal("Couldn't copy the staging package stamp files")
+            bb.fatal("Couldn't copy the staging package stamp files: %s" % exc)
 
         #
         # Iterate over the stamps seeing if they're valid. If we find any that
@@ -454,10 +457,13 @@ python do_package_stage () {
             pr = bb.data.getVar('PR_%s' % pkg, d, 1)
             if not pr:
                 pr = bb.data.getVar('PR', d, 1)
+            pkgv = bb.data.getVar('PKGV_%s' % pkg, d, 1)
+            if not pkgv:
+                pkgv = bb.data.getVar('PKGV', d, 1)
             if not oe.packagedata.packaged(pkg, d):
                 continue
             if bb.data.inherits_class('package_ipk', d):
-                srcname = bb.data.expand(pkgname + "_${PKGV}-" + pr + "${DISTRO_PR}" + "_" + arch + ".ipk", d)
+                srcname = bb.data.expand(pkgname + "_" + pkgv + "-" + pr + "${DISTRO_PR}" + "_" + arch + ".ipk", d)
                 srcfile = bb.data.expand("${DEPLOY_DIR_IPK}/" + arch + "/" + srcname, d)
                 if os.path.exists(srcfile):
                     destpath = ipkpath + "/" + arch + "/"

@@ -1,5 +1,5 @@
 DESCRIPTION = "SHR Feed"
-PR = "r89"
+PR = "r96"
 PV = "1.0"
 LICENSE = "GPL"
 
@@ -79,7 +79,7 @@ RDEPENDS_${PN} += "\
 		mtpaint \
 		telepathy-python \
 		intone-video \
-		ipkg-utils \
+		opkg-utils \
 		mysql \
 		fltk-chess \
 		remoko \
@@ -119,7 +119,7 @@ RDEPENDS_${PN} += "\
 		ppp \
 		bluez-hcidump \
 		kbdd \
-		kexec-tools \
+		kexec \
 		mc \
 		iotop \
 		xprop \
@@ -207,6 +207,11 @@ RDEPENDS_${PN} += "\
 		font-sun-misc \
 		font-winitzki-cyrillic \
 #		font-xfree86-type1 \
+		ttf-droid-sans \
+		ttf-droid-sans-mono \
+		ttf-droid-sans-fallback \
+		ttf-droid-sans-japanese \
+		ttf-droid-serif \
 #		msn-pecan \
 		qwo \
 		fso-apm \
@@ -285,6 +290,7 @@ RDEPENDS_${PN} += "\
 		rtmom \
 # broken	ventura \
 		emtooth \
+		emtooth2 \
 		podboy \
 		mcnavi \
 		neolight \
@@ -319,7 +325,13 @@ RDEPENDS_${PN} += "\
 		enjoy \
 		shr-theme-efenniht \
 		gwaterpas \
+		sflphone-common \
+		samba \
+		bison \
+		automake \
 "
 
 # this is only usefull on gta02 and on other devices it's trying to pull mesa-dri (not respecting DEFAULT_PROVIDER for virtual/libgl)
-RDEPENDS_${PN}_append_om-gta02 = "glamo-dri-tests"
+RDEPENDS_${PN}_append_om-gta02 = "glamo-dri-tests \
+		valacompass \
+"

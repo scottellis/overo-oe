@@ -1,4 +1,4 @@
-PR = "r7"
+PR = "r10"
 
 INHIBIT_DEFAULT_DEPS = "1"
 
@@ -6,6 +6,7 @@ INSANE_SKIP_libgcc = "True"
 INSANE_SKIP_libstdc++ = "True"
 INSANE_SKIP_nscd = "True"
 INSANE_SKIP_glibc-utils = "True"
+INSANE_SKIP_gdbserver = "True"
 
 SRC_URI = "file://SUPPORTED"
 
@@ -21,9 +22,11 @@ PROVIDES = "\
 	virtual/libintl \
 	virtual/libiconv \
 	glibc-thread-db \
-	linux-libc-headers \
+	${@base_conditional('PREFERRED_PROVIDER_linux-libc-headers', 'external-toolchain-csl', 'linux-libc-headers', '', d)} \
+	${@base_conditional('PREFERRED_PROVIDER_gdbserver', 'external-toolchain-csl', 'gdbserver', '', d)} \
 "
 
+DEPENDS = "${@base_conditional('PREFERRED_PROVIDER_linux-libc-headers', 'external-toolchain-csl', '', 'linux-libc-headers', d)}"
 RPROVIDES_glibc-dev += "libc-dev libc6-dev virtual-libc-dev"
 PACKAGES_DYNAMIC += "glibc-gconv-*"
 PACKAGES_DYNAMIC += "glibc-locale-*"
@@ -35,7 +38,8 @@ PACKAGES = "\
 	libgcc-dev \
 	libstdc++ \
 	libstdc++-dev \
-	linux-libc-headers \
+	${@base_conditional('PREFERRED_PROVIDER_linux-libc-headers', 'external-toolchain-csl', 'linux-libc-headers', '', d)} \
+	${@base_conditional('PREFERRED_PROVIDER_gdbserver', 'external-toolchain-csl', 'gdbserver', '', d)} \
 	glibc-dbg \
 	glibc \
 	catchsegv \
@@ -119,6 +123,7 @@ FILES_ldd = "${bindir}/ldd"
 FILES_nscd = "${sbindir}/nscd*"
 FILES_sln = "${base_sbindir}/sln"
 FILES_localedef = "${bindir}/localedef"
+FILES_gdbserver = "${bindir}/gdbserver"
 
 DESCRIPTION_glibc-utils = "glibc: misc utilities like iconf, local, gencat, tzselect, rpcinfo, ..."
 DESCRIPTION_glibc-extra-nss = "glibc: nis, nisplus and hesiod search services"
@@ -126,6 +131,7 @@ DESCRIPTION_ldd = "glibc: print shared library dependencies"
 DESCRIPTION_nscd = "glibc: name service cache daemon for passwd, group, and hosts"
 DESCRIPTION_sln = "glibc: create symbolic links between files"
 DESCRIPTION_localedef = "glibc: compile locale definition files"
+DESCRIPTION_gdbserver = "gdb - GNU debugger"
 
 def csl_get_main_version(d):
 	import subprocess,os,bb
@@ -161,12 +167,19 @@ def csl_get_kernel_version(d):
 				return str(maj)+'.'+str(min)+'.'+str(ver)
 		return None
 
+def csl_get_gdb_version(d):
+	import subprocess,os,bb
+	if os.path.exists(bb.data.getVar('TOOLCHAIN_PATH', d, 1)+'/bin/'+bb.data.getVar('TARGET_PREFIX', d, 1)+'gdb'):
+		return subprocess.Popen([bb.data.getVar('TOOLCHAIN_PATH', d, 1)+'/bin/'+bb.data.getVar('TARGET_PREFIX', d, 1)+'gdb', '-v'],stdout=subprocess.PIPE).communicate()[0].splitlines()[0].split()[-1]
+
 CSL_VER_MAIN := "${@csl_get_main_version(d)}"
 CSL_VER_GCC := "${@csl_get_gcc_version(d)}"
 CSL_VER_LIBC := "${@csl_get_libc_version(d)}"
 CSL_VER_KERNEL := "${@csl_get_kernel_version(d)}"
+CSL_VER_GDBSERVER := "${@csl_get_gdb_version(d)}"
 CSL_LIC_LIBC := "LGPLv2.1+"
 CSL_LIC_RLE := "${@["GPLv3 with GCC RLE", "GPLv2 with GCC RLE"][csl_get_main_version(d) <= "2007q3-51"]}"
+CSL_LIC_GDBSERVER := "${@["GPLv2+", "GPLv3+"][csl_get_gdb_version(d) >= "6.7.1"]}"
 
 PKGV = "${CSL_VER_MAIN}"
 PKGV_libgcc = "${CSL_VER_GCC}"
@@ -189,6 +202,7 @@ PKGV_ldd = "${CSL_VER_LIBC}"
 PKGV_localedef = "${CSL_VER_LIBC}"
 PKGV_libsegfault = "${CSL_VER_LIBC}"
 PKGV_linux-libc-headers = "${CSL_VER_KERNEL}"
+PKGV_gdbserver = "${CSL_VER_GDBSERVER}"
 
 LICENSE = "${CSL_LIC_LIBC}"
 LICENSE_ldd = "${CSL_LIC_LIBC}"
@@ -198,6 +212,7 @@ LICENSE_libgcc = "${CSL_LIC_RLE}"
 LICENSE_libgcc-dev = "${CSL_LIC_RLE}"
 LICENSE_libstdc++ = "${CSL_LIC_RLE}"
 LICENSE_libstdc++-dev = "${CSL_LIC_RLE}"
+LICENSE_gdbserver = "${CSL_LIC_GDBSERVER}"
 
 do_install() {
 	install -d ${D}${sysconfdir}
@@ -214,28 +229,18 @@ do_install() {
 	cp -a ${TOOLCHAIN_PATH}/${TARGET_SYS}/libc/sbin/* ${D}${base_sbindir} \
 		|| true
 	cp -a ${TOOLCHAIN_PATH}/${TARGET_SYS}/libc/usr/* ${D}/usr
+	${@base_conditional('PREFERRED_PROVIDER_linux-libc-headers', 'external-toolchain-csl', '', 'rm -rf ${D}/usr/include/linux', d)}
 	cp -a ${TOOLCHAIN_PATH}/${TARGET_SYS}/include/* ${D}/usr/include
+	${@base_conditional('PREFERRED_PROVIDER_gdbserver', 'external-toolchain-csl', '', 'rm -rf ${D}/usr/bin/gdbserver', d)}
 
-	rm -rf ${D}${bindir}/gdbserver
 	rm -rf ${D}${sysconfdir}/rpc
 	rm -rf ${D}${datadir}/zoneinfo
-}
 
-do_stage() {
-	install -d ${STAGING_INCDIR}
-	install -d ${STAGING_LIBDIR}
-	install -d ${STAGING_DIR_TARGET}${base_libdir}
+	sed -e "s# /lib# ../../lib#g" -e "s# /usr/lib# .#g" ${D}${libdir}/libc.so > ${D}${libdir}/temp
+	mv ${D}${libdir}/temp ${D}${libdir}/libc.so
 
-	cp -a ${TOOLCHAIN_PATH}/${TARGET_SYS}/libc/usr/include/* ${STAGING_INCDIR}
-	cp -a ${TOOLCHAIN_PATH}/${TARGET_SYS}/include/* ${STAGING_INCDIR}
-	cp -a ${TOOLCHAIN_PATH}/${TARGET_SYS}/libc/usr/lib/* ${STAGING_LIBDIR}
-	cp -a ${TOOLCHAIN_PATH}/${TARGET_SYS}/libc/lib/* ${STAGING_DIR_TARGET}${base_libdir}
-
-	sed -e "s# /lib# ../../lib#g" -e "s# /usr/lib# .#g" ${STAGING_LIBDIR}/libc.so > ${STAGING_LIBDIR}/temp
-	mv ${STAGING_LIBDIR}/temp ${STAGING_LIBDIR}/libc.so
-
-	sed -e "s# /lib# ../../lib#" -e "s# /usr/lib# .#g" ${STAGING_LIBDIR}/libpthread.so > ${STAGING_LIBDIR}/temp
-	mv ${STAGING_LIBDIR}/temp ${STAGING_LIBDIR}/libpthread.so
+	sed -e "s# /lib# ../../lib#" -e "s# /usr/lib# .#g" ${D}${libdir}/libpthread.so > ${D}${libdir}/temp
+	mv ${D}${libdir}/temp ${D}${libdir}/libpthread.so
 }
 
 TMP_LOCALE="/tmp/locale${libdir}/locale"
@@ -454,3 +459,5 @@ python populate_packages_prepend () {
 		bb.data.setVar('PKG_libgcc-dev', 'libgcc1-dev', d)
 	bb.build.exec_func('package_do_split_gconvs', d)
 }
+
+NATIVE_INSTALL_WORKS = "1"

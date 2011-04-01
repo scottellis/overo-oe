@@ -2,6 +2,8 @@
 
 require omap3-console-image.bb
 
+DEPENDS = task-sdk-native
+
 IMAGE_LINGUAS = "de-de fr-fr en-gb en-us pt-br es-es"
 
 ANGSTROM_EXTRA_INSTALL ?= ""
@@ -106,6 +108,10 @@ XSERVER_BASE = " \
   xset \
   xlsfonts \
   xrefresh \
+ "
+
+TOOLS_INSTALL += " \
+  task-native-sdk \
  "
 
 IMAGE_INSTALL += " \

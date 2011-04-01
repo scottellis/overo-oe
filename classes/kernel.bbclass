@@ -1,6 +1,6 @@
 inherit linux-kernel-base module_strip
 
-PROVIDES += "virtual/kernel"
+PROVIDES += "virtual/kernel virtual/kernel-${PV}"
 DEPENDS += "virtual/${TARGET_PREFIX}gcc virtual/${TARGET_PREFIX}depmod-${@get_kernelmajorversion('${PV}')} virtual/${TARGET_PREFIX}gcc${KERNEL_CCSUFFIX} update-modules bluez-dtl1-workaround"
 
 # we include gcc above, we dont need virtual/libc
@@ -18,7 +18,7 @@ python __anonymous () {
     	bb.data.setVar("DEPENDS", depends, d)
 
     image = bb.data.getVar('INITRAMFS_IMAGE', d, True)
-    if image != '' and image is not None:
+    if image:
         bb.data.setVar('INITRAMFS_TASK', '${INITRAMFS_IMAGE}:do_rootfs', d)
 
     machine_kernel_pr = bb.data.getVar('MACHINE_KERNEL_PR', d, True)
@@ -32,6 +32,7 @@ INITRAMFS_TASK ?= ""
 
 inherit kernel-arch
 
+PACKAGES_DYNAMIC += "kernel-*"
 PACKAGES_DYNAMIC += "kernel-module-*"
 PACKAGES_DYNAMIC += "kernel-image-*"
 PACKAGES_DYNAMIC += "kernel-firmware-*"
@@ -167,7 +168,7 @@ sysroot_stage_all_append() {
 	mkdir -p $kerneldir/include/asm-generic
 	cp -fR include/asm-generic/* $kerneldir/include/asm-generic/
 
-	for entry in drivers/crypto drivers/media include/generated include/linux include/net include/pcmcia include/media include/acpi include/sound include/video include/scsi include/trace include/mtd include/rdma include/drm include/xen; do
+	for entry in drivers/crypto drivers/media include/generated include/linux include/net include/pcmcia include/media include/acpi include/sound include/video include/scsi include/trace include/mtd include/rdma include/drm include/xen crypto/ocf; do
 		if [ -d $entry ]; then
 			mkdir -p $kerneldir/$entry
 			cp -fR $entry/* $kerneldir/$entry/
@@ -222,20 +223,7 @@ kernel_do_configure() {
 		done
 	fi
 }
-# XXX: Once we depend on bitbake 1.10.1 or newer this can be kernel_do_...
 do_configure[depends] += "${INITRAMFS_TASK}"
-
-do_menuconfig() {
-	export TERMWINDOWTITLE="${PN} Kernel Configuration"
-	export SHELLCMDS="make menuconfig"
-	${TERMCMDRUN}
-	if [ $? -ne 0 ]; then
-		echo "Fatal: '${TERMCMD}' not found. Check TERMCMD variable."
-		exit 1
-	fi
-}
-do_menuconfig[nostamp] = "1"
-addtask menuconfig after do_configure
 
 pkg_postinst_kernel () {
 	cd /${KERNEL_IMAGEDEST}; update-alternatives --install /${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE} ${KERNEL_IMAGETYPE} ${KERNEL_IMAGETYPE}-${KERNEL_VERSION} ${KERNEL_PRIORITY} || true
@@ -397,7 +385,12 @@ python populate_packages_prepend () {
 		return deps
 	
 	def get_dependencies(file, pattern, format):
-		file = file.replace(bb.data.getVar('PKGD', d, 1) or '', '', 1)
+		prefix = os.path.normpath(os.path.join(
+			os.path.join(bb.data.getVar('PKGD', d, 1) or ''),
+			'lib/modules',
+			bb.data.getVar('KERNEL_VERSION', d, 1)
+		)) + '/'
+		file = file.replace(prefix, '', 1)
 
 		if module_deps.has_key(file):
 			import re

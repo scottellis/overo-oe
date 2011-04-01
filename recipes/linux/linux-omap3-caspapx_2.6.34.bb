@@ -16,6 +16,7 @@ PV = "2.6.34"
 SRC_URI = "git://www.sakoman.com/git/linux-omap-2.6.git;branch=omap3-2.6.34;protocol=git \
 	   file://defconfig \
            file://mt9v032-2.6.34.patch \
+           file://mt9v032-queryctl-ordering.patch \
           "
 
 SRC_URI_append = " \

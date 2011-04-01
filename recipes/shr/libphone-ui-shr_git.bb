@@ -1,15 +1,15 @@
 DESCRIPTION = "SHR default module for the Phone UI daemon"
 SECTION = "e/apps"
 DEPENDS += " libphone-ui evas ecore edje edje-native elementary"
-SRCREV = "d0e59a3b5ef88d65a67e2c00abac9f14b2775eea"
+SRCREV = "e50e9927fac05664bf1d6b1e0d3a953484038495"
 PE = "1"
 PV = "0.0.1+gitr${SRCPV}"
-PR = "r1"
+PR = "r3"
 
 SRC_URI = "git://git.shr-project.org/repo/libphone-ui-shr.git;protocol=http;branch=master"
 S = "${WORKDIR}/git"
 
-inherit pkgconfig autotools autotools
+inherit pkgconfig autotools gettext
 
 EXTRA_OECONF = "--with-edje-cc=${STAGING_BINDIR_NATIVE}/edje_cc"
 

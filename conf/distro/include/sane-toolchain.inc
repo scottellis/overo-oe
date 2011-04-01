@@ -6,7 +6,7 @@
 
 # Base line versions, good for most things
 PREFERRED_GCC_VERSION                ?= "4.5"
-PREFERRED_BINUTILS_VERSION           ?= "2.20.1"
+PREFERRED_BINUTILS_VERSION           ?= "2.21"
 PREFERRED_UCLIBC_VERSION             ?= "git"
 PREFERRED_EGLIBC_VERSION             ?= "2.12"
 PREFERRED_GLIBC_VERSION              ?= "2.10.1"
@@ -27,8 +27,6 @@ PREFERRED_VERSION_eglibc-initial     ?= "${PREFERRED_EGLIBC_VERSION}"
 PREFERRED_GCC_VERSION_486sx          ?= "4.3.2"
 PREFERRED_GCC_VERSION_avr32          ?= "4.2.2"
 PREFERRED_GCC_VERSION_bfin           ?= "4.1.2"
-PREFERRED_GCC_VERSION_sh3            ?= "4.4.4"
-PREFERRED_GCC_VERSION_sh4            ?= "4.4.4"
 PREFERRED_GCC_VERSION_xilinx-ml403   ?= "4.1.1"
 
 # This is unrelated to the kernel version, but glibc and some userspaceapps require a recent version to build against
@@ -201,8 +199,8 @@ def compute_os_portion_of_target_triplet (d):
 		bb.note("DISTRO_FEATURES is not set abi suffix not set")
 		abi_suffix = ""
 
-	if bb.data.getVar('TOOLCHAIN_BRAND',d,1) is not None and \
-	bb.data.getVar('TOOLCHAIN_BRAND',d,1) in "csl":
+	if bb.data.getVar('TOOLCHAIN_BRAND', d, 1) is not None and \
+	"csl" in bb.data.getVar('TOOLCHAIN_BRAND', d, 1):
 		gnu_suffix = "gnu"
 
 	if libc_suffix + gnu_suffix + abi_suffix is not "":
