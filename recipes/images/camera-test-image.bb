@@ -4,7 +4,9 @@ require omap3-console-image.bb
 
 IMAGE_LINGUAS = "en-us"
 
-ANGSTROM_EXTRA_INSTALL ?= ""
+ANGSTROM_EXTRA_INSTALL ?= " \
+  opencv-samples \
+ "
 
 SPLASH ?= "psplash"
 #SPLASH ?= "exquisite exquisite-themes exquisite-theme-angstrom"
