@@ -6,12 +6,12 @@ DEPENDS = "task-base"
 
 IMAGE_EXTRA_INSTALL ?= ""
 
-AUDIO_INSTALL = " \
-  alsa-utils \
-  alsa-utils-aplay \
-  alsa-utils-amixer \
-  angstrom-zeroconf-audio \
- "
+#AUDIO_INSTALL = " \
+#  alsa-utils \
+#  alsa-utils-aplay \
+#  alsa-utils-amixer \
+#  angstrom-zeroconf-audio \
+# "
 
 BASE_INSTALL = " \
   task-base-extended \
@@ -20,8 +20,6 @@ BASE_INSTALL = " \
 FIRMWARE_INSTALL = " \
 #  linux-firmware \
   libertas-sd-firmware \
-  rt73-firmware \
-  zd1211-firmware \
  "
 
 GLES_INSTALL = " \
@@ -31,27 +29,22 @@ GLES_INSTALL = " \
 TOOLS_INSTALL = " \
   bash \
   bzip2 \
-  ckermit \
   devmem2 \
-  dhcp-client \
+#  dhcp-client \
   dosfstools \
   fbgrab \
   fbset \
   fbset-modes \
-  i2c-tools \
   ksymoops \
-  mkfs-jffs2 \
+#  mkfs-jffs2 \
   mtd-utils \
-  nano \
-  ntp ntpdate \
+#  ntp ntpdate \
   openssh-misc \
   openssh-scp \
   openssh-ssh \
-  omap3-writeprom \
+#  omap3-writeprom \
   procps \
-  socat \
   strace \
-  sudo \
   syslog-ng \
   task-proper-tools \
   u-boot-utils \
@@ -59,7 +52,7 @@ TOOLS_INSTALL = " \
 
 IMAGE_INSTALL += " \
   ${BASE_INSTALL} \
-  ${AUDIO_INSTALL} \
+#  ${AUDIO_INSTALL} \
   ${FIRMWARE_INSTALL} \
   ${GLES_INSTALL} \
   ${IMAGE_EXTRA_INSTALL} \
