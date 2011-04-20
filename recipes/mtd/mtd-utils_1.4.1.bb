@@ -1,3 +1,5 @@
+DEFAULT_PREFERENCE = "-1"
+
 require mtd-utils.inc
 
 DEPENDS += "util-linux-ng lzo2"
