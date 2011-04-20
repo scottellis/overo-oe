@@ -55,7 +55,7 @@ python populate_packages_prepend () {
 FILES_${PN} = ""
 FILES_${PN}-apps = "${bindir}/* ${datadir}/opencv/"
 FILES_${PN}-dbg += "${libdir}/.debug"
-FILES_${PN}-dev = "${includedir} ${libdir}/pkgconfig"
+FILES_${PN}-dev = "${includedir} ${libdir}/pkgconfig ${libdir}/libopencv*"
 
 ALLOW_EMPTY_${PN} = "1"
 
