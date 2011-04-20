@@ -5,8 +5,18 @@ require omap3-console-image.bb
 IMAGE_LINGUAS = "en-us"
 
 ANGSTROM_EXTRA_INSTALL ?= " \
-#  opencv-samples \
-#   task-gstreamer-ti \
+   task-sdk-native \
+   opencv-dev \
+   task-gstreamer-ti \
+   gnome-vfs-plugin-http \
+   gnome-vfs-plugin-ftp \
+   gnome-vfs-plugin-sftp \
+   ti-codec-engine \
+   ti-dmai \
+   ti-dspbios \
+   ti-dsplib \
+   ti-dsplink \
+#   ti-dvsdk-demos \
  "
 
 SPLASH ?= "psplash"
@@ -15,7 +25,7 @@ SPLASH ?= "psplash"
 APPS = " \
 #  cheese \
 #  gnome-mplayer \
-  gpe-scap \
+#  gpe-scap \
 #  libgles-omap3-x11demos \
 #  vnc \
 #  x11vnc \
