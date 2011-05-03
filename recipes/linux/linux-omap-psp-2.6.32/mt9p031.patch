@@ -2960,10 +2960,10 @@ index 0000000..0428672
 +#endif /* __VIDEO_MT9P031_REGS_H */
 diff --git git/include/media/mt9p031.h git/include/media/mt9p031.h
 new file mode 100644
-index 0000000..89c3a6b
+index 0000000..b3818c4
 --- /dev/null
 +++ git/include/media/mt9p031.h
-@@ -0,0 +1,81 @@
+@@ -0,0 +1,61 @@
 +/*
 + * mt9p031.h - Register definitions for the MT9P031 camera sensor.
 + *
@@ -3001,14 +3001,6 @@ index 0000000..89c3a6b
 +#define V4L2_MT9P031_RED_GAIN			(V4L2_CID_PRIVATE_BASE + 2)
 +#define V4L2_MT9P031_GREEN2_GAIN		(V4L2_CID_PRIVATE_BASE + 3)
 +
-+#define V4L2_MT9P031_WINDOW_POS			(V4L2_CID_PRIVATE_BASE+5)
-+#define V4L2_MT9P031_CENTER_POS			(V4L2_CID_PRIVATE_BASE+6)
-+#define V4L2_MT9P031_SET_TRIGGER		(V4L2_CID_PRIVATE_BASE+7)
-+#define V4L2_MT9P031_RESTART			(V4L2_CID_PRIVATE_BASE+8)
-+#define V4L2_MT9P031_RESERVED_30REG		(V4L2_CID_PRIVATE_BASE+9)
-+#define V4L2_MT9P031_RESET 			(V4L2_CID_PRIVATE_BASE+10)
-+#define V4L2_MT9P031_ROW_TIME 			(V4L2_CID_PRIVATE_BASE+11)
-+#define V4L2_MT9P031_PIXEL_CLOCK		(V4L2_CID_PRIVATE_BASE+12)
 +
 +enum mt9p031_image_size {
 +//	MT9P031_640X480,
@@ -3018,18 +3010,10 @@ index 0000000..89c3a6b
 +	MT9P031_NUM_IMAGE_SIZES
 +};
 +
-+union mt9p031_window_pos{
-+	struct {
-+		__u16 start_col;
-+		__u16 start_row;
-+	}win;
-+	__s32 i;
-+};
 +
 +/**
 + * struct mt9p031_platform_data - platform data values and access functions
 + * @power_set: Power state access function, zero is off, non-zero is on.
-+ * @default_regs: Default registers written after power-on or reset.
 + * @ifparm: Interface parameters access function
 + * @priv_data_set: device private data (pointer) access function
 + */
@@ -3038,10 +3022,6 @@ index 0000000..89c3a6b
 +	int (*power_set)(struct v4l2_int_device *s, enum v4l2_power power);
 +	int (*ifparm) (struct v4l2_ifparm *p);
 +	int (*priv_data_set)(void *);
-+        // callbacks for shutter control:
-+        // void (*set_trigger)(struct v4l2_int_device *s, int trigger_state);
-+        // void (*set_standby)(struct v4l2_int_device *s, int standby_state);
-+        // void (*set_oe)(struct v4l2_int_device *s, int oe_state);
 +};
 +
 +#endif /* ifndef MT9P031_H */
