@@ -520,20 +520,30 @@ index fb7e46c..974b1d9 100644
  obj-$(CONFIG_VIDEO_TPS61059)    += tps61059.o
 diff --git git/drivers/media/video/mt9p031.c git/drivers/media/video/mt9p031.c
 new file mode 100644
-index 0000000..d6c4e5f
+index 0000000..60a807b
 --- /dev/null
 +++ git/drivers/media/video/mt9p031.c
-@@ -0,0 +1,2205 @@
+@@ -0,0 +1,2108 @@
 +/*
 + * mt9p031.c - mt9p031 sensor driver
++ *
++ * Originally based on code from Procerus Technologies
++ * http://gitorious.org/procerus-vpu-main-linux-kernel
 + *
 + * Copyright (C) 2010 Procerus Technologies.
 + *
 + * Contributors:
 + * 	Evan Andersen <evana@procerus.com>
-+ *      Neil Johnson <neilj@procerus.com>
-+ *      
-+ * Leverage MT9P012.c
++ * 	Neil Johnson <neilj@procerus.com>
++ *
++ * Modifications:
++ *	Scott Ellis <scott@jumpnowtek.com>
++ *
++ * Heavily modified for a custom board with a max pixel_clock of 48 MHz due
++ * to power supplies. Only 2560x1920 images are supported. The pixel_clock 
++ * speed and image size restrict max frame rate to 7 fps. You can resize the 
++ * images down to 1280x960 or 640x480 using the OMAP ISP resizer via the
++ * V4L2 interface.
 + *
 + * This file is licensed under the terms of the GNU General Public License
 + * version 2. This program is licensed "as is" without any warranty of any
@@ -635,10 +645,6 @@ index 0000000..d6c4e5f
 +	u8 use_pll;
 +	u8 use_extclk;
 +};
-+
-+//const static unsigned short mt9p031_fps[] = { 1, 2, 3, 4, 5, 6, 7 };
-+//#define MT9P031_NUM_FPS ARRAY_SIZE(mt9p031_fps)
-+//#define MT9P031_DEF_FPS 6
 + 
 +/**
 + * struct capture_size - image capture size information
@@ -656,10 +662,7 @@ index 0000000..d6c4e5f
 + * smallest image size to largest.
 + */
 +const static struct mt9p031_capture_size mt9p031_sizes[] = {
-+//	[MT9P031_640X480] = { 640, 480, 30 },
-+//	[MT9P031_1280X960] = { 1296, 970, 10 },
 +	[MT9P031_2560X1920] = { 2560, 1920 },
-+//	[MT9P031_2592X1944]= { 2592, 1944, 5 }
 +};
 +
 +
@@ -717,68 +720,25 @@ index 0000000..d6c4e5f
 +
 +/* Exits soft standby */
 +const static struct mt9p031_reg stream_on_list[] = {
-+//	{ MT9P031_TOK_OR, REG_OUTPUT_CONTROL, OUTPUT_CTRL_CHIP_ENABLE},
 +	{ MT9P031_TOK_OR, REG_FRAME_RESTART, RESTART_FRAME | PAUSE_RESTART },
-+	/* Sensor datasheet says we need 1 ms to allow PLL lock */
 +	{ MT9P031_TOK_DELAY, 0x00, 1 },
 +	{ MT9P031_TOK_AND, REG_FRAME_RESTART, ~PAUSE_RESTART },
 +	{ MT9P031_TOK_TERM, 0, 0 }
 +};
 +
 +
-+/*
-+ * Common MT9P012 register initialization for all image sizes, pixel formats,
-+ * and frame rates
-+ */
 +#define INVERT_PIXEL_CLOCK (1 << 15)
 +const static struct mt9p031_reg mt9p031_common[] = {
 +	{ MT9P031_TOK_OR, REG_OUTPUT_CONTROL, OUTPUT_CTRL_CHIP_ENABLE },
 +	{ MT9P031_TOK_WRITE, REG_RESET, 0x01 },
-+	{ MT9P031_TOK_DELAY, 0x00, 5 }, /* Delay = 5ms, min 2400 xcks */
++	{ MT9P031_TOK_DELAY, 0x00, 5 },
 +	{ MT9P031_TOK_WRITE, REG_RESET, 0 },
 +	{ MT9P031_TOK_OR, REG_OUTPUT_CONTROL, OUTPUT_CTRL_SYNC_CHANGES},
-+/*
-+	{ MT9P031_TOK_WRITE, REG_GREEN1_GAIN, 8 },
-+	{ MT9P031_TOK_WRITE, REG_RED_GAIN, 8 },
-+	{ MT9P031_TOK_WRITE, REG_BLUE_GAIN, 8 },
-+	{ MT9P031_TOK_WRITE, REG_GREEN2_GAIN, 8 },
-+*/
 +	{ MT9P031_TOK_WRITE, REG_PIXEL_CLOCK_CONTROL, INVERT_PIXEL_CLOCK},
-+	/* Recommended values for image quality, sensor Rev 1 */
-+/*
-+	{MT9P031_TOK_WRITE, 0x70, 0x005c},
-+	{MT9P031_TOK_WRITE, 0x71, 0x5b00},
-+	{MT9P031_TOK_WRITE, 0x72, 0x5900},
-+	{MT9P031_TOK_WRITE, 0x73, 0x0200},
-+	{MT9P031_TOK_WRITE, 0x74, 0x0200},
-+	{MT9P031_TOK_WRITE, 0x75, 0x2800},
-+	{MT9P031_TOK_WRITE, 0x76, 0x3e29},
-+	{MT9P031_TOK_WRITE, 0x77, 0x3e29},
-+	{MT9P031_TOK_WRITE, 0x78, 0x583f},
-+	{MT9P031_TOK_WRITE, 0x79, 0x5b00},
-+	{MT9P031_TOK_WRITE, 0x7A, 0x5a00},
-+	{MT9P031_TOK_WRITE, 0x7B, 0x5900},
-+	{MT9P031_TOK_WRITE, 0x7C, 0x5900},
-+	{MT9P031_TOK_WRITE, 0x7E, 0x5900},
-+	{MT9P031_TOK_WRITE, 0x7F, 0x5900},
-+	{MT9P031_TOK_WRITE, 0x29, 0x0481},
-+	{MT9P031_TOK_WRITE, 0x3E, 0x0087},
-+	{MT9P031_TOK_WRITE, 0x3F, 0x0007},
-+	{MT9P031_TOK_WRITE, 0x41, 0x0003},
-+	{MT9P031_TOK_WRITE, 0x48, 0x0018},
-+	{MT9P031_TOK_WRITE, 0x5F, 0x1c16},
-+	{MT9P031_TOK_WRITE, 0x57, 0x0007},
-+*/
-+	/* update all at once */
 +	{ MT9P031_TOK_AND, REG_OUTPUT_CONTROL, ~OUTPUT_CTRL_SYNC_CHANGES },
 +	{ MT9P031_TOK_TERM, 0, 0 }
 +};
 +
-+/**
-+ * struct vcontrol - Video controls
-+ * @v4l2_queryctrl: V4L2 VIDIOC_QUERYCTRL ioctl structure
-+ * @current_value: current value of this control
-+ */
 +static struct v4l2_queryctrl mt9p031_ctrl[] = {
 +	{
 +		.id = V4L2_CID_EXPOSURE,
@@ -842,10 +802,6 @@ index 0000000..d6c4e5f
 + * @data_length: length of data to be read
 + * @reg: register address / offset
 + * @val: stores the value that gets read
-+ *
-+ * Read a value from a register in an mt9p031 sensor device.
-+ * The value is returned in 'val'.
-+ * Returns zero if successful, or non-zero otherwise.
 + */
 +static int mt9p031_read_reg(struct i2c_client *client, u16 reg, u16 *val)
 +{
@@ -865,9 +821,6 @@ index 0000000..d6c4e5f
 + * @data_length: length of data to be read
 + * @reg: register address / offset
 + * @val: value to be written to specified register
-+ *
-+ * Write a value to a register in an mt9p031 sensor device.
-+ * Returns zero if successful, or non-zero otherwise.
 + */
 +static int mt9p031_write_reg(struct i2c_client *client, u16 reg, u16 val)
 +{
@@ -941,9 +894,6 @@ index 0000000..d6c4e5f
 + * mt9p031_write_regs - Initializes a list of MT9P031 registers
 + * @client: i2c driver client structure
 + * @reglist: list of registers to be written
-+ *
-+ * Initializes a list of MT9P031 registers. The list of registers is
-+ * terminated by MT9P031_TOK_TERM.
 + */
 +static int mt9p031_write_regs(struct i2c_client *client,
 +			      const struct mt9p031_reg reglist[])
@@ -983,32 +933,29 @@ index 0000000..d6c4e5f
 +    char *name;
 +    int offset;
 +} _reg_list[] = {
-+   _REG(REG_CHIP_VERSION),
-+   _REG(REG_ROW_START),
-+   _REG(REG_COLUMN_START),
-+   _REG(REG_ROW_HEIGHT),
-+   _REG(REG_COLUMN_WIDTH),
-+   _REG(REG_HORIZONTAL_BLANK),
-+   _REG(REG_VERTICAL_BLANK),
-+   _REG(REG_OUTPUT_CONTROL),
-+   _REG(REG_SHUTTER_WIDTH_UPPER),
-+   _REG(REG_SHUTTER_WIDTH_LOWER),
-+   _REG(REG_PIXEL_CLOCK_CONTROL),
-+   _REG(REG_FRAME_RESTART),
-+   _REG(REG_SHUTTER_DELAY),
++  _REG(REG_CHIP_VERSION),
++  _REG(REG_ROW_START),
++  _REG(REG_COLUMN_START),
++  _REG(REG_ROW_HEIGHT),
++  _REG(REG_COLUMN_WIDTH),
++  _REG(REG_HORIZONTAL_BLANK),
++  _REG(REG_VERTICAL_BLANK),
++  _REG(REG_OUTPUT_CONTROL),
++  _REG(REG_SHUTTER_WIDTH_UPPER),
++  _REG(REG_SHUTTER_WIDTH_LOWER),
++  _REG(REG_PIXEL_CLOCK_CONTROL),
++  _REG(REG_FRAME_RESTART),
++  _REG(REG_SHUTTER_DELAY),
 +  _REG(REG_RESET),
 +  _REG(REG_READ_MODE1),
 +  _REG(REG_READ_MODE2),
 +  _REG(REG_ROW_ADDRESS_MODE),
 +  _REG(REG_COL_ADDRESS_MODE),
-+//! For Mt9P031 PLL settings:
 +  _REG(REG_PLL_CONTROL),
 +  _REG(REG_PLL_CONFIG1),
 +  _REG(REG_PLL_CONFIG2),
 +
 +  _REG(REG_CHIP_ENABLE_SYNC),
-+
-+// Undocumented registers, get back to these later
 +
 +  _REG(REG_RESERVED_27_REG),
 +  _REG(REG_GREEN1_GAIN),
@@ -1030,7 +977,6 @@ index 0000000..d6c4e5f
 +  _REG(REG_RED_OFFSET),
 +  _REG(REG_BLUE_OFFSET),
 +
-+// Test pattern control
 +  _REG(REG_TEST_PATTERN_CONTROL),
 +  _REG(REG_TEST_PATTERN_GREEN),
 +  _REG(REG_TEST_PATTERN_RED),
@@ -1133,7 +1079,6 @@ index 0000000..d6c4e5f
 +	if (err)
 +		return err;
 +
-+	// why this assignment?
 +	sensor->pixclk = sensor->xclk_current;
 +
 +	return 0;
@@ -1793,35 +1738,20 @@ index 0000000..d6c4e5f
 +	int remainder;
 +	int SD;
 +
-+	/*
-+	dev_dbg(&client->dev, "start sensor->exposure = %lu\n",
-+		sensor->exposure);
-+
-+	dev_dbg(&client->dev, "v_blank = %d\n", sensor->v_blank);
-+	dev_dbg(&client->dev, "h_blank = %d\n", sensor->h_blank);
-+	dev_dbg(&client->dev, "row_bin = %d\n", sensor->row_bin);
-+	*/
-+
 +	exp_clk = exp_time * (sensor->pixclk / 1000000);
-+	/* dev_dbg(&client->dev, "exp_clk = %u\n", exp_clk); */
 +
 +	out_w = mt9p031_output_width(sensor);
 +	out_h = mt9p031_output_height(sensor);
-+	/* dev_dbg(&client->dev, "out_w = %u  out_h = %u\n", out_w, out_h); */
 +
 +	max_shutter_width = out_h + sensor->v_blank - 2;
-+	/* dev_dbg(&client->dev, "max_shutter_width = %u\n", max_shutter_width); */
 +
 +	sensor->row_clk = out_w + (2 * sensor->h_blank);
-+	/* dev_dbg(&client->dev, "sensor->row_clk = %u\n", sensor->row_clk); */
 +
 +	shutter_overhead = mt9p031_shutter_overhead(sensor->row_bin, 
 +							shutter_delay);
-+	/* dev_dbg(&client->dev, "shutter_overhead = %u\n", shutter_overhead); */
 +	shutter_overhead *= 2;
 +
 +	shutter_width = (exp_clk + shutter_overhead) / sensor->row_clk;
-+	/* dev_dbg(&client->dev, "raw shutter_width = %u\n", shutter_width); */
 +
 +	if (shutter_width > max_shutter_width) {
 +		shutter_width = max_shutter_width;		
@@ -1833,8 +1763,6 @@ index 0000000..d6c4e5f
 +		/* using shutter_delay to compensate for SW roundoff error */
 +		remainder = exp_clk - (shutter_width * sensor->row_clk) 
 +				+ shutter_overhead;
-+
-+		/* dev_dbg(&client->dev, "remainder = %d\n", remainder); */
 +
 +		if (remainder) {
 +			SD = (sensor->row_clk - remainder) / 2;
@@ -1885,12 +1813,6 @@ index 0000000..d6c4e5f
 +/**
 + * mt9p031_configure - Configure the mt9p031 for the specified image mode
 + * @s: pointer to standard V4L2 device structure
-+ *
-+ * Configure the mt9p031 for a specified image size, pixel format, and frame
-+ * period.  xclk is the frequency (in Hz) of the xclk input to the mt9p031.
-+ * fper is the frame period (in seconds) expressed as a fraction.
-+ * Returns zero if successful, or non-zero otherwise.
-+ * The actual frame period is returned in fper.
 + */
 +static int mt9p031_configure(struct v4l2_int_device *s)
 +{
@@ -1901,12 +1823,10 @@ index 0000000..d6c4e5f
 +
 +	dev_dbg(&client->dev, "mt9p031_configure\n");
 +
-+	/* common register initialization */
 +	err = mt9p031_write_regs(client, mt9p031_common);
 +	if (err)
 +		return err;
 +
-+	/* configure image size and pixel format */
 +	err = mt9p031_set_window_size(sensor, sensor->row_size, 
 +					sensor->col_size);
 +	if (err)
@@ -1916,7 +1836,6 @@ index 0000000..d6c4e5f
 +					sensor->col_start);
 +	if (err)
 +		return err;
-+
 +
 +	err = mt9p031_set_binning(sensor);
 +	if (err)
@@ -1940,7 +1859,6 @@ index 0000000..d6c4e5f
 +			return err;
 +	}
 +
-+	/* configure streaming ON */
 +	err = mt9p031_write_regs(client, stream_on_list);
 +
 +	if (!err) {
@@ -1956,16 +1874,6 @@ index 0000000..d6c4e5f
 +/**
 + * mt9p031_detect - Detect if an mt9p031 is present, and if so which revision
 + * @client: pointer to the i2c client driver structure
-+ *
-+ * Detect if an mt9p031 is present, and if so which revision.
-+ * A device is considered to be detected if the manufacturer ID (MIDH and MIDL)
-+ * and the product ID (PID) registers match the expected values.
-+ * Any value of the version ID (VER) register is accepted.
-+ * Here are the version numbers we know about:
-+ *	0x48 --> mt9p012 Revision 1 or mt9p012 Revision 2
-+ *	0x49 --> mt9p012 Revision 3
-+ * Returns a negative error number if no device is detected, or the
-+ * non-negative value of the version ID register if a device is detected.
 + */
 +static int mt9p031_detect(struct i2c_client *client)
 +{
@@ -2578,8 +2486,7 @@ index 0000000..d6c4e5f
 + * mt9p031_probe - sensor driver i2c probe handler
 + * @client: i2c driver client device structure
 + *
-+ * Register sensor as an i2c client device and V4L2
-+ * device.
++ * Register sensor as an i2c client device and V4L2 device.
 + */
 +static int mt9p031_probe(struct i2c_client *client,
 +			 const struct i2c_device_id *id)
@@ -2613,9 +2520,7 @@ index 0000000..d6c4e5f
 +	sensor->pdata->power_set = pdata->power_set;
 +	sensor->pdata->priv_data_set = pdata->priv_data_set;
 +
-+	/* Set sensor default values */
 +	sensor->xclk_current = 0;
-+	
 +	sensor->pll.use_pll = 0;
 +	sensor->pll.use_extclk = 1;
 +	sensor->output_size = MT9P031_2560X1920;
@@ -2672,8 +2577,8 @@ index 0000000..d6c4e5f
 + * mt9p031_remove - sensor driver i2c remove handler
 + * @client: i2c driver client device structure
 + *
-+ * Unregister sensor as an i2c client device and V4L2
-+ * device.  Complement of mt9p031_probe().
++ * Unregister sensor as an i2c client device and V4L2 device.  
++ * Complement of mt9p031_probe().
 + */
 +static int mt9p031_remove(struct i2c_client *client)
 +{
@@ -2706,8 +2611,7 @@ index 0000000..d6c4e5f
 +/**
 + * mt9p031sensor_init - sensor driver module_init handler
 + *
-+ * Registers driver as an i2c client driver.  Returns 0 on success,
-+ * error code otherwise.
++ * Registers driver as an i2c client driver.
 + */
 +static int __init mt9p031_init(void)
 +{
@@ -2719,7 +2623,6 @@ index 0000000..d6c4e5f
 + * mt9p031sensor_cleanup - sensor driver module_exit handler
 + *
 + * Unregisters/deletes driver as an i2c client driver.
-+ * Complement of mt9p031sensor_init.
 + */
 +static void __exit mt9p031_cleanup(void)
 +{
@@ -2823,31 +2726,34 @@ index 0000000..0428672
 +#endif /* __VIDEO_MT9P031_REGS_H */
 diff --git git/include/media/mt9p031.h git/include/media/mt9p031.h
 new file mode 100644
-index 0000000..b3818c4
+index 0000000..88c8808
 --- /dev/null
 +++ git/include/media/mt9p031.h
-@@ -0,0 +1,61 @@
+@@ -0,0 +1,64 @@
 +/*
 + * mt9p031.h - Register definitions for the MT9P031 camera sensor.
++ *
++  * Originally based on code from Procerus Technologies
++ * http://gitorious.org/procerus-vpu-main-linux-kernel
 + *
 + * Copyright (C) 2010 Procerus Technologies.
 + *
 + * Contributors:
 + * 	Evan Andersen <evana@procerus.com>
++ * 	Neil Johnson <neilj@procerus.com>
 + *
-+ * This package is free software; you can redistribute it and/or modify
-+ * it under the terms of the GNU General Public License version 2 as
-+ * published by the Free Software Foundation.
++ * Modifications:
++ *	Scott Ellis <scott@jumpnowtek.com>
 + *
-+ * This program is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ * GNU General Public License for more details.
++ * Heavily modified for a custom board with a max pixel_clock of 48 MHz due
++ * to power supplies. Only 2560x1920 images are supported. The pixel_clock 
++ * speed and image size restrict max frame rate to 7 fps. You can resize the 
++ * images down to 1280x960 or 640x480 using the OMAP ISP resizer via the
++ * V4L2 interface.
 + *
-+ * You should have received a copy of the GNU General Public License
-+ * along with this program; if not, write to the Free Software
-+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-+ *
++ * This file is licensed under the terms of the GNU General Public License
++ * version 2. This program is licensed "as is" without any warranty of any
++ * kind, whether express or implied.
 + */
 +
 +#ifndef MT9P031_H
