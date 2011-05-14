@@ -236,10 +236,10 @@ index 2677b41..6c4dc1b 100644
  		}
 diff --git git/arch/arm/mach-omap2/board-overo-camera.c git/arch/arm/mach-omap2/board-overo-camera.c
 new file mode 100644
-index 0000000..f749ba6
+index 0000000..b8acd04
 --- /dev/null
 +++ git/arch/arm/mach-omap2/board-overo-camera.c
-@@ -0,0 +1,210 @@
+@@ -0,0 +1,211 @@
 +/*
 + * linux/arch/arm/mach-omap2/board-overo-camera.c
 + *
@@ -274,7 +274,6 @@ index 0000000..f749ba6
 +#include <../drivers/media/video/omap34xxcam.h>
 +#include <../drivers/media/video/isp/ispreg.h>
 +
-+#include "mux.h"
 +
 +#define CAM_USE_XCLKA		0
 +
@@ -380,7 +379,6 @@ index 0000000..f749ba6
 +	return 0;
 +}
 +
-+
 +struct mt9p031_platform_data overo_mt9p031_platform_data = {
 +	.master		= "omap34xxcam",
 +	.power_set	= mt9p031_power_set,
@@ -398,13 +396,15 @@ index 0000000..f749ba6
 +
 +	gpio_direction_output(CAM_RESET_GPIO, 0);
 +
-+	printk(KERN_INFO "overo_mt9p031: driver registration complete\n");
++	dev_info(&pdev->dev, "overo_mt9p031: driver registration complete\n");
 +
 +	return 0;
 +}
 +
 +static int overo_cam_remove(struct platform_device *pdev)
 +{
++	dev_info(&pdev->dev, "overo_cam_remove\n");
++
 +	gpio_free(CAM_RESET_GPIO);
 +
 +	return 0;
@@ -448,19 +448,29 @@ index 0000000..f749ba6
 +}
 +late_initcall(overo_mt9p031_init);
 +
++
 +#endif
 +
 diff --git git/arch/arm/mach-omap2/board-overo.c git/arch/arm/mach-omap2/board-overo.c
-index 2595f81..81404c5 100644
+index 2595f81..da5568c 100644
 --- git/arch/arm/mach-omap2/board-overo.c
 +++ git/arch/arm/mach-omap2/board-overo.c
-@@ -603,12 +603,31 @@ static struct i2c_board_info __initdata overo_i2c_boardinfo[] = {
+@@ -59,6 +59,7 @@
+ #include "pm.h"
+ #include "omap3-opp.h"
+ 
++
+ #define OVERO_GPIO_BT_XGATE	15
+ #define OVERO_GPIO_W2W_NRESET	16
+ #define OVERO_GPIO_PENDOWN	114
+@@ -603,12 +604,45 @@ static struct i2c_board_info __initdata overo_i2c_boardinfo[] = {
  	},
  };
  
 +#if defined(CONFIG_VIDEO_MT9P031) || defined(CONFIG_VIDEO_MT9P031_MODULE)
 +#define MT9P031_I2C_ADDR		0x5D
 +#include <media/mt9p031.h>
++
 +extern struct mt9p031_platform_data overo_mt9p031_platform_data;
 +
 +static struct i2c_board_info __initdata overo_i2c_mt9p031_info[] = {
@@ -469,6 +479,19 @@ index 2595f81..81404c5 100644
 +		.platform_data = &overo_mt9p031_platform_data,
 +	},
 +};
++
++static struct platform_device overo_cam_device = {
++	.name		= "overo_cam",
++	.id		= -1,
++};
++
++int overo_cam_init(void)
++{
++	return platform_device_register(&overo_cam_device);
++}
++
++#else
++static inline int overo_cam_init(void) { return 0; }
 +#endif
 +
 +
@@ -487,6 +510,14 @@ index 2595f81..81404c5 100644
  	return 0;
  }
  
+@@ -689,6 +723,7 @@ static void __init overo_init(void)
+ 	overo_spi_init();
+ 	overo_init_smsc911x();
+ 	overo_display_init();
++	overo_cam_init();
+ 
+ 	/* Ensure SDRC pins are mux'd for self-refresh */
+ 	omap_mux_init_signal("sdrc_cke0", OMAP_PIN_OUTPUT);
 diff --git git/drivers/media/video/Kconfig git/drivers/media/video/Kconfig
 index 4c1fb0f..0f9b660 100644
 --- git/drivers/media/video/Kconfig
@@ -520,7 +551,7 @@ index fb7e46c..974b1d9 100644
  obj-$(CONFIG_VIDEO_TPS61059)    += tps61059.o
 diff --git git/drivers/media/video/mt9p031.c git/drivers/media/video/mt9p031.c
 new file mode 100644
-index 0000000..60a807b
+index 0000000..2c56d90
 --- /dev/null
 +++ git/drivers/media/video/mt9p031.c
 @@ -0,0 +1,2108 @@
@@ -2495,7 +2526,7 @@ index 0000000..60a807b
 +	struct mt9p031_platform_data *pdata;
 +	int err;
 +
-+	//dev_info(&client->dev, "mt9p031_i2c_probe()\n");
++	dev_info(&client->dev, "mt9p031_i2c_probe()\n");
 +	
 +	if (i2c_get_clientdata(client))
 +		return -EBUSY;
