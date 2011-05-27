@@ -518,6 +518,33 @@ index 2595f81..da5568c 100644
  
  	/* Ensure SDRC pins are mux'd for self-refresh */
  	omap_mux_init_signal("sdrc_cke0", OMAP_PIN_OUTPUT);
+diff --git git/arch/arm/plat-omap/include/plat/isp_user.h git/arch/arm/plat-omap/include/plat/isp_user.h
+index 4be4074..76f9ad3 100644
+--- git/arch/arm/plat-omap/include/plat/isp_user.h
++++ git/arch/arm/plat-omap/include/plat/isp_user.h
+@@ -192,14 +192,14 @@ struct isp_hist_config {
+ 	__u16 wb_gain_B;	/* White Balance Field-to-Pattern Assignments */
+ 	__u16 wb_gain_BG;	/* White Balance Field-to-Pattern Assignments */
+ 	__u8 num_regions;		/* number of regions to be configured */
+-	__u16 reg0_hor;		/* Region 0 size and position */
+-	__u16 reg0_ver;		/* Region 0 size and position */
+-	__u16 reg1_hor;		/* Region 1 size and position */
+-	__u16 reg1_ver;		/* Region 1 size and position */
+-	__u16 reg2_hor;		/* Region 2 size and position */
+-	__u16 reg2_ver;		/* Region 2 size and position */
+-	__u16 reg3_hor;		/* Region 3 size and position */
+-	__u16 reg3_ver;		/* Region 3 size and position */
++	__u32 reg0_hor;		/* Region 0 size and position */
++	__u32 reg0_ver;		/* Region 0 size and position */
++	__u32 reg1_hor;		/* Region 1 size and position */
++	__u32 reg1_ver;		/* Region 1 size and position */
++	__u32 reg2_hor;		/* Region 2 size and position */
++	__u32 reg2_ver;		/* Region 2 size and position */
++	__u32 reg3_hor;		/* Region 3 size and position */
++	__u32 reg3_ver;		/* Region 3 size and position */
+ };
+ 
+ struct isp_hist_data {
 diff --git git/drivers/media/video/Kconfig git/drivers/media/video/Kconfig
 index 4c1fb0f..0f9b660 100644
 --- git/drivers/media/video/Kconfig
@@ -549,9 +576,145 @@ index fb7e46c..974b1d9 100644
  obj-$(CONFIG_VIDEO_MT9T112)	+= mt9t112.o
  obj-$(CONFIG_VIDEO_DW9710)	+= dw9710.o
  obj-$(CONFIG_VIDEO_TPS61059)    += tps61059.o
+diff --git git/drivers/media/video/isp/isphist.c git/drivers/media/video/isp/isphist.c
+index d4ad266..a4c63e5 100644
+--- git/drivers/media/video/isp/isphist.c
++++ git/drivers/media/video/isp/isphist.c
+@@ -128,8 +128,6 @@ static void isp_hist_update_regs(struct isp_hist_device *isp_hist)
+ 		       ISPHIST_R3_VERT);
+ 	isp_reg_writel(isp_hist->dev, isp_hist->regs.hist_addr,
+ 		       OMAP3_ISP_IOMEM_HIST, ISPHIST_ADDR);
+-	isp_reg_writel(isp_hist->dev, isp_hist->regs.hist_data,
+-		       OMAP3_ISP_IOMEM_HIST, ISPHIST_DATA);
+ 	isp_reg_writel(isp_hist->dev, isp_hist->regs.hist_radd,
+ 		       OMAP3_ISP_IOMEM_HIST, ISPHIST_RADD);
+ 	isp_reg_writel(isp_hist->dev, isp_hist->regs.hist_radd_off,
+@@ -196,11 +194,8 @@ static int isp_hist_reset_mem(struct isp_hist_device *isp_hist)
+ static int isp_hist_set_params(struct isp_hist_device *isp_hist,
+ 			       struct isp_hist_config *user_cfg)
+ {
+-
+-	int reg_num = 0;
+ 	int bit_shift = 0;
+ 
+-
+ 	if (isp_hist_busy(isp_hist))
+ 		return -EINVAL;
+ 
+@@ -234,7 +229,6 @@ static int isp_hist_set_params(struct isp_hist_device *isp_hist,
+ 				"hist: Offset should be in 32 byte boundary\n");
+ 			return -EINVAL;
+ 		}
+-
+ 	}
+ 
+ 	isp_hist_reset_mem(isp_hist);
+@@ -255,15 +249,33 @@ static int isp_hist_set_params(struct isp_hist_device *isp_hist,
+ 	}
+ 
+ 	/* Regions size and position */
++	if (user_cfg->num_regions < 1 || user_cfg->num_regions > MAX_REGIONS) {
++		dev_err(isp_hist->dev, "hist: Invalid num regions: %d\n",
++			user_cfg->num_regions);
++		return -EINVAL;
++	}
+ 
+-	if (user_cfg->num_regions > MAX_REGIONS)
++	if (user_cfg->hist_bins > BINS_256) {
++		dev_err(isp_hist->dev, "hist: Invalid Bins Number: %d\n",
++			user_cfg->hist_bins);
+ 		return -EINVAL;
++	}
++
++	if (((user_cfg->hist_bins == BINS_256) && (user_cfg->num_regions > 1))
++		|| ((user_cfg->hist_bins == BINS_128) 
++			&& (user_cfg->num_regions > 2))) {
++		dev_err(isp_hist->dev, 
++			"hist: Invalid num regions for num bins: %d\n",
++		       user_cfg->hist_bins);
++		return -EINVAL;
++	}
++
++	WRITE_NUM_BINS(isp_hist->regs.cnt, user_cfg->hist_bins);
+ 
+ 	if (likely((user_cfg->reg0_hor & ISPHIST_REGHORIZ_HEND_MASK) -
+ 		   ((user_cfg->reg0_hor & ISPHIST_REGHORIZ_HSTART_MASK) >>
+ 		    ISPHIST_REGHORIZ_HSTART_SHIFT))) {
+ 		WRITE_REG_HORIZ(isp_hist->regs.r0_h, user_cfg->reg0_hor);
+-		reg_num++;
+ 	} else {
+ 		dev_err(isp_hist->dev, "hist: Invalid Region parameters\n");
+ 		return -EINVAL;
+@@ -278,7 +290,7 @@ static int isp_hist_set_params(struct isp_hist_device *isp_hist,
+ 		return -EINVAL;
+ 	}
+ 
+-	if (user_cfg->num_regions >= 1) {
++	if (user_cfg->num_regions > 1) {
+ 		if (likely((user_cfg->reg1_hor & ISPHIST_REGHORIZ_HEND_MASK) -
+ 			   ((user_cfg->reg1_hor &
+ 			     ISPHIST_REGHORIZ_HSTART_MASK) >>
+@@ -302,9 +314,12 @@ static int isp_hist_set_params(struct isp_hist_device *isp_hist,
+ 				"hist: Invalid Region parameters\n");
+ 			return -EINVAL;
+ 		}
++	} else {
++		WRITE_REG_HORIZ(isp_hist->regs.r1_h, 0);
++		WRITE_REG_VERT(isp_hist->regs.r1_v, 0);
+ 	}
+ 
+-	if (user_cfg->num_regions >= 2) {
++	if (user_cfg->num_regions > 2) {
+ 		if (likely((user_cfg->reg2_hor & ISPHIST_REGHORIZ_HEND_MASK) -
+ 			   ((user_cfg->reg2_hor &
+ 			     ISPHIST_REGHORIZ_HSTART_MASK) >>
+@@ -328,9 +343,12 @@ static int isp_hist_set_params(struct isp_hist_device *isp_hist,
+ 				"hist: Invalid Region parameters\n");
+ 			return -EINVAL;
+ 		}
++	} else {
++		WRITE_REG_HORIZ(isp_hist->regs.r2_h, 0);
++		WRITE_REG_VERT(isp_hist->regs.r2_v, 0);
+ 	}
+ 
+-	if (user_cfg->num_regions >= 3) {
++	if (user_cfg->num_regions > 3) {
+ 		if (likely((user_cfg->reg3_hor & ISPHIST_REGHORIZ_HEND_MASK) -
+ 			   ((user_cfg->reg3_hor &
+ 			     ISPHIST_REGHORIZ_HSTART_MASK) >>
+@@ -354,18 +372,9 @@ static int isp_hist_set_params(struct isp_hist_device *isp_hist,
+ 				"hist: Invalid Region parameters\n");
+ 			return -EINVAL;
+ 		}
+-	}
+-	reg_num = user_cfg->num_regions;
+-	if (unlikely(((user_cfg->hist_bins > BINS_256) &&
+-		      (user_cfg->hist_bins != BINS_32)) ||
+-		     ((user_cfg->hist_bins == BINS_256) &&
+-		      reg_num != 0) || ((user_cfg->hist_bins ==
+-					 BINS_128) && reg_num >= 2))) {
+-		dev_err(isp_hist->dev, "hist: Invalid Bins Number: %d\n",
+-		       user_cfg->hist_bins);
+-		return -EINVAL;
+ 	} else {
+-		WRITE_NUM_BINS(isp_hist->regs.cnt, user_cfg->hist_bins);
++		WRITE_REG_HORIZ(isp_hist->regs.r3_h, 0);
++		WRITE_REG_VERT(isp_hist->regs.r3_v, 0);
+ 	}
+ 
+ 	if (user_cfg->input_bit_width > MAX_BIT_WIDTH ||
+@@ -387,8 +396,6 @@ static int isp_hist_set_params(struct isp_hist_device *isp_hist,
+ 		case BINS_32:
+ 			bit_shift = user_cfg->input_bit_width - 5;
+ 			break;
+-		default:
+-			return -EINVAL;
+ 		}
+ 		WRITE_BIT_SHIFT(isp_hist->regs.cnt, bit_shift);
+ 	}
 diff --git git/drivers/media/video/mt9p031.c git/drivers/media/video/mt9p031.c
 new file mode 100644
-index 0000000..2c56d90
+index 0000000..f7b7026
 --- /dev/null
 +++ git/drivers/media/video/mt9p031.c
 @@ -0,0 +1,2108 @@
@@ -819,7 +982,7 @@ index 0000000..2c56d90
 +	{
 +		.id = V4L2_MT9P031_GREEN2_GAIN,
 +		.type = V4L2_CTRL_TYPE_INTEGER,
-+		.name = "Green1 Gain",
++		.name = "Green2 Gain",
 +		.minimum = 1,
 +		.maximum = 161,
 +		.step = 1,
@@ -1482,7 +1645,7 @@ index 0000000..2c56d90
 +	ret = mt9p031_write_reg(client, REG_GREEN2_GAIN, reg_val);
 +
 +	if (!ret)
-+		sensor->green1_gain = val;
++		sensor->green2_gain = val;
 +	else
 +		dev_warn(&client->dev, "green2 gain failed!\n");
 +
