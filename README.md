@@ -38,9 +38,18 @@ Server on the Overo
 	gst-launch -v v4l2src ! video/x-raw-yuv,framerate=7/1,format=\(fourcc\)UYVY,width=640,height=480 ! ffmpegcolorspace ! TIVidenc1 codecName=h264enc engineName=codecServer ! rtph264pay pt=96 ! udpsink host=192.168.10.4 port=4000
 
 
-You can use the gstreamer smoke encoder if you do not have the dsplink installed.
+I added a mem=99M@0x80000000 kernel arg to u-boot. You can add an additional mem= arg if
+you want to take advantage of more of the memory for Linux. I think the default loadmodules.sh
+for the DSP cmem stuff only uses 16M starting at 0x86300000. The loadmodules.sh script
+can be found here on the gumstix
 
-Client
+	/usr/share/ti/gst/omap3530/loadmodules.sh
+
+
+You can use the gstreamer smoke encoder if you do not have the dsplink installed. Performance
+is not as good, but it works. You can start these two commands in any order.
+
+Client on workstation
 
 	gst-launch udpsrc port=4000 ! smokedec ! autovideosink
 
@@ -50,10 +59,13 @@ Server on the Overo
 
 
 There are a several utility programs in my github account to help with testing the
-mt9p031 camera.
+mt9p031 camera. They all have READMEs and are fairly simple testing apps.
 
-https://github.com/scottellis/snap.git
-https://github.com/scottellis/aewbctl.git
-https://github.com/scottellis/camctl.git
-https://github.com/scottellis/snapx.git
+	https://github.com/scottellis/snap.git
+
+	https://github.com/scottellis/aewbctl.git
+
+	https://github.com/scottellis/camctl.git
+
+	https://github.com/scottellis/snapx.git
 
