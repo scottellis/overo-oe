@@ -7,7 +7,7 @@ You can pull this tree into your existing overo-oe repository this way.
 
 	cd ${OVEROTOP}/org.openembedded.dev
 	git remote add -f jumpnow git://github.com/scottellis/overo-oe.git
-	git checkout -b 2.6.32-psp jumpnow/2.6.32-psp
+	git checkout -b 2.6.32-psp-dsp jumpnow/2.6.32-psp-dsp
 	git branch -a
 	* 2.6.32-psp-dsp
 	org.openembedded.dev
@@ -38,16 +38,24 @@ Server on the Overo
 	gst-launch -v v4l2src ! video/x-raw-yuv,framerate=7/1,format=\(fourcc\)UYVY,width=640,height=480 ! ffmpegcolorspace ! TIVidenc1 codecName=h264enc engineName=codecServer ! rtph264pay pt=96 ! udpsink host=192.168.10.4 port=4000
 
 
-I added a mem=99M@0x80000000 kernel arg to u-boot. You can add an additional mem= arg if
-you want to take advantage of more of the memory for Linux. I think the default loadmodules.sh
-for the DSP cmem stuff only uses 16M starting at 0x86300000. The loadmodules.sh script
-can be found here on the gumstix
+Obviously you need a Gumstix board with network connectivity for this. I have only been using
+Gumstix Tobi boards.
+
+You need to add a mem=99M@0x80000000 kernel arg to u-boot. You can add an additional mem= arg if
+you want to take advantage of more of the memory for Linux. For general camera testing that is not
+necessary. I believe the default loadmodules.sh for the DSP cmem stuff only requires 16M starting 
+at 0x86300000. For example when testing with an Overo Tide I sometimes add an additional 
+mem=384M@0x88000000. For the other Overo boards the additional mem arg would be mem=128M@0x88000000.
+
+The loadmodules.sh script can be found here on the gumstix
 
 	/usr/share/ti/gst/omap3530/loadmodules.sh
 
 
 You can use the gstreamer smoke encoder if you do not have the dsplink installed. Performance
-is not as good, but it works. You can start these two commands in any order.
+is not as good, but it works. 
+
+You can start these two commands in any order.
 
 Client on workstation
 
@@ -59,13 +67,10 @@ Server on the Overo
 
 
 There are a several utility programs in my github account to help with testing the
-mt9p031 camera. They all have READMEs and are fairly simple testing apps.
+mt9p031 camera. They all have READMEs and are fairly simple example apps.
 
 	https://github.com/scottellis/snap.git
-
 	https://github.com/scottellis/aewbctl.git
-
 	https://github.com/scottellis/camctl.git
-
 	https://github.com/scottellis/snapx.git
 
