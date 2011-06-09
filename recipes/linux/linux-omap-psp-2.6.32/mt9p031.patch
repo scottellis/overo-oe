@@ -716,10 +716,10 @@ index d4ad266..a4c63e5 100644
  	}
 diff --git git/drivers/media/video/mt9p031.c git/drivers/media/video/mt9p031.c
 new file mode 100644
-index 0000000..308ac6b
+index 0000000..7b7650d
 --- /dev/null
 +++ git/drivers/media/video/mt9p031.c
-@@ -0,0 +1,1948 @@
+@@ -0,0 +1,1865 @@
 +/*
 + * mt9p031.c - mt9p031 sensor driver
 + *
@@ -832,19 +832,22 @@ index 0000000..308ac6b
 + * struct capture_size - image capture size information
 + * @width: image width in pixels
 + * @height: image height in pixels
-+ * @max_fps: max frame rate at a given pixclk
++ * @max_fps_at_96mhz: max frame rate for pixclk
 + */
 +struct mt9p031_capture_size {
-+	unsigned long width;
-+	unsigned long height;
++	unsigned int width;
++	unsigned int height;
++	unsigned int max_fps_at_96mhz;
 +};
 +
 +/*
-+ * Array of image sizes supported by MT9P031.  These must be ordered from
-+ * smallest image size to largest.
++ * Image sizes based on skip mode of 0, 1 or 3
 + */
 +const static struct mt9p031_capture_size mt9p031_sizes[] = {
-+	[MT9P031_2560X1920] = { 2560, 1920 },
++	{ 2560, 1920, 14 },
++	{ 1280, 960, 56 },
++	{ 0, 0, 0 },
++	{ 640, 480, 120 },
 +};
 +
 +/**
@@ -875,13 +878,10 @@ index 0000000..308ac6b
 +	unsigned int blue_gain;
 +	unsigned int red_gain;
 +	unsigned int green2_gain;
-+	u8 row_bin;	
-+	u8 row_skip;
-+	u8 col_bin;
-+	u8 col_skip;	
++	u8 bin;	
++	u8 skip;
 +	u8 fps;
 +	u8 max_fps;
-+	u8 output_size;
 +	u8 hflip;
 +	u8 vflip;
 +	u16 test_pattern_control;
@@ -1029,6 +1029,15 @@ index 0000000..308ac6b
 +		.default_value = 1,
 +	},
 +	{
++		.id = V4L2_MT9P031_SKIP_MODE,
++		.type = V4L2_CTRL_TYPE_INTEGER,
++		.name = "Skip Mode",
++		.minimum = 0,
++		.maximum = 3,
++		.step = 1,
++		.default_value = 0,
++	},
++	{
 +		.id = V4L2_MT9P031_TEST_PATTERN_CONTROL,
 +		.type = V4L2_CTRL_TYPE_INTEGER,
 +		.name = "Test Pattern Control",
@@ -1168,81 +1177,6 @@ index 0000000..308ac6b
 +	}
 +
 +	return 0;
-+}
-+
-+#define _REG(n) { .name=#n, .offset=n }
-+static struct {
-+    char *name;
-+    int offset;
-+} _reg_list[] = {
-+  _REG(REG_CHIP_VERSION),
-+  _REG(REG_ROW_START),
-+  _REG(REG_COLUMN_START),
-+  _REG(REG_ROW_HEIGHT),
-+  _REG(REG_COLUMN_WIDTH),
-+  _REG(REG_HORIZONTAL_BLANK),
-+  _REG(REG_VERTICAL_BLANK),
-+  _REG(REG_OUTPUT_CONTROL),
-+  _REG(REG_SHUTTER_WIDTH_UPPER),
-+  _REG(REG_SHUTTER_WIDTH_LOWER),
-+  _REG(REG_PIXEL_CLOCK_CONTROL),
-+  _REG(REG_FRAME_RESTART),
-+  _REG(REG_SHUTTER_DELAY),
-+  _REG(REG_RESET),
-+  _REG(REG_READ_MODE1),
-+  _REG(REG_READ_MODE2),
-+  _REG(REG_ROW_ADDRESS_MODE),
-+  _REG(REG_COL_ADDRESS_MODE),
-+  _REG(REG_PLL_CONTROL),
-+  _REG(REG_PLL_CONFIG1),
-+  _REG(REG_PLL_CONFIG2),
-+
-+  _REG(REG_CHIP_ENABLE_SYNC),
-+
-+  _REG(REG_RESERVED_27_REG),
-+  _REG(REG_GREEN1_GAIN),
-+  _REG(REG_BLUE_GAIN),
-+  _REG(REG_RED_GAIN),
-+  _REG(REG_GREEN2_GAIN),
-+  _REG(REG_BLACK_LEVEL),
-+  _REG(REG_ROW_BLK_DEF_OFFSET),
-+  _REG(REG_RESERVED_4E_REG),
-+  _REG(REG_RESERVED_50_REG),
-+  _REG(REG_RESERVED_51_REG),
-+  _REG(REG_RESERVED_52_REG),
-+  _REG(REG_RESERVED_53_REG),
-+  _REG(REG_CAL_COARSE),
-+  _REG(REG_CAL_TARGET),
-+  _REG(REG_GREEN1_OFFSET),
-+  _REG(REG_GREEN2_OFFSET),
-+  _REG(REG_BLK_LVL_CALIB),
-+  _REG(REG_RED_OFFSET),
-+  _REG(REG_BLUE_OFFSET),
-+
-+  _REG(REG_TEST_PATTERN_CONTROL),
-+  _REG(REG_TEST_PATTERN_GREEN),
-+  _REG(REG_TEST_PATTERN_RED),
-+  _REG(REG_TEST_PATTERN_BLUE),
-+  _REG(REG_TEST_PATTERN_BAR_WIDTH),
-+};
-+
-+static void mt9p031_dump_regs(struct i2c_client *client)
-+{
-+    u16 val, i;
-+    int err;
-+
-+    for (i = 0; i < ARRAY_SIZE(_reg_list); i++) {
-+        err = mt9p031_read_reg(client, _reg_list[i].offset, &val);
-+
-+	if (err == 0) {
-+            dev_info(&client->dev, "%32s[0x%04X] = 0x%04X\n", 
-+			_reg_list[i].name, _reg_list[i].offset, val);
-+	}
-+	else {
-+            dev_info(&client->dev, "%32s[0x%04X] read error: %d\n", 
-+			_reg_list[i].name, _reg_list[i].offset, err);
-+	}
-+    }
 +}
 +
 +struct mt9p031_reg set_pll_reg[] = {
@@ -1508,10 +1442,10 @@ index 0000000..308ac6b
 +	struct i2c_client *client = to_i2c_client(sensor->dev);
 +	int err;
 +
-+	set_bin_reg[1].val = (sensor->row_bin << ROW_BIN_SHIFT)
-+			    	| (sensor->row_skip << ROW_SKIP_SHIFT);
-+	set_bin_reg[2].val = (sensor->col_bin << COLUMN_BIN_SHIFT)
-+			    	| (sensor->col_skip << COLUMN_SKIP_SHIFT);
++	set_bin_reg[1].val = (sensor->bin << ROW_BIN_SHIFT)
++			    	| (sensor->skip << ROW_SKIP_SHIFT);
++	set_bin_reg[2].val = (sensor->bin << COLUMN_BIN_SHIFT)
++			    	| (sensor->skip << COLUMN_SKIP_SHIFT);
 +
 +	/*
 +	dev_dbg(&client->dev, 
@@ -1580,8 +1514,8 @@ index 0000000..308ac6b
 +	struct i2c_client *client = to_i2c_client(sensor->dev);
 +	int err;
 +
-+	//dev_dbg(&client->dev, "mt9p031_set_window_size() %dx%d\n", 
-+	//	col_size, row_size);
++	dev_info(&client->dev, "mt9p031_set_window_size() %dx%d\n", 
++		col_size, row_size);
 +
 +	set_window_size_reg[1].val = row_size - 1;
 +	set_window_size_reg[2].val = col_size - 1;
@@ -1619,10 +1553,10 @@ index 0000000..308ac6b
 +	 * };
 +	 */
 +
-+	if (sensor->row_bin > 3 || sensor->col_bin > 3)
++	if (sensor->skip > 3)
 +		return HBmin[3][3];
 +
-+	return HBmin[sensor->row_bin][sensor->col_bin];
++	return HBmin[sensor->skip][sensor->skip];
 +}
 +
 +static u16 mt9p031_calc_VBmin(struct mt9p031_sensor *sensor)
@@ -1666,33 +1600,9 @@ index 0000000..308ac6b
 +	return 0;
 +}
 +
-+static unsigned int mt9p031_output_width(struct mt9p031_sensor *sensor)
++static unsigned int mt9p031_output_size(unsigned int size, unsigned int skip)
 +{
-+	unsigned int out_w;
-+
-+	out_w = 2 * (sensor->col_skip + 1);
-+
-+	if (sensor->col_size % out_w)
-+		out_w = 2 * (sensor->col_size / out_w) + 1;
-+	else
-+		out_w = 2 * (sensor->col_size / out_w);
-+
-+	return out_w;
-+}
-+
-+
-+static unsigned int mt9p031_output_height(struct mt9p031_sensor *sensor)
-+{
-+	unsigned int out_h;
-+
-+	out_h = 2 * (sensor->row_skip + 1);
-+
-+	if (sensor->row_size % out_h)
-+		out_h = 2 * (sensor->row_size / out_h + 1);
-+	else
-+		out_h = 2 * (sensor->row_size / out_h);
-+
-+	return out_h;
++	return size / (skip + 1);
 +}
 +
 +static int mt9p031_set_fps(struct mt9p031_sensor* sensor, unsigned int fps)
@@ -1707,8 +1617,8 @@ index 0000000..308ac6b
 +	if (fps < 1 || fps > sensor->max_fps)
 +		fps = sensor->max_fps;
 +
-+	out_w = mt9p031_output_width(sensor);
-+	out_h = mt9p031_output_height(sensor);
++	out_w = mt9p031_output_size(sensor->col_size, sensor->skip);
++	out_h = mt9p031_output_size(sensor->row_size, sensor->skip);
 +
 +	row_clocks = out_w + (HBmin * 2);
 +
@@ -1725,7 +1635,7 @@ index 0000000..308ac6b
 +
 +	sensor->fps = rows_per_sec / (out_h + v_blank);
 +
-+	dev_dbg(&client->dev, "actual fps = %d\n", sensor->fps);
++	dev_info(&client->dev, "actual fps = %d\n", sensor->fps);
 +
 +	return 0;
 +}
@@ -1759,15 +1669,14 @@ index 0000000..308ac6b
 +
 +	exp_clk = exp_time * (sensor->pixclk / 1000000);
 +
-+	out_w = mt9p031_output_width(sensor);
-+	out_h = mt9p031_output_height(sensor);
++	out_w = mt9p031_output_size(sensor->col_size, sensor->skip);
++	out_h = mt9p031_output_size(sensor->row_size, sensor->skip);
 +
 +	max_shutter_width = out_h + sensor->v_blank - 2;
 +
 +	sensor->row_clk = out_w + (2 * sensor->h_blank);
 +
-+	shutter_overhead = mt9p031_shutter_overhead(sensor->row_bin, 
-+							shutter_delay);
++	shutter_overhead = mt9p031_shutter_overhead(sensor->bin, shutter_delay);
 +	shutter_overhead *= 2;
 +
 +	shutter_width = (exp_clk + shutter_overhead) / sensor->row_clk;
@@ -1810,8 +1719,7 @@ index 0000000..308ac6b
 +	sensor->shutter_width = shutter_width;
 +	sensor->shutter_delay = shutter_delay;
 +
-+	shutter_overhead = mt9p031_shutter_overhead(sensor->row_bin,
-+							shutter_delay);
++	shutter_overhead = mt9p031_shutter_overhead(sensor->bin, shutter_delay);
 +
 +	sensor->exposure = ((shutter_width * sensor->row_clk) 
 +						- (2 * shutter_overhead))
@@ -1823,7 +1731,7 @@ index 0000000..308ac6b
 +			sensor->exposure = exp_time;
 +	}
 +
-+	dev_dbg(&client->dev, "finish exposure = %lu sw = %u sd = %u\n",
++	dev_info(&client->dev, "finish exposure = %lu sw = %u sd = %u\n",
 +		sensor->exposure, shutter_width, shutter_delay);
 +	
 +	return 0;
@@ -1835,6 +1743,24 @@ index 0000000..308ac6b
 +	struct mt9p031_sensor *sensor = s->priv;
 +	struct i2c_client *client = to_i2c_client(sensor->dev);
 +	int err;
++
++	if (sensor->streaming)
++		return -EINVAL;
++
++	sensor->pix.width = mt9p031_sizes[sensor->skip].width;
++	sensor->pix.height = mt9p031_sizes[sensor->skip].height;
++	sensor->pix.bytesperline = 2 * sensor->pix.width;
++	sensor->pix.sizeimage = sensor->pix.bytesperline * sensor->pix.height;
++
++	sensor->max_fps = mt9p031_sizes[sensor->skip].max_fps_at_96mhz;
++
++	if (sensor->pixclk == 48000000)
++		sensor->max_fps /= 2;
++	else if (sensor->pixclk == 24000000)
++		sensor->max_fps /= 4;
++
++	sensor->fps = sensor->max_fps;
++
 +
 +	err = mt9p031_write_regs(client, mt9p031_common);
 +	if (err)
@@ -1899,7 +1825,6 @@ index 0000000..308ac6b
 +
 +		return -ENODEV;
 +	}
-+
 +
 +	return chip_version;
 +}
@@ -1985,6 +1910,10 @@ index 0000000..308ac6b
 +
 +	case V4L2_MT9P031_GREEN2_GAIN:		
 +		vc->value = sensor->green2_gain;
++		break;
++
++	case V4L2_MT9P031_SKIP_MODE:
++		vc->value = sensor->skip;
 +		break;
 +
 +	case V4L2_MT9P031_TEST_PATTERN_CONTROL:
@@ -2091,6 +2020,16 @@ index 0000000..308ac6b
 +			ret = mt9p031_set_gain(sensor, REG_GREEN2_GAIN, 
 +						sensor->green2_gain);
 +	
++		break;
++
++	case V4L2_MT9P031_SKIP_MODE:
++		if (vc->value == 0 || vc->value == 1 || vc->value == 3) {
++			sensor->skip = vc->value;
++			sensor->bin = vc->value;
++		}
++		else
++			return -EINVAL;
++
 +		break;
 +
 +	case V4L2_MT9P031_TEST_PATTERN_CONTROL:
@@ -2327,12 +2266,12 @@ index 0000000..308ac6b
 +	if (frms->pixel_format != sensor->pix.pixelformat)
 +		return -EINVAL;
 +
-+	if (frms->index >= ARRAY_SIZE(mt9p031_sizes))
++	if (frms->index != 0)
 +		return -EINVAL;
 +
 +	frms->type = V4L2_FRMSIZE_TYPE_DISCRETE;
-+	frms->discrete.width = mt9p031_sizes[frms->index].width;
-+	frms->discrete.height = mt9p031_sizes[frms->index].height;
++	frms->discrete.width = mt9p031_sizes[sensor->skip].width;
++	frms->discrete.height = mt9p031_sizes[sensor->skip].height;
 +
 +	return 0;
 +}
@@ -2345,12 +2284,12 @@ index 0000000..308ac6b
 +	if (frmi->pixel_format != sensor->pix.pixelformat)
 +		return -EINVAL;
 +
-+	if (frmi->index >= sensor->max_fps)
++	if (frmi->index != 0)
 +		return -EINVAL;
 +
 +	frmi->type = V4L2_FRMSIZE_TYPE_DISCRETE;
 +	frmi->discrete.numerator = 1;
-+	frmi->discrete.denominator = frmi->index + 1;
++	frmi->discrete.denominator = sensor->max_fps;
 +
 +	return 0;
 +}
@@ -2445,10 +2384,8 @@ index 0000000..308ac6b
 +		}
 +		else {
 +			ret = mt9p031_configure(s);
-+			if (!ret) {
++			if (!ret)
 +				sensor->streaming = 1;
-+				/* mt9p031_dump_regs(client); */
-+			}
 +		}
 +
 +		break;
@@ -2556,50 +2493,30 @@ index 0000000..308ac6b
 +
 +	sensor->pdata->power_set = pdata->power_set;
 +	sensor->pdata->priv_data_set = pdata->priv_data_set;
++	sensor->pixclk = pdata->pixel_clock;
 +
++	sensor->detected = 0;
++	sensor->streaming = 0;
 +	sensor->xclk_current = MT9P031_DEFAULT_XCLK;
-+	sensor->output_size = MT9P031_2560X1920;
++	sensor->skip = 0; 
++	sensor->bin = 0;
 +
 +	sensor->hflip = 0;
 +	sensor->vflip = 0;
-+	sensor->pix.width = mt9p031_sizes[MT9P031_2560X1920].width;
-+	sensor->pix.height = mt9p031_sizes[MT9P031_2560X1920].height;
-+	sensor->pix.pixelformat = mt9p031_format[NOFLIP_FORMAT].pixelformat;
-+	sensor->pix.bytesperline = 2 * sensor->pix.width;
-+	sensor->pix.sizeimage = sensor->pix.bytesperline * sensor->pix.height;
++
 +	sensor->pix.priv = 0;
 +	sensor->pix.colorspace = V4L2_COLORSPACE_SRGB;
 +	sensor->pix.field = V4L2_FIELD_NONE;	
++	sensor->pix.pixelformat = mt9p031_format[NOFLIP_FORMAT].pixelformat;
 +
 +	sensor->col_start = MT9P031_DEFAULT_COL_START;
 +	sensor->row_start = MT9P031_DEFAULT_ROW_START;
 +	sensor->col_size = MT9P031_DEFAULT_COL_SIZE;
 +	sensor->row_size = MT9P031_DEFAULT_ROW_SIZE;
-+	sensor->col_skip = 0; 
-+	sensor->col_bin = 0;
-+	sensor->row_skip = 0;
-+	sensor->row_bin = 0;
++
 +	sensor->shutter_width = 139;
 +	sensor->shutter_delay = 257;
-+	sensor->detected = 0;
 +
-+	sensor->pixclk = pdata->pixel_clock;
-+
-+	/* Enforce one of three allowed pixel clock rates and max_fps based
-+	   on that. Could implement more but have to do the pll calculations.
-+	*/
-+	if (sensor->pixclk == 24000000) {
-+		sensor->max_fps = 3;
-+	}
-+	else if (sensor->pixclk == 96000000) {
-+		sensor->max_fps = 14;
-+	}
-+	else {
-+		sensor->pixclk = 48000000;
-+		sensor->max_fps = 7;
-+	}
-+
-+	sensor->fps = sensor->max_fps;
 +	sensor->exposure = MT9P031_DEF_EXPOSURE;
 +	sensor->green1_gain = 1;
 +	sensor->blue_gain = 1;
@@ -2766,10 +2683,10 @@ index 0000000..cd73fdc
 +#endif /* __VIDEO_MT9P031_REGS_H */
 diff --git git/include/media/mt9p031.h git/include/media/mt9p031.h
 new file mode 100644
-index 0000000..b9dff97
+index 0000000..e000eda
 --- /dev/null
 +++ git/include/media/mt9p031.h
-@@ -0,0 +1,69 @@
+@@ -0,0 +1,62 @@
 +/*
 + * mt9p031.h - Register definitions for the MT9P031 camera sensor.
 + *
@@ -2809,19 +2726,12 @@ index 0000000..b9dff97
 +#define V4L2_MT9P031_BLUE_GAIN			(V4L2_CID_PRIVATE_BASE + 1)
 +#define V4L2_MT9P031_RED_GAIN			(V4L2_CID_PRIVATE_BASE + 2)
 +#define V4L2_MT9P031_GREEN2_GAIN		(V4L2_CID_PRIVATE_BASE + 3)
++#define V4L2_MT9P031_SKIP_MODE			(V4L2_CID_PRIVATE_BASE + 4)
 +#define V4L2_MT9P031_TEST_PATTERN_CONTROL	(V4L2_CID_PRIVATE_BASE + 20)
 +#define V4L2_MT9P031_TEST_PATTERN_GREEN		(V4L2_CID_PRIVATE_BASE + 21)
 +#define V4L2_MT9P031_TEST_PATTERN_RED		(V4L2_CID_PRIVATE_BASE + 22)
 +#define V4L2_MT9P031_TEST_PATTERN_BLUE		(V4L2_CID_PRIVATE_BASE + 23)
 +#define V4L2_MT9P031_TEST_PATTERN_BAR_WIDTH	(V4L2_CID_PRIVATE_BASE + 24)
-+
-+enum mt9p031_image_size {
-+//	MT9P031_640X480,
-+//	MT9P031_1280X960,
-+	MT9P031_2560X1920,
-+//	MT9P031_2592X1944,
-+	MT9P031_NUM_IMAGE_SIZES
-+};
 +
 +
 +/**
