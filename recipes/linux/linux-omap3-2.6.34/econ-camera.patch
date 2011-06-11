@@ -1,0 +1,53 @@
+diff --git git/arch/arm/mach-omap2/board-overo.c git/arch/arm/mach-omap2/board-overo.c
+index 95efc77..f680432 100644
+--- git/arch/arm/mach-omap2/board-overo.c
++++ git/arch/arm/mach-omap2/board-overo.c
+@@ -607,12 +607,29 @@ static struct i2c_board_info __initdata overo_i2c_boardinfo[] = {
+ 	},
+ };
+ 
++#define LM3553_SLAVE_ADDRESS	0x53
++#define OV3640_I2C_ADDR		(0x78 >> 1)
++int omap3evm_ov3640_platform_data;
++int lm3553_platform_data;
++
++static struct i2c_board_info __initdata econcam_i2c_boardinfo[] = {
++	{
++		I2C_BOARD_INFO("ov3640", OV3640_I2C_ADDR),
++		.platform_data = &omap3evm_ov3640_platform_data,
++	},
++	{
++		I2C_BOARD_INFO("lm3553", LM3553_SLAVE_ADDRESS),
++		.platform_data = &lm3553_platform_data,
++	},
++};
++
+ static int __init overo_i2c_init(void)
+ {
+ 	omap_register_i2c_bus(1, 2600, overo_i2c_boardinfo,
+ 			ARRAY_SIZE(overo_i2c_boardinfo));
+ 	/* i2c2 pins are used for gpio */
+-	omap_register_i2c_bus(3, 400, NULL, 0);
++	omap_register_i2c_bus(3, 100, econcam_i2c_boardinfo, 
++			ARRAY_SIZE(econcam_i2c_boardinfo));
+ 	return 0;
+ }
+ 
+diff --git git/drivers/media/video/Kconfig git/drivers/media/video/Kconfig
+index 9644cf7..d8d9649 100644
+--- git/drivers/media/video/Kconfig
++++ git/drivers/media/video/Kconfig
+@@ -833,6 +833,13 @@ config VIDEO_CAFE_CCIC
+ 	  CMOS camera controller.  This is the controller found on first-
+ 	  generation OLPC systems.
+ 
++config VIDEO_OMAP3
++	bool "OMAP2/OMAP3 V4L2-DSS drivers"
++	depends on VIDEO_DEV && (ARCH_OMAP24XX || ARCH_OMAP34XX || ARCH_OMAP3430)
++	default y
++	---help---
++        V4L2 DSS driver support for OMAP2/3 based boards.
++
+ config SOC_CAMERA
+ 	tristate "SoC camera support"
+ 	depends on VIDEO_V4L2 && HAS_DMA && I2C
