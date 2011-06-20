@@ -12,7 +12,7 @@ ANGSTROM_EXTRA_INSTALL ?= " \
   task-qt4-x11-base \
   task-qt4-x11-qwt \
   qmake2 \
-  qt4-x11-free-gles-dev \
+  qt4-x11-free-dev \
  "
 
 SPLASH ?= "psplash"
