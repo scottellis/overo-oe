@@ -22,10 +22,10 @@ RDEPENDS_${PN} = "\
 		gzip \
 		ifupdown \
 		${@base_contains('DISTRO_FEATURES', 'ipv6', 'iproute2', '', d)} \
-		iputils-arping \
-		${@base_contains('DISTRO_FEATURES', 'ipv6', 'iputils-ping6', '', d)} \
-		iputils-ping \
-		iputils \
+#		iputils-arping \
+#		${@base_contains('DISTRO_FEATURES', 'ipv6', 'iputils-ping6', '', d)} \
+#		iputils-ping \
+#		iputils \
 		less \
 		minicom \
 		mktemp \
