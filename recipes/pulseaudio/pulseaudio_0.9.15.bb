@@ -26,5 +26,10 @@ do_compile_prepend() {
     cp ${STAGING_LIBDIR}/libltdl* ${S}/libltdl
 }
 
+do_install_append() {
+	rm "${D}/etc/xdg/autostart/pulseaudio.desktop"
+}
+
+
 SRC_URI[md5sum] = "4510364eeab219fd100bd1b373b1a002"
 SRC_URI[sha256sum] = "1e8ad5b7c5cf3485bd0738c296274ff2c99d26d12a25a225dc250eddea25b9f1"
