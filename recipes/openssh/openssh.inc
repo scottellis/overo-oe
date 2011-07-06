@@ -51,6 +51,9 @@ do_configure_prepend () {
 
 do_compile_append () {
 	install -m 0644 ${WORKDIR}/sshd_config ${S}/
+	if [ ${DISTRO_TYPE} = debug ]; then
+		sed -i -e 's:#PermitEmptyPasswords no:PermitEmptyPasswords yes:g' ${S}/sshd_config
+	fi
 	install -m 0644 ${WORKDIR}/ssh_config ${S}/
 }
 
