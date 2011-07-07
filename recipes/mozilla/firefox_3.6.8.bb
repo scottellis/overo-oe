@@ -28,6 +28,7 @@ SRC_URI[archive.md5sum] = "0ee5f14fd8be07513d16131027ebcb61"
 SRC_URI[archive.sha256sum] = "fc609cc6a0ddaa2a9ebd8511ec39ae4a404e1107a12e07b233e2afca51d9a10e"
 
 S = "${WORKDIR}/mozilla-1.9.2"
+export PKG_CONFIG=${STAGING_BINDIR_NATIVE}/pkg-config
 
 inherit mozilla
 require firefox.inc
@@ -37,7 +38,9 @@ EXTRA_OECONF += " --enable-official-branding --disable-crashreporter"
 FULL_OPTIMIZATION = "-fexpensive-optimizations -fomit-frame-pointer -frename-registers -O2"
 
 do_compile_prepend() {
-	cp ${WORKDIR}/jsautocfg.h ${S}/js/src/
-	sed -i "s|CPU_ARCH =|CPU_ARCH = ${TARGET_ARCH}|" security/coreconf/Linux.mk
+    cp ${WORKDIR}/jsautocfg.h ${S}/js/src/
+    sed -i "s|CPU_ARCH =|CPU_ARCH = ${TARGET_ARCH}|" security/coreconf/Linux.mk
+    sed -i "s|HOST_LIBIDL_CFLAGS = \@HOST_LIBIDL_CFLAGS\@|HOST_LIBIDL_CFLAGS = $(pkg-config --cflags libIDL-2.0)|" config/autoconf.mk.in
+    sed -i "s|HOST_LIBIDL_LIBS   = @HOST_LIBIDL_LIBS@|HOST_LIBIDL_LIBS = $(pkg-config --libs libIDL-2.0)|" config/autoconf.mk.in
 }
 
