@@ -97,6 +97,7 @@ RDEPENDS_task-base = "\
     ${@base_contains('MACHINE_FEATURES', 'apm', 'task-base-apm', '',d)} \
     ${@base_contains('MACHINE_FEATURES', 'acpi', 'task-base-acpi', '',d)} \
     ${@base_contains('MACHINE_FEATURES', 'keyboard', 'task-base-keyboard', '',d)} \
+    ${@base_contains('MACHINE_FEATURES', 'touchscreen', 'task-base-touchscreen', '',d)} \
     \
     ${@base_contains('COMBINED_FEATURES', 'alsa', 'task-base-alsa', '',d)} \
     ${@base_contains('COMBINED_FEATURES', 'ext2', 'task-base-ext2', '',d)} \
