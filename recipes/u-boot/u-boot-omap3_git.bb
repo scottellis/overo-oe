@@ -1,19 +1,18 @@
 require u-boot.inc
 
-FILESDIR = "${@os.path.dirname(bb.data.getVar('FILE',d,1))}/u-boot-omap3-git/${MACHINE}"
+FILESDIR = "${@os.path.dirname(bb.data.getVar('FILE',d,1))}/u-boot-omap3-git/"
 
-SRCREV = "08d7fdcce5dde5c2dc968fac5b2facf17cbabb5"
+SRCREV = "1e4e5ef0469050f014aee1204dae8a9ab6053e49"
 
-PV = "2008.10+${PR}+gitr${SRCREV}"
-PR ="r2"
-PE = "1"
+PV = "2010.9+${PR}+git${SRCREV}"
+PR = "r1"
 
-SRC_URI = "git://www.sakoman.net/git/u-boot-omap3.git;branch=common;protocol=git \
+SRC_URI = "git://git.denx.de/u-boot.git;branch=master;protocol=git \
+	   file://expansion.patch \
+           file://overo-gpio10.patch \
+           file://ttyO.patch \
+           file://ubifs.patch \
           "
-
-UBOOT_MACHINE_beagleboard = "omap3_beagle_config"
-UBOOT_MACHINE_omap3evm = "omap3_evm_config"
-UBOOT_MACHINE_overo = "omap3_overo_config"
 
 S = "${WORKDIR}/git"
 

@@ -1,0 +1,15 @@
+diff --git a/include/configs/omap3_overo.h b/include/configs/omap3_overo.h
+index 2058888..06f3c2a 100644
+--- a/include/configs/omap3_overo.h
++++ b/include/configs/omap3_overo.h
+@@ -161,8 +161,8 @@
+ 	"defaultdisplay=dvi\0" \
+ 	"mmcroot=/dev/mmcblk0p2 rw\0" \
+ 	"mmcrootfstype=ext3 rootwait\0" \
+-	"nandroot=/dev/mtdblock4 rw\0" \
+-	"nandrootfstype=jffs2\0" \
++	"nandroot=ubi0:overo-rootfs ubi.mtd=4\0" \
++	"nandrootfstype=ubifs\0" \
+ 	"mmcargs=setenv bootargs console=${console} " \
+ 		"mpurate=${mpurate} " \
+ 		"vram=${vram} " \
