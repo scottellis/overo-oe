@@ -5,7 +5,7 @@ SRCREV = "5f48c7b878862b67ba61"
 PV = "1.0+gitr${SRCPV}"
 PR = "${INC_PR}.5"
 
-DEFAULT_PREFERENCE = "-1"
+#DEFAULT_PREFERENCE = "-1"
 
 # move this to tslib.inc when upstream releases a new version which includes support for
 # the palmpre machine
