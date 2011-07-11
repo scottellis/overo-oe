@@ -2,12 +2,17 @@ require linux-libc-headers.inc
 
 INHIBIT_DEFAULT_DEPS = "1"
 DEPENDS += "unifdef-native"
-PR = "r6"
+PR = "r7"
 
 SRC_URI = "${KERNELORG_MIRROR}/pub/linux/kernel/v2.6/linux-${PV}.tar.bz2 \
            file://procinfo.h \
            file://export_falloc_h.patch \
+           file://make-3.82.patch \
            file://unifdef.patch"
+
+SRC_URI_append_hipox = " \
+	file://siocoutqsnd.patch \
+	"
 
 S = "${WORKDIR}/linux-${PV}"
 

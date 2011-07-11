@@ -15,6 +15,7 @@ SRC_URI = "ftp://ftp.trolltech.com/qt/source/qt-everywhere-opensource-src-${PV}.
            file://0010-no-simpledecoration-example.patch \
            file://fix-config-tests.patch \
            file://qt-config.patch \
+           file://0001-wsegl2-support.patch \
            file://g++.conf \
            file://linux.conf \
            "
@@ -46,11 +47,6 @@ QT_GLFLAGS ?= ""
 QT_CONFIG_FLAGS += " -no-rpath -qt3support -reduce-relocations -silent ${QT_GLFLAGS}"
 
 do_compile() {
-    # Fixup missing wsegl header in some SGX SDKs
-    if ! [ -e ${STAGING_INCDIR}/wsegl.h ] ; then
-        cp src/3rdparty/powervr/wsegl.h src/plugins/gfxdrivers/powervr/QWSWSEGL/
-    fi
-
     unset CFLAGS CXXFLAGS
     oe_runmake ${EXTRA_ENV}
 }

@@ -11,13 +11,16 @@ DEFAULT_PREFERENCE_hipox = "1"
 DEFAULT_PREFERENCE_cs-e9302 = "1"
 DEFAULT_PREFERENCE_smartq5 = "1"
 
-PR = "r35"
+PR = "r44"
 
 SRC_URI = "${KERNELORG_MIRROR}/pub/linux/kernel/v2.6/linux-2.6.24.tar.bz2;name=kernel \
            ${KERNELORG_MIRROR}/pub/linux/kernel/v2.6/patch-${PV}.7.bz2;apply=yes;name=stablepatch \
            file://squashfs-lzma-2.6.24.patch \
            file://ubifs-v2.6.24.patch \
            file://ubifs-v2.6.24-silent-get-sb.patch \
+           file://cfi-amic.patch \
+           file://make-3.82.patch \
+           file://ftdi-4n-galaxy.patch \
            file://defconfig"
 
 # Moved away temporarely until committed properly (work in progress).
@@ -104,6 +107,9 @@ SRC_URI_append_hipox = " \
 	file://hipox-poe-enable.patch \
 	file://siocoutqsnd.patch \
 	file://hipox-phy.patch \
+	file://ox810-pci-read-config-fix.patch \
+	file://hipox-nand-timing.patch \
+    file://ox810-pci-abort-handler.patch \
 	"
 
 EXTRA_OEMAKE_smartq5 = " OBJCOPY=${OBJCOPY}"
