@@ -1,0 +1,17 @@
+diff --git git/arch/arm/plat-omap/dma.c-orig git/arch/arm/plat-omap/dma.c
+index f7f571e..c373845 100644
+--- git/arch/arm/plat-omap/dma.c-orig
++++ git/arch/arm/plat-omap/dma.c
+@@ -737,10 +737,9 @@ int omap_request_dma(int dev_id, const char *dev_name,
+ 
+ 	spin_lock_irqsave(&dma_chan_lock, flags);
+ 	for (ch = 0; ch < dma_chan_count; ch++) {
+-		if (free_ch == -1 && dma_chan[ch].dev_id == -1) {
++		if (dma_chan[ch].dev_id == -1) {
+ 			free_ch = ch;
+-			if (dev_id == 0)
+-				break;
++			break;
+ 		}
+ 	}
+ 	if (free_ch == -1) {
