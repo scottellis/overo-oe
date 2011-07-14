@@ -1,25 +1,21 @@
-DESCRIPTION = "Linux kernel for Gumstix Overo COM with MT9V032 support"
-KERNEL_IMAGETYPE = "uImage"
-
-COMPATIBLE_MACHINE = "overo"
-
 require linux.inc
 
+DESCRIPTION = "Linux kernel for Gumstix Overo COM with MT9V032 support"
+KERNEL_IMAGETYPE = "uImage"
+COMPATIBLE_MACHINE = "overo"
+
+BOOT_SPLASH ?= "logo_linux_clut224-generic.ppm"
 MUSB_MODE ?= "host"
 
-SRCREV = "cb89736af28f583598e49a05249334a194d00f1d"
-
 PV = "2.6.34"
+PR = 102
+S = "${WORKDIR}/git"
 
-# The main PR is now using MACHINE_KERNEL_PR, for omap3 see conf/machine/include/omap3.inc
-
+SRCREV = "cb89736af28f583598e49a05249334a194d00f1d"
 SRC_URI = "git://www.sakoman.com/git/linux-omap-2.6.git;branch=omap3-2.6.34;protocol=git \
 	   file://defconfig \
            file://mt9v032-2.6.34.patch \
            file://mt9v032-queryctl-ordering.patch \
-          "
-
-SRC_URI_append = " \
            file://${BOOT_SPLASH} \
            "
 
