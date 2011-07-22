@@ -1,0 +1,19 @@
+diff --git git/arch/arm/plat-omap/mcbsp.c-orig git/arch/arm/plat-omap/mcbsp.c
+index c2ed55a..1df0081 100644
+--- git/arch/arm/plat-omap/mcbsp.c-orig
++++ git/arch/arm/plat-omap/mcbsp.c
+@@ -120,6 +120,14 @@ void omap_mcbsp_dump_reg(unsigned int id)
+ 			MCBSP_READ(mcbsp, SRGR1));
+ 	dev_dbg(mcbsp->dev, "PCR0:  0x%04x\n",
+ 			MCBSP_READ(mcbsp, PCR0));
++	dev_dbg(mcbsp->dev, "THRSH2:  0x%04x\n",
++			MCBSP_READ(mcbsp, THRSH2));
++	dev_dbg(mcbsp->dev, "THRSH1:  0x%04x\n",
++			MCBSP_READ(mcbsp, THRSH1));
++	dev_dbg(mcbsp->dev, "XBUFFSTAT:  0x%04x\n",
++			MCBSP_READ(mcbsp, XBUFFSTAT));
++	dev_dbg(mcbsp->dev, "RBUFFSTAT:  0x%04x\n",
++			MCBSP_READ(mcbsp, RBUFFSTAT));
+ 	dev_dbg(mcbsp->dev, "***********************\n");
+ }
+ EXPORT_SYMBOL(omap_mcbsp_dump_reg);

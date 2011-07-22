@@ -1,0 +1,41 @@
+diff --git git/arch/arm/plat-omap/mcbsp.c-orig git/arch/arm/plat-omap/mcbsp.c
+index 0c8612f..c2ed55a 100644
+--- git/arch/arm/plat-omap/mcbsp.c-orig
++++ git/arch/arm/plat-omap/mcbsp.c
+@@ -14,6 +14,7 @@
+ 
+ #include <linux/module.h>
+ #include <linux/init.h>
++#define DEBUG
+ #include <linux/device.h>
+ #include <linux/platform_device.h>
+ #include <linux/wait.h>
+@@ -88,7 +89,7 @@ int omap_mcbsp_st_read(struct omap_mcbsp *mcbsp, u16 reg)
+ #define MCBSP_ST_WRITE(mcbsp, reg, val) \
+ 			omap_mcbsp_st_write(mcbsp, OMAP_ST_REG_##reg, val)
+ 
+-static void omap_mcbsp_dump_reg(u8 id)
++void omap_mcbsp_dump_reg(unsigned int id)
+ {
+ 	struct omap_mcbsp *mcbsp = id_to_mcbsp_ptr(id);
+ 
+@@ -121,6 +122,7 @@ static void omap_mcbsp_dump_reg(u8 id)
+ 			MCBSP_READ(mcbsp, PCR0));
+ 	dev_dbg(mcbsp->dev, "***********************\n");
+ }
++EXPORT_SYMBOL(omap_mcbsp_dump_reg);
+ 
+ static irqreturn_t omap_mcbsp_tx_irq_handler(int irq, void *dev_id)
+ {
+diff --git git/arch/arm/plat-omap/include/plat/mcbsp.h-orig git/arch/arm/plat-omap/include/plat/mcbsp.h
+index b4ff6a1..0d669d5 100644
+--- git/arch/arm/plat-omap/include/plat/mcbsp.h-orig
++++ git/arch/arm/plat-omap/include/plat/mcbsp.h
+@@ -468,6 +468,7 @@ int omap_mcbsp_init(void);
+ void omap_mcbsp_register_board_cfg(struct omap_mcbsp_platform_data *config,
+ 					int size);
+ void omap_mcbsp_config(unsigned int id, const struct omap_mcbsp_reg_cfg * config);
++void omap_mcbsp_dump_reg(unsigned int id);
+ #ifdef CONFIG_ARCH_OMAP3
+ void omap_mcbsp_set_tx_threshold(unsigned int id, u16 threshold);
+ void omap_mcbsp_set_rx_threshold(unsigned int id, u16 threshold);
