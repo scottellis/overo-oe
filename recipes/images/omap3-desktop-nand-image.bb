@@ -47,6 +47,11 @@ FONTS = " \
   ttf-dejavu-sans-mono \
  "  
 
+GLES_INSTALL = " \
+  libgles-omap3 \
+ "
+
+
 SETTINGS = " \
   networkmanager network-manager-applet networkmanager-openvpn \
   gnome-bluetooth \
@@ -72,6 +77,16 @@ XSERVER_BASE = " \
   xset \
   xlsfonts \
   xrefresh \
+ "
+
+TOOLS_INSTALL += " \
+  python \
+  python-subprocess \
+  python-unittest \
+  python-compression \
+  python-pyxdg \
+  python-pyserial \
+  python-argparse \
  "
 
 IMAGE_INSTALL += " \
