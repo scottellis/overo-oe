@@ -8,7 +8,7 @@ index 2058888..06f3c2a 100644
  	"mmcrootfstype=ext3 rootwait\0" \
 -	"nandroot=/dev/mtdblock4 rw\0" \
 -	"nandrootfstype=jffs2\0" \
-+	"nandroot=ubi0:overo-rootfs ubi.mtd=4\0" \
++	"nandroot=ubi0:rootfs ubi.mtd=4\0" \
 +	"nandrootfstype=ubifs\0" \
  	"mmcargs=setenv bootargs console=${console} " \
  		"mpurate=${mpurate} " \
