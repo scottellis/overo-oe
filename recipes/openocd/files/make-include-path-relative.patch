@@ -1,0 +1,13 @@
+diff --git a/configure.in.orig b/configure.in
+index 4681aeb..07f57f3 100644
+--- a/configure.in
++++ b/configure.in.modified
+@@ -186,7 +186,7 @@ then
+       LDFLAGS="$LDFLAGS -Wl,-rpath,$OCDxprefix/lib"
+     fi
+     # The "INCDIR" is also usable
+-    CFLAGS="$CFLAGS -I$includedir"
++    CFLAGS="$CFLAGS -I$sysroot/include"
+ fi
+ 
+ AC_ARG_WITH(ftd2xx,
