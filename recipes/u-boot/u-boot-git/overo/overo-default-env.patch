@@ -1,9 +1,18 @@
 diff --git a/include/configs/omap3_overo.h b/include/configs/omap3_overo.h
-index 2058888..06f3c2a 100644
+index 74b2ff0..4698ca0 100644
 --- a/include/configs/omap3_overo.h
 +++ b/include/configs/omap3_overo.h
-@@ -161,8 +161,8 @@
- 	"defaultdisplay=dvi\0" \
+@@ -155,7 +155,7 @@
+ 
+ #define CONFIG_EXTRA_ENV_SETTINGS \
+ 	"loadaddr=0x82000000\0" \
+-	"console=ttyS2,115200n8\0" \
++	"console=ttyO2,115200n8\0" \
+ 	"mpurate=auto\0" \
+ 	"vram=12M\0" \
+ 	"dvimode=1024x768MR-16@60\0" \
+@@ -163,8 +163,8 @@
+ 	"mmcdev=0\0" \
  	"mmcroot=/dev/mmcblk0p2 rw\0" \
  	"mmcrootfstype=ext3 rootwait\0" \
 -	"nandroot=/dev/mtdblock4 rw\0" \

@@ -12,7 +12,7 @@ UBOOT_ENTRYPOINT = "0x80008000"
 UBOOT_LOADADDRESS = "0x80008000"
 
 # Only build u-boot, xload is optional
-EXTRA_IMAGEDEPENDS += "u-boot-omap3"
+EXTRA_IMAGEDEPENDS += "u-boot"
 
 DISTRO_SSH_DAEMON = "openssh-sshd"
 
