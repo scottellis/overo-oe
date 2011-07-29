@@ -6,7 +6,7 @@ PR = "r1"
 
 DEPENDS = "clthreads clxclient clalsadrv jack freetype fftwf"
 
-SRC_URI = "http://www.kokkinizita.net/linuxaudio/downloads/jaaa-${PV}.tar.bz2 \
+SRC_URI = "http://cumulus.gumstix.org/sources/jaaa-${PV}.tar.bz2 \
 			file://jaaa-Makefile.patch \
 "
 

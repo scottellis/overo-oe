@@ -7,7 +7,7 @@ PR = "r3"
 DEPENDS = "libx11 clthreads freetype libxft"
 RDEPENDS_${PN} = "libx11-locale"
 TARGET_CC_ARCH += "-I ${STAGING_DIR_HOST}/usr/include/freetype2"
-SRC_URI = "http://www.kokkinizita.net/linuxaudio/downloads/clxclient-${PV}.tar.bz2 \
+SRC_URI = "http://cumulus.gumstix.org/sources/clxclient-${PV}.tar.bz2 \
 	file://clxclient-Makefile.patch \
 "
 
