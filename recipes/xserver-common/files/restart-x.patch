@@ -1,0 +1,14 @@
+diff --git a/run-calibrate.sh.old b/run-calibrate.sh
+index ff8853d..5053101 100755
+--- a/run-calibrate.sh.old
++++ b/run-calibrate.sh
+@@ -2,7 +2,8 @@
+ 
+ if [ -e /dev/input/touchscreen0 ]; then
+ 	if [ -x /usr/bin/ts_calibrate ]; then
+-	        exec /usr/bin/ts_calibrate
++	        /usr/bin/ts_calibrate
++		kill $(cat /tmp/.X0-lock)
+ 	fi
+ fi
+ 
