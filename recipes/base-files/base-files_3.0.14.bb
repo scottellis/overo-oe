@@ -1,7 +1,7 @@
 DESCRIPTION = "Miscellaneous files for the base system."
 SECTION = "base"
 PRIORITY = "required"
-PR = "r97"
+PR = "r100"
 LICENSE = "GPL"
 
 SRC_URI = " \
@@ -10,6 +10,7 @@ SRC_URI = " \
            file://inputrc \
            file://host.conf \
            file://profile \
+           file://profile.d \
            file://fstab \
            file://filesystems \
            file://issue.net \
@@ -116,6 +117,8 @@ do_install () {
         	install -m 0644 ${WORKDIR}/filesystems ${D}${sysconfdir}/filesystems
         	install -m 0644 ${WORKDIR}/usbd ${D}${sysconfdir}/default/usbd
         	install -m 0644 ${WORKDIR}/profile ${D}${sysconfdir}/profile
+        	install -d 0755 ${D}${sysconfdir}/profile.d
+        	install -m 0755 ${WORKDIR}/profile.d/* ${D}${sysconfdir}/profile.d/
         	install -m 0755 ${WORKDIR}/share/dot.profile ${D}${sysconfdir}/skel/.profile
         	install -m 0755 ${WORKDIR}/share/dot.bashrc ${D}${sysconfdir}/skel/.bashrc
         	install -m 0644 ${WORKDIR}/inputrc ${D}${sysconfdir}/inputrc
@@ -155,6 +158,17 @@ do_install_append_slugos() {
 
 do_install_append_netbook-pro () {
 	mkdir -p ${D}/initrd
+}
+
+do_install_append_tb5200l() {
+	rmdir ${D}/tmp
+	ln -s var/tmp ${D}/tmp
+}
+
+do_install_append_visstrim_m10() {
+	mkdir -p ${D}/opt
+	mkdir -p ${D}/mnt/jffs2
+	mkdir -p ${D}/mnt/defaults/etc
 }
 
 PACKAGES = "${PN}-dbg ${PN}-doc ${PN}"

@@ -7,7 +7,7 @@ require linux.inc
 
 MUSB_MODE ?= "peripheral"
 
-SRCREV = "8c58a467d1b0b2525f415cb66beb9ef4d50b9c50"
+SRCREV = "cb89736af28f583598e49a05249334a194d00f1d"
 
 PV = "2.6.34"
 

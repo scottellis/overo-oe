@@ -51,6 +51,7 @@ OE_vars = [
     'GPE_TARBALL_SUFFIX',
     'inherit',
     'EXTRA_',
+    'export',
     'do_fetch',
     'do_unpack',
     'do_patch',
@@ -67,7 +68,6 @@ OE_vars = [
     'addhandler',
     'addtask',
     'bindir',
-    'export',
     'headers',
     'include',
     'includedir',
@@ -379,7 +379,7 @@ if __name__ == "__main__":
                 line = follow_rule(5, line)
             if var == "":
                 if not in_routine:
-                    print "## Warning: unknown variable/routine \"%s\"" % originalLine
+                    print "## Warning: unknown variable/routine \"%s\"" % originalLine.rstrip('\n')
                 var = 'others'
             for c in commentBloc: seen_vars[var].append(c)
             commentBloc = []

@@ -1,15 +1,19 @@
 DESCRIPTION = "MIDPath is a Java library which provides a MIDP2 implementation"
 
-PR = "r3"
+PR = "r6"
 
-SRC_URI = "${SOURCEFORGE_MIRROR}/midpath/midpath-0.3rc2.tar.gz"
+SRC_URI = "${SOURCEFORGE_MIRROR}/midpath/midpath-0.3rc2.tar.gz \
+	   file://configuration.cfg"
 
 S = "${WORKDIR}/midpath-0.3rc2"
 
 require midpath-common.inc
 
 SRC_URI += "\
-	file://fix-openfile.patch \
+  http://jlime.com/downloads/development/patches/sdl-fixes.patch;name=patch \
+  file://ui-colors.patch \
+  file://fix-openfile.patch \
+  file://hci_read_local_name.patch \
   file://midpath-suitemanager \
   file://midpath-launcher-j2se \
   file://midpath-suitemanager.desktop \
@@ -22,6 +26,10 @@ DEPENDS += "midpath-cldc midpath-backend-sdl midpath-backend-escher swt3.4-gtk k
 RDEPENDS_${PN} += "libkxml2-java"
 
 JAR = "midpath.jar"
+
+do_configure() {
+  mv ${WORKDIR}/configuration.cfg ${S}/configuration/com/sun/midp/configuration/
+}
 
 do_compile() {
   midpath_build \
@@ -46,12 +54,13 @@ do_compile() {
 do_install() {
   oe_libinstall -C dist -so libavetanabtcldc ${D}${libdir_jni}
 
-	install -d ${D}${datadir}/midpath
-	install -m 0644 dist/${JAR} ${D}${datadir}/midpath
-	install -m 0644 dist/microbackend.jar ${D}${datadir}/midpath
-	install -m 0644 dist/avetanabt-cldc.jar ${D}${datadir}/midpath
-	install -m 0644 dist/jorbis-cldc.jar ${D}${datadir}/midpath
-	install -m 0644 dist/jlayerme-cldc.jar ${D}${datadir}/midpath
+  install -d ${D}${datadir}/midpath
+  cp -R configuration ${D}${datadir}/midpath
+  install -m 0644 dist/${JAR} ${D}${datadir}/midpath
+  install -m 0644 dist/microbackend.jar ${D}${datadir}/midpath
+  install -m 0644 dist/avetanabt-cldc.jar ${D}${datadir}/midpath
+  install -m 0644 dist/jorbis-cldc.jar ${D}${datadir}/midpath
+  install -m 0644 dist/jlayerme-cldc.jar ${D}${datadir}/midpath
 
   install -d ${D}${bindir}
   install -m 0755 ${WORKDIR}/midpath-launcher-j2se ${D}${bindir}
@@ -62,15 +71,6 @@ do_install() {
 
   install -d ${D}${datadir}/pixmaps
   install -m 0644 ${WORKDIR}/midpath.png ${D}${datadir}/pixmaps
-}
-
-do_stage() {
-	install -d ${STAGING_DATADIR}/midpath
-	install -m 0644 dist/${JAR} ${STAGING_DATADIR}/midpath
-	install -m 0644 dist/microbackend.jar ${STAGING_DATADIR}/midpath
-	install -m 0644 dist/avetanabt-cldc.jar ${STAGING_DATADIR}/midpath
-	install -m 0644 dist/jorbis-cldc.jar ${STAGING_DATADIR}/midpath
-	install -m 0644 dist/jlayerme-cldc.jar ${STAGING_DATADIR}/midpath
 }
 
 PACKAGES = "${PN}-bluetooth ${PN}-bluetooth-jni ${PN}-bluetooth-jni-dbg ${PN}-mp3 ${PN}-ogg ${PN}"
@@ -84,11 +84,14 @@ FILES_${PN}-ogg = "${datadir}/midpath/jorbis-cldc.jar"
 
 FILES_${PN} = "\
   ${datadir}/midpath/*.jar \
+  ${datadir}/midpath/configuration \
   ${datadir}/applications \
   ${datadir}/pixmaps \
   ${bindir} \
 	"
 
-
 SRC_URI[md5sum] = "d03cd88f51f82bbcfcfa5b65df0da5b0"
 SRC_URI[sha256sum] = "e235ca7470e7cdfb90e3806fbcc1b2c450db286276136a2523c7ae26a804a100"
+
+SRC_URI[patch.md5sum] = "31d8e20f9d89fd77e9c855bfefc58c22"
+SRC_URI[patch.sha256sum] = "5fadd05567ed95c4012ba1685344a34ee73c67016cfab43b0db5a1508f4c22da"

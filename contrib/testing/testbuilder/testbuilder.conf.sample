@@ -1,0 +1,63 @@
+# Testbuilder config
+
+### NOTES
+# 0. For first time setup look into end of file for "Misc dirs"
+# 1. You can prefix any word in following 'list' variables
+# with '!' do disable it.
+# 2. All lists items will be processed in order they appears in list
+
+### Common options
+
+## STAGES: what TB should do
+# update_bb - update bitbake git tree
+# update_oe - update OE git tree
+# run_builds - run builds
+STAGES="update_bb update_oe !run_builds"
+
+## ACCOUNTING: account some useful things
+# df - log free disk space
+# ps - log processes count
+# vmstat - log vm statistics
+ACCOUNTING="!df !ps !vmstat"
+# Accounting interval (seconds)
+ACCOUNTING_INTERVAL="10"
+
+# Build every image by separate bitbake invocation (lower peak disk usage)
+#SEPARATE_BUILD="yes"
+# Build all images by single bitbake invocation (slightly faster)
+SEPARATE_BUILD="no"
+
+# Number of parallel bitbake threads
+BB_NUMBER_THREADS=2
+# Number of parallel make threads inside one bitbake thread (-j)
+MAKE_NUMBER_THREADS=2
+
+# Bitbake cmdline options
+#BB_OPTS='-k'
+
+# Direct build invocation shell variables (-S option)
+# PS1 for shell mode
+TB_PS1="[TB] "
+# Use bash with --norc to disable overriding PS1
+TB_SHELL='/bin/bash --norc'
+# Use $SHELL variable or fallback to /bin/sh
+#TB_SHELL=${SHELL:-'/bin/sh'}
+
+# Name for oestats-client and wiki tables
+TB_BUILDER=""
+
+# Build host distro
+HOST_DISTRO=""
+# Build host machine (CPU/RAM)
+HOST_MACHINE=""
+
+# Misc dirs
+TB_BASE=`pwd`
+BB_DIR="${TB_BASE}/bitbake"
+OE_DIR="${TB_BASE}/openembedded"
+DL_DIR="${TB_BASE}/sources"
+BLD_DIR="${TB_BASE}/build"
+LOG_DIR="${TB_BASE}/logs"
+CLN_DIR="/var/tmp/tb-clean-build"	# TMPDIR for clean builds
+INC_DIR="${BLD_DIR}"	# Top dir for incremental builds archive
+

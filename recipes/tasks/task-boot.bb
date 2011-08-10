@@ -1,5 +1,5 @@
 DESCRIPTION = "Basic task to get a device booting"
-PR = "r52"
+PR = "r53"
 
 inherit task
 
@@ -17,7 +17,7 @@ MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS ?= ""
 # u-a script used for building image which is defined with
 # PREFERRED_PROVIDER_virtual/update-alternatives-native
 
-DISTRO_UPDATE_ALTERNATIVES ?= "${PREFERRED_PROVIDER_virtual/update-alternatives}"
+DISTRO_UPDATE_ALTERNATIVES ?= "${@base_conditional("ONLINE_PACKAGE_MANAGEMENT", "none", "", "${PREFERRED_PROVIDER_virtual/update-alternatives}", d)}"
 
 # Make sure we build the kernel
 DEPENDS = "virtual/kernel"

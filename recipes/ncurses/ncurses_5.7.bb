@@ -2,44 +2,58 @@ DESCRIPTION = "Ncurses library"
 HOMEPAGE = "http://www.gnu.org/software/ncurses/ncurses.html"
 LICENSE = "MIT"
 SECTION = "libs"
-PATCHDATE = "20100501"
-PKGV = "${PV}+${PATCHDATE}"
-PR = "r11"
+PATCHDATE = "20110115"
+PV = "5.7+${PATCHDATE}"
+PR = "r16"
 
 DEPENDS = "ncurses-native unifdef-native"
 DEPENDS_virtclass-native = "unifdef-native"
 
 inherit autotools binconfig test
 
-SRC_URI = "${GNU_MIRROR}/ncurses/ncurses-${PV}.tar.gz;name=tarball \
-        ftp://invisible-island.net/ncurses/5.7/ncurses-5.7-20100424-patch.sh.bz2;apply=yes;name=p20100424sh \
+SRC_URI = "${GNU_MIRROR}/ncurses/ncurses-5.7.tar.gz;name=tarball \
+        ftp://invisible-island.net/ncurses/5.7/ncurses-5.7-20110108-patch.sh.bz2;apply=yes;name=p20110108sh \
 \
-        ftp://invisible-island.net/ncurses/5.7/ncurses-5.7-${PATCHDATE}.patch.gz;name=p20100501 \
+        ftp://invisible-island.net/ncurses/5.7/ncurses-5.7-${PATCHDATE}.patch.gz;name=p${PATCHDATE} \
         file://tic-hang.patch \
+        file://config.cache \
 "
 
 SRC_URI[tarball.md5sum] = "cce05daf61a64501ef6cd8da1f727ec6"
 SRC_URI[tarball.sha256sum] = "0a9bdea5c7de8ded5c9327ed642915f2cc380753f12d4ad120ef7da3ea3498f4"
-SRC_URI[p20100424sh.md5sum] = "3a5f76613f0f7ec3e0e73b835bc24864"
-SRC_URI[p20100424sh.sha256sum] = "1e9d70d2d1fe1fea471868832c52f1b9cc6065132102e49e2a3755f2f4f5be53"
-SRC_URI[p20100501.md5sum] = "6518cfa5d45e9069a1e042468161448b"
-SRC_URI[p20100501.sha256sum] = "a97ccc30e4bd6fbb89564f3058db0fe84bd35cfefee831556c500793b477abde"
+SRC_URI[p20110108sh.md5sum] = "ccc7b56c5b4e99d40aa2d3bb7a08f4c6"
+SRC_URI[p20110108sh.sha256sum] = "814a23f0bf4e60ff177ee4dca82be0b94c81daa9dfb59a145e7213718d6f0d97"
+SRC_URI[p20110115.md5sum] = "811cd49a8666395092383f1d0bb66e05"
+SRC_URI[p20110115.sha256sum] = "1992e8149ba11cbabe6d699407de40cbdc49f61db76655d8a06ae0ac5229634e"
+
+FILESPATHPKG =. "${BPN}-5.7:"
+S = "${WORKDIR}/${BPN}-5.7"
 
 PARALLEL_MAKE = ""
 EXTRA_AUTORECONF = "-I m4"
+CONFIG_SITE =+ "${WORKDIR}/config.cache"
 
 # Whether to enable separate widec libraries; must be 'true' or 'false'
+#
+# TODO: remove this variable when widec is supported in every setup?
 ENABLE_WIDEC = "true"
-# Build breaks on Ubuntu else :(
-ENABLE_WIDEC_virtclass-native = "false"
 
+# _GNU_SOURCE is required for widec stuff and is detected automatically
+# for target objects.  But it must be set manually for native and sdk
+# builds.
+BUILD_CPPFLAGS += "-D_GNU_SOURCE"
 
 # Override the function from the autotools class; ncurses requires a
 # patched autoconf213 to generate the configure script. This autoconf
 # is not available so that the shipped script will be used.
 do_configure() {
+        # check does not work with cross-compiling and is generally
+        # broken because it requires stdin to be pollable (which is
+        # not the case for /dev/null redirections)
+        export cf_cv_working_poll=yes
+
         for i in \
-        'narrowc --with-ticlib' \
+        'narrowc' \
         'widec   --enable-widec --without-progs'; do
                 set -- $i
                 mkdir -p $1
@@ -50,6 +64,7 @@ do_configure() {
                         --disable-static \
                         --without-debug \
                         --without-ada \
+                        --without-gpm \
                         --enable-hard-tabs \
                         --enable-xmc-glitch \
                         --enable-colorfgbg \
@@ -58,14 +73,16 @@ do_configure() {
                         --with-shared \
                         --disable-big-core \
                         --program-prefix= \
+                        --with-ticlib \
                         --with-termlib=tinfo \
                         --enable-sigwinch \
                         --enable-pc-files \
+                        --disable-rpath-hack \
                         --with-build-cc="${BUILD_CC}" \
                         --with-build-cpp="${BUILD_CPP}" \
                         --with-build-ld="${BUILD_LD}" \
                         --with-build-cflags="${BUILD_CFLAGS}" \
-                        --with-build-cppflags='${BUILD_CPPFLAGS} -D_GNU_SOURCE' \
+                        --with-build-cppflags='${BUILD_CPPFLAGS}' \
                         --with-build-ldflags='${BUILD_LDFLAGS}' \
                         "$@"
                 cd ..
@@ -148,11 +165,30 @@ do_install() {
                 mv ${D}${bindir}/clear ${D}${bindir}/clear.${PN}
                 mv ${D}${bindir}/reset ${D}${bindir}/reset.${PN}
         fi
+
+
+        # create linker scripts for libcurses.so and libncurses to
+        # link against -ltinfo when needed. Some builds might break
+        # else when '-Wl,--no-copy-dt-needed-entries' has been set in
+        # linker flags.
+        for i in libncurses libncursesw; do
+                f=${D}${libdir}/$i.so
+                test -h $f || continue
+                rm -f $f
+                echo '/* GNU ld script */'  >$f
+                echo "INPUT($i.so.5 AS_NEEDED(-ltinfo))" >>$f
+        done
+
+        # create libtermcap.so linker script for backward compatibility
+        f=${D}${libdir}/libtermcap.so
+        echo '/* GNU ld script */' >$f
+        echo 'INPUT(AS_NEEDED(-ltinfo))' >>$f
 }
 
 python populate_packages_prepend () {
         libdir = bb.data.expand("${libdir}", d)
-        do_split_packages(d, libdir, '^lib(.*)\.so\..*', 'ncurses-lib%s', 'ncurses %s library', prepend=True, extra_depends = '', allow_links=True)
+        pnbase = bb.data.expand("${PN}-lib%s", d)
+        do_split_packages(d, libdir, '^lib(.*)\.so\..*', pnbase, 'ncurses %s library', prepend=True, extra_depends = '', allow_links=True)
 }
 
 
@@ -172,27 +208,21 @@ pkg_prerm_ncurses-tools () {
 
 BBCLASSEXTEND = "native sdk"
 
-PACKAGES = " \
-  ncurses-dbg \
-  ncurses-dev \
-  ncurses-doc \
-  ncurses-tools \
-  ncurses \
-  ncurses-static \
-  ncurses-terminfo \
+PACKAGES += " \
+  ${PN}-tools \
+  ${PN}-terminfo \
+  ${PN}-terminfo-base \
 "
-RSUGGESTS_${PN} = "ncurses-terminfo"
 
 FILES_${PN} = "\
   ${bindir}/tput \
   ${bindir}/tset \
   ${datadir}/tabset \
-  ${sysconfdir}/terminfo \
 "
 
 # This keeps only tput/tset in ncurses
 # clear/reset are in already busybox
-FILES_ncurses-tools = "\
+FILES_${PN}-tools = "\
   ${bindir}/tic \
   ${bindir}/toe \
   ${bindir}/infotocap \
@@ -203,7 +233,16 @@ FILES_ncurses-tools = "\
   ${bindir}/tack \
   ${bindir}/tabs \
 "
+# 'reset' is a symlink to 'tset' which is in the 'ncurses' package
+RDEPENDS_${PN}-tools = "${PN}"
 
-FILES_ncurses-terminfo = "\
+FILES_${PN}-terminfo = "\
   ${datadir}/terminfo \
 "
+
+FILES_${PN}-terminfo-base = "\
+  ${sysconfdir}/terminfo \
+"
+
+RSUGGESTS_${PN}-libtinfo = "${PN}-terminfo"
+RRECOMMENDS_${PN}-libtinfo = "${PN}-terminfo-base"

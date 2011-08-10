@@ -1,6 +1,7 @@
 DESCRIPTION = "Various uboot scripts"
+LICENSE = "MIT"
 
-PR = "r10"
+PR = "r11"
 
 DEPENDS = "u-boot-mkimage-native"
 

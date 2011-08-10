@@ -1,5 +1,2 @@
-This branch is for the ads127x ADC driver project.
-
-The branch is based on my minimal branch with patches to the
-in-tree McBSP driver code needed for the ads127x driver.
+This branch is for the Hyperion ads127x ADC driver project.
 

@@ -15,10 +15,8 @@ RDEPENDS_${PN} += " \
 
 # Browsers know to work on all archs
 RDEPENDS_${PN} += " \
-         gpe-mini-browser \
          midori \
 	 minimo \
-         openmoko-browser2 \
 	 webkit-gtklauncher \
          "
 

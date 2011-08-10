@@ -4,9 +4,7 @@ LICENSE = "AL2.0 LGPL2.1"
 AUTHOR = "Codehaus"
 HOMEPAGE = "http://woodstox.codehaus.org"
 
-SRC_URI = "http://woodstox.codehaus.org/2.0.6/wstx-src.tar.gz"
-
-S = "${WORKDIR}"
+SRC_URI = "http://woodstox.codehaus.org/2.0.6/wstx-src.tar.gz;subdir=${BPN}-${PV}"
 
 inherit java-library
 
@@ -19,7 +17,7 @@ do_compile() {
 		`find src/java/org -name "*.java"` \
 		`find src/java/com -name "*.java"`
 
-  cp -r src/resources/* build/META-INF/services
+  cp -R src/resources/* build/META-INF/services
 
   fastjar -C build -c -f ${JARFILENAME} .
 }

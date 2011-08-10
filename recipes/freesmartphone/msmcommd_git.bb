@@ -1,20 +1,34 @@
-DESCRIPTION = "Low level protocol implementation for binary protocol spoken by some Qualcomm modems"
-HOMEPAGE = "http://www.freesmartphone.org"
-AUTHOR = "Simon Busch <morphis@gravedo.de>"
-SECTION = "console/network"
-LICENSE = "GPL"
-DEPENDS = "libgee libfsotransport gtk+"
-SRCREV = "91ea329fd3be68d031c61a587c6c0036b94cf2cd"
-PV = "0.1.0+gitr${SRCPV}"
-PR = "r2"
-PE = "1"
+require msmcomm.inc
 
-SRC_URI = "${FREESMARTPHONE_GIT}/msmcomm.git;protocol=git;branch=master"
-S = "${WORKDIR}/git"
+PR = "${INC_PR}.3"
+PV = "0.6.0+gitr${SRCPV}"
 
-inherit autotools vala
+DEPENDS = " \
+ vala-native \
+ glib-2.0 \
+ libfso-glib \
+ libfsotransport \
+ libgee \
+ libmsmcomm \
+ msmcomm-specs \
+"
 
-PACKAGES =+ "${PN}-lib ${PN}-term"
-FILES_${PN}-lib = "${libdir}/lib*.so.*"
-FILES_${PN}-term = "${sbindir}/msmvterm"
+SRC_URI += "file://msmcommd"
+
+S = "${WORKDIR}/git/msmcommd"
+
+inherit autotools vala update-rc.d
+
+INITSCRIPT_NAME = "msmcommd"
+INITSCRIPT_PARAMS = "defaults 28"
+
+do_install_append() {
+	install -d ${D}${sysconfdir}/init.d/
+	install -m 0755 ${WORKDIR}/msmcommd ${D}${sysconfdir}/init.d/
+}
+
+FILES_${PN} += "\
+  ${sysconfdir} \
+  ${datadir}/dbus-1 \
+"
 

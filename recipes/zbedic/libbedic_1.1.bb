@@ -7,11 +7,12 @@ LICENSE = "GPL"
 DEPENDS = "sqlite3"
 APPTYPE = "binary"
 APPDESKTOP = "${WORKDIR}/zbedic/misc"
-PR = "r4"
+FILESPATHPKG .= ":zbedic"
+PR = "r5"
 
-SRC_URI = "${SOURCEFORGE_MIRROR}/bedic/libbedic_${PV}-0.tgz"
-
-S = "${WORKDIR}"
+SRC_URI = "${SOURCEFORGE_MIRROR}/bedic/libbedic_${PV}-0.tgz;subdir=${BPN}-${PV} \
+           file://include-cstdio.patch \
+          "
 
 inherit palmtop
 # need to override this, because bedic contains exception handling

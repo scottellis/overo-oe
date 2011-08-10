@@ -1,0 +1,11 @@
+--- mplayer/libao2/ao_alsa.c-orig	2010-09-22 15:16:51.000000000 -0700
++++ mplayer/libao2/ao_alsa.c	2010-09-23 07:43:05.000000000 -0700
+@@ -637,7 +637,7 @@ static int init(int rate_hz, int channel
+ 	       snd_strerror(err));
+ 	return 0;
+       }
+-#if SND_LIB_VERSION >= 0x000901
++#if 0
+       /* play silence when there is an underrun */
+       if ((err = snd_pcm_sw_params_set_silence_size(alsa_handler, alsa_swparams, boundary)) < 0) {
+ 	mp_msg(MSGT_AO,MSGL_ERR,MSGTR_AO_ALSA_UnableToSetSilenceSize,

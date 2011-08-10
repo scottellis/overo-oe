@@ -16,6 +16,7 @@ PROVIDES = "udev-compat"
 
 # Need udev with udev-compat-wrapper support and nothing else.
 RDEPENDS_${PN} = "udev-compat-wrapper"
+
 # Remove hotplug RPROVIDES
 RPROVIDES_${PN} = "udev-compat"
 
@@ -29,7 +30,7 @@ EXTRA_OECONF += "--enable-static"
 do_install_append () {
 	mv ${D}${base_sbindir}/udevd ${D}${base_sbindir}/udevd-compat
 	mv ${D}${base_sbindir}/udevadm ${D}${base_sbindir}/udevadm-compat
-	rm -r ${D}${datadir} ${D}${base_libdir} ${D}${libdir} ${D}${includedir} ${D}${sysconfdir}
+	rm -rf ${D}${datadir} ${D}${base_libdir} ${D}${libdir} ${D}${includedir} ${D}${sysconfdir}
 	rmdir ${D}${prefix} 2>/dev/null || true
 }
 

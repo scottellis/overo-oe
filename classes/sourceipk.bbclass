@@ -14,6 +14,9 @@
 #   - SRCIPK_PACKAGE_ARCH   = This variable allows specific recipies to
 #                             specify an architecture for the sourcetree
 #                             package is "all" is not appropriate
+#   - SRCIPK_INC_EXTRAFILES = When set to 1 this variable indicates that
+#                             the source ipk should contain extra files
+#                             such as the README file and recipe.
 #
 # The default installation directory for the sources is:
 #   /usr/src/${PN}-src
@@ -28,13 +31,13 @@
 # CREATE_SRCIPK_pn-<package name> = "1" in your local.conf
 #
 #TODO: 
-# Need to figure out how to use ipkg-build in this class.
+# Need to figure out how to use opkg-build in this class.
 # I tried adding it as a dependency for the do_create_srcipk
 # task using:
-#   do_create_srcipk[depends] += "ipkg-utils-native:do_populate_sysroot"
+#   do_create_srcipk[depends] += "opkg-utils-native:do_populate_sysroot"
 # But then there is a circular dependency between sourcipk.bbclass and
-# ipkg-utils-native.  Until I can figure out how to resolve this
-# circular dependency I am extracting the needed pieces from ipkg-build
+# opkg-utils-native.  Until I can figure out how to resolve this
+# circular dependency I am extracting the needed pieces from opkg-build
 # into this class and building the source ipk myself.
 
 
@@ -46,6 +49,9 @@ SRCIPK_INSTALL_DIR ?= "/usr/src/${PN}-src"
 
 # Default PACKAGE_ARCH for sources is "all"
 SRCIPK_PACKAGE_ARCH ?= "all"
+
+# Default SRCIPK_INCLUDE_EXTRAFILES is to include the extra files
+SRCIPK_INCLUDE_EXTRAFILES ?= "1"
 
 # Create a README file that describes the contents of the source ipk
 sourceipk_create_readme() {
@@ -86,12 +92,11 @@ sourceipk_do_create_srcipk() {
         echo "License: ${LICENSE}" >> $control_file
         echo "Architecture: ${SRCIPK_PACKAGE_ARCH}" >> $control_file
         srcuri="${SRC_URI}"
-        if [ "$srcuri" == "" ]
+        if [ "$srcuri" = "" ]
         then
             srcuri="OpenEmbedded"
         fi
         echo "Source: $srcuri" >> $control_file
-
         #Write the control tarball
         tar -C $tmp_dir/CONTROL --owner=0 --group=0 -czf $srcipk_dir/control.tar.gz .
 
@@ -100,9 +105,23 @@ sourceipk_do_create_srcipk() {
 
         # Copy sources for packaging
         mkdir -p $tmp_dir/${SRCIPK_INSTALL_DIR}
-        cp -rLf ${S}/* $tmp_dir/${SRCIPK_INSTALL_DIR}/
-        sourceipk_create_readme $tmp_dir/${SRCIPK_INSTALL_DIR}/
-        cp ${FILE} $tmp_dir/${SRCIPK_INSTALL_DIR}/
+        cp -RLf ${S}/* $tmp_dir/${SRCIPK_INSTALL_DIR}/
+        # Copy any hidden files in the source directory such as
+        # eclipse project files.  Use a regex to avoid trying to
+        # copy the . and .. directories.  This is only required for
+        # the top-level directory as the hidden files will be copied
+        # for subdiretories.
+        hidden_files=`find ${S} -maxdepth 1 -name ".*"`
+        for f in $hidden_files
+        do
+            cp -rf $f $tmp_dir/${SRCIPK_INSTALL_DIR}/
+        done
+
+        if [ ${SRCIPK_INCLUDE_EXTRAFILES} != "0" ]
+        then
+            sourceipk_create_readme $tmp_dir/${SRCIPK_INSTALL_DIR}/
+            cp ${FILE} $tmp_dir/${SRCIPK_INSTALL_DIR}/
+        fi
 
         #Write the data tarball
         tar -C $tmp_dir --owner=0 --group=0 -czf $srcipk_dir/data.tar.gz .
@@ -125,7 +144,18 @@ EXPORT_FUNCTIONS do_create_srcipk
 
 do_create_srcipk[deptask] = "do_patch"
 
-addtask create_srcipk after do_patch before do_configure
+# Add a blank compileconfigs task.  This allows the sourceipk to schedule
+# its copy of the sources for kernels using the multi-kernel functionality
+# before the compileconfigs task.  Failure to do this results in a race
+# condition where in the best case the sources packaged may contain binary
+# builds and in the worst case binary files being cleaned cause an error
+# in the copy command for the sourceipk.
+do_compileconfigs() {
+    :
+}
+addtask compileconfigs after do_patch before do_configure
+
+addtask create_srcipk after do_patch before do_compileconfigs
 
 #Add source packages to list of packages OE knows about
 PACKAGES_DYNAMIC += "${PN}-src"

@@ -5,7 +5,7 @@ ARM_INSTRUCTION_SET = "arm"
 PACKAGES_DYNAMIC = "libc6*"
 RPROVIDES_${PN}-dev = "libc6-dev virtual-libc-dev"
 
-PR = "${INC_PR}.3"
+PR = "${INC_PR}.4"
 
 # the -isystem in bitbake.conf screws up glibc do_stage
 BUILD_CPPFLAGS = "-I${STAGING_INCDIR_NATIVE}"
@@ -63,6 +63,7 @@ SRC_URI = "ftp://ftp.gnu.org/pub/gnu/glibc/glibc-${PV}.tar.bz2;name=archive \
 	   file://glibc-2.9-use-_begin.patch \
            file://arm-lowlevellock-include-tls.patch \
            file://glibc-2.9-enable-binutils-2.2.patch \
+           file://0001-Don-t-mix-pattern-rules-with-normal-rules.patch \
            "
 
 # patches to fix libmemusage.so
@@ -70,6 +71,8 @@ SRC_URI_append = " file://0001-malloc-memusage.c-update_data-Fix-handling-of-wra
                    file://0002-malloc-memusage.c-DEFAULT_BUFFER_SIZE-Change-to-3276.patch \
                    file://0003-Fix-wrap-around-in-memusage.patch "
 
+
+SRC_URI_append_angstrom = "file://neon-memcpy.patch"
 
 # Build fails on sh3 and sh4 without additional patches
 SRC_URI_append_sh3 = " file://no-z-defs.patch \
@@ -91,7 +94,7 @@ EXTRA_OECONF = "--enable-kernel=${OLDEST_KERNEL} \
 		--without-selinux \
 		${GLIBC_EXTRA_OECONF}"
 
-EXTRA_OECONF += "${@get_glibc_fpu_setting(bb, d)}"
+EXTRA_OECONF += "${@get_libc_fpu_setting(bb, d)}"
 
 do_munge() {
 	# Integrate ports and libidn into tree
