@@ -1,0 +1,62 @@
+diff --git git/arch/arm/mach-omap2/board-overo.c-orig git/arch/arm/mach-omap2/board-overo.c
+index 9ee600c..591fcbc 100644
+--- git/arch/arm/mach-omap2/board-overo.c-orig
++++ git/arch/arm/mach-omap2/board-overo.c
+@@ -223,26 +223,6 @@ static inline void __init overo_init_smsc911x(void) { return; }
+ static int lcd_enabled;
+ static int dvi_enabled;
+ 
+-#define OVERO_GPIO_LCD_EN 144
+-#define OVERO_GPIO_LCD_BL 145
+-
+-static void __init overo_display_init(void)
+-{
+-	if ((gpio_request(OVERO_GPIO_LCD_EN, "OVERO_GPIO_LCD_EN") == 0) &&
+-	    (gpio_direction_output(OVERO_GPIO_LCD_EN, 1) == 0))
+-		gpio_export(OVERO_GPIO_LCD_EN, 0);
+-	else
+-		printk(KERN_ERR "could not obtain gpio for "
+-					"OVERO_GPIO_LCD_EN\n");
+-
+-	if ((gpio_request(OVERO_GPIO_LCD_BL, "OVERO_GPIO_LCD_BL") == 0) &&
+-	    (gpio_direction_output(OVERO_GPIO_LCD_BL, 1) == 0))
+-		gpio_export(OVERO_GPIO_LCD_BL, 0);
+-	else
+-		printk(KERN_ERR "could not obtain gpio for "
+-					"OVERO_GPIO_LCD_BL\n");
+-}
+-
+ static int overo_panel_enable_dvi(struct omap_dss_device *dssdev)
+ {
+ 	if (lcd_enabled) {
+@@ -277,21 +257,11 @@ static struct omap_dss_device overo_tv_device = {
+ 
+ static int overo_panel_enable_lcd(struct omap_dss_device *dssdev)
+ {
+-	if (dvi_enabled) {
+-		printk(KERN_ERR "cannot enable LCD, DVI is enabled\n");
+-		return -EINVAL;
+-	}
+-
+-	gpio_set_value(OVERO_GPIO_LCD_EN, 1);
+-	gpio_set_value(OVERO_GPIO_LCD_BL, 1);
+-	lcd_enabled = 1;
+-	return 0;
++	return -EINVAL;
+ }
+ 
+ static void overo_panel_disable_lcd(struct omap_dss_device *dssdev)
+ {
+-	gpio_set_value(OVERO_GPIO_LCD_EN, 0);
+-	gpio_set_value(OVERO_GPIO_LCD_BL, 0);
+ 	lcd_enabled = 0;
+ }
+ 
+@@ -745,7 +715,6 @@ static void __init overo_init(void)
+ 	usb_ehci_init(&ehci_pdata);
+ 	overo_spi_init();
+ 	overo_init_smsc911x();
+-	overo_display_init();
+ 	overo_init_led();
+ 	overo_init_keys();
+ 

@@ -12,6 +12,10 @@ SRCREV = "83ae3fe304548ab234e73ec116554d7c3b8e2f91"
 SRC_URI = "git://www.sakoman.com/git/linux-omap-2.6.git;branch=omap-2.6.36;protocol=git \
 	   file://defconfig \
            file://${BOOT_SPLASH} \
+           file://no-lcd-gpio.patch \
+           file://omap-request-dma.patch \
+#           file://mcbsp-debug.patch \
+#           file://mcbsp-buff-debug.patch \
            "
 
 MUSB_MODE ?= "host"
