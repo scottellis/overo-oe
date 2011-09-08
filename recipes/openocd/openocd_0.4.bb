@@ -8,7 +8,7 @@ PR = "r0"
 DEPENDS = "libftdi"
 EXTRA_OECONF = " --enable-ft2232_libftdi --disable-werror --enable-maintainer-mode"
 
-SRC_URI = "git://openocd.git.sourceforge.net/gitroot/openocd/openocd;protocol=http;branch=master \
+SRC_URI = "git://openocd.git.sourceforge.net/gitroot/openocd/openocd;protocol=git;branch=master \
           file://make-include-path-relative.patch"
 S = "${WORKDIR}/git"
 
