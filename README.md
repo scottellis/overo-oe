@@ -30,13 +30,13 @@ some bug fixes to the 2.6.32-psp kernel ISP code.
 
 The patch can be found here
 
-	$(OVEROTOP)/org.openembedded.dev/recipes/linux/linux-omap-psp-2.6.32/mt9p031.patch
+	${OVEROTOP}/org.openembedded.dev/recipes/linux/linux-omap-psp-2.6.32/mt9p031.patch
 
 
 This OE branch specifies the linux-omap-psp kernel as the preferred virtual/kernel. This
 is done in 
 
-	$(OVEROTOP)/org.openembedded.dev/conf/machine/overo.conf
+	${OVEROTOP}/org.openembedded.dev/conf/machine/overo.conf
 
 So when you build the camera-test-image, things should build correctly unless you have
 overridden your kernel in local.conf. 
