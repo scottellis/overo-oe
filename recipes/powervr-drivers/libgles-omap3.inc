@@ -1,7 +1,9 @@
 DESCRIPTION = "libGLES for the omap3"
 LICENSE = "proprietary-binary"
+# 'TSPA.txt' might not be the best file to md5sum
+LIC_FILES_CHKSUM = "file://TSPA.txt;md5=c0d5d9c1e38b41677144c4e24d6ddee1"
 
-PR = "r15"
+PR = "r16"
 
 COMPATIBLE_MACHINE = "(omap3|ti816x)"
 
@@ -27,8 +29,6 @@ ES2LOCATION ?= "${S}/gfx_rel_es2.x"
 ES3LOCATION ?= "${S}/gfx_rel_es3.x"
 ES5LOCATION ?= "${S}/gfx_rel_es5.x"
 ES6LOCATION ?= "${S}/gfx_rel_es6.x"
-
-LIBGLESWINDOWSYSTEM ?= "libpvrPVR2D_FRONTWSEGL.so.1"
 
 do_configure() {
 	# Attempt to fix up the worst offenders for file permissions
@@ -154,7 +154,7 @@ do_install () {
 
 	install -d ${D}${sysconfdir}
 	echo "[default]" > ${D}${sysconfdir}/powervr.ini
-	echo "WindowSystem=${LIBGLESWINDOWSYSTEM}" >> ${D}${sysconfdir}/powervr.ini
+	echo "WindowSystem=libpvrPVR2D_FRONTWSEGL.so.1" >> ${D}${sysconfdir}/powervr.ini
 
 	# The ES2.x, ES3.x, ES5.x and ES6.x CPUs have different SGX hardware, so we need to install multiple sets of userspace
 
@@ -228,6 +228,8 @@ FILES_${PN}-linuxfbwsegl = "${libdir}/libpvrPVR2D_LINUXFBWSEGL.so.* ${libdir}/*/
 FILES_${PN}-x11wsegl = "${libdir}/libpvrPVR2D_X11WSEGL.so* ${libdir}/*/libpvrPVR2D_X11WSEGL.so*"
 
 CONFFILES_${PN} = "${sysconfdir}/powervr.ini"
+# 'cputype' uses /etc/init.d/functions
+RRECOMMENDS_${PN} += "initscripts"
 
 FILES_${PN} = "${sysconfdir} ${libdir}/lib*.so.* ${libdir}/ES*/* ${bindir}/pvrsrvinit ${bindir}/cputype ${bindir}/*/*"
 FILES_xserver-kdrive-powervrsgx = "${bindir}/Xsgx"
