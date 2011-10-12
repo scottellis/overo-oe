@@ -196,12 +196,9 @@ do_compile_omapzoom36x () {
         oe_runmake tools
 }
 
-SRC_URI_overo = "git://www.sakoman.com/git/u-boot.git;branch=omap4-exp;protocol=git \
-           file://overo-gpio10.patch \
-           file://overo-default-env.patch \
-"
-SRCREV_overo = "261733408a27d14590cf3ec6b596461808050e32"
-PV_overo = "2010.12+${PR}+gitr${SRCREV}"
+SRC_URI_overo = "git://www.sakoman.com/git/u-boot.git;branch=gnome-r13;protocol=git"
+SRCREV_overo = "4be3f92ac9abd019b60ec6a63ead29a528664ead"
+PV_overo = "2011.09+${PR}+gitr${SRCREV}"
 
 SRC_URI_omap4430-panda = "git://www.sakoman.com/git/u-boot.git;branch=omap4-exp;protocol=git \
                           file://fix-break-caused-by-new-binutils.patch \
