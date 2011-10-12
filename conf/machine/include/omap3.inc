@@ -4,7 +4,7 @@ TARGET_ARCH = "arm"
 require conf/machine/include/tune-cortexa8.inc
 
 # Increase this everytime you change something in the kernel
-MACHINE_KERNEL_PR = "r102"
+MACHINE_KERNEL_PR = "r103"
 
 KERNEL_IMAGETYPE = "uImage"
 
