@@ -39,7 +39,7 @@ TOOLS_INSTALL = " \
   fbset \
   fbset-modes \
   i2c-tools \
-  ksymoops \
+#  ksymoops \
   mkfs-jffs2 \
   mtd-utils \
   nano \
