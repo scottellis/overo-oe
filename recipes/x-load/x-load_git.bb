@@ -12,6 +12,8 @@ SRCREV = "04b1732220078d47c18a84cbafc52e45db71f13d"
 SRC_URI = "git://gitorious.org/x-loader/x-loader.git;branch=master;protocol=git \
            file://0001-Beagle-Rev-C5-support.patch \
           "
+SRCREV_overo = "358f33dcae0f7c57600b80b02dfce6147160aeb3"
+SRC_URI_overo = "git://www.sakoman.com/git/x-loader.git;branch=gnome-r13;protocol=git"
 
 XLOAD_MACHINE_beagleboard = "omap3530beagle_config"
 
