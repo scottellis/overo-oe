@@ -1,0 +1,22 @@
+diff --git git/drivers/media/video/mt9v032.c-orig git/drivers/media/video/mt9v032.c
+index a2dab8b..7d33576 100644
+--- git/drivers/media/video/mt9v032.c-orig
++++ git/drivers/media/video/mt9v032.c
+@@ -480,7 +480,7 @@ static int ioctl_s_ctrl(struct v4l2_int_device *s, struct v4l2_control *vc)
+ 		break;
+ 
+ 	case V4L2_CID_EXPOSURE:
+-		lvc = &mt9v032_controls[2];
++		lvc = &mt9v032_controls[0];
+ 
+ 		if (vc->value < lvc->minimum || vc->value > lvc->maximum)
+ 			return -EINVAL;
+@@ -499,7 +499,7 @@ static int ioctl_s_ctrl(struct v4l2_int_device *s, struct v4l2_control *vc)
+ 		break;
+ 
+ 	case V4L2_CID_GAIN:
+-		lvc = &mt9v032_controls[3];
++		lvc = &mt9v032_controls[2];
+ 
+ 		if (vc->value < lvc->minimum || vc->value > lvc->maximum)
+ 			return -EINVAL;

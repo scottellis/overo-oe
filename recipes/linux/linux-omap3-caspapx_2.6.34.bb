@@ -16,6 +16,8 @@ SRC_URI = "git://www.sakoman.com/git/linux-omap-2.6.git;branch=omap3-2.6.34;prot
 	   file://defconfig \
            file://mt9v032-2.6.34.patch \
            file://mt9v032-queryctl-ordering.patch \
+           file://mt9v032-correct-bad-ioctl-indexing.patch \
+           file://mt9v032-increase-max-exposure.patch \
            file://${BOOT_SPLASH} \
            "
 

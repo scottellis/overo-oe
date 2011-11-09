@@ -1,0 +1,13 @@
+diff --git git/drivers/media/video/mt9v032.c-orig git/drivers/media/video/mt9v032.c
+index 7d33576..68c8560 100644
+--- git/drivers/media/video/mt9v032.c-orig
++++ git/drivers/media/video/mt9v032.c
+@@ -125,7 +125,7 @@ static const struct v4l2_queryctrl mt9v032_controls [] = {
+ 		.type			= V4L2_CTRL_TYPE_INTEGER,
+ 		.name			= "Exposure",
+ 		.minimum		= 2,
+-		.maximum		= 480,
++		.maximum		= 566,
+ 		.step			= 1,
+ 		.default_value	= 480,
+ 		.flags			= V4L2_CTRL_FLAG_SLIDER,
