@@ -1,7 +1,8 @@
 LICENSE = "GPLv2"
 DEPENDS = "libxml-simple-perl-native"
 PR = "r1"
-SRC_URI = "http://tango.freedesktop.org/releases/icon-naming-utils-${PV}.tar.gz"
+#SRC_URI = "http://tango.freedesktop.org/releases/icon-naming-utils-${PV}.tar.gz"
+SRC_URI = "http://cumulus.gumstix.org/sources/icon-naming-utils-${PV}.tar.gz"
 
 S = "${WORKDIR}/icon-naming-utils-${PV}"
 
