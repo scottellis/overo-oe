@@ -1,4 +1,4 @@
-ANGSTROM_QT_VERSION ?= "4.6.3"
+ANGSTROM_QT_VERSION ?= "4.7.1"
 CE_VERSION ?= "latest"
 
 require conf/distro/include/angstrom-codec-engine-${CE_VERSION}-preferred-versions.inc
