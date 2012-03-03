@@ -11,5 +11,6 @@ require qt-${PV}.inc
 QT_CONFIG_FLAGS += " \
  -no-embedded \
  -xrandr \
- -x11"
+ -x11 \
+ -no-iconv"
 
