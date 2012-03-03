@@ -1,0 +1,94 @@
+diff --git git/drivers/media/video/mt9v032.c-orig git/drivers/media/video/mt9v032.c
+index 68c8560..2b417da 100644
+--- git/drivers/media/video/mt9v032.c-orig
++++ git/drivers/media/video/mt9v032.c
+@@ -286,47 +286,67 @@ static int mt9v032_configure(struct mt9v032_sensor *sensor)
+ 	reg_write(sensor, MT9V032_VERTICAL_BLANKING, vertical_blanking);
+ 
+ 	/* Set snapshot mode on startup */
+-	sensor->chip_control = reg_read(sensor, MT9V032_CHIP_CONTROL) | MT9V032_SNAPSHOT_MODE;
++	sensor->chip_control = 
++		reg_read(sensor, MT9V032_CHIP_CONTROL) | MT9V032_SNAPSHOT_MODE;
++
+ 	reg_write(sensor, MT9V032_CHIP_CONTROL, sensor->chip_control);
+ 
+-	/* Find the max shutter width - this will be the default if auto exposure is disabled */
+-	window_height = reg_read(sensor, MT9V032_WINDOW_HEIGHT);
+-	sensor->shutter = window_height + vertical_blanking - 2;
++	/* Use default or user specified shutter */
+ 	reg_write(sensor, MT9V032_TOTAL_SHUTTER_WIDTH, sensor->shutter);
+ 
+ 	/* Set sensor operation mode */
+ 	sensor->pixel_mode = reg_read(sensor, MT9V032_PIXEL_OPERATION_MODE);
+-	if (hdr) sensor->pixel_mode |= MT9V032_HIGH_DYNAMIC_RANGE;
+-	else sensor->pixel_mode &= ~MT9V032_HIGH_DYNAMIC_RANGE;
++
++	if (hdr) 
++		sensor->pixel_mode |= MT9V032_HIGH_DYNAMIC_RANGE;
++	else 
++		sensor->pixel_mode &= ~MT9V032_HIGH_DYNAMIC_RANGE;
++
+ 	reg_write(sensor, MT9V032_PIXEL_OPERATION_MODE, sensor->pixel_mode);
+ 
+ 	/* Set read mode */
+ 	sensor->read_mode = reg_read(sensor, MT9V032_READ_MODE);
+-	if (vflip) sensor->read_mode |= MT9V032_VERTICAL_FLIP;
+-	else sensor->read_mode &= ~MT9V032_VERTICAL_FLIP;
+-	if (hflip) sensor->read_mode |= MT9V032_HORIZONTAL_FLIP;
+-	else sensor->read_mode &= ~MT9V032_HORIZONTAL_FLIP;
++
++	if (vflip) 
++		sensor->read_mode |= MT9V032_VERTICAL_FLIP;
++	else 
++		sensor->read_mode &= ~MT9V032_VERTICAL_FLIP;
++
++	if (hflip) 
++		sensor->read_mode |= MT9V032_HORIZONTAL_FLIP;
++	else 
++		sensor->read_mode &= ~MT9V032_HORIZONTAL_FLIP;
++	
+ 	reg_write(sensor, MT9V032_READ_MODE, sensor->read_mode);
+ 
+ 	/* Enable AEC and AGC and set their values */
+ 	sensor->aec_agc_enable = reg_read(sensor, MT9V032_AEC_AGC_ENABLE);
+-	if (auto_exp) sensor->aec_agc_enable |= MT9V032_AUTO_EXPOSURE;
+-	else sensor->aec_agc_enable &= ~MT9V032_AUTO_EXPOSURE;
+-	if (auto_gain) sensor->aec_agc_enable |= MT9V032_AUTO_GAIN;
+-	else sensor->aec_agc_enable &= ~MT9V032_AUTO_GAIN;
++
++	if (auto_exp) 
++		sensor->aec_agc_enable |= MT9V032_AUTO_EXPOSURE;
++	else 
++		sensor->aec_agc_enable &= ~MT9V032_AUTO_EXPOSURE;
++
++	if (auto_gain) 
++		sensor->aec_agc_enable |= MT9V032_AUTO_GAIN;
++	else 
++		sensor->aec_agc_enable &= ~MT9V032_AUTO_GAIN;
++
+ 	reg_write(sensor, MT9V032_AEC_AGC_ENABLE, sensor->aec_agc_enable);
+ 
+ 	/* Enable companding */
+-	if (low_light) sensor->adc_mode = MT9V032_COMPANDING_ADC;
+-	else sensor->adc_mode = MT9V032_LINEAR_ADC;
++	if (low_light) 
++		sensor->adc_mode = MT9V032_COMPANDING_ADC;
++	else 
++		sensor->adc_mode = MT9V032_LINEAR_ADC;
++
+ 	reg_write(sensor, MT9V032_ADC_MODE_CONTROL, sensor->adc_mode);
+ 
+-	/* Set manual analog gain to its maximum */
+-	gain = reg_read(sensor, MT9V032_MAXIMUM_ANALOG_GAIN);
+-	reg_write(sensor, MT9V032_ANALOG_GAIN, gain);
+-	
+-	/* Increase the maximum total shutter width to improve performance in low light */
+-	reg_write(sensor, MT9V032_MAX_SHUTTER_WIDTH, 4*sensor->shutter);
++	/* Use default or user specified gain */
++	reg_write(sensor, MT9V032_ANALOG_GAIN, sensor->gain);
++
++	/* Manual says max is 2047. Not sure why this was chosen. */
++	reg_write(sensor, MT9V032_MAX_SHUTTER_WIDTH, 4 * 480);
+ 
+ 	return 0;
+ }
