@@ -4,12 +4,12 @@ DESCRIPTION = "Linux kernel for OMAP processors"
 KERNEL_IMAGETYPE = "uImage"
 
 BOOT_SPLASH ?= "logo_linux_clut224-generic.ppm"
-PV = "3.0"
+PV = "3.2"
 
 S = "${WORKDIR}/git"
 
-SRCREV = 946d9657fd4a095e08c261506c3e2e7ea06f5c7d
-SRC_URI = "git://www.sakoman.com/git/linux-omap-2.6.git;branch=omap-3.0-pm;protocol=git \
+SRCREV = 33128932803c3f8c35fe8dae257901deb60db2aa
+SRC_URI = "git://www.sakoman.com/git/linux-omap-2.6.git;branch=omap-3.2;protocol=git \
 	   file://defconfig \
            file://${BOOT_SPLASH} \
            "
