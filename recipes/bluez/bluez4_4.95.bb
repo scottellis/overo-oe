@@ -8,7 +8,7 @@ SRC_URI[md5sum] = "3e6e77ae06aad73bbedbabed3f0d508e"
 SRC_URI[sha256sum] = "795dc8eb45e07c7848c58e2f2d730a404179ecce3dd1cd7b822cdec5ea7b69c8"
 
 DEFAULT_PREFERENCE = "-1"
-DEFAULT_PREFERENCE_angstrom = "1"
+#DEFAULT_PREFERENCE_angstrom = "1"
 
 DEPENDS += "libsndfile1"
 
