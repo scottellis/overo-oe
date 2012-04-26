@@ -24,6 +24,7 @@ ANGSTROM_EXTRA_INSTALL ?= "\
     devmem2 \
     openssh-scp \
     kernel-modules \
+    wireless-tools \
     "
 
 FIRMWARE_INSTALL = " \
