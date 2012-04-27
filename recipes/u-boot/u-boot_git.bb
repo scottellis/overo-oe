@@ -196,7 +196,9 @@ do_compile_omapzoom36x () {
         oe_runmake tools
 }
 
-SRC_URI_overo = "git://www.sakoman.com/git/u-boot.git;branch=gnome-r13;protocol=git"
+SRC_URI_overo = "git://www.sakoman.com/git/u-boot.git;branch=gnome-r13;protocol=git \
+                 file://invoy-mux.patch \
+                "
 SRCREV_overo = "4be3f92ac9abd019b60ec6a63ead29a528664ead"
 PV_overo = "2011.09+${PR}+gitr${SRCREV}"
 
