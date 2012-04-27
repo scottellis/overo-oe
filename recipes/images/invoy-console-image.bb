@@ -18,6 +18,7 @@ TOOLS_INSTALL += "\
     libqtgui4 \
     libqtnetwork4 \
     qmake2 \
+    python \
     "
 
 ANGSTROM_EXTRA_INSTALL ?= "\
