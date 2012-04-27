@@ -1,4 +1,3 @@
-# caspa-qt-console-image
 # Console image for testing Gumstix Caspa module
 # Includes compiler tools, Qt, OpenCV dev and git
 # Doesn't do network setup, you'll have to do that manually.
@@ -18,6 +17,7 @@ TOOLS_INSTALL += "\
     libqtgui4 \
     libqtnetwork4 \
     qmake2 \
+    python \
     "
 
 ANGSTROM_EXTRA_INSTALL ?= "\
