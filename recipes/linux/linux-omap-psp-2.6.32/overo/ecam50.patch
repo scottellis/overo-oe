@@ -1,0 +1,56 @@
+diff --git git/arch/arm/mach-omap2/devices.c-orig git/arch/arm/mach-omap2/devices.c
+index 18ad931..7478eb0 100644
+--- git/arch/arm/mach-omap2/devices.c-orig
++++ git/arch/arm/mach-omap2/devices.c
+@@ -29,6 +29,8 @@
+ 
+ #include "mux.h"
+ 
++#define CONFIG_VIDEO_OMAP3
++
+ #if defined(CONFIG_VIDEO_OMAP2) || defined(CONFIG_VIDEO_OMAP2_MODULE)
+ 
+ static struct resource cam_resources[] = {
+diff --git git/arch/arm/mach-omap2/board-overo.c-orig git/arch/arm/mach-omap2/board-overo.c
+index 2595f81..2518ce5 100644
+--- git/arch/arm/mach-omap2/board-overo.c-orig
++++ git/arch/arm/mach-omap2/board-overo.c
+@@ -603,12 +603,24 @@ static struct i2c_board_info __initdata overo_i2c_boardinfo[] = {
+ 	},
+ };
+ 
++#define OV5642_I2C_ADDR		(0x78 >> 1)
++int omap3evm_ov5642_platform_data;
++
++static struct i2c_board_info __initdata omap3_i2c_boardinfo_3[] = {
++	{
++		I2C_BOARD_INFO("ov5642", OV5642_I2C_ADDR),
++		.platform_data = &omap3evm_ov5642_platform_data,
++	},
++};
++
+ static int __init overo_i2c_init(void)
+ {
+ 	omap_register_i2c_bus(1, 2600, overo_i2c_boardinfo,
+ 			ARRAY_SIZE(overo_i2c_boardinfo));
+ 	/* i2c2 pins are used for gpio */
+-	omap_register_i2c_bus(3, 400, NULL, 0);
++	omap_register_i2c_bus(3, 100, omap3_i2c_boardinfo_3, 
++		ARRAY_SIZE(omap3_i2c_boardinfo_3));
++
+ 	return 0;
+ }
+ 
+diff --git git/drivers/media/video/ti-media/omap_vout.c-orig git/drivers/media/video/ti-media/omap_vout.c
+index 98cad55..0ee7519 100644
+--- git/drivers/media/video/ti-media/omap_vout.c-orig
++++ git/drivers/media/video/ti-media/omap_vout.c
+@@ -2453,7 +2453,7 @@ static int __init omap_vout_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto probe_err2;
+ 
+-	for (i = 0; i < vid_dev->num_displays; i++) {
++	for (i = 0; i < vid_dev->num_displays - 1; i++) {
+ 		struct omap_dss_device *display = vid_dev->displays[i];
+ 
+ 		if (display->update)

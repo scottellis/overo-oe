@@ -156,6 +156,11 @@ SRC_URI_append_beagleboard = " file://logo_linux_clut224.ppm \
            file://cam/5m03/0002-board-omap3beagle-import-li5m03-driver-from-https-gi.patch \
 "
 
+SRC_URI_append_overo = " \
+	file://ecam50.patch \
+	file://madc-clock-enable.patch \
+	"
+
 SRC_URI_append_omap3-touchbook = " \
                                   file://0001-ARM-OMAP-add-spi-platform-devices.patch \
                                   file://0002-MMA7455L-accelerometer-driver.patch \
