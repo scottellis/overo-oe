@@ -9,8 +9,8 @@ iface lo inet loopback
 # Wired interfaces
 #
 
-#auto eth0
-#iface eth0 inet dhcp
+auto eth0
+iface eth0 inet dhcp
 #iface eth1 inet dhcp
 
 #
