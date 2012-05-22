@@ -31,10 +31,8 @@ XSERVER_BASE = " \
   gpe-dm \
   gpe-session-scripts \
   xauth \
-  xdg-utils \
   xhost \
   xset \
-  xlsfonts \
   xrefresh \
  "
 
