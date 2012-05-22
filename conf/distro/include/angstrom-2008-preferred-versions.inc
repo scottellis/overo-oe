@@ -1,4 +1,4 @@
-ANGSTROM_QT_VERSION ?= "4.6.3"
+ANGSTROM_QT_VERSION ?= "4.7.1"
 CE_VERSION ?= "latest"
 
 require conf/distro/include/angstrom-codec-engine-${CE_VERSION}-preferred-versions.inc
@@ -50,7 +50,7 @@ PREFERRED_VERSION_python-pycairo = "1.8.0"
 PREFERRED_VERSION_qt4-tools-native = "${ANGSTROM_QT_VERSION}"
 PREFERRED_VERSION_qt4-tools-sdk = "${ANGSTROM_QT_VERSION}"
 PREFERRED_VERSION_qt4-embedded = "${ANGSTROM_QT_VERSION}"
-PREFERRED_VERSION_qt4-embedded-gles = "${ANGSTROM_QT_VERSION}"
+#PREFERRED_VERSION_qt4-embedded-gles = "${ANGSTROM_QT_VERSION}"
 PREFERRED_VERSION_qt4-x11-free = "${ANGSTROM_QT_VERSION}"
 PREFERRED_VERSION_qt4-x11-free-gles = "${ANGSTROM_QT_VERSION}"
 
