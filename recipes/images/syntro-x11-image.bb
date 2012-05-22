@@ -8,26 +8,10 @@ ANGSTROM_EXTRA_INSTALL ?= " "
 
 SPLASH ?= "psplash"
 
-APPS = " \
-#    xterm \
-  "
-
-E_CONFIG = " \
-#  e-wm-config-angstrom \
-#  e-wm-config-angstrom-widescreen \
-#  e-wm-config-illume \
-#  e-wm-config-standard \
-#  e-wm-config-netbook \
-#  e-wm-config-default \
-  e-wm-config-minimalist \
-#  e-wm-config-scaleable \
- "
 
 E17 = " \
   e-wm \
-#  e-wm-menu \
-#  e-wm-sysactions \
-  ${E_CONFIG} \
+  e-wm-config-minimalist \
  "
 
 FONTS = " \
@@ -37,9 +21,6 @@ FONTS = " \
   ttf-dejavu-sans-mono \
  "  
 
-SETTINGS = " \
-#  gpe-conf \
- "
 
 XSERVER_BASE = " \
   ${XSERVER} \
@@ -49,8 +30,6 @@ XSERVER_BASE = " \
   gtk-engine-clearlooks \
   gpe-dm \
   gpe-session-scripts \
-#  hicolor-icon-theme \
-#  mime-support \
   xauth \
   xdg-utils \
   xhost \
@@ -60,10 +39,8 @@ XSERVER_BASE = " \
  "
 
 IMAGE_INSTALL += " \
-#  ${APPS} \
   ${E17} \
   ${FONTS} \
-#  ${SETTINGS} \
   ${SPLASH} \
   ${XSERVER_BASE} \
  "
