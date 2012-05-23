@@ -13,6 +13,7 @@ DEPENDS = "gperf-native usbutils acl glib-2.0"
 RDEPENDS_${PN} += "module-init-tools-depmod udev-utils"
 
 SRC_URI = "http://kernel.org/pub/linux/utils/kernel/hotplug/udev-${PV}.tar.gz \
+           file://disable-persistent-net-generator.patch \
 	   file://udev-replace-le16toh.patch \
 	   file://udev-replace-lutimes.patch \
 	   file://mount.blacklist \

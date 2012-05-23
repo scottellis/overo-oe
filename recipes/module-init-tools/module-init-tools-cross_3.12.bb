@@ -5,7 +5,7 @@ EXTRA_OECONF += "--disable-builddir"
 #DEPENDS += "docbook-utils-native"
 
 DEFAULT_PREFERENCE = "0"
-PROVIDES += "virtual/${TARGET_PREFIX}depmod virtual/${TARGET_PREFIX}depmod-2.6 virtual/${TARGET_PREFIX}depmod-3.0"
+PROVIDES += "virtual/${TARGET_PREFIX}depmod virtual/${TARGET_PREFIX}depmod-2.6 virtual/${TARGET_PREFIX}depmod-3.0 virtual/${TARGET_PREFIX}depmod-3.2"
 
 # Remove the RDEPENDS_${PN} we picked up from the "require";
 # it's simply extraneous for the cross package
