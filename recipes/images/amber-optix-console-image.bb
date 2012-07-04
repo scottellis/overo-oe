@@ -34,6 +34,7 @@ TOOLS_INSTALL += "\
 ANGSTROM_EXTRA_INSTALL ?= "\
     devmem2 \
     openssh-scp \
+    openssh-sftp \
     kernel-modules \
     wireless-tools \
  "
