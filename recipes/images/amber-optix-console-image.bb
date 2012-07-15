@@ -29,6 +29,9 @@ TOOLS_INSTALL += "\
     git \
     python \
     samba \
+    iperf \
+    netperf \
+    emacs \
  "
 
 ANGSTROM_EXTRA_INSTALL ?= "\
