@@ -5,10 +5,14 @@ require amber-optix-console-image.bb
 
 IMAGE_LINGUAS = "en-gb"
 
+TI_DSP_GUI_INSTALL = " \
+  gst-plugin-xvimagesink \
+ "
+
 APPS = " \
-    xterm \
-    vlc \
-  "
+  xterm \
+  vlc \
+ "
 
 E_CONFIG = " \
   e-wm-config-angstrom \
@@ -58,6 +62,7 @@ XSERVER_BASE = " \
  "
 
 IMAGE_INSTALL += " \
+  ${TI_DSP_GUI_INSTALL} \
   ${APPS} \
   ${E17} \
   ${FONTS} \
