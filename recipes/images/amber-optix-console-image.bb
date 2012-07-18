@@ -15,6 +15,7 @@ TI_DSP_INSTALL = " \
     gst-plugin-rtp \
     gst-plugin-video4linux2 \
     gst-plugin-udp \
+    gst-plugin-x264 \
     ti-codec-engine \
     ti-dmai \
     ti-dspbios \
